@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Inacap Renca Smart</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="irAGestionUsuarios()">
+        Gestionar Usuarios
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Inacap Renca Smart</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="container">
+    <h1>Bienvenido a Inacap Renca Smart</h1>
+    <p>Sistema de gestión y visualización.</p>
+
+    <div class="actions">
+      <ion-button expand="block" (click)="irAGestionUsuarios()">
+        Ir a Gestión de Usuarios
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
