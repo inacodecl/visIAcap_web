@@ -1,0 +1,70 @@
+.pasado-content {
+    --background: #e0e0e0;
+}
+
+.main-card {
+    background-color: white;
+    border-top-left-radius: 50% 100px;
+    /* Curve matching home page */
+    border-top-right-radius: 0;
+    min-height: 70vh;
+    margin-top: -50px;
+    padding-top: 40px;
+    /* Reduced padding to accommodate back button */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.back-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    --color: #000;
+    font-size: 1.5rem;
+    height: 50px;
+    width: 50px;
+    --border-radius: 50%;
+    border: 1px solid #000;
+    border-radius: 50%;
+    /* Make it circular visually if button shape isn't enough */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    /* Adjusted gap */
+    width: 100%;
+    max-width: 300px;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.nav-button {
+    --background: #d32f2f;
+    /* Red color */
+    --color: white;
+    --border-radius: 30px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    height: 90px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: normal;
+    /* Allow text wrap */
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+}

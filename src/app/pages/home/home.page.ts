@@ -37,8 +37,7 @@ export class HomePage implements OnInit {
   }
 
   navegarPasado() {
-    console.log('Navegar a Pasado');
-    // Implementar navegación aquí
+    this.router.navigate(['/pasado']);
   }
 
   navegarPresente() {
