@@ -1,0 +1,40 @@
+.top-section {
+    background-color: #e0e0e0;
+    padding: 20px;
+    height: 30vh;
+    /* Adjust as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.logo-container {
+    /* Placeholder styling */
+    width: 670px;
+    height: auto;
+
+    .logo-placeholder {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+.header-text {
+    border-left: 2px solid #333;
+    padding-left: 10px;
+
+    .sede-text {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: #000;
+        line-height: 1.1;
+        display: block;
+    }
+}

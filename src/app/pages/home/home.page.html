@@ -1,29 +1,26 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Inacap Renca Smart</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="irAGestionUsuarios()">
-        Gestionar Usuarios
+<ion-content [fullscreen]="true" class="home-content">
+
+  <!-- Header Component -->
+  <app-home-header></app-home-header>
+
+  <!-- Main Content Section (White Curved Area) -->
+  <div class="main-card">
+    <div class="buttons-container">
+      <ion-button class="nav-button" shape="round" (click)="navegarPasado()">
+        PASADO
       </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Inacap Renca Smart</ion-title>
-    </ion-toolbar>
-  </ion-header>
+      <ion-button class="nav-button" shape="round" (click)="navegarPresente()">
+        PRESENTE
+      </ion-button>
 
-  <div class="container">
-    <h1>Bienvenido a Inacap Renca Smart</h1>
-    <p>Sistema de gestión y visualización.</p>
-
-    <div class="actions">
-      <ion-button expand="block" (click)="irAGestionUsuarios()">
-        Ir a Gestión de Usuarios
+      <ion-button class="nav-button" shape="round" (click)="navegarFuturo()">
+        FUTURO
       </ion-button>
     </div>
   </div>
+
+  <!-- Footer Component -->
+  <app-home-footer></app-home-footer>
+
 </ion-content>

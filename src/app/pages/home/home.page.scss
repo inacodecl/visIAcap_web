@@ -1,17 +1,43 @@
-.container {
-    text-align: center;
-    padding: 20px;
-    margin-top: 50px;
+.home-content {
+    --background: #e0e0e0;
+    /* Gray background for the top section */
 }
 
-h1 {
-    font-size: 2em;
-    margin-bottom: 10px;
+.main-card {
+    background-color: white;
+    border-top-left-radius: 50% 100px;
+    /* Creates the curved effect */
+    border-top-right-radius: 0;
+    min-height: 70vh;
+    margin-top: -50px;
+    /* Overlap with the top section */
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 10;
 }
 
-.actions {
-    margin-top: 30px;
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 90px;
+    width: 100%;
     max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
+    align-items: center;
+}
+
+.nav-button {
+    --background: #d32f2f;
+    /* Red color */
+    --color: white;
+    --border-radius: 30px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    height: 100px;
+    font-weight: bold;
+    font-size: 1.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }

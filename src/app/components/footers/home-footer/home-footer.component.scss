@@ -1,0 +1,22 @@
+.footer-section {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 20px;
+    color: #000;
+
+    /* Ensure footer is visible within the white area or overlapping if needed */
+    /* If the white area is the content background, we might need to adjust positioning */
+}
+
+.accessibility-icon {
+    font-size: 2rem;
+}
+
+.footer-logo {
+    font-weight: bold;
+    font-size: 1rem;
+}
