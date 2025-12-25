@@ -1,0 +1,342 @@
+// Variables
+$brand-red: #d92b34; // Rojo Institucional
+$bg-dark: #0a0a0a;
+$text-light: #ffffff;
+
+:host {
+    display: block;
+}
+
+// --------------------------------------------------
+// Encabezado (Header)
+// --------------------------------------------------
+.timeline-header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background: transparent;
+
+    // Accedemos al componente hijo (HomeHeader) mediante ::ng-deep
+    ::ng-deep .top-section {
+        // Altura y Padding controlados dinámicamente vía variables CSS (JS)
+        height: var(--current-height) !important;
+        padding: var(--current-padding) 20px !important;
+        background-color: rgba(224, 224, 224, 0.9);
+
+        // Optimización de rendimiento
+        will-change: height, padding;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    ::ng-deep .logo-container {
+        // Ancho controlado dinámicamente
+        width: var(--current-logo-width) !important;
+        will-change: width;
+        display: flex;
+        align-items: center;
+
+        .logo-placeholder {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    // Estado activo durante scroll (ajustes adicionales si fueran necesarios)
+    &.active-scroll {
+        ::ng-deep .header-text .sede-text {
+            font-size: 1rem !important;
+        }
+    }
+}
+
+// --------------------------------------------------
+// Contenido Principal
+// --------------------------------------------------
+.timeline-content {
+    --background: #{$bg-dark};
+    --color: #{$text-light};
+}
+
+.timeline-container {
+    position: relative;
+    // Padding superior para compensar el header inicial
+    padding: calc(20vh + 40px) 20px 40px 20px;
+    min-height: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+// Título
+.page-title {
+    text-align: center;
+    margin-bottom: 40px;
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 2px 10px rgba($brand-red, 0.5);
+    }
+}
+
+// --------------------------------------------------
+// Elementos de la Línea de Tiempo
+// --------------------------------------------------
+
+// Línea Central
+.central-line {
+    position: absolute;
+    // Inicia visualmente debajo del título
+    top: 550px;
+    bottom: 0; // Se extiende hasta el final
+    left: 50%;
+    width: 4px;
+    background: linear-gradient(to bottom, $brand-red 0%, $brand-red 90%, transparent);
+    transform: translateX(-50%);
+    z-index: 1;
+    box-shadow: 0 0 15px rgba($brand-red, 0.6);
+    overflow: visible; // Visible para mostrar la esfera superior
+
+    // Animación: Crecimiento tipo "Sable de Luz" (Solo cuando se activa la clase)
+    height: 0;
+
+    &.animate-line {
+        animation: line-grow 2s ease-out forwards 0.5s;
+    }
+
+    // Esfera Neón Superior
+    &::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 16px;
+        height: 16px;
+        background-color: $brand-red;
+        border-radius: 50%;
+        box-shadow: 0 0 10px $brand-red, 0 0 20px $brand-red;
+        z-index: 2;
+        // Animaciones: Latido y Destello
+        animation: sphere-pulse 3s ease-out infinite;
+    }
+
+    // Haz de Luz Pulsante (Efecto de flujo)
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 150px;
+        background: linear-gradient(to bottom, transparent, #fff, transparent);
+        box-shadow: 0 0 20px #fff;
+        opacity: 0; // Inicia invisible
+        // Sincronizado con la esfera
+        animation: neon-flow 3s ease-in infinite;
+    }
+}
+
+// Lista de Hitos
+.milestones-list {
+    position: relative;
+    z-index: 2;
+    padding-bottom: 100px;
+}
+
+.milestone-item {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 80px;
+
+    opacity: 0;
+    will-change: opacity, transform;
+    pointer-events: none; // Desactiva interacción mientras está oculto
+
+    &.expanded,
+    &:hover {
+        pointer-events: auto;
+    }
+
+    // Estilos base para interacción
+    &.expanded,
+    &:hover,
+    &:active {
+        filter: none;
+        z-index: 10;
+        transition: filter 0.3s ease;
+    }
+
+    // Marcador redondo en la línea
+    .timeline-marker {
+        position: absolute;
+        left: 50%;
+        width: 18px;
+        height: 18px;
+        background: $brand-red;
+        border: 3px solid $bg-dark;
+        border-radius: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+        box-shadow: 0 0 10px $brand-red;
+    }
+
+    // Tarjeta de Contenido
+    .milestone-content {
+        width: 40%;
+        background: rgba(20, 20, 20, 0.9);
+        border-radius: 12px;
+        padding: 0;
+        overflow: hidden;
+        cursor: pointer;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: max-height 0.4s ease, transform 0.3s ease;
+
+        // Estado Colapsado
+        max-height: 250px;
+
+        .image-container {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.5s ease;
+            }
+
+            .year-badge {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background: rgba($brand-red, 0.9);
+                color: white;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-weight: bold;
+                font-size: 1.1rem;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .details {
+            padding: 15px;
+            color: #ddd;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        &:hover img {
+            transform: scale(1.1);
+        }
+    }
+
+    // Lógica Zig Zag
+    &.odd {
+        justify-content: flex-start;
+
+        .milestone-content {
+            margin-left: 5%;
+            margin-right: auto;
+            transform-origin: right center;
+        }
+    }
+
+    &.even {
+        justify-content: flex-end;
+
+        .milestone-content {
+            margin-right: 5%;
+            margin-left: auto;
+            transform-origin: left center;
+        }
+    }
+}
+
+// Estado Expandido (Click)
+.milestone-item.expanded {
+    .milestone-content {
+        max-height: 500px;
+        border-color: $brand-red;
+
+        .details {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+// Ajustes Responsivos
+@media (max-width: 600px) {
+    .milestone-content {
+        width: 42% !important;
+    }
+}
+
+// --------------------------------------------------
+// Animaciones (Keyframes)
+// --------------------------------------------------
+
+@keyframes line-grow {
+    0% {
+        height: 0;
+    }
+
+    100% {
+        height: 100%;
+    }
+}
+
+@keyframes sphere-pulse {
+
+    0%,
+    100% {
+        transform: translateX(-50%) scale(1);
+        background-color: $brand-red;
+        box-shadow: 0 0 10px $brand-red, 0 0 20px $brand-red;
+    }
+
+    10% {
+        transform: translateX(-50%) scale(1.5); // Expansión (Latido)
+        background-color: #fff; // Destello Blanco
+        box-shadow: 0 0 20px #fff, 0 0 40px #fff;
+    }
+
+    20% {
+        transform: translateX(-50%) scale(1);
+        background-color: $brand-red;
+        box-shadow: 0 0 10px $brand-red, 0 0 20px $brand-red;
+    }
+}
+
+@keyframes neon-flow {
+    0% {
+        top: -75px;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1; // Aparece junto con el destello
+    }
+
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
+}
