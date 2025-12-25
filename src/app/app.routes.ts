@@ -8,7 +8,11 @@ export const routes: Routes = [
   },
   {
     path: 'login-admin',
-    loadComponent: () => import('./pages/admin/login-admin/login-admin.page').then(m => m.LoginAdminPage)
+    loadComponent: () => import('./pages/admin/login-admin/login-admin.page').then( m => m.LoginAdminPage)
+  },
+  {
+    path: 'pasado',
+    loadComponent: () => import('./pages/pasado/pasado.page').then(m => m.PasadoPage)
   },
   {
     path: 'timeline',
