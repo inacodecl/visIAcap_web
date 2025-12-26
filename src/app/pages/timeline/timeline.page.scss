@@ -1,342 +1,294 @@
-// Variables
-$brand-red: #d92b34; // Rojo Institucional
-$bg-dark: #0a0a0a;
-$text-light: #ffffff;
-
-:host {
-    display: block;
-}
-
-// --------------------------------------------------
-// Encabezado (Header)
-// --------------------------------------------------
 .timeline-header {
-    position: absolute;
+    --background: #fff;
+    position: fixed;
     top: 0;
-    width: 100%;
-    z-index: 100;
-    background: transparent;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    overflow: hidden;
+    height: var(--current-height);
+    padding: var(--current-padding);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.3s ease;
 
-    // Accedemos al componente hijo (HomeHeader) mediante ::ng-deep
-    ::ng-deep .top-section {
-        // Altura y Padding controlados dinámicamente vía variables CSS (JS)
-        height: var(--current-height) !important;
-        padding: var(--current-padding) 20px !important;
-        background-color: rgba(224, 224, 224, 0.9);
-
-        // Optimización de rendimiento
-        will-change: height, padding;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    ::ng-deep .logo-container {
-        // Ancho controlado dinámicamente
-        width: var(--current-logo-width) !important;
-        will-change: width;
+    // App-Home-Header debe adaptarse
+    app-home-header {
+        width: 100%;
+        height: 100%;
         display: flex;
         align-items: center;
+        justify-content: center;
 
-        .logo-placeholder {
-            width: 100%;
-            height: auto;
-        }
-    }
-
-    // Estado activo durante scroll (ajustes adicionales si fueran necesarios)
-    &.active-scroll {
-        ::ng-deep .header-text .sede-text {
-            font-size: 1rem !important;
+        // Necesitamos pasar variables CSS al hijo si es posible, 
+        // o asumir que el hijo usa un contenedor que podemos escalar.
+        ::ng-deep .logo-container img {
+            width: var(--current-logo-width) !important;
+            height: auto !important;
+            transition: width 0.1s linear;
         }
     }
 }
 
-// --------------------------------------------------
-// Contenido Principal
-// --------------------------------------------------
 .timeline-content {
-    --background: #{$bg-dark};
-    --color: #{$text-light};
+    --padding-top: 360px; // Espacio inicial para el header grande
+    --background: #fdfdfd;
 }
 
 .timeline-container {
-    position: relative;
-    // Padding superior para compensar el header inicial
-    padding: calc(20vh + 40px) 20px 40px 20px;
-    min-height: 100%;
-    max-width: 800px;
+    padding: 20px;
+    max-width: 1000px;
     margin: 0 auto;
+    position: relative;
+    min-height: 80vh;
 }
 
-// Título
 .page-title {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 3rem;
 
     h1 {
         font-size: 2.5rem;
-        font-weight: bold;
-        color: white;
+        color: #333;
+        font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 2px;
-        text-shadow: 0 2px 10px rgba($brand-red, 0.5);
+        letter-spacing: 1px;
+
+        &::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #D01824; // Rojo Inacap
+            margin: 10px auto 0;
+        }
     }
 }
 
-// --------------------------------------------------
-// Elementos de la Línea de Tiempo
-// --------------------------------------------------
+// Estados de carga y error
+.loading-state,
+.error-state,
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
 
-// Línea Central
+    ion-spinner {
+        transform: scale(1.5);
+        margin-bottom: 1rem;
+    }
+
+    ion-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+}
+
 .central-line {
     position: absolute;
-    // Inicia visualmente debajo del título
-    top: 550px;
-    bottom: 0; // Se extiende hasta el final
     left: 50%;
+    top: 150px;
+    bottom: 50px;
     width: 4px;
-    background: linear-gradient(to bottom, $brand-red 0%, $brand-red 90%, transparent);
+    background: #e0e0e0;
     transform: translateX(-50%);
-    z-index: 1;
-    box-shadow: 0 0 15px rgba($brand-red, 0.6);
-    overflow: visible; // Visible para mostrar la esfera superior
+    z-index: 0;
 
-    // Animación: Crecimiento tipo "Sable de Luz" (Solo cuando se activa la clase)
-    height: 0;
-
-    &.animate-line {
-        animation: line-grow 2s ease-out forwards 0.5s;
-    }
-
-    // Esfera Neón Superior
-    &::before {
-        content: '';
-        position: absolute;
-        top: -6px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 16px;
-        height: 16px;
-        background-color: $brand-red;
-        border-radius: 50%;
-        box-shadow: 0 0 10px $brand-red, 0 0 20px $brand-red;
-        z-index: 2;
-        // Animaciones: Latido y Destello
-        animation: sphere-pulse 3s ease-out infinite;
-    }
-
-    // Haz de Luz Pulsante (Efecto de flujo)
+    // Animación de llenado
     &::after {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 150px;
-        background: linear-gradient(to bottom, transparent, #fff, transparent);
-        box-shadow: 0 0 20px #fff;
-        opacity: 0; // Inicia invisible
-        // Sincronizado con la esfera
-        animation: neon-flow 3s ease-in infinite;
+        right: 0;
+        bottom: 0;
+        background: #D01824;
+        transform-origin: top;
+        transform: scaleY(0);
+        transition: transform 1.5s ease-out;
+    }
+
+    &.animate-line::after {
+        transform: scaleY(1);
     }
 }
 
-// Lista de Hitos
 .milestones-list {
     position: relative;
-    z-index: 2;
-    padding-bottom: 100px;
+    z-index: 1;
 }
 
 .milestone-item {
-    position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-bottom: 80px;
+    align-items: flex-start; // Alineación superior
+    margin-bottom: 3rem;
+    position: relative;
 
+    // Animación Inicial (Javascript controla transform/opacity)
     opacity: 0;
-    will-change: opacity, transform;
-    pointer-events: none; // Desactiva interacción mientras está oculto
+    transform: scale(0.9);
 
-    &.expanded,
-    &:hover {
-        pointer-events: auto;
-    }
-
-    // Estilos base para interacción
-    &.expanded,
-    &:hover,
-    &:active {
-        filter: none;
-        z-index: 10;
-        transition: filter 0.3s ease;
-    }
-
-    // Marcador redondo en la línea
-    .timeline-marker {
-        position: absolute;
-        left: 50%;
-        width: 18px;
-        height: 18px;
-        background: $brand-red;
-        border: 3px solid $bg-dark;
-        border-radius: 50%;
-        transform: translateX(-50%);
-        z-index: 3;
-        box-shadow: 0 0 10px $brand-red;
-    }
-
-    // Tarjeta de Contenido
-    .milestone-content {
-        width: 40%;
-        background: rgba(20, 20, 20, 0.9);
-        border-radius: 12px;
-        padding: 0;
-        overflow: hidden;
-        cursor: pointer;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: max-height 0.4s ease, transform 0.3s ease;
-
-        // Estado Colapsado
-        max-height: 250px;
-
-        .image-container {
-            position: relative;
-            height: 200px;
-            overflow: hidden;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transition: transform 0.5s ease;
-            }
-
-            .year-badge {
-                position: absolute;
-                top: 10px;
-                left: 10px;
-                background: rgba($brand-red, 0.9);
-                color: white;
-                padding: 4px 12px;
-                border-radius: 20px;
-                font-weight: bold;
-                font-size: 1.1rem;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            }
-        }
-
-        .details {
-            padding: 15px;
-            color: #ddd;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            display: none;
-        }
-
-        &:hover img {
-            transform: scale(1.1);
-        }
-    }
-
-    // Lógica Zig Zag
+    // Alternancia
     &.odd {
         justify-content: flex-start;
-
-        .milestone-content {
-            margin-left: 5%;
-            margin-right: auto;
-            transform-origin: right center;
-        }
+        padding-right: 50%;
     }
 
     &.even {
         justify-content: flex-end;
+        padding-left: 50%;
+    }
+
+    .timeline-marker {
+        position: absolute;
+        left: 50%;
+        top: 20px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #fff;
+        border: 3px solid #D01824;
+        transform: translateX(-50%);
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.8);
+        z-index: 2;
+    }
+
+    .milestone-content {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        width: 90%;
+        max-width: 400px;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        cursor: pointer;
+
+        // Márgenes para separar de la línea central
+        &.odd {
+            margin-right: 30px;
+        }
+
+        // Item a la izquierda, margen a la derecha
+        &.even {
+            margin-left: 30px;
+        }
+
+        // Item a la derecha, margen a la izquierda
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+    }
+
+    .image-container {
+        position: relative;
+        height: 180px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .year-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 12px;
+            background: rgba(208, 24, 36, 0.9); // Rojo semi
+            color: white;
+            font-weight: bold;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            backdrop-filter: blur(4px);
+        }
+    }
+
+    &:hover .image-container img {
+        transform: scale(1.05);
+    }
+
+    .details {
+        padding: 1.2rem;
+
+        h3.milestone-title {
+            color: #D01824;
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        p {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+
+            // Truncamiento inicial
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .expand-icon {
+            float: right;
+            font-size: 1.4rem;
+            color: #999;
+        }
+    }
+
+    // Estado Expandido
+    &.expanded {
+        .details p {
+            -webkit-line-clamp: unset; // Mostrar todo
+        }
+    }
+}
+
+// Media Queries básicas
+@media (max-width: 768px) {
+    .timeline-content {
+        --padding-top: 200px;
+    }
+
+    .milestone-item {
+
+        &.odd,
+        &.even {
+            padding: 0;
+            justify-content: center;
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+        }
 
         .milestone-content {
-            margin-right: 5%;
-            margin-left: auto;
-            transform-origin: left center;
+            width: 85%;
+            margin: 0 !important; // Quitar margenes de lado
+            z-index: 2; // Sobre la linea
+        }
+
+        .timeline-marker {
+            display: none; // Ocultar marcador central en móvil si se superpone
         }
     }
-}
 
-// Estado Expandido (Click)
-.milestone-item.expanded {
-    .milestone-content {
-        max-height: 500px;
-        border-color: $brand-red;
-
-        .details {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-}
-
-// Ajustes Responsivos
-@media (max-width: 600px) {
-    .milestone-content {
-        width: 42% !important;
-    }
-}
-
-// --------------------------------------------------
-// Animaciones (Keyframes)
-// --------------------------------------------------
-
-@keyframes line-grow {
-    0% {
-        height: 0;
-    }
-
-    100% {
-        height: 100%;
-    }
-}
-
-@keyframes sphere-pulse {
-
-    0%,
-    100% {
-        transform: translateX(-50%) scale(1);
-        background-color: $brand-red;
-        box-shadow: 0 0 10px $brand-red, 0 0 20px $brand-red;
-    }
-
-    10% {
-        transform: translateX(-50%) scale(1.5); // Expansión (Latido)
-        background-color: #fff; // Destello Blanco
-        box-shadow: 0 0 20px #fff, 0 0 40px #fff;
-    }
-
-    20% {
-        transform: translateX(-50%) scale(1);
-        background-color: $brand-red;
-        box-shadow: 0 0 10px $brand-red, 0 0 20px $brand-red;
-    }
-}
-
-@keyframes neon-flow {
-    0% {
-        top: -75px;
-        opacity: 0;
-    }
-
-    10% {
-        opacity: 1; // Aparece junto con el destello
-    }
-
-    100% {
-        top: 100%;
-        opacity: 0;
+    .central-line {
+        left: 20px; // Mover línea a la izquierda
     }
 }

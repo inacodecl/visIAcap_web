@@ -35,3 +35,19 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+html,
+body {
+    height: 100%;
+}
+
+/*  solucion para pantalla negra/contenido colapsado */
+#main-content {
+    height: 100%;
+    position: relative;
+    /*  asegura que respete el contexto de pila si es necesario */
+}
+
+ion-app {
+    height: 100%;
+}

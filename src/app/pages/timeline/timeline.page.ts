@@ -1,17 +1,20 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChildren, QueryList, ElementRef, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonButton } from '@ionic/angular/standalone';
-import { HomeHeaderComponent } from '../../components/headers/home-header/home-header.component';
-import { HomeFooterComponent } from '../../components/footers/home-footer/home-footer.component';
+import { RouterModule } from '@angular/router';
+import {
+  IonContent, IonHeader, IonIcon, IonButton,
+  IonSpinner
+} from '@ionic/angular/standalone';
+import { TimelineService } from '../../services/timeline.service';
+import { Historia } from '../../models/historia.model';
 import { addIcons } from 'ionicons';
-import { add, remove } from 'ionicons/icons';
-import { ChangeDetectorRef } from '@angular/core';
+import { chevronDown, arrowBack, locationOutline, calendarOutline, settingsSharp, add, remove, alertCircle } from 'ionicons/icons';
+import { AuthService } from '../../services/auth.service';
+import { HomeFooterComponent } from '../../components/footers/home-footer/home-footer.component';
+import { HomeHeaderComponent } from '../../components/headers/home-header/home-header.component';
 
-interface Milestone {
-  year: number;
-  image: string;
-  description: string;
+// Extendemos la interfaz Historia para incluir estado de la UI
+interface TimelineEvent extends Historia {
   expanded: boolean;
 }
 
@@ -21,53 +24,69 @@ interface Milestone {
   styleUrls: ['./timeline.page.scss'],
   standalone: true,
   imports: [
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
     CommonModule,
-    FormsModule,
-    HomeHeaderComponent,
+    IonContent, IonButton, IonIcon, IonSpinner,
+    RouterModule,
+    IonHeader,
     HomeFooterComponent,
-    IonIcon,
-    IonButton]
+    HomeHeaderComponent
+  ]
 })
 export class TimelinePage implements OnInit {
+
+  private timelineService = inject(TimelineService);
+  private cdr = inject(ChangeDetectorRef);
+  public authService = inject(AuthService); // Public for HTML access
 
   @ViewChildren('milestoneItem') milestoneElements!: QueryList<ElementRef>;
 
   // Control para reiniciar la animación CSS de la línea
   animateLine = false;
 
-  milestones: Milestone[] = [
-    { year: 1960, image: 'assets/img/img-1960.png', description: 'Fundación de INACAP.', expanded: false },
-    { year: 1962, image: 'assets/img/img-1962.png', description: 'Primeros cursos técnicos.', expanded: false },
-    { year: 1966, image: 'assets/img/img-1966.png', description: 'Expansión a regiones.', expanded: false },
-    { year: 1967, image: 'assets/img/img-1967.png', description: 'Nuevas tecnologías.', expanded: false },
-    { year: 1968, image: 'assets/img/img-1968-s1.png', description: 'Modernización curricular.', expanded: false },
-    { year: 1970, image: 'https://placehold.co/300x200/333/fff?text=1970', description: 'Acreditación institucional.', expanded: false },
-    { year: 1980, image: 'https://placehold.co/300x200/333/fff?text=1980', description: 'Nuevas tecnologías.', expanded: false },
-    { year: 1990, image: 'https://placehold.co/300x200/333/fff?text=1990', description: 'Modernización curricular.', expanded: false },
-    { year: 2000, image: 'https://placehold.co/300x200/333/fff?text=2000', description: 'Acreditación institucional.', expanded: false },
-    { year: 2010, image: 'https://placehold.co/300x200/333/fff?text=2010', description: 'Nuevas sedes.', expanded: false },
-    { year: 2024, image: 'https://placehold.co/300x200/333/fff?text=2024', description: 'Innovación y Futuro.', expanded: false },
-  ];
+  milestones: TimelineEvent[] = [];
+  isLoading = true;
+  error: string | null = null;
 
   // Variables de estado para la animación continua
   headerHeight = 350; // Altura inicial aproximada 
   logoWidth = 600; // Ancho inicial
   headerPadding = 20; // Padding inicial
-  headerBdrop = 0; // Opacidad/Blur inicial
 
-  readonly MAX_HEIGHT = 350; // ~30vh
-  readonly MIN_HEIGHT = 100; // Altura mínima deseada
-  readonly SCROLL_RANGE = 400; // Distancia de scroll para completar la animación
+  readonly MAX_HEIGHT = 350;
+  readonly MIN_HEIGHT = 100;
+  readonly SCROLL_RANGE = 400;
 
-  constructor(private cdr: ChangeDetectorRef) {
-    addIcons({ add, remove });
+  private currentScrollTop = 0;
+
+  constructor() {
+    addIcons({ add, remove, alertCircle, chevronDown, arrowBack, locationOutline, calendarOutline, settingsSharp });
   }
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
+    this.isLoading = true;
+    this.error = null;
+
+    this.timelineService.getHistorias().subscribe({
+      next: (data) => {
+        // Filtrar solo visibles y mapear a TimelineEvent
+        this.milestones = data
+          .filter(h => h.visible)
+          .sort((a, b) => a.order_index - b.order_index) // Ordenar por índice
+          .map(h => ({ ...h, expanded: false }));
+
+        this.isLoading = false;
+        // La detección de cambios ocurrirá y disparará milestoneElements.changes si aplica
+      },
+      error: (err) => {
+        console.error('Error cargando timeline', err);
+        this.error = 'No se pudo cargar la línea de tiempo. Intenta nuevamente.';
+        this.isLoading = false;
+      }
+    });
   }
 
   // Se ejecuta cada vez que la vista entra (navegación)
@@ -75,6 +94,10 @@ export class TimelinePage implements OnInit {
     this.animateLine = false; // Reiniciar animación CSS de la línea
     this.currentScrollTop = 0; // Reiniciar rastreador de scroll
     this.updateAnimations(0); // Forzar estado inicial (fuera de pantalla)
+
+    // Sincronización en caliente: Recargar datos al entrar
+    // Esto asegura que si se editó en el Admin, se vea aquí de inmediato.
+    this.loadData();
   }
 
   ionViewDidEnter() {
@@ -84,11 +107,15 @@ export class TimelinePage implements OnInit {
       this.cdr.detectChanges(); // Notificar cambio a Angular
 
       // 2. Iniciar animación de entrada de las tarjetas
+      // Si ya hay datos cargados checkeamos los elementos
       if (this.milestoneElements && this.milestoneElements.length > 0) {
         this.startEntranceAnimation();
-      } else {
-        // Si los elementos no están listos, esperar a que cambien
+      }
+
+      // Siempre nos suscribimos a cambios por si los datos llegan tarde (async)
+      if (this.milestoneElements) {
         this.milestoneElements.changes.subscribe(() => {
+          // Solo iniciar si no ha iniciado o reiniciar si cambian datos drásticamente
           this.startEntranceAnimation();
         });
       }
@@ -97,7 +124,6 @@ export class TimelinePage implements OnInit {
 
   /**
    * Inicia el bucle de animación para la entrada suave de las tarjetas.
-   * Interpola entre la posición inicial (fuera de pantalla) y la posición de scroll actual.
    */
   private startEntranceAnimation() {
     const startTime = Date.now();
@@ -108,7 +134,7 @@ export class TimelinePage implements OnInit {
       let progress = (now - startTime) / duration;
       if (progress > 1) progress = 1;
 
-      // Easing: easeOutCubic (comienza rápido, frena suave al final)
+      // Easing: easeOutCubic
       const easeProgress = 1 - Math.pow(1 - progress, 3);
       this.updateAnimations(easeProgress);
 
@@ -119,17 +145,14 @@ export class TimelinePage implements OnInit {
     requestAnimationFrame(animate);
   }
 
-  toggleMilestone(milestone: Milestone) {
+  toggleMilestone(milestone: TimelineEvent) {
     milestone.expanded = !milestone.expanded;
   }
 
   onScroll(event: any) {
-    // Al hacer scroll manual, asumimos que la entrada ya terminó (factor 1)
     this.currentScrollTop = event.detail.scrollTop;
     this.updateAnimations(1);
   }
-
-  private currentScrollTop = 0;
 
   /**
    * Actualiza las animaciones de cabecera y tarjetas.
@@ -139,54 +162,38 @@ export class TimelinePage implements OnInit {
     const scrollTop = this.currentScrollTop;
     const viewportHeight = window.innerHeight;
 
-    // ----------------------------
     // 1. Animación del Encabezado
-    // ----------------------------
     let progressHeader = scrollTop / this.SCROLL_RANGE;
-    // Clampear valor entre 0 y 1
     progressHeader = Math.max(0, Math.min(1, progressHeader));
 
     this.headerHeight = this.MAX_HEIGHT + (this.MIN_HEIGHT - this.MAX_HEIGHT) * progressHeader;
     this.logoWidth = 600 + (240 - 600) * progressHeader;
     this.headerPadding = 20 + (10 - 20) * progressHeader;
 
-    // ----------------------------
-    // 2. Animación de Tarjetas (Scrubbing)
-    // ----------------------------
+    // 2. Animación de Tarjetas
     if (this.milestoneElements) {
       this.milestoneElements.forEach((elementRef, index) => {
         const element = elementRef.nativeElement;
         const rect = element.getBoundingClientRect();
 
-        // Calcular progreso basado en posición en viewport
         const distanceFromBottom = viewportHeight - rect.top;
-        const animationRange = 500; // Rango de pixeles para completar la animación
+        const animationRange = 500;
         let itemProgress = distanceFromBottom / animationRange;
 
-        // Clampear entre 0 y 1
         itemProgress = Math.max(0, Math.min(1, itemProgress));
 
-        // Propiedades Objetivo (Estado final según scroll)
-        const targetScale = 0.5 + (0.5 * itemProgress); // De 0.5 a 1.0
-        const targetOpacity = itemProgress; // De 0 a 1
+        const targetScale = 0.5 + (0.5 * itemProgress);
+        const targetOpacity = itemProgress;
 
-        // Determinación de dirección (Izquierda/Derecha)
-        const isOdd = index % 2 !== 0; // Impares (índice 1, 3...) vs Pares (0, 2...)
-        // Nota: Ajustar según lógica visual deseada (Impares izquierda, Pares derecha)
+        // Alternancia visual (Impares vs Pares)
+        const isOdd = index % 2 !== 0;
         const startX = isOdd ? -50 : 50; // Unidades en 'vw'
-
-        // Posición Objetivo del Scroll: 'startX' se reduce a 0 conforme 'itemProgress' llega a 1
         const targetX = startX * (1 - itemProgress);
-
-        // Interpolación Final (Mezcla con animación de entrada)
-        // Si entranceFactor es 0, forzamos posición startX (lejos).
-        // Si entranceFactor es 1, usamos targetX (calculado por scroll).
 
         const finalX = (targetX * entranceFactor) + (startX * (1 - entranceFactor));
         const finalScale = (targetScale * entranceFactor) + (0.5 * (1 - entranceFactor));
         const finalOpacity = (targetOpacity * entranceFactor);
 
-        // Aplicar estilos optimizados
         element.style.transform = `translateX(${finalX}vw) scale(${finalScale})`;
         element.style.opacity = `${finalOpacity}`;
       });

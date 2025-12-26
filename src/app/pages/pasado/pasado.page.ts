@@ -44,8 +44,7 @@ export class PasadoPage implements OnInit {
     }
 
     goToInterviews() {
-        console.log('Navegar a Entrevistas');
-        // Implementar ruta cuando exista
+        this.router.navigate(['/pasado/entrevistas']);
     }
 
 }

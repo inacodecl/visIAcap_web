@@ -10,10 +10,24 @@
       <h1>Línea de Tiempo</h1>
     </div>
 
-    <!-- Línea Central Roja -->
-    <div class="central-line" [class.animate-line]="animateLine"></div>
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Cargando historia...</p>
+    </div>
 
-    <div class="milestones-list">
+    <!-- Error State -->
+    <div class="error-state" *ngIf="error && !isLoading">
+      <ion-icon name="alert-circle" color="danger"></ion-icon>
+      <p>{{ error }}</p>
+      <ion-button fill="outline" (click)="loadData()">Reintentar</ion-button>
+    </div>
+
+    <!-- Línea Central Roja (Solo si hay datos) -->
+    <div class="central-line" [class.animate-line]="animateLine" *ngIf="!isLoading && !error && milestones.length > 0">
+    </div>
+
+    <div class="milestones-list" *ngIf="!isLoading && !error">
       <div class="milestone-item" #milestoneItem *ngFor="let m of milestones; let i = index; let odd = odd"
         [class.odd]="odd" [class.even]="!odd" [class.expanded]="m.expanded">
 
@@ -24,19 +38,26 @@
         <div class="milestone-content" (click)="toggleMilestone(m)">
           <div class="image-container">
             <!-- Imágenes de marcador de año -->
-            <img [src]="m.image" alt="Año {{m.year}}"
+            <img [src]="m.media_url || 'https://placehold.co/300x200/333/fff?text=' + m.anio" alt="Año {{m.anio}}"
               onerror="this.src='https://placehold.co/300x200/333/fff?text=No+Image'">
-            <div class="year-badge">{{ m.year }}</div>
+            <div class="year-badge">{{ m.anio }}</div>
           </div>
 
           <div class="details">
-            <p>{{ m.description }}</p>
+            <h3 class="milestone-title">{{ m.titulo }}</h3>
+            <p>{{ m.descripcion }}</p>
             <ion-icon [name]="m.expanded ? 'remove' : 'add'" class="expand-icon"></ion-icon>
           </div>
         </div>
 
       </div>
     </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!isLoading && !error && milestones.length === 0">
+      <p>No hay hitos históricos visibles en este momento.</p>
+    </div>
+
   </div>
 
   <app-home-footer></app-home-footer>

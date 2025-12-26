@@ -1,0 +1,176 @@
+<ion-header class="ion-no-border header-inacap">
+    <div class="top-section">
+        <div class="header-content">
+            <!-- Menú Button (Visible siempre para admin) -->
+            <ion-buttons slot="start" class="menu-btn-container">
+                <ion-menu-button color="light"></ion-menu-button>
+            </ion-buttons>
+
+            <div class="logo-container">
+                <img src="assets/icon/logo-inacap-60.png" alt="Logo Inacap" class="logo-placeholder">
+            </div>
+
+            <div class="header-text">
+                <span class="sede-text">SEDE<br>RENCA (ADMIN)</span>
+            </div>
+        </div>
+    </div>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="admin-content">
+    <div class="glass-container">
+
+        <!-- Search Bar Retro-Futurista -->
+        <div class="search-wrapper">
+            <ion-searchbar placeholder="Buscar en la base de datos..." [debounce]="250"
+                (ionInput)="searchTerm.set($any($event).target.value)" animated="true" class="neon-searchbar">
+            </ion-searchbar>
+        </div>
+
+        <!-- Mensaje de Estado -->
+        <div class="status-summary">
+            <p>Sistemas Activos: <span class="highlight">{{ filteredHistorias().length }}</span> registros encontrados.
+            </p>
+        </div>
+
+        <!-- Lista de Tarjetas (Glassmorphism) -->
+        <ion-grid>
+            <ion-row>
+                <ion-col size="12" size-md="6" size-xl="4" *ngFor="let item of filteredHistorias()">
+                    <ion-card class="glass-card" [class.hidden-item]="!item.visible">
+                        <div class="card-glow"></div>
+                        <ion-card-header>
+                            <div class="header-row">
+                                <div class="year-crypto">{{ item.anio }}</div>
+                                <ion-badge [color]="item.visible ? 'success' : 'medium'" class="status-badge">
+                                    {{ item.visible ? 'EN AIRE' : 'OCULTO' }}
+                                </ion-badge>
+                            </div>
+                            <ion-card-title>{{ item.titulo }}</ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content>
+                            <p class="description">{{ item.descripcion | slice:0:120 }}...</p>
+
+                            <div class="actions-panel">
+                                <!-- Toggle Rápido -->
+                                <div class="toggle-control">
+                                    <!-- <ion-icon name="eye" [color]="item.visible ? 'success' : 'medium'"></ion-icon> -->
+                                    <ion-toggle [checked]="item.visible" (ionChange)="toggleVisibility(item, $event)"
+                                        color="success">
+                                    </ion-toggle>
+                                </div>
+
+                                <div class="buttons">
+                                    <ion-button fill="clear" color="secondary" (click)="openEditModal(item)"
+                                        class="action-btn edit-btn">
+                                        <ion-icon slot="icon-only" name="create"></ion-icon>
+                                    </ion-button>
+                                    <ion-button fill="clear" color="danger" (click)="deleteHistoria(item.id)"
+                                        class="action-btn delete-btn">
+                                        <ion-icon slot="icon-only" name="trash"></ion-icon>
+                                    </ion-button>
+                                </div>
+                            </div>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <!-- Estado Vacío -->
+        <div class="empty-state" *ngIf="filteredHistorias().length === 0">
+            <div class="hologram-circle"></div>
+            <p>No se encontraron datos en el sector.</p>
+        </div>
+
+        <!-- FAB para Crear -->
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+            <ion-fab-button color="danger" (click)="openCreateModal()" class="create-fab">
+                <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+        </ion-fab>
+
+        <!-- Modal Formulario Pro -->
+        <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="glass-modal">
+            <ng-template>
+                <ion-header class="modal-header">
+                    <ion-toolbar color="dark">
+                        <ion-title>{{ isEditing ? 'Editando Registro #' + currentEditingId : 'Nuevo Evento Histórico'
+                            }}</ion-title>
+                        <ion-buttons slot="end">
+                            <ion-button (click)="closeModal()">
+                                <ion-icon name="close"></ion-icon>
+                            </ion-button>
+                        </ion-buttons>
+                    </ion-toolbar>
+                </ion-header>
+                <ion-content class="ion-padding modal-content">
+                    <form [formGroup]="historyForm" (ngSubmit)="saveHistoria()">
+
+                        <div class="form-grid">
+                            <!-- Año (Destacado) -->
+                            <div class="form-group year-group">
+                                <ion-item class="input-item" lines="none">
+                                    <ion-label position="stacked">Año del Hito <span
+                                            class="required">*</span></ion-label>
+                                    <ion-input type="number" formControlName="anio" placeholder="Ej: 1966"></ion-input>
+                                    <ion-note slot="helper">Año calendario del evento</ion-note>
+                                    <ion-note slot="error"
+                                        *ngIf="historyForm.get('anio')?.hasError('required')">Requerido</ion-note>
+                                </ion-item>
+                            </div>
+
+                            <!-- Título -->
+                            <div class="form-group title-group">
+                                <ion-item class="input-item" lines="none">
+                                    <ion-label position="stacked">Título del Evento <span
+                                            class="required">*</span></ion-label>
+                                    <ion-input type="text" formControlName="titulo"
+                                        placeholder="Ej: Fundación de Inacap"></ion-input>
+                                    <ion-note slot="helper">Corto y descriptivo (Max 150 caracteres)</ion-note>
+                                </ion-item>
+                            </div>
+
+                            <!-- Descripción -->
+                            <div class="form-group full-width">
+                                <ion-item class="input-item" lines="none">
+                                    <ion-label position="stacked">Narrativa Histórica <span
+                                            class="required">*</span></ion-label>
+                                    <ion-textarea formControlName="descripcion" rows="6"
+                                        placeholder="Describe qué sucedió en este hito con detalle..."></ion-textarea>
+                                    <ion-note slot="helper">Este texto aparecerá en el detalle del hito.</ion-note>
+                                </ion-item>
+                            </div>
+
+                            <!-- Opciones Avanzadas (Visuales por ahora) -->
+                            <div class="form-group full-width settings-group">
+                                <h3>Configuración de Visualización</h3>
+                                <div class="settings-grid">
+                                    <ion-item lines="none" class="input-item toggle-box">
+                                        <ion-icon name="eye" slot="start" size="small"></ion-icon>
+                                        <ion-label>
+                                            <h2>Visibilidad Pública</h2>
+                                            <p>Mostrar inmediatamente en el Tótem</p>
+                                        </ion-label>
+                                        <ion-toggle slot="end" formControlName="visible" color="success"></ion-toggle>
+                                    </ion-item>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-actions ion-margin-top">
+                            <ion-button fill="outline" color="medium" (click)="closeModal()">Cancelar</ion-button>
+                            <ion-button type="submit" [disabled]="historyForm.invalid || isLoading" color="danger"
+                                class="save-btn">
+                                <ion-icon slot="start" [name]="isLoading ? 'hourglass' : 'save'"></ion-icon>
+                                {{ isLoading ? 'Procesando...' : 'Guardar en Historial' }}
+                            </ion-button>
+                        </div>
+
+                    </form>
+                </ion-content>
+            </ng-template>
+        </ion-modal>
+
+    </div>
+</ion-content>

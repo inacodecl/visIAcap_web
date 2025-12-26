@@ -1,0 +1,98 @@
+<ion-content [fullscreen]="true" class="entrevistas-content">
+
+    <!-- Header Component -->
+    <app-home-header></app-home-header>
+
+    <!-- Main Content (Glassmorphism & Curve) -->
+    <div class="main-wrapper">
+        <div class="content-container">
+
+            <!-- Back Button & Title -->
+            <div class="header-section fade-in-down">
+                <ion-button fill="clear" class="back-btn" (click)="goBack()">
+                    <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+                </ion-button>
+                <h2 class="page-title">Entrevistas</h2>
+            </div>
+
+            <!-- Loading State (Skeleton) -->
+            <div class="cards-container" *ngIf="isLoading()">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size="12" size-md="6" size-lg="4" *ngFor="let item of [1,2,3,4,5,6]">
+                            <ion-card class="entrevista-card skeleton-card">
+                                <div class="image-skeleton">
+                                    <ion-skeleton-text animated style="width: 100%; height: 100%"></ion-skeleton-text>
+                                </div>
+                                <ion-card-header>
+                                    <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                                    <ion-skeleton-text animated
+                                        style="width: 80%; height: 20px; margin-top: 8px;"></ion-skeleton-text>
+                                </ion-card-header>
+                                <ion-card-content>
+                                    <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                                    <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                                </ion-card-content>
+                            </ion-card>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+
+            <!-- Error State -->
+            <div class="error-container" *ngIf="error() && !isLoading()">
+                <ion-icon name="alert-circle-outline"></ion-icon>
+                <p>{{ error() }}</p>
+                <ion-button fill="outline" color="dark" (click)="loadEntrevistas()">Reintentar</ion-button>
+            </div>
+
+            <!-- Content State -->
+            <div class="cards-container" *ngIf="!isLoading() && !error()">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size="12" size-md="6" size-lg="4"
+                            *ngFor="let entrevista of entrevistas(); let i = index">
+
+                            <!-- Card with ViewChild reference for animations -->
+                            <div #cardElement class="card-wrapper scroll-hidden" [style.--i]="i">
+                                <ion-card class="entrevista-card" (click)="openVideo(entrevista.url_video)">
+
+                                    <div class="image-container">
+                                        <img [src]="entrevista.url_imagen" alt="{{ entrevista.titulo }}"
+                                            loading="lazy" />
+                                        <div class="play-overlay">
+                                            <div class="play-circle">
+                                                <ion-icon name="play-circle-outline"></ion-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <ion-card-header>
+                                        <ion-card-subtitle>{{ entrevista.entrevistado }}</ion-card-subtitle>
+                                        <ion-card-title>{{ entrevista.titulo }}</ion-card-title>
+                                    </ion-card-header>
+
+                                    <ion-card-content>
+                                        <p>{{ entrevista.descripcion }}</p>
+                                    </ion-card-content>
+
+                                </ion-card>
+                            </div>
+
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+
+                <!-- Empty State -->
+                <div class="empty-state" *ngIf="entrevistas().length === 0">
+                    <p>No hay entrevistas disponibles por el momento.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer Component -->
+    <app-home-footer></app-home-footer>
+
+</ion-content>

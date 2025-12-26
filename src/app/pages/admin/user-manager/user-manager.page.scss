@@ -1,0 +1,79 @@
+$inacap-red: #D01824;
+
+$inacap-red: #D01824;
+
+:host {
+    display: block;
+    height: 100%;
+}
+
+.admin-header {
+    ion-toolbar {
+        --background: #fff;
+        --color: #222;
+        border-bottom: 1px solid #eee;
+    }
+}
+
+.admin-content {
+    --background: #f8f9fa;
+}
+
+.container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.section-header {
+    margin-bottom: 2rem;
+
+    h2 {
+        font-size: 1.8rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+        border-left: 4px solid #5260ff; // Azul/Tertiary para diferenciar de History
+        padding-left: 10px;
+    }
+
+    p {
+        color: #666;
+        margin-left: 14px;
+    }
+}
+
+.user-list {
+    background: transparent;
+
+    .user-item {
+        --background: white;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+        .avatar-icon {
+            font-size: 24px;
+            color: #666;
+            margin-right: 15px;
+        }
+
+        h2 {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        p {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        ion-badge {
+            margin-left: 10px;
+        }
+    }
+}
+
+.form-item {
+    --background: transparent;
+    margin-bottom: 1rem;
+}

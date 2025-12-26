@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { addIcons } from 'ionicons';
+import { accessibilityOutline } from 'ionicons/icons';
 
 @Component({
     selector: 'app-home-footer',
@@ -11,7 +13,9 @@ import { IonicModule } from '@ionic/angular';
 })
 export class HomeFooterComponent implements OnInit {
 
-    constructor() { }
+    constructor() {
+        addIcons({ accessibilityOutline });
+    }
 
     ngOnInit() { }
 

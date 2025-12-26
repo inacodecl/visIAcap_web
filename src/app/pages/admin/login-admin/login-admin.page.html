@@ -1,13 +1,56 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>login-admin</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="login-bg">
+  <div class="login-container">
+    <ion-card class="login-card">
+      <div class="login-header">
+        <!-- Logo Placeholder: Reemplazar con activo real -->
+        <h1 class="logo-text">INACAP <span class="highlight">Renca Smart</span></h1>
+        <p class="subtitle">Acceso Administrativo</p>
+      </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">login-admin</ion-title>
-    </ion-toolbar>
-  </ion-header>
+      <ion-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+          <div class="input-group">
+            <ion-item lines="full" class="custom-item">
+              <ion-label position="floating">Correo Institucional</ion-label>
+              <ion-input type="email" formControlName="email">
+              </ion-input>
+            </ion-item>
+            <ion-text color="danger" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+              class="error-text">
+              <small *ngIf="loginForm.get('email')?.errors?.['required']">El correo es obligatorio.</small>
+              <small *ngIf="loginForm.get('email')?.errors?.['email']">Formato de correo inválido.</small>
+            </ion-text>
+          </div>
+
+          <div class="input-group">
+            <ion-item lines="full" class="custom-item">
+              <ion-label position="floating">Contraseña</ion-label>
+              <ion-input type="password" formControlName="password">
+              </ion-input>
+            </ion-item>
+            <ion-text color="danger" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+              class="error-text">
+              <small>La contraseña es obligatoria.</small>
+            </ion-text>
+          </div>
+
+          <div class="error-message-box" *ngIf="errorMessage">
+            <ion-text color="danger">{{ errorMessage }}</ion-text>
+          </div>
+
+          <div class="actions">
+            <ion-button expand="block" type="submit" [disabled]="loginForm.invalid || isLoading" class="inacap-btn">
+              {{ isLoading ? 'Ingresando...' : 'Iniciar Sesión' }}
+            </ion-button>
+          </div>
+
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="footer-copy">
+      <p>© 2025 INACAP Sede Renca | 60° Aniversario</p>
+    </div>
+  </div>
 </ion-content>
