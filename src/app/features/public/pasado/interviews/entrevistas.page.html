@@ -55,7 +55,7 @@
 
                             <!-- Card with ViewChild reference for animations -->
                             <div #cardElement class="card-wrapper scroll-hidden" [style.--i]="i">
-                                <ion-card class="entrevista-card" (click)="openVideo(entrevista.video_url)">
+                                <ion-card class="entrevista-card" (click)="openVideo(entrevista.url_video)">
 
                                     <div class="image-container">
                                         <img [src]="entrevista.url_imagen" alt="{{ entrevista.titulo }}"

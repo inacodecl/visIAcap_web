@@ -59,7 +59,8 @@ export class InterviewManagerPage implements OnInit {
         titulo: ['', [Validators.required, Validators.maxLength(150)]],
         entrevistado: ['', [Validators.required, Validators.maxLength(100)]],
         descripcion: ['', [Validators.required]],
-        video_url: ['', [Validators.required, Validators.pattern(/^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/)]],
+        url_video: ['', [Validators.required, Validators.pattern(/^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/)]],
+        url_imagen: ['', [Validators.required]],
         visible: [true]
     });
 
@@ -96,7 +97,8 @@ export class InterviewManagerPage implements OnInit {
             titulo: entrevista.titulo,
             entrevistado: entrevista.entrevistado,
             descripcion: entrevista.descripcion,
-            video_url: entrevista.video_url,
+            url_video: entrevista.url_video,
+            url_imagen: entrevista.url_imagen,
             visible: entrevista.visible
         });
         this.isModalOpen = true;
