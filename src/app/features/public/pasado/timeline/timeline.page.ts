@@ -12,6 +12,7 @@ import { chevronDown, arrowBack, locationOutline, calendarOutline, settingsSharp
 import { AuthService } from '../../../../core/services/auth.service';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
 import { HomeHeaderComponent } from '../../../../components/headers/home-header/home-header.component';
+import { BackgroundBrilloComponent } from '../../../../components/background/brillo/background-brillo.component';
 
 // Extendemos la interfaz Historia para incluir estado de la UI
 interface TimelineEvent extends Historia {
@@ -29,7 +30,8 @@ interface TimelineEvent extends Historia {
     RouterModule,
     IonHeader,
     HomeFooterComponent,
-    HomeHeaderComponent
+    HomeHeaderComponent,
+    BackgroundBrilloComponent
   ]
 })
 export class TimelinePage implements OnInit {

@@ -1,0 +1,24 @@
+<div class="splash-container" [class.exiting]="isExiting">
+    <!-- Fondo animado con colores INACAP -->
+    <div class="background-layer"></div>
+
+    <!-- Contenido principal -->
+    <div class="splash-content">
+        <!-- Logo INACAP -->
+        <div class="logo-wrapper">
+            <img src="assets/icon/logo-inacap-60.png" alt="INACAP 60 Años" class="logo-image">
+        </div>
+
+        <!-- Texto de bienvenida -->
+        <div class="welcome-text">
+            <span class="sede-label">SEDE RENCA</span>
+            <span class="anniversary-label">60° Aniversario</span>
+        </div>
+
+        <!-- Loader animado (cubo giratorio) -->
+        <div class="loader-container">
+            <app-rotate-cube></app-rotate-cube>
+            <span class="loading-text">Cargando experiencia...</span>
+        </div>
+    </div>
+</div>

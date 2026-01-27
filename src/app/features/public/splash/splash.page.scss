@@ -1,0 +1,350 @@
+// Variables de colores INACAP
+$inacap-red: #C8102E;
+$inacap-red-dark: #9B0D23;
+$inacap-white: #FFFFFF;
+$inacap-gray-light: #F5F5F5;
+
+// =============================================
+// CONTENEDOR PRINCIPAL
+// =============================================
+.splash-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    // Animación de entrada del contenedor
+    animation: containerFadeIn 0.5s ease-out forwards;
+
+    // Estado de salida
+    &.exiting {
+        animation: containerFadeOut 0.8s ease-in-out forwards;
+
+        .logo-wrapper {
+            animation: logoExit 0.6s ease-in forwards;
+        }
+
+        .welcome-text {
+            animation: textExit 0.5s ease-in forwards;
+        }
+
+        .loader-container {
+            animation: loaderExit 0.4s ease-in forwards;
+        }
+    }
+}
+
+// =============================================
+// CAPA DE FONDO (Colores INACAP)
+// =============================================
+.background-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    // Gradiente con colores INACAP (rojo y blanco)
+    background: linear-gradient(135deg,
+            $inacap-white 0%,
+            $inacap-gray-light 25%,
+            $inacap-white 50%,
+            rgba($inacap-red, 0.05) 75%,
+            rgba($inacap-red, 0.1) 100%);
+
+    // Capa con efecto de onda roja
+    &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(ellipse at 30% 20%,
+                rgba($inacap-red, 0.15) 0%,
+                transparent 50%);
+        animation: waveMove 8s ease-in-out infinite;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -30%;
+        right: -30%;
+        width: 80%;
+        height: 80%;
+        background: radial-gradient(ellipse at center,
+                rgba($inacap-red, 0.1) 0%,
+                transparent 60%);
+        animation: waveMove 10s ease-in-out infinite reverse;
+    }
+}
+
+// =============================================
+// CONTENIDO PRINCIPAL
+// =============================================
+.splash-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; // Alinear hacia arriba
+    text-align: center;
+    padding: 2rem;
+    padding-top: 10vh; // Espacio desde arriba
+    height: 100%;
+    box-sizing: border-box;
+}
+
+// =============================================
+// LOGO
+// =============================================
+.logo-wrapper {
+    margin-bottom: 4rem; // Más espacio debajo del logo
+    animation: logoEnter 1s ease-out 0.3s both;
+}
+
+.logo-image {
+    width: 600px; // Logo significativamente más grande
+    max-width: 85vw;
+    height: auto;
+    filter: drop-shadow(0 15px 40px rgba($inacap-red, 0.25));
+    transition: transform 0.3s ease;
+}
+
+// =============================================
+// TEXTO DE BIENVENIDA
+// =============================================
+.welcome-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; // Más espacio entre textos
+    margin-bottom: 5rem; // Más espacio antes del loader
+    animation: textEnter 0.8s ease-out 0.6s both;
+
+    .sede-label {
+        font-size: 3rem; // Texto mucho más grande
+        font-weight: 700;
+        color: $inacap-red;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        text-shadow: 0 2px 10px rgba($inacap-red, 0.2);
+    }
+
+    .anniversary-label {
+        font-size: 1.8rem; // Subtítulo más grande
+        font-weight: 400;
+        color: #555;
+        letter-spacing: 0.15em;
+    }
+}
+
+// =============================================
+// LOADER ANIMADO
+// =============================================
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    animation: loaderEnter 0.6s ease-out 0.9s both;
+    margin-top: 4rem; // Espacio arriba del loader
+}
+
+.loader {
+    width: 200px;
+    height: 4px;
+    background: rgba($inacap-red, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.loader-bar {
+    height: 100%;
+    width: 30%;
+    background: linear-gradient(90deg, $inacap-red, $inacap-red-dark);
+    border-radius: 2px;
+    animation: loaderProgress 1.5s ease-in-out infinite;
+}
+
+.loading-text {
+    font-size: 1.2rem; // Texto más grande
+    color: #555;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    animation: textPulse 2s ease-in-out infinite;
+}
+
+// =============================================
+// KEYFRAMES - ANIMACIONES DE ENTRADA
+// =============================================
+@keyframes containerFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes logoEnter {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes textEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes loaderEnter {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// =============================================
+// KEYFRAMES - ANIMACIONES DE SALIDA
+// =============================================
+@keyframes containerFadeOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes logoExit {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(1.2);
+    }
+}
+
+@keyframes textExit {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes loaderExit {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+// =============================================
+// KEYFRAMES - ANIMACIONES DE LOOP
+// =============================================
+@keyframes loaderProgress {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    50% {
+        transform: translateX(250%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes textPulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes waveMove {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(5%, 5%) rotate(5deg);
+    }
+}
+
+// =============================================
+// RESPONSIVE
+// =============================================
+@media (max-width: 768px) {
+    .splash-content {
+        padding-top: 8vh;
+    }
+
+    .logo-image {
+        width: 350px;
+    }
+
+    .welcome-text {
+        .sede-label {
+            font-size: 2rem;
+        }
+
+        .anniversary-label {
+            font-size: 1.3rem;
+        }
+    }
+
+    .loader-container {
+        transform: scale(1.2);
+    }
+}
