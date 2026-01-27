@@ -7,7 +7,7 @@ import {
     IonRouterOutlet, IonButtons, IonButton
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { people, logOut, time } from 'ionicons/icons';
+import { people, logOut, time, videocam, briefcase } from 'ionicons/icons';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
@@ -28,11 +28,11 @@ export class AdminLayoutComponent {
     router = inject(Router);
 
     constructor() {
-        addIcons({ people, logOut, time });
+        addIcons({ people, logOut, time, videocam, briefcase });
     }
 
     logout() {
         this.authService.logout();
-        this.router.navigate(['/auth/login']); 
+        this.router.navigate(['/auth/login']);
     }
 }

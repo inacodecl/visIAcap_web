@@ -18,20 +18,17 @@ export class EntrevistaService {
     constructor() { }
 
     /**
-     * Obtiene la lista pública de entrevistas (solo visibles)
+     * Obtiene la lista de entrevistas.
+     * @param includeHidden Si es true, trae todas (admin). Si es false, solo visibles (public).
      */
-    getEntrevistas(): Observable<Entrevista[]> {
-        return this.http.get<Entrevista[]>(`${this.API_URL}/entrevistas`).pipe(
+    getEntrevistas(includeHidden: boolean = false): Observable<Entrevista[]> {
+        const url = includeHidden ? `${this.API_URL}/entrevistas/all` : `${this.API_URL}/entrevistas`;
+        return this.http.get<Entrevista[]>(url).pipe(
             tap(data => this._entrevistas.set(data))
         );
     }
 
-    /**
-     * Obtiene TODAS las entrevistas (Admin)
-     */
-    getAllEntrevistas(): Observable<Entrevista[]> {
-        return this.http.get<Entrevista[]>(`${this.API_URL}/entrevistas/all`);
-    }
+
 
     getEntrevistaById(id: number): Observable<Entrevista> {
         return this.http.get<Entrevista>(`${this.API_URL}/entrevistas/${id}`);

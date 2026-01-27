@@ -1,0 +1,117 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Gestión de Entrevistas</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="loadData()">
+                <ion-icon slot="icon-only" name="refresh"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">Entrevistas</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <div class="search-container">
+        <ion-searchbar placeholder="Buscar entrevista..." (ionInput)="searchTerm.set($any($event).target.value)"
+            animated="true"></ion-searchbar>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="ion-text-center ion-padding">
+        <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <!-- Lista de Entrevistas -->
+    <ion-list *ngIf="!isLoading">
+        <ion-item *ngFor="let item of filteredEntrevistas()">
+            <ion-icon slot="start" name="videocam" color="secondary"></ion-icon>
+            <ion-label>
+                <h2>{{ item.titulo }}</h2>
+                <p>{{ item.entrevistado }}</p>
+                <ion-note *ngIf="!item.visible" color="warning">Oculto</ion-note>
+            </ion-label>
+
+            <ion-buttons slot="end">
+                <ion-button color="primary" (click)="openEditModal(item)">
+                    <ion-icon slot="icon-only" name="create"></ion-icon>
+                </ion-button>
+                <ion-button color="danger" (click)="deleteEntrevista(item.id)">
+                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </ion-item>
+
+        <ion-item *ngIf="filteredEntrevistas().length === 0" lines="none">
+            <ion-label class="ion-text-center" color="medium">
+                <p>No se encontraron entrevistas.</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+
+    <!-- FAB -->
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="openCreateModal()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+    <!-- Modal Formulario -->
+    <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
+        <ng-template>
+            <ion-header>
+                <ion-toolbar>
+                    <ion-title>{{ isEditing ? 'Editar' : 'Nueva' }} Entrevista</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button (click)="closeModal()">
+                            <ion-icon slot="icon-only" name="close"></ion-icon>
+                        </ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+                <form [formGroup]="interviewForm" (ngSubmit)="saveEntrevista()">
+                    <ion-item class="input-item">
+                        <ion-label position="stacked">Título de la Entrevista</ion-label>
+                        <ion-input formControlName="titulo" placeholder="Ej: Visión 2030"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="input-item">
+                        <ion-label position="stacked">Entrevistado</ion-label>
+                        <ion-input formControlName="entrevistado" placeholder="Ej: Juan Pérez"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="input-item">
+                        <ion-label position="stacked">Descripción (Contexto)</ion-label>
+                        <ion-textarea formControlName="descripcion" rows="3"></ion-textarea>
+                    </ion-item>
+
+                    <ion-item class="input-item">
+                        <ion-label position="stacked">URL Youtube</ion-label>
+                        <ion-input formControlName="video_url" placeholder="https://youtube.com/..."></ion-input>
+                    </ion-item>
+
+                    <ion-item lines="none" class="toggle-item">
+                        <ion-label>Visible al público</ion-label>
+                        <ion-toggle formControlName="visible" slot="end"></ion-toggle>
+                    </ion-item>
+
+                    <div class="ion-padding-top">
+                        <ion-button expand="block" type="submit" [disabled]="interviewForm.invalid || isLoading">
+                            <ion-icon slot="start" name="save"></ion-icon>
+                            {{ isEditing ? 'Actualizar' : 'Crear' }}
+                        </ion-button>
+                    </div>
+                </form>
+            </ion-content>
+        </ng-template>
+    </ion-modal>
+
+</ion-content>

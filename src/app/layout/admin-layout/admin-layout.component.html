@@ -6,14 +6,28 @@
     </ion-header>
     <ion-content>
         <ion-list>
-            <ion-menu-toggle auto-hide="false">
+            <!-- Seccion Contenido (Solo Content Admin) -->
+            <ion-menu-toggle auto-hide="false" *ngIf="authService.isContentAdmin">
                 <ion-item routerLink="/admin/historias" routerDirection="root" lines="none">
                     <ion-icon slot="start" name="time"></ion-icon>
                     <ion-label>Línea de Tiempo</ion-label>
                 </ion-item>
+
+                <ion-item routerLink="/admin/entrevistas" routerDirection="root" lines="none">
+                    <ion-icon slot="start" name="videocam"></ion-icon>
+                    <ion-label>Entrevistas</ion-label>
+                </ion-item>
+
+                <!-- 
+                <ion-item routerLink="/admin/proyectos" routerDirection="root" lines="none">
+                    <ion-icon slot="start" name="briefcase"></ion-icon>
+                    <ion-label>Proyectos</ion-label>
+                </ion-item>
+                 -->
             </ion-menu-toggle>
 
-            <ion-menu-toggle auto-hide="false" *ngIf="authService.isAdmin">
+            <!-- Seccion Usuarios (Solo SuperAdmin) -->
+            <ion-menu-toggle auto-hide="false" *ngIf="authService.isSuperAdmin">
                 <ion-item routerLink="/admin/usuarios" routerDirection="root" lines="none">
                     <ion-icon slot="start" name="people"></ion-icon>
                     <ion-label>Usuarios</ion-label>

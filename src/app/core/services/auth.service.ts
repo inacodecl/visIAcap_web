@@ -84,6 +84,23 @@ export class AuthService {
         return this.hasRole([UsuarioRol.SuperAdmin, UsuarioRol.Admin]);
     }
 
+    /**
+     * Helper: ¿Es SuperAdmin?
+     */
+    get isSuperAdmin(): boolean {
+        return this.hasRole([UsuarioRol.SuperAdmin]);
+    }
+
+    /**
+     * Helper: ¿Es Admin de contenidos (o SuperAdmin)?
+     * Nota: Según requerimiento, SuperAdmin NO ve contenidos, solo usuarios.
+     * Pero si en el futuro SuperAdmin debe ver todo, cambiar esto.
+     * Por ahora: Admin ve contenidos.
+     */
+    get isContentAdmin(): boolean {
+        return this.hasRole([UsuarioRol.Admin]);
+    }
+
     // --- Métodos Internos ---
 
     private setSession(user: Usuario, token: string): void {

@@ -77,8 +77,13 @@ export class LoginAdminPage implements OnInit {
       next: (success) => {
         this.isLoading = false;
         if (success) {
-          // Redirección exitosa (Asumimos gestion-usuarios como dashboard principal)
-          this.router.navigate(['/admin/historias']);
+          // Redirección basada en Rol
+          if (this.authService.isSuperAdmin) {
+            this.router.navigate(['/admin/usuarios']);
+          } else {
+            // Admin / Content Manager
+            this.router.navigate(['/admin/historias']);
+          }
         } else {
           this.errorMessage = 'Credenciales inválidas. Por favor intenta nuevamente.';
         }

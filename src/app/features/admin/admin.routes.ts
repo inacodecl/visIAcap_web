@@ -13,5 +13,9 @@ export const routes: Routes = [
     {
         path: 'usuarios',
         loadComponent: () => import('./user-manager/user-manager.page').then(m => m.UserManagerPage)
+    },
+    {
+        path: 'entrevistas',
+        loadComponent: () => import('./interview-manager/interview-manager.page').then(m => m.InterviewManagerPage)
     }
 ];

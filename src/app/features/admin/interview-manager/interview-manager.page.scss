@@ -1,0 +1,19 @@
+ion-content {
+    --background: var(--ion-background-color);
+}
+
+.search-container {
+    padding-bottom: 10px;
+}
+
+.input-item {
+    --padding-start: 0;
+    margin-bottom: 10px;
+}
+
+.toggle-item {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid var(--ion-color-step-150);
+    border-radius: 8px;
+}

@@ -1,79 +1,62 @@
-$inacap-red: #D01824;
-
-$inacap-red: #D01824;
-
-:host {
-    display: block;
-    height: 100%;
+ion-content {
+    --background: var(--ion-background-color);
 }
 
-.admin-header {
-    ion-toolbar {
-        --background: #fff;
-        --color: #222;
-        border-bottom: 1px solid #eee;
+/* Scroll y espaciado */
+.table-container {
+    overflow-x: auto;
+    background: var(--ion-card-background);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    margin-bottom: 80px;
+    /* Space for FAB */
+
+    /* Custom Scrollbar */
+    &::-webkit-scrollbar {
+        height: 8px;
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--ion-color-medium);
+        border-radius: 4px;
     }
 }
 
-.admin-content {
-    --background: #f8f9fa;
-}
+/* User Card Styling for Mobile */
+.user-card {
+    margin: 10px 0;
+    border-left: 4px solid var(--ion-color-primary);
 
-.container {
-    padding: 20px;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.section-header {
-    margin-bottom: 2rem;
-
-    h2 {
-        font-size: 1.8rem;
-        color: #333;
-        margin-bottom: 0.5rem;
-        border-left: 4px solid #5260ff; // Azul/Tertiary para diferenciar de History
-        padding-left: 10px;
+    &.admin-role {
+        border-left-color: var(--ion-color-secondary);
     }
 
-    p {
-        color: #666;
-        margin-left: 14px;
+    &.super-admin-role {
+        border-left-color: var(--ion-color-tertiary);
     }
 }
 
-.user-list {
-    background: transparent;
-
-    .user-item {
-        --background: white;
-        margin-bottom: 10px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-
-        .avatar-icon {
-            font-size: 24px;
-            color: #666;
-            margin-right: 15px;
-        }
-
-        h2 {
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        p {
-            font-size: 0.85rem;
-            color: #888;
-        }
-
-        ion-badge {
-            margin-left: 10px;
-        }
-    }
+/* Badge styling */
+ion-badge {
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-weight: 500;
 }
 
-.form-item {
-    --background: transparent;
-    margin-bottom: 1rem;
+/* FAB Styling */
+ion-fab-button {
+    --box-shadow: 0 4px 16px rgba(var(--ion-color-primary-rgb), 0.4);
+}
+
+/* Modal Styling */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 20px;
 }
