@@ -8,8 +8,8 @@
     align-items: center;
     padding: 18px 30px;
 
-    // Fondo sólido oscuro profesional
-    background: #1D1D1B; // Negro INACAP
+    // Fondo gris oscuro
+    background: #e0e0e0; // Gris oscuro
     border-top: 3px solid #C8102E; // Línea roja INACAP superior
     z-index: 100;
 }
@@ -67,13 +67,13 @@
 .brand-text {
     font-size: 1.3rem;
     font-weight: 700;
-    color: #ffffff;
+    color: #000000;
     text-transform: uppercase;
     letter-spacing: 3px;
 }
 
 .brand-year {
-    font-size: 0.85rem;
+    font-size: 1.3rem;
     font-weight: 500;
     color: #C8102E; // Rojo INACAP
     margin-top: 2px;
