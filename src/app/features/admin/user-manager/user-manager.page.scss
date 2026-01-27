@@ -60,3 +60,44 @@ ion-fab-button {
     gap: 10px;
     padding-top: 20px;
 }
+
+.form-item {
+    --background: transparent;
+    margin-bottom: 1rem;
+}
+
+// --- Responsive Adjustments ---
+.item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .role-badge {
+        margin-right: 5px;
+    }
+}
+
+.fab-spacer {
+    height: 80px;
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 10px;
+    }
+
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .user-list .user-item {
+        h2 {
+            font-size: 0.9rem;
+        }
+
+        .role-badge {
+            font-size: 0.6rem;
+            padding: 4px;
+        }
+    }
+}

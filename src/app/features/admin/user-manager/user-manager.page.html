@@ -7,7 +7,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="admin-content">
+<ion-content [fullscreen]="true" [scrollY]="true" class="admin-content">
     <div class="container">
 
         <div class="section-header">
@@ -28,11 +28,13 @@
                     <ion-label>
                         <h2>{{ user.nombre }} {{ user.apellido }}</h2>
                         <p>{{ user.email }}</p>
-                        <ion-badge color="tertiary" slot="end">{{ user.rol }}</ion-badge>
                     </ion-label>
 
-                    <ion-toggle slot="end" [checked]="user.is_active"
-                        (ionChange)="toggleUserStatus(user, $event)"></ion-toggle>
+                    <div slot="end" class="item-actions">
+                        <ion-badge color="tertiary" class="role-badge">{{ user.rol }}</ion-badge>
+                        <ion-toggle [checked]="user.is_active"
+                            (ionChange)="toggleUserStatus(user, $event)"></ion-toggle>
+                    </div>
                 </ion-item>
             </ion-item-group>
         </ion-list>
@@ -102,4 +104,6 @@
         </ion-modal>
 
     </div>
+    <!-- Spacer for FAB visibility -->
+    <div class="fab-spacer"></div>
 </ion-content>

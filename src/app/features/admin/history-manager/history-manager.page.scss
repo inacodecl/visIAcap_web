@@ -343,3 +343,18 @@ ion-modal.glass-modal {
         }
     }
 }
+
+.fab-spacer {
+    height: 100px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .glass-container {
+        padding: 10px;
+    }
+
+    .glass-card {
+        margin-bottom: 15px;
+    }
+}
