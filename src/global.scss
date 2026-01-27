@@ -1,24 +1,24 @@
 /*
- * App Global CSS
+ * CSS Global de la Aplicación
  * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
+ * Coloca aquí las reglas de estilo que desees aplicar globalmente. Estos estilos son para
+ * toda la aplicación y no solo para un componente. Además, este archivo puede ser
+ * utilizado como punto de entrada para importar otros archivos CSS/Sass para ser incluidos en el
+ * CSS de salida.
+ * Para más información sobre hojas de estilo globales, visita la documentación:
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
-/* Core CSS required for Ionic components to work properly */
+/* CSS Core requerido para que los componentes de Ionic funcionen correctamente */
 @import "@ionic/angular/css/core.css";
 
-/* Basic CSS for apps built with Ionic */
+/* CSS básico para aplicaciones creadas con Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
-/* Optional CSS utils that can be commented out */
+/* Utilidades CSS opcionales que se pueden comentar */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
@@ -26,9 +26,9 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 /**
- * Ionic Dark Mode
+ * Modo Oscuro de Ionic
  * -----------------------------------------------------
- * For more info, please see:
+ * Para más información, por favor visita:
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
@@ -41,13 +41,17 @@ body {
     height: 100%;
 }
 
-/*  solucion para pantalla negra/contenido colapsado */
+/* solución para pantalla negra/contenido colapsado */
 #main-content {
     height: 100%;
     position: relative;
-    /*  asegura que respete el contexto de pila si es necesario */
+    /* asegura que respete el contexto de apilamiento si es necesario */
 }
+
 
 ion-app {
     height: 100%;
 }
+
+/* Estilos de Modo Tótem / Quiosco */
+@import 'theme/totem';

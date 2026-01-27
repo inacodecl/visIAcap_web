@@ -1,0 +1,39 @@
+/* Estilos de Modo Tótem / Modo Quiosco */
+/* Resolución Objetivo: 1080x1920 (Vertical 9:16) */
+
+:root {
+    --totem-header-height: 120px;
+    --totem-footer-height: 100px;
+    --totem-font-scale: 1.2;
+}
+
+/* Detectar pantallas verticales de alta resolución (Tótem) */
+@media screen and (min-height: 1000px) and (orientation: portrait) {
+
+    html,
+    body {
+        font-size: 18px;
+        /* Incremento del tamaño de fuente base */
+    }
+
+    /* Aumentar el tamaño de los elementos táctiles */
+    ion-button {
+        min-height: 60px;
+        font-size: 1.2rem;
+    }
+
+    ion-item {
+        --min-height: 70px;
+    }
+
+    /* Ajustar el espaciado del diseño */
+    .ion-padding {
+        padding: 32px !important;
+    }
+
+    /* Barra de navegación para Tótem (normalmente en la parte inferior) */
+    app-home-footer {
+        padding-bottom: 40px;
+        /* Área segura */
+    }
+}

@@ -1,0 +1,33 @@
+<ion-menu contentId="admin-content">
+    <ion-header>
+        <ion-toolbar color="primary">
+            <ion-title>Admin Panel</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <ion-menu-toggle auto-hide="false">
+                <ion-item routerLink="/admin/historias" routerDirection="root" lines="none">
+                    <ion-icon slot="start" name="time"></ion-icon>
+                    <ion-label>Línea de Tiempo</ion-label>
+                </ion-item>
+            </ion-menu-toggle>
+
+            <ion-menu-toggle auto-hide="false" *ngIf="authService.isAdmin">
+                <ion-item routerLink="/admin/usuarios" routerDirection="root" lines="none">
+                    <ion-icon slot="start" name="people"></ion-icon>
+                    <ion-label>Usuarios</ion-label>
+                </ion-item>
+            </ion-menu-toggle>
+
+            <ion-item button (click)="logout()" lines="none" class="logout-item">
+                <ion-icon slot="start" name="log-out" color="danger"></ion-icon>
+                <ion-label color="danger">Cerrar Sesión</ion-label>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+
+<div id="admin-content">
+    <ion-router-outlet></ion-router-outlet>
+</div>

@@ -1,0 +1,14 @@
+#admin-content {
+    height: 100%;
+    position: relative;
+    background-color: var(--ion-background-color, #fff); // Fallback debug color
+}
+
+ion-router-outlet {
+    height: 100%;
+}
+
+.logout-item {
+    margin-top: 20px;
+    border-top: 1px solid var(--ion-color-step-150, #ccc);
+}

@@ -1,33 +1,28 @@
 import { Routes } from '@angular/router';
-import { adminGuard } from './guards/admin.guard';
+import { PublicLayoutComponent } from './layout/public-layout/public-layout.component';
+import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
-  { path: '', loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage) },
-
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,
+    canActivate: [adminGuard],
+    loadChildren: () => import('./features/admin/admin.routes').then(m => m.routes)
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./features/auth/auth.routes').then(m => m.routes)
+  },
+  {
+    path: '',
+    component: PublicLayoutComponent,
+    loadChildren: () => import('./features/public/public.routes').then(m => m.routes)
+  },
+ 
   {
     path: 'login-admin',
-    loadComponent: () => import('./pages/admin/login-admin/login-admin.page').then(m => m.LoginAdminPage)
-  },
-  {
-    path: 'pasado',
-    loadComponent: () => import('./pages/pasado/pasado.page').then(m => m.PasadoPage)
-  },
-  {
-    path: 'pasado/entrevistas',
-    loadComponent: () => import('./pages/pasado/entrevistas/entrevistas.page').then(m => m.EntrevistasPage)
-  },
-  {
-    path: 'admin/historias',
-    loadComponent: () => import('./pages/admin/history-manager/history-manager.page').then(m => m.HistoryManagerPage),
-    canActivate: [adminGuard]
-  },
-  {
-    path: 'admin/usuarios',
-    loadComponent: () => import('./pages/admin/user-manager/user-manager.page').then(m => m.UserManagerPage),
-    canActivate: [adminGuard]
-  },
-  {
-    path: 'timeline',
-    loadComponent: () => import('./pages/timeline/timeline.page').then(m => m.TimelinePage)
+    redirectTo: 'auth/login',
+    pathMatch: 'full'
   }
 ];

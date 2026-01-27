@@ -56,3 +56,21 @@ export const environment = {
 
 ## Desarrolladores
 - Estudiante de Inacap Renca
+
+## Nueva Arquitectura Modular (Refactor v2)
+
+Se ha reestructurado el proyecto para mejorar la escalabilidad y el mantenimiento:
+
+### Estructura de Carpetas
+- **src/app/core**: Servicios, Guards, Modelos e Interceptores compartidos.
+- **src/app/features**: Módulos funcionales divididos por dominio (`public`, `admin`, `auth`).
+- **src/app/layout**: Componentes "Shell" que definen la estructura visual (`PublicLayout`, `AdminLayout`).
+
+### Roles y Seguridad (RBAC)
+- **Public**: Acceso libre a Home, Pasado y Presente.
+- **Admin**: Acceso restringido (`/admin`) mediante `AdminGuard`.
+- **Auth**: Login separado para administradores.
+
+### UX Tótems
+Se ha integrado `src/theme/totem.scss` para estilos específicos de pantallas verticales (1080x1920), aumentando áreas táctiles y tamaños de fuente automáticamente.
+
