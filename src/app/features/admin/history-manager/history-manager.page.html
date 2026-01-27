@@ -83,12 +83,7 @@
             <p>No se encontraron datos en el sector.</p>
         </div>
 
-        <!-- FAB para Crear -->
-        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-            <ion-fab-button color="danger" (click)="openCreateModal()" class="create-fab">
-                <ion-icon name="add"></ion-icon>
-            </ion-fab-button>
-        </ion-fab>
+
 
         <!-- Modal Formulario Pro -->
         <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="glass-modal">
@@ -104,7 +99,7 @@
                         </ion-buttons>
                     </ion-toolbar>
                 </ion-header>
-                <ion-content class="ion-padding modal-content">
+                <div class="ion-padding modal-body">
                     <form [formGroup]="historyForm" (ngSubmit)="saveHistoria()">
 
                         <div class="form-grid">
@@ -133,10 +128,10 @@
 
                             <!-- Descripción -->
                             <div class="form-group full-width">
-                                <ion-item class="input-item" lines="none">
+                                <ion-item class="input-item description-item" lines="none">
                                     <ion-label position="stacked">Narrativa Histórica <span
                                             class="required">*</span></ion-label>
-                                    <ion-textarea formControlName="descripcion" rows="6"
+                                    <ion-textarea formControlName="descripcion" rows="15"
                                         placeholder="Describe qué sucedió en este hito con detalle..."></ion-textarea>
                                     <ion-note slot="helper">Este texto aparecerá en el detalle del hito.</ion-note>
                                 </ion-item>
@@ -168,10 +163,15 @@
                         </div>
 
                     </form>
-                </ion-content>
+                </div>
             </ng-template>
         </ion-modal>
 
         <div class="fab-spacer"></div>
     </div>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="fixed-fab">
+        <ion-fab-button color="danger" (click)="openCreateModal()" class="create-fab">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>

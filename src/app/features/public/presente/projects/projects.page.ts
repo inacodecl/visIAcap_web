@@ -10,7 +10,7 @@ import { HomeFooterComponent } from '../../../../components/footers/home-footer/
   templateUrl: './projects.page.html',
   styleUrls: ['./projects.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, HomeHeaderComponent, HomeFooterComponent]
+  imports: [IonContent, CommonModule, FormsModule, HomeHeaderComponent, HomeFooterComponent]
 })
 export class ProjectsPage implements OnInit {
 

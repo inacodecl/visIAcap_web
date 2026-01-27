@@ -10,7 +10,7 @@ import { HomeFooterComponent } from '../../../../components/footers/home-footer/
     templateUrl: './futuro.page.html',
     styleUrls: ['./futuro.page.scss'],
     standalone: true,
-    imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, HomeHeaderComponent, HomeFooterComponent]
+    imports: [IonContent, CommonModule, FormsModule, HomeHeaderComponent, HomeFooterComponent]
 })
 export class FuturoPage implements OnInit {
 

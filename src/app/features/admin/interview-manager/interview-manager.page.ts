@@ -22,9 +22,9 @@ import { Entrevista } from '../../../core/models/entrevista.model';
         CommonModule,
         ReactiveFormsModule,
         IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton,
-        IonIcon, IonCard, IonCardContent, IonCardHeader,
-        IonCardTitle, IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
-        IonList, IonBadge, IonModal, IonFab, IonFabButton,
+        IonIcon,
+        IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
+        IonList, IonModal, IonFab, IonFabButton,
         IonSearchbar, IonMenuButton, IonNote, IonSpinner
     ]
 })

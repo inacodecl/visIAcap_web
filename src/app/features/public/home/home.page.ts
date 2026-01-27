@@ -13,14 +13,9 @@ import { HomeFooterComponent } from '../../../components/footers/home-footer/hom
   standalone: true,
   imports: [
     IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
     CommonModule,
     FormsModule,
-    IonButtons,
     IonButton,
-    IonIcon,
     HomeHeaderComponent,
     HomeFooterComponent
   ]

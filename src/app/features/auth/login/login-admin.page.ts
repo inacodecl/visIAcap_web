@@ -4,18 +4,13 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { Router } from '@angular/router';
 import {
   IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
   IonCard,
-  IonCardHeader,
-  IonCardTitle,
   IonCardContent,
   IonItem,
   IonLabel,
   IonInput,
   IonButton,
-  IonIcon,
+  IonSpinner,
   IonText
 } from '@ionic/angular/standalone';
 import { AuthService } from '../../../core/services/auth.service';
@@ -28,21 +23,12 @@ import { AuthService } from '../../../core/services/auth.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-    IonItem,
-    IonLabel,
-    IonInput,
+    IonContent, IonCard, IonCardContent,
+    IonItem, IonLabel, IonInput,
     IonButton,
-    IonIcon,
-    IonText
-  ]
+    IonSpinner,
+    IonText,
+  ],
 })
 export class LoginAdminPage implements OnInit {
   private fb = inject(FormBuilder);

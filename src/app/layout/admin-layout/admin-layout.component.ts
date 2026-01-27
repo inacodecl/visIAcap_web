@@ -20,7 +20,7 @@ import { AuthService } from '../../core/services/auth.service';
         RouterModule,
         IonMenu, IonHeader, IonToolbar, IonTitle, IonContent,
         IonList, IonItem, IonIcon, IonLabel, IonMenuToggle,
-        IonRouterOutlet, IonButtons, IonButton
+        IonRouterOutlet
     ]
 })
 export class AdminLayoutComponent {

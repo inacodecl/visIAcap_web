@@ -14,7 +14,6 @@ $glass-border: rgba(255, 255, 255, 0.08);
 // --- Header Inacap Style ---
 .header-inacap {
     background: #fff; // O el color que desees, el home usa gris/blanco? Usuario pidio "mismo header que home".
-    // Home header seems to use a specific layout. Let's replicate basic structure.
     background: transparent; // Para que se vea el fondo global si lo hay, o white.
 
     .top-section {
@@ -130,7 +129,7 @@ $glass-border: rgba(255, 255, 255, 0.08);
         border: 1px dashed #444;
 
         &:hover {
-            opacity: 1; // Reveal on hover
+            opacity: 1;
         }
     }
 
@@ -251,6 +250,13 @@ $glass-border: rgba(255, 255, 255, 0.08);
 }
 
 // --- Create FAB ---
+ion-fab.fixed-fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999 !important;
+}
+
 .create-fab {
     --box-shadow: 0 0 20px rgba(255, 42, 42, 0.4);
 }
@@ -259,25 +265,63 @@ $glass-border: rgba(255, 255, 255, 0.08);
 ion-modal.glass-modal {
     --background: #1a1d26;
     --border-radius: 16px;
+    --width: 95%;
+    --max-width: 1000px;
+    --height: auto;
+    --min-height: 400px;
+    --max-height: 90vh;
+    --backdrop-opacity: 0.8;
 
     ion-toolbar {
         --background: #1a1d26;
         --color: white;
         border-bottom: 1px solid #333;
+        padding: 0 10px;
     }
 
-    .modal-content {
-        --background: #1a1d26;
-        --color: white;
+    .modal-body {
+        background: #1a1d26;
+        color: white;
+        overflow-y: auto; 
+        max-height: calc(90vh - 60px); 
 
-        .form-grid {
+        form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            padding-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+
+            // Layout Desktop/Tablet
+            @media (min-width: 768px) {
+                grid-template-columns: 200px 1fr;
+
+                .year-group {
+                    grid-column: 1 / 2;
+                }
+
+                .title-group {
+                    grid-column: 2 / 3;
+                }
+
+                .full-width {
+                    grid-column: 1 / -1;
+                }
+            }
 
             .year-group {
+                // Mobile default
                 width: 100%;
-                max-width: 150px;
+            }
+
+           
+            .full-width {
+                display: flex;
+                flex-direction: column;
             }
 
             h3 {
@@ -286,7 +330,7 @@ ion-modal.glass-modal {
                 border-bottom: 1px solid #333;
                 padding-bottom: 5px;
                 margin-bottom: 10px;
-                margin-top: 20px;
+                margin-top: 10px;
             }
         }
 
@@ -311,6 +355,25 @@ ion-modal.glass-modal {
             ion-note {
                 font-size: 0.75rem;
             }
+
+            &.textarea-item {
+                --min-height: 150px;
+            }
+
+            &.description-item {
+                --min-height: 300px; 
+                display: flex;
+                flex-direction: column;
+
+                ion-textarea {
+                    height: 100% !important;
+                    --height: 100%;
+                    --padding-top: 15px;
+                    --padding-bottom: 15px;
+                    --padding-start: 10px;
+                    --padding-end: 10px;
+                }
+            }
         }
 
         .toggle-box {
@@ -332,7 +395,14 @@ ion-modal.glass-modal {
         .modal-actions {
             display: flex;
             justify-content: flex-end;
-            gap: 10px;
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            margin-top: 20px;
+
+            ion-button {
+                min-width: 120px;
+            }
 
             .save-btn {
                 --background: #{$neon-red};

@@ -22,10 +22,10 @@ import { Historia } from '../../../core/models/historia.model';
         CommonModule,
         ReactiveFormsModule,
         IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton,
-        IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader,
-        IonCardTitle, IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
-        IonList, IonListHeader, IonBadge, IonModal, IonFab, IonFabButton,
-        IonSearchbar, IonMenuButton, IonNote
+        IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle,
+        IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
+        IonBadge, IonModal, IonFab, IonFabButton,
+        IonSearchbar, IonMenuButton, IonNote,
     ]
 })
 export class HistoryManagerPage implements OnInit {

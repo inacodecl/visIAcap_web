@@ -15,9 +15,6 @@ import { arrowBackOutline } from 'ionicons/icons';
     standalone: true,
     imports: [
         IonContent,
-        IonHeader,
-        IonTitle,
-        IonToolbar,
         CommonModule,
         FormsModule,
         IonButton,
