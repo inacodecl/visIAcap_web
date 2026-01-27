@@ -1,0 +1,20 @@
+<div class="card" [class.closing]="isClosing">
+  <!-- Badge del año (fuera del bg para sobresalir) -->
+  <div class="year-badge" *ngIf="anio">{{ anio }}</div>
+
+  <div class="bg">
+    <!-- Botón de cerrar -->
+    <button class="close-btn" (click)="close()">
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+
+    <!-- Contenido -->
+    <div class="card-content">
+      <h2 class="card-title">{{ titulo }}</h2>
+      <p class="card-description">{{ descripcion }}</p>
+    </div>
+  </div>
+
+  <!-- Blob para el brillo -->
+  <div class="blob"></div>
+</div>

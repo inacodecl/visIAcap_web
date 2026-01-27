@@ -74,3 +74,8 @@ Se ha reestructurado el proyecto para mejorar la escalabilidad y el mantenimient
 ### UX Tótems
 Se ha integrado `src/theme/totem.scss` para estilos específicos de pantallas verticales (1080x1920), aumentando áreas táctiles y tamaños de fuente automáticamente.
 
+# Crear componente
+
+```powershell
+ng g c components/[nombre carpet<>]/[nombre componente].component --standalone
+```

@@ -5,6 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon } from 
 import { Router } from '@angular/router';
 import { HomeHeaderComponent } from '../../../../components/headers/home-header/home-header.component';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
+import { WhiteCubeComponent } from '../../../../components/background/brillo/white-cube/white-cube.component';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline } from 'ionicons/icons';
 
@@ -20,7 +21,8 @@ import { arrowBackOutline } from 'ionicons/icons';
         IonButton,
         IonIcon,
         HomeHeaderComponent,
-        HomeFooterComponent
+        HomeFooterComponent,
+        WhiteCubeComponent
     ]
 })
 export class PasadoPage implements OnInit {
@@ -33,7 +35,7 @@ export class PasadoPage implements OnInit {
     }
 
     goBack() {
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
     }
 
     goToTimeline() {

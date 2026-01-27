@@ -3,7 +3,7 @@
 }
 
 .main-card {
-    background-color: white;
+    background-color: transparent; // Transparente para que se vea el fondo de cubos
     border-top-left-radius: 50% 100px;
     /* Curve matching home page */
     border-top-right-radius: 0;
@@ -16,6 +16,7 @@
     align-items: center;
     position: relative;
     z-index: 10;
+    overflow: hidden; // Para que el fondo respete el borde curvo
 }
 
 .back-button-container {

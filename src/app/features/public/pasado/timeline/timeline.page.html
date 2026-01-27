@@ -65,4 +65,14 @@
   </div>
 
   <app-home-footer></app-home-footer>
+
+  <!-- Modal Overlay para mostrar detalles del hito -->
+  <div class="modal-overlay" *ngIf="selectedMilestone" [class.closing]="isModalClosing" (click)="closeModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <app-red-card [titulo]="selectedMilestone.titulo || ''" [descripcion]="selectedMilestone.descripcion || ''"
+        [anio]="selectedMilestone.anio" [isClosing]="isModalClosing" (onClose)="closeModal()">
+      </app-red-card>
+    </div>
+  </div>
+
 </ion-content>

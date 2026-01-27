@@ -13,6 +13,7 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
 import { HomeHeaderComponent } from '../../../../components/headers/home-header/home-header.component';
 import { BackgroundBrilloComponent } from '../../../../components/background/brillo/background-brillo.component';
+import { RedCardComponent } from '../../../../components/cards/red-card.component/red-card.component.component';
 
 // Extendemos la interfaz Historia para incluir estado de la UI
 interface TimelineEvent extends Historia {
@@ -31,7 +32,8 @@ interface TimelineEvent extends Historia {
     IonHeader,
     HomeFooterComponent,
     HomeHeaderComponent,
-    BackgroundBrilloComponent
+    BackgroundBrilloComponent,
+    RedCardComponent
   ]
 })
 export class TimelinePage implements OnInit {
@@ -54,6 +56,10 @@ export class TimelinePage implements OnInit {
   logoWidth = 600; // Ancho inicial
   textScale = 1; // Escala del texto (1 = 100%)
   contentOffset = 0; // Desplazamiento vertical del contenido interno
+
+  // Estado del modal
+  selectedMilestone: TimelineEvent | null = null;
+  isModalClosing = false;
 
   readonly MAX_HEIGHT = 350;
   readonly MIN_HEIGHT = 150;
@@ -149,7 +155,20 @@ export class TimelinePage implements OnInit {
   }
 
   toggleMilestone(milestone: TimelineEvent) {
-    milestone.expanded = !milestone.expanded;
+    // Abrir modal con la información del hito
+    this.selectedMilestone = milestone;
+    this.isModalClosing = false;
+  }
+
+  closeModal() {
+    // Activar animación de salida
+    this.isModalClosing = true;
+
+    // Esperar a que termine la animación antes de cerrar
+    setTimeout(() => {
+      this.selectedMilestone = null;
+      this.isModalClosing = false;
+    }, 300);
   }
 
   onScroll(event: any) {

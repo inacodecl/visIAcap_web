@@ -1,0 +1,242 @@
+// Variables INACAP
+$inacap-red: #C8102E;
+
+// Host del componente
+:host {
+    display: block;
+}
+
+// Tarjeta principal - tamaño casi pantalla completa (modal)
+.card {
+    position: relative;
+    width: 95vw;
+    max-width: 600px;
+    height: 85vh; // Más alto como pidió el usuario
+    max-height: 800px;
+    border-radius: 30px;
+    z-index: 100; // Asegurar que esté encima
+    // IMPORTANTE: overflow visible para que el brillo y el badge salgan
+    overflow: visible !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    // Sombra sutil para profundidad
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+
+    // Animación de entrada
+    animation: slideInUp 0.4s ease-out forwards;
+
+    // Estado de salida
+    &.closing {
+        animation: slideOutDown 0.3s ease-in forwards;
+    }
+}
+
+// Fondo glassmorphism - contiene el contenido y recorta lo de adentro
+.bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(30px);
+    border-radius: 30px;
+    overflow: hidden; // Recorta el contenido interno
+    outline: 2px solid white;
+    display: flex;
+    flex-direction: column;
+}
+
+// Botón de cerrar
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba($inacap-red, 0.1);
+    color: $inacap-red;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+
+    ion-icon {
+        font-size: 24px;
+    }
+
+    &:hover {
+        background: $inacap-red;
+        color: white;
+        transform: scale(1.1);
+    }
+}
+
+// Contenido de la tarjeta
+.card-content {
+    padding: 80px 30px 40px; // Padding superior grande para dar espacio al badge
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    text-align: center; // Centrar textos como pidió diseño implícito
+}
+
+// Badge del año - Estilo Pastilla Grande Sobresaliendo
+.year-badge {
+    position: absolute;
+    top: -30px; // Sobresalir hacia arriba
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20; // Encima de todo
+
+    background: $inacap-red;
+    color: white;
+    padding: 15px 50px; // Pastilla ancha
+    border-radius: 50px;
+
+    font-size: 2.5rem; // Texto muy grande
+    font-weight: 800; // Extra negrita
+    letter-spacing: 2px;
+    box-shadow: 0 10px 25px rgba($inacap-red, 0.6); // Sombra roja brillante
+    border: 4px solid white; // Borde blanco para separar del fondo oscuro
+}
+
+// Título de la tarjeta
+.card-title {
+    font-size: 2.2rem; // Más grande
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 40px 0 20px 0; // Margen superior para separar del año
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+// Descripción
+.card-description {
+    font-size: 1.2rem;
+    color: #444;
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+    text-align: left; // Texto descriptivo mejor a la izquierda o justificado
+    white-space: pre-line;
+}
+
+// Blob animado - efecto de luz roja exterior
+.blob {
+    position: absolute;
+    z-index: -1; // Detrás de la tarjeta
+    top: 50%;
+    left: 50%;
+    // Tamaño mucho más grande que la tarjeta para que sobresalga
+    width: 120%;
+    height: 120%;
+    transform: translate(-50%, -50%);
+
+    // Gradiente radial rojo difuminado
+    background: radial-gradient(circle, rgba($inacap-red, 0.8) 0%, rgba($inacap-red, 0.4) 40%, transparent 70%);
+    opacity: 0.8;
+    // Blur fuerte para efecto luz
+    filter: blur(40px);
+
+    // Animación de respiración/pulso
+    animation: glow-pulse 4s infinite ease-in-out;
+}
+
+@keyframes glow-pulse {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
+}
+
+// =============================================
+// ANIMACIONES
+// =============================================
+
+// Animación de entrada
+@keyframes slideInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+// Animación de salida
+@keyframes slideOutDown {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+    }
+}
+
+// Animación del blob
+@keyframes blob-bounce {
+    0% {
+        transform: translate(-100%, -100%) translate3d(0, 0, 0);
+    }
+
+    25% {
+        transform: translate(-100%, -100%) translate3d(100%, 0, 0);
+    }
+
+    50% {
+        transform: translate(-100%, -100%) translate3d(100%, 100%, 0);
+    }
+
+    75% {
+        transform: translate(-100%, -100%) translate3d(0, 100%, 0);
+    }
+
+    100% {
+        transform: translate(-100%, -100%) translate3d(0, 0, 0);
+    }
+}
+
+// =============================================
+// RESPONSIVE
+// =============================================
+@media (max-width: 500px) {
+    .card {
+        width: 95vw;
+        height: 80vh;
+        max-height: none;
+    }
+
+    .card-content {
+        padding: 50px 20px 20px;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+    }
+
+    .card-description {
+        font-size: 1rem;
+    }
+}
