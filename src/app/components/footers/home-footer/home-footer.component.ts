@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { accessibilityOutline } from 'ionicons/icons';
+import { accessibilityOutline, informationCircleOutline } from 'ionicons/icons';
 
 @Component({
     selector: 'app-home-footer',
@@ -14,7 +14,7 @@ import { accessibilityOutline } from 'ionicons/icons';
 export class HomeFooterComponent implements OnInit {
 
     constructor() {
-        addIcons({ accessibilityOutline });
+        addIcons({ accessibilityOutline, informationCircleOutline });
     }
 
     ngOnInit() { }

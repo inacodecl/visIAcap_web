@@ -1,0 +1,4 @@
+<button class="button-home" [ngClass]="variant">
+    <ion-icon *ngIf="icon" [name]="icon" class="button-home__icon"></ion-icon>
+    <span class="button-home__label">{{ label | uppercase }}</span>
+</button>

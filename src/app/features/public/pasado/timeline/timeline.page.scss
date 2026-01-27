@@ -7,7 +7,7 @@
     z-index: 10;
     overflow: hidden;
     height: var(--current-height);
-    padding: var(--current-padding);
+    padding: 0;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
@@ -18,16 +18,25 @@
     app-home-header {
         width: 100%;
         height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
 
-        // Necesitamos pasar variables CSS al hijo si es posible, 
-        // o asumir que el hijo usa un contenedor que podemos escalar.
+        // Aplicar variables CSS a los elementos internos del header
+        ::ng-deep .top-section {
+            height: 100% !important; // Llenar el contenedor padre completamente
+            display: flex;
+            align-items: center; // Centrar contenido verticalmente
+            justify-content: center;
+        }
+
         ::ng-deep .logo-container img {
             width: var(--current-logo-width) !important;
             height: auto !important;
             transition: width 0.1s linear;
+        }
+
+        ::ng-deep .header-text {
+            transform: scale(var(--current-text-scale, 1));
+            transform-origin: right center;
+            transition: transform 0.1s linear;
         }
     }
 }

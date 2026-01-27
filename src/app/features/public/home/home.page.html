@@ -3,20 +3,23 @@
   <!-- Header Component -->
   <app-home-header></app-home-header>
 
-  <!-- Main Content Section (White Curved Area) -->
-  <div class="main-card">
+  <!-- Main Content Section (With Background Image) -->
+  <div class="main-card" (click)="onBackgroundTap($event)">
+    <!-- Ripple Effect Container -->
+    <div class="ripple-container">
+      <div *ngFor="let ripple of ripples" class="ripple" [style.left.px]="ripple.x" [style.top.px]="ripple.y">
+      </div>
+    </div>
+
     <div class="buttons-container">
-      <ion-button class="nav-button" shape="round" (click)="navegarPasado()">
-        PASADO
-      </ion-button>
+      <app-button-home label="Pasado" icon="time-outline" variant="pasado" (click)="navegarPasado()">
+      </app-button-home>
 
-      <ion-button class="nav-button" shape="round" (click)="navegarPresente()">
-        PRESENTE
-      </ion-button>
+      <app-button-home label="Presente" icon="location-outline" variant="presente" (click)="navegarPresente()">
+      </app-button-home>
 
-      <ion-button class="nav-button" shape="round" (click)="navegarFuturo()">
-        FUTURO
-      </ion-button>
+      <app-button-home label="Futuro" icon="rocket-outline" variant="futuro" (click)="navegarFuturo()">
+      </app-button-home>
     </div>
   </div>
 

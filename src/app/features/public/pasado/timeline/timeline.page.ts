@@ -50,10 +50,11 @@ export class TimelinePage implements OnInit {
   // Variables de estado para la animación continua
   headerHeight = 350; // Altura inicial aproximada 
   logoWidth = 600; // Ancho inicial
-  headerPadding = 20; // Padding inicial
+  textScale = 1; // Escala del texto (1 = 100%)
+  contentOffset = 0; // Desplazamiento vertical del contenido interno
 
   readonly MAX_HEIGHT = 350;
-  readonly MIN_HEIGHT = 100;
+  readonly MIN_HEIGHT = 150;
   readonly SCROLL_RANGE = 400;
 
   private currentScrollTop = 0;
@@ -167,8 +168,9 @@ export class TimelinePage implements OnInit {
     progressHeader = Math.max(0, Math.min(1, progressHeader));
 
     this.headerHeight = this.MAX_HEIGHT + (this.MIN_HEIGHT - this.MAX_HEIGHT) * progressHeader;
-    this.logoWidth = 600 + (240 - 600) * progressHeader;
-    this.headerPadding = 20 + (10 - 20) * progressHeader;
+    this.logoWidth = 600 + (350 - 600) * progressHeader; // De 600 a 350px
+    this.textScale = 1 + (0.7 - 1) * progressHeader; // De 1 a 0.7 (no tan pequeño)
+    this.contentOffset = 0; // Ya no usamos offset, el contenido se centra automáticamente
 
     // 2. Animación de Tarjetas
     if (this.milestoneElements) {
