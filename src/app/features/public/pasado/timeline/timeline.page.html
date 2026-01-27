@@ -44,7 +44,10 @@
             <!-- Imágenes de marcador de año -->
             <img [src]="m.media_url || 'https://placehold.co/300x200/333/fff?text=' + m.anio" alt="Año {{m.anio}}"
               onerror="this.src='https://placehold.co/300x200/333/fff?text=No+Image'">
-            <div class="year-badge">{{ m.anio }}</div>
+            <div class="year-badge">
+              <span class="full-date" *ngIf="m.fecha">{{ m.fecha | date:'d MMMM y' : '' : 'es-ES' }}</span>
+              <span class="only-year" *ngIf="!m.fecha">{{ m.anio }}</span>
+            </div>
           </div>
 
           <div class="details">

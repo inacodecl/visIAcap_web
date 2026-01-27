@@ -55,7 +55,8 @@ export class HistoryManagerPage implements OnInit {
     isLoading = false;
 
     historyForm: FormGroup = this.fb.group({
-        anio: ['', [Validators.required, Validators.min(1900), Validators.max(2100)]],
+        anio: [''], // Se llenará automáticamente
+        fecha: ['', [Validators.required]],
         titulo: ['', [Validators.required, Validators.maxLength(150)]],
         descripcion: ['', [Validators.required]],
         visible: [true]
@@ -95,15 +96,29 @@ export class HistoryManagerPage implements OnInit {
     openCreateModal() {
         this.isEditing = false;
         this.currentEditingId = null;
-        this.historyForm.reset({ visible: true, anio: new Date().getFullYear() });
+        // Fecha por defecto hoy
+        const today = new Date().toISOString().split('T')[0];
+        this.historyForm.reset({ visible: true, fecha: today });
         this.isModalOpen = true;
     }
 
     openEditModal(historia: Historia) {
         this.isEditing = true;
         this.currentEditingId = historia.id;
+
+        let fechaFormatted = '';
+        if (historia.fecha) {
+            // Asegurar formato YYYY-MM-DD para el input date
+            // Si viene como string '2026-01-27T...' o objeto Date
+            const d = new Date(historia.fecha);
+            if (!isNaN(d.getTime())) {
+                fechaFormatted = d.toISOString().split('T')[0];
+            }
+        }
+
         this.historyForm.patchValue({
             anio: historia.anio,
+            fecha: fechaFormatted,
             titulo: historia.titulo,
             descripcion: historia.descripcion,
             visible: historia.visible
@@ -122,7 +137,15 @@ export class HistoryManagerPage implements OnInit {
         }
 
         this.isLoading = true;
-        const formValue = this.historyForm.value;
+        const formValue = { ...this.historyForm.value };
+
+        // Derivar año automáticamente de la fecha seleccionada
+        if (formValue.fecha) {
+            const dateObj = new Date(formValue.fecha); // YYYY-MM-DD
+            if (!isNaN(dateObj.getTime())) {
+                formValue.anio = dateObj.getFullYear();
+            }
+        }
 
         if (this.isEditing && this.currentEditingId) {
             // Usar PUT para reemplazo total al editar desde formulario

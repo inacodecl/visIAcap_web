@@ -84,7 +84,14 @@ export class TimelinePage implements OnInit {
         // Filtrar solo visibles y mapear a TimelineEvent
         this.milestones = data
           .filter(h => h.visible)
-          .sort((a, b) => a.order_index - b.order_index) // Ordenar por índice
+          .sort((a, b) => {
+            const dateA = a.fecha ? new Date(a.fecha).getTime() : 0;
+            const dateB = b.fecha ? new Date(b.fecha).getTime() : 0;
+            // Si ambas tienen fecha, ordenamos por fecha
+            if (dateA !== 0 && dateB !== 0) return dateA - dateB;
+            // Si no, fallback al año
+            return a.anio - b.anio;
+          })
           .map(h => ({ ...h, expanded: false }));
 
         this.isLoading = false;

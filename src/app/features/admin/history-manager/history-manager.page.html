@@ -103,15 +103,15 @@
                     <form [formGroup]="historyForm" (ngSubmit)="saveHistoria()">
 
                         <div class="form-grid">
-                            <!-- Año (Destacado) -->
+                            <!-- Fecha (Año derivado) -->
                             <div class="form-group year-group">
                                 <ion-item class="input-item" lines="none">
-                                    <ion-label position="stacked">Año del Hito <span
+                                    <ion-label position="stacked">Fecha Exacta <span
                                             class="required">*</span></ion-label>
-                                    <ion-input type="number" formControlName="anio" placeholder="Ej: 1966"></ion-input>
-                                    <ion-note slot="helper">Año calendario del evento</ion-note>
+                                    <ion-input type="date" formControlName="fecha"></ion-input>
+                                    <ion-note slot="helper">Día/Mes/Año (El año se calcula automáticamente)</ion-note>
                                     <ion-note slot="error"
-                                        *ngIf="historyForm.get('anio')?.hasError('required')">Requerido</ion-note>
+                                        *ngIf="historyForm.get('fecha')?.hasError('required')">Requerido</ion-note>
                                 </ion-item>
                             </div>
 
