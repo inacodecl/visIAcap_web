@@ -1,0 +1,36 @@
+// ==============================================
+// Overlay Geométrico Superior
+// ==============================================
+.geometric-overlay-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none; // El contenedor no bloquea clicks
+
+    .geo-pattern {
+        width: 100%;
+        height: 100%;
+
+        // Habilitar interacción en los polígonos
+        polygon {
+            pointer-events: auto; // Los polígonos SÍ reciben eventos
+            cursor: pointer;
+            transition: filter 0.3s ease, opacity 0.3s ease;
+
+            // Efecto hover (mouse)
+            &:hover {
+                filter: brightness(1.15);
+                opacity: 0.95;
+            }
+
+            // Efecto active (touch/click)
+            &:active {
+                filter: brightness(0.9);
+                opacity: 1;
+            }
+        }
+    }
+}

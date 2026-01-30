@@ -1,0 +1,33 @@
+<!-- Overlay geométrico INFERIOR DERECHO (Efecto espejo roto Interactivo) -->
+<div class="geometric-overlay-bottom">
+    <svg class="geo-pattern" viewBox="0 0 100 100" preserveAspectRatio="none">
+
+        <!-- Definición de Patrones de Imágen -->
+        <defs>
+            <pattern *ngFor="let shard of shards" [id]="'pattern-' + shard.id" patternUnits="objectBoundingBox"
+                patternContentUnits="objectBoundingBox" width="1" height="1">
+                <!-- 
+                    width/height="1" en patternContentUnits="objectBoundingBox" significa el 100% del bounding box del polígono.
+                    preserveAspectRatio="xMidYMid slice" asegura que la foto llene todo el polígono sin deformarse (recortando excesos).
+                -->
+                <image [attr.href]="shard.imageUrl" x="0" y="0" width="1" height="1"
+                    preserveAspectRatio="xMidYMid slice" />
+            </pattern>
+        </defs>
+
+        <!-- Grupos de Polígonos (Capas) -->
+        <g *ngFor="let shard of shards" class="shard-group" [class.is-active]="isActive(shard.id)"
+            (click)="toggleShard(shard.id)" [attr.title]="shard.title">
+
+            <!-- Capa 1: Fondo con Imagen (Siempre visible, se revela al ocultar la superior) -->
+            <polygon [attr.points]="shard.points" [attr.fill]="'url(#pattern-' + shard.id + ')'"
+                class="shard-image-layer" />
+
+            <!-- Capa 2: Overlay de Color (Se desvanece al hover/click) -->
+            <polygon [attr.points]="shard.points" [attr.fill]="shard.color" class="shard-color-layer"
+                [style.animation-delay]="shard.animationDelay" />
+
+        </g>
+
+    </svg>
+</div>

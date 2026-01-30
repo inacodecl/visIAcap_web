@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { ButtonHomeComponent } from '../../../components/buttons/button-home/button-home.component';
 import { HomeHeaderComponent } from '../../../components/headers/home-header/home-header.component';
@@ -25,7 +25,6 @@ interface RippleEffect {
     IonContent,
     CommonModule,
     FormsModule,
-    IonButton,
     HomeHeaderComponent,
     HomeFooterComponent,
     ButtonHomeComponent

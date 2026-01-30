@@ -1,0 +1,74 @@
+<ion-content [fullscreen]="true" class="home-v2-content">
+
+    <!-- Overlay geométrico SUPERIOR IZQUIERDO (Modularizado) -->
+    <app-geometric-overlay-top></app-geometric-overlay-top>
+
+    <!-- Overlay geométrico INFERIOR DERECHO (Modularizado) -->
+    <app-geometric-overlay-bottom></app-geometric-overlay-bottom>
+
+    <!-- Header -->
+    <header class="v2-header">
+        <div class="logo-container">
+            <img src="assets/icon/logo-inacap-60-v2.png" alt="INACAP 60 Años" class="logo-img">
+        </div>
+        <div class="header-separator"></div>
+        <div class="sede-container">
+            <span class="sede-line">SEDE</span>
+            <span class="renca-line">RENCA</span>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal Centrado -->
+    <main class="main-container">
+
+        <!-- Botones / Tarjetas -->
+        <div class="cards-container">
+
+            <!-- Pasado -->
+            <div class="v2-card" tabindex="0">
+                <div class="card-icon-wrapper">
+                    <ion-icon name="time-outline"></ion-icon>
+                </div>
+                <div class="card-separator"></div>
+                <span class="card-text">PASADO</span>
+            </div>
+
+            <!-- Presente -->
+            <div class="v2-card" tabindex="0">
+                <div class="card-icon-wrapper">
+                    <ion-icon name="business-outline"></ion-icon>
+                </div>
+                <div class="card-separator"></div>
+                <span class="card-text">PRESENTE</span>
+            </div>
+
+            <!-- Futuro -->
+            <div class="v2-card" tabindex="0">
+                <div class="card-icon-wrapper">
+                    <ion-icon name="rocket-outline"></ion-icon>
+                </div>
+                <div class="card-separator"></div>
+                <span class="card-text">FUTURO</span>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer (Rectángulo con puntas redondeadas) -->
+    <footer class="v2-footer">
+        <button class="footer-btn" aria-label="Usuario">
+            <ion-icon name="person-circle-outline"></ion-icon>
+        </button>
+
+        <div class="footer-text">
+            <h2 class="footer-title">INACAP RENCA SMART</h2>
+            <p class="footer-subtitle">60° Aniversario</p>
+        </div>
+
+        <button class="footer-btn" aria-label="Información">
+            <ion-icon name="information-circle-outline"></ion-icon>
+        </button>
+    </footer>
+
+</ion-content>
