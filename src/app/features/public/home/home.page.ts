@@ -87,7 +87,7 @@ export class HomePage implements OnInit {
   }
 
   navegarPresente() {
-    this.navigateWithDelay('/presente/projects');
+    this.navigateWithDelay('/presente');
   }
 
   navegarFuturo() {

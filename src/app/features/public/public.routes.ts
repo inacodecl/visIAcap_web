@@ -30,6 +30,10 @@ export const routes: Routes = [
         path: 'presente',
         children: [
             {
+                path: '',
+                loadComponent: () => import('./presente/hub/presente.page').then(m => m.PresentePage)
+            },
+            {
                 path: 'projects',
                 loadComponent: () => import('./presente/projects/projects.page').then(m => m.ProjectsPage)
             }

@@ -17,5 +17,9 @@ export const routes: Routes = [
     {
         path: 'entrevistas',
         loadComponent: () => import('./interview-manager/interview-manager.page').then(m => m.InterviewManagerPage)
+    },
+    {
+        path: 'proyectos',
+        loadComponent: () => import('./project-manager/project-manager.page').then(m => m.ProjectManagerPage)
     }
 ];

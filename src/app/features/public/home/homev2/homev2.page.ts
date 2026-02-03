@@ -24,4 +24,8 @@ export class Homev2Page implements OnInit {
     ngOnInit() {
     }
 
+    navegar(ruta: string) {
+        this.router.navigate([ruta]);
+    }
+
 }
