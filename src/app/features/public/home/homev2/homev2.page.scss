@@ -128,20 +128,32 @@ $text-dark: #333;
 // Tarjetas (Botones) - GRANDES con FRANJA ROJA
 // ==============================================
 .v2-card {
-    background: $card-bg;
-    border-radius: 60px; // Pill shape
-    height: 150px; // Altura grande para tótem
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 1.5rem 2rem;
     display: flex;
     align-items: center;
-    padding: 0;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    gap: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    overflow: hidden;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    width: 280px; // Ancho fijo para alineación perfecta
     position: relative;
+    z-index: 2; // Sobre los overlays
 
-    &:active {
-        transform: scale(0.97);
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(220, 20, 60, 0.15); // Sombra rojiza sutil
+        border-color: rgba(220, 20, 60, 0.3);
+    }
+
+    // Efecto de click/touch
+    &:active,
+    &:focus {
+        transform: scale(0.95);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
 
     // FRANJA ROJA a la izquierda

@@ -42,6 +42,39 @@ $inacap-grey: #f4f4f4;
     padding: 20px;
 }
 
+// Botón Volver
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    padding: 10px 20px;
+    color: white;
+    font-size: 2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    ion-icon {
+        font-size: 2.2rem;
+    }
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateX(-3px);
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
 .login-card {
     width: 100%;
     max-width: 400px;

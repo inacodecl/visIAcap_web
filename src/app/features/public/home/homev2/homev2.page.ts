@@ -24,8 +24,28 @@ export class Homev2Page implements OnInit {
     ngOnInit() {
     }
 
-    navegar(ruta: string) {
-        this.router.navigate([ruta]);
+    /**
+     * Navegación con retraso para permitir ver la animación del botón.
+     * Ideal para Tótems y dispositivos táctiles.
+     * @param route Ruta a navegar
+     */
+    private navigateWithDelay(route: string) {
+        // Retraso de 300ms para que la animación CSS (scale) se aprecie
+        setTimeout(() => {
+            this.router.navigate([route]);
+        }, 300);
+    }
+
+    navegarPasado() {
+        this.navigateWithDelay('/pasado');
+    }
+
+    navegarPresente() {
+        this.navigateWithDelay('/presente');
+    }
+
+    navegarFuturo() {
+        this.navigateWithDelay('/futuro');
     }
 
 }

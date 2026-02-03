@@ -11,8 +11,11 @@ import {
   IonInput,
   IonButton,
   IonSpinner,
-  IonText
+  IonText,
+  IonIcon
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { arrowBackOutline } from 'ionicons/icons';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
@@ -28,6 +31,7 @@ import { AuthService } from '../../../core/services/auth.service';
     IonButton,
     IonSpinner,
     IonText,
+    IonIcon
   ],
 })
 export class LoginAdminPage implements OnInit {
@@ -43,9 +47,15 @@ export class LoginAdminPage implements OnInit {
   isLoading = false;
   errorMessage = '';
 
-  constructor() { }
+  constructor() {
+    addIcons({ arrowBackOutline });
+  }
 
   ngOnInit() {
+  }
+
+  goBack() {
+    this.router.navigate(['/homev2']);
   }
 
   async onSubmit() {
