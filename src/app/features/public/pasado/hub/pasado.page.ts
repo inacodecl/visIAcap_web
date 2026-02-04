@@ -7,7 +7,7 @@ import { HomeHeaderComponent } from '../../../../components/headers/home-header/
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
 import { WhiteCubeComponent } from '../../../../components/background/brillo/white-cube/white-cube.component';
 import { addIcons } from 'ionicons';
-import { arrowBackOutline } from 'ionicons/icons';
+import { arrowBackOutline, timeOutline, chatbubblesOutline, arrowForwardOutline, playOutline } from 'ionicons/icons';
 
 @Component({
     selector: 'app-pasado',
@@ -28,7 +28,7 @@ import { arrowBackOutline } from 'ionicons/icons';
 export class PasadoPage implements OnInit {
 
     constructor(private router: Router) {
-        addIcons({ arrowBackOutline });
+        addIcons({ arrowBackOutline, timeOutline, chatbubblesOutline, arrowForwardOutline, playOutline });
     }
 
     ngOnInit() {
