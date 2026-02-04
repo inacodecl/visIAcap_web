@@ -2,11 +2,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
-    IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton,
+    IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
     IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent,
     IonItem, IonLabel, IonInput, IonSelect, IonSelectOption,
     IonList, IonBadge, IonModal, IonFab, IonFabButton, IonToggle,
-    IonSpinner, IonItemGroup, IonMenuButton
+    IonSpinner, IonItemGroup
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { add, create, trash, close, person } from 'ionicons/icons';
@@ -22,11 +22,11 @@ import { AuthService } from '../../../core/services/auth.service';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton,
+        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
         IonIcon,
         IonItem, IonLabel, IonInput, IonSelect, IonSelectOption,
         IonList, IonBadge, IonModal, IonFab, IonFabButton, IonToggle,
-        IonSpinner, IonItemGroup, IonMenuButton
+        IonSpinner, IonItemGroup
     ]
 })
 export class UserManagerPage implements OnInit {

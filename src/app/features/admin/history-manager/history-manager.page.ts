@@ -2,10 +2,10 @@ import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
-    IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton,
+    IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
     IonCardTitle, IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
     IonList, IonListHeader, IonBadge, IonModal, IonFab, IonFabButton,
-    IonSearchbar, IonMenuButton, IonNote,
+    IonSearchbar, IonNote,
     IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -21,11 +21,11 @@ import { Historia } from '../../../core/models/historia.model';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton,
+        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
         IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle,
         IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
         IonBadge, IonModal, IonFab, IonFabButton,
-        IonSearchbar, IonMenuButton, IonNote,
+        IonSearchbar, IonNote,
     ]
 })
 export class HistoryManagerPage implements OnInit {

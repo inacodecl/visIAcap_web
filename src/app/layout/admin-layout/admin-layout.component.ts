@@ -4,10 +4,10 @@ import { Router, RouterModule } from '@angular/router';
 import {
     IonMenu, IonHeader, IonToolbar, IonTitle, IonContent,
     IonList, IonItem, IonIcon, IonLabel, IonMenuToggle,
-    IonRouterOutlet, IonButtons, IonButton
+    IonRouterOutlet
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { people, logOut, time, videocam, briefcase } from 'ionicons/icons';
+import { people, logOut, time, videocam, briefcase, grid } from 'ionicons/icons';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
@@ -18,8 +18,6 @@ import { AuthService } from '../../core/services/auth.service';
     imports: [
         CommonModule,
         RouterModule,
-        IonMenu, IonHeader, IonToolbar, IonTitle, IonContent,
-        IonList, IonItem, IonIcon, IonLabel, IonMenuToggle,
         IonRouterOutlet
     ]
 })
@@ -28,11 +26,8 @@ export class AdminLayoutComponent {
     router = inject(Router);
 
     constructor() {
-        addIcons({ people, logOut, time, videocam, briefcase });
+        addIcons({ people, logOut, time, videocam, briefcase, grid });
     }
 
-    logout() {
-        this.authService.logout();
-        this.router.navigate(['/auth/login']);
-    }
+
 }

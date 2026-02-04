@@ -1,8 +1,8 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-    IonHeader, IonMenuButton, IonContent, IonGrid, IonRow, IonCol,
-    IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBadge, IonButton, IonIcon,
+    IonHeader, IonContent, IonGrid, IonRow, IonCol,
+    IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBadge, IonButton, IonBackButton, IonIcon,
     IonSearchbar, IonButtons, ModalController, AlertController, ToastController
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -21,8 +21,8 @@ import { MetadataManagerModalComponent } from './metadata-manager-modal/metadata
     standalone: true,
     imports: [
         CommonModule,
-        IonHeader, IonMenuButton, IonContent, IonGrid, IonRow, IonCol,
-        IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBadge, IonButton, IonIcon,
+        IonHeader, IonContent, IonGrid, IonRow, IonCol,
+        IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBadge, IonButton, IonBackButton, IonIcon,
         IonSearchbar, IonButtons
     ]
 })
@@ -91,7 +91,7 @@ export class ProjectManagerPage implements OnInit {
                 });
 
                 modal.onDidDismiss().then((result) => {
-                    if (result.data === true) { 
+                    if (result.data === true) {
                         this.showToast('Proyecto actualizado exitosamente');
                         this.loadProyectos();
                     }

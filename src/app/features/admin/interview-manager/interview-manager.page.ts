@@ -2,14 +2,14 @@ import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
-    IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton,
+    IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
     IonIcon, IonCard, IonCardContent, IonCardHeader,
     IonCardTitle, IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
     IonList, IonBadge, IonModal, IonFab, IonFabButton,
-    IonSearchbar, IonMenuButton, IonNote, IonSpinner
+    IonSearchbar, IonNote, IonSpinner
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { add, create, trash, close, checkmarkCircle, search, videocam, save } from 'ionicons/icons';
+import { add, create, trash, close, checkmarkCircle, search, videocam, save, refresh } from 'ionicons/icons';
 import { EntrevistaService } from '../../../core/services/entrevista.service';
 import { Entrevista } from '../../../core/models/entrevista.model';
 
@@ -21,11 +21,11 @@ import { Entrevista } from '../../../core/models/entrevista.model';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton,
+        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
         IonIcon,
         IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
         IonList, IonModal, IonFab, IonFabButton,
-        IonSearchbar, IonMenuButton, IonNote, IonSpinner
+        IonSearchbar, IonNote, IonSpinner
     ]
 })
 export class InterviewManagerPage implements OnInit {
@@ -65,7 +65,7 @@ export class InterviewManagerPage implements OnInit {
     });
 
     constructor() {
-        addIcons({ add, create, trash, close, checkmarkCircle, search, videocam, save });
+        addIcons({ refresh, videocam, create, trash, add, close, save, checkmarkCircle, search });
     }
 
     ngOnInit() {
