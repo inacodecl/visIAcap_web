@@ -1,3 +1,5 @@
+@use 'theme/totem';
+
 /*
  * CSS Global de la Aplicación
  * ----------------------------------------------------------------------------
@@ -48,10 +50,40 @@ body {
     /* asegura que respete el contexto de apilamiento si es necesario */
 }
 
-
 ion-app {
     height: 100%;
 }
 
-/* Estilos de Modo Tótem / Quiosco */
-@import 'theme/totem';
+/* ==========================================================================
+   MODAL GLOBAL STYLES (Admin)
+   Ionic renderiza los modales fuera del árbol de componentes, por lo que
+   los estilos deben definirse globalmente para que apliquen correctamente.
+   ========================================================================== */
+
+ion-modal.glass-modal {
+    --background: #1a1d26;
+    --border-radius: 20px;
+    --width: 80vw;
+    --max-width: 1200px;
+    --height: 48vh;
+    --min-height: 500px;
+    --max-height: 90vh;
+    --backdrop-opacity: 0.85;
+    --box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+
+    &::part(content) {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    ion-toolbar {
+        --background: #1a1d26;
+        --color: white;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0 10px;
+    }
+
+    ion-content {
+        --background: #1a1d26;
+        --color: white;
+    }
+}

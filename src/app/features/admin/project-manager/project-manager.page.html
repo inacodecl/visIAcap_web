@@ -19,25 +19,55 @@
 <ion-content [fullscreen]="true" [scrollY]="true" class="admin-content">
     <div class="glass-container">
 
-        <h1 class="page-title">
-            <ion-icon name="rocket"></ion-icon>
-            Gestión de Proyectos (Presente)
-        </h1>
-
-        <!-- Search Bar -->
-        <div class="search-wrapper">
-            <ion-searchbar placeholder="Buscar proyectos..." [debounce]="250"
-                (ionInput)="searchTerm.set($any($event).target.value)" animated="true" class="neon-searchbar">
-            </ion-searchbar>
+        <!-- HEADER ROW: Título + Buscador -->
+        <div class="page-header-row">
+            <h1 class="page-title">
+                <ion-icon name="rocket"></ion-icon>
+                Gestión de Proyectos
+            </h1>
+            <div class="search-wrapper">
+                <ion-searchbar placeholder="Buscar proyectos..." [debounce]="250"
+                    (ionInput)="searchTerm.set($any($event).target.value)" animated="true" class="neon-searchbar">
+                </ion-searchbar>
+            </div>
         </div>
 
-        <!-- Status -->
+        <!-- ACTION CARDS -->
+        <ion-grid class="action-cards-grid ion-margin-bottom">
+            <ion-row>
+                <!-- NEW PROJECT CARD (Large) -->
+                <ion-col size="12" size-md="6">
+                    <div class="quick-card main-action" (click)="openCreateModal()">
+                        <div class="icon-bg"><ion-icon name="add"></ion-icon></div>
+                        <div class="content">
+                            <h3>Crear Nuevo Proyecto</h3>
+                            <p>Iniciar el asistente de creación</p>
+                        </div>
+                        <ion-icon name="arrow-forward" class="arrow-icon"></ion-icon>
+                    </div>
+                </ion-col>
+
+                <!-- METADATA CARDS (Small) -->
+                <ion-col size="6" size-md="3">
+                    <div class="quick-card meta-action" (click)="openTagsManager()">
+                        <div class="icon-circle"><ion-icon name="pricetags"></ion-icon></div>
+                        <span>Crear Tag</span>
+                    </div>
+                </ion-col>
+                <ion-col size="6" size-md="3">
+                    <div class="quick-card meta-action" (click)="openCategoriesManager()">
+                        <div class="icon-circle"><ion-icon name="list"></ion-icon></div>
+                        <span>Crear Categoría</span>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
         <div class="status-summary">
-            <p>Proyectos Activos: <span class="highlight">{{ filteredProyectos().length }}</span> registros encontrados.
-            </p>
+            <p>Mostrando <span class="highlight">{{ filteredProyectos().length }}</span> proyectos</p>
         </div>
 
-        <!-- Grid de Tarjetas -->
+        <!-- LIST GRID -->
         <ion-grid>
             <ion-row>
                 <ion-col size="12" size-md="6" size-xl="4" *ngFor="let item of filteredProyectos()">
@@ -82,151 +112,5 @@
             <p>No se encontraron proyectos.</p>
         </div>
 
-        <!-- Modal Formulario -->
-        <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="glass-modal">
-            <ng-template>
-                <ion-header class="modal-header">
-                    <ion-toolbar color="dark">
-                        <ion-title>{{ isEditing ? 'Editando Proyecto #' + currentEditingId : 'Nuevo Proyecto'
-                            }}</ion-title>
-                        <ion-buttons slot="end">
-                            <ion-button (click)="closeModal()">
-                                <ion-icon name="close"></ion-icon>
-                            </ion-button>
-                        </ion-buttons>
-                    </ion-toolbar>
-                </ion-header>
-                <div class="ion-padding modal-body">
-                    <form [formGroup]="projectForm" (ngSubmit)="saveProyecto()">
-
-                        <div class="form-grid">
-                            <!-- Slug -->
-                            <div class="form-group">
-                                <ion-item class="input-item" lines="none">
-                                    <ion-label position="stacked">Slug (URL) <span class="required">*</span></ion-label>
-                                    <ion-input type="text" formControlName="slug"
-                                        placeholder="mi-proyecto-ejemplo"></ion-input>
-                                    <ion-note slot="helper">Solo minúsculas, números y guiones</ion-note>
-                                    <ion-note slot="error"
-                                        *ngIf="projectForm.get('slug')?.hasError('required')">Requerido</ion-note>
-                                    <ion-note slot="error" *ngIf="projectForm.get('slug')?.hasError('pattern')">Formato
-                                        inválido</ion-note>
-                                </ion-item>
-                            </div>
-
-                            <!-- Título -->
-                            <div class="form-group">
-                                <ion-item class="input-item" lines="none">
-                                    <ion-label position="stacked">Título <span class="required">*</span></ion-label>
-                                    <ion-input type="text" formControlName="titulo"
-                                        placeholder="Nombre del proyecto"></ion-input>
-                                    <ion-note slot="helper">Max 150 caracteres</ion-note>
-                                </ion-item>
-                            </div>
-
-                            <!-- Resumen -->
-                            <div class="form-group full-width">
-                                <ion-item class="input-item" lines="none">
-                                    <ion-label position="stacked">Resumen</ion-label>
-                                    <ion-textarea formControlName="resumen" rows="3"
-                                        placeholder="Breve descripción..."></ion-textarea>
-                                </ion-item>
-                            </div>
-
-                            <!-- Descripción -->
-                            <div class="form-group full-width">
-                                <ion-item class="input-item description-item" lines="none">
-                                    <ion-label position="stacked">Descripción Completa</ion-label>
-                                    <ion-textarea formControlName="descripcion" rows="8"
-                                        placeholder="Descripción detallada del proyecto..."></ion-textarea>
-                                </ion-item>
-                            </div>
-
-                            <!-- Fechas -->
-                            <div class="form-group">
-                                <ion-item class="input-item" lines="none">
-                                    <ion-label position="stacked">Fecha Inicio</ion-label>
-                                    <ion-input type="date" formControlName="start_date"></ion-input>
-                                </ion-item>
-                            </div>
-                            <div class="form-group">
-                                <ion-item class="input-item" lines="none">
-                                    <ion-label position="stacked">Fecha Fin</ion-label>
-                                    <ion-input type="date" formControlName="end_date"></ion-input>
-                                </ion-item>
-                            </div>
-
-                            <!-- Ubicación -->
-                            <div class="form-group">
-                                <ion-item class="input-item" lines="none">
-                                    <ion-label position="stacked">Ubicación</ion-label>
-                                    <ion-input type="text" formControlName="location"
-                                        placeholder="Ej: Renca, Chile"></ion-input>
-                                </ion-item>
-                            </div>
-
-                            <!-- URL Externa -->
-                            <div class="form-group">
-                                <ion-item class="input-item" lines="none">
-                                    <ion-label position="stacked">URL Externa</ion-label>
-                                    <ion-input type="url" formControlName="url_externa"
-                                        placeholder="https://..."></ion-input>
-                                </ion-item>
-                            </div>
-
-                            <!-- Imagen Cover URL -->
-                            <div class="form-group full-width">
-                                <ion-item class="input-item" lines="none">
-                                    <ion-label position="stacked">URL Imagen Portada</ion-label>
-                                    <ion-input type="url" formControlName="image_cover_url"
-                                        placeholder="https://...imagen.jpg"></ion-input>
-                                </ion-item>
-                            </div>
-
-                            <!-- Toggles -->
-                            <div class="form-group full-width settings-group">
-                                <h3>Configuración</h3>
-                                <div class="settings-grid">
-                                    <ion-item lines="none" class="input-item toggle-box">
-                                        <ion-icon name="eye" slot="start" size="small"></ion-icon>
-                                        <ion-label>
-                                            <h2>Publicado</h2>
-                                            <p>Visible públicamente</p>
-                                        </ion-label>
-                                        <ion-toggle slot="end" formControlName="is_published"
-                                            color="success"></ion-toggle>
-                                    </ion-item>
-                                    <ion-item lines="none" class="input-item toggle-box">
-                                        <ion-icon name="rocket" slot="start" size="small"></ion-icon>
-                                        <ion-label>
-                                            <h2>Destacado</h2>
-                                            <p>Mostrar en portada</p>
-                                        </ion-label>
-                                        <ion-toggle slot="end" formControlName="featured" color="warning"></ion-toggle>
-                                    </ion-item>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal-actions ion-margin-top">
-                            <ion-button fill="outline" color="medium" (click)="closeModal()">Cancelar</ion-button>
-                            <ion-button type="submit" [disabled]="projectForm.invalid || isLoading" color="danger"
-                                class="save-btn">
-                                <ion-icon slot="start" [name]="isLoading ? 'hourglass' : 'save'"></ion-icon>
-                                {{ isLoading ? 'Procesando...' : 'Guardar Proyecto' }}
-                            </ion-button>
-                        </div>
-
-                    </form>
-                </div>
-            </ng-template>
-        </ion-modal>
-
-        <div class="fab-spacer"></div>
     </div>
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="fixed-fab">
-        <ion-fab-button color="danger" (click)="openCreateModal()" class="create-fab">
-            <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-    </ion-fab>
 </ion-content>

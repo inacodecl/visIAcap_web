@@ -31,11 +31,11 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('./presente/hub/presente.page').then(m => m.PresentePage)
+                loadComponent: () => import('./presente/projects/projects.page').then(m => m.ProjectsPage)
             },
             {
-                path: 'projects',
-                loadComponent: () => import('./presente/projects/projects.page').then(m => m.ProjectsPage)
+                path: 'projects/:id',
+                loadComponent: () => import('./presente/projects/projects-details/projects-details.page').then(m => m.ProjectsDetailsPage)
             }
         ]
     },

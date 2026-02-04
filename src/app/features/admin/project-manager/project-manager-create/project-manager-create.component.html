@@ -1,0 +1,238 @@
+<ion-header class="modal-header">
+    <ion-toolbar color="dark">
+        <ion-title>{{ proyecto ? 'Editando Proyecto' : 'Nuevo Proyecto' }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="close()">
+                <ion-icon name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+    <ion-progress-bar [value]="progress" color="danger"></ion-progress-bar>
+</ion-header>
+
+<ion-content class="modal-body">
+    <div class="ion-padding">
+        <!-- Step Indicators -->
+        <div class="wizard-steps">
+            <div class="step" [class.active]="currentStep() >= 1" (click)="goToStep(1)">
+                <div class="step-icon"><ion-icon name="create"></ion-icon></div>
+                <span>General</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" [class.active]="currentStep() >= 2" (click)="goToStep(2)">
+                <div class="step-icon"><ion-icon name="globe"></ion-icon></div>
+                <span>Detalles</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" [class.active]="currentStep() >= 3" (click)="goToStep(3)">
+                <div class="step-icon"><ion-icon name="people"></ion-icon></div>
+                <span>Equipo</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" [class.active]="currentStep() >= 4" (click)="goToStep(4)">
+                <div class="step-icon"><ion-icon name="pricetags"></ion-icon></div>
+                <span>Clasif.</span>
+            </div>
+        </div>
+
+        <form [formGroup]="projectForm" (ngSubmit)="save()">
+
+            <!-- STEP 1: GENERAL -->
+            <div class="form-step" *ngIf="currentStep() === 1">
+                <h3 class="step-title">Información Básica</h3>
+                <div class="form-grid">
+                    <ion-item class="input-item" lines="none">
+                        <ion-label position="stacked">Slug (URL) <span class="required">*</span></ion-label>
+                        <ion-input type="text" formControlName="slug" placeholder="mi-proyecto"></ion-input>
+                        <ion-note slot="error" *ngIf="projectForm.get('slug')?.hasError('pattern')">Sin espacios ni
+                            mayúsculas</ion-note>
+                    </ion-item>
+
+                    <ion-item class="input-item" lines="none">
+                        <ion-label position="stacked">Título <span class="required">*</span></ion-label>
+                        <ion-input type="text" formControlName="titulo" placeholder="Nombre del proyecto"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="input-item full-width" lines="none">
+                        <ion-label position="stacked">Resumen</ion-label>
+                        <ion-textarea formControlName="resumen" rows="3"
+                            placeholder="Breve descripción..."></ion-textarea>
+                    </ion-item>
+
+                    <ion-item class="input-item full-width description-item" lines="none">
+                        <ion-label position="stacked">Descripción Completa</ion-label>
+                        <ion-textarea formControlName="descripcion" rows="8"
+                            placeholder="Detalle completo..."></ion-textarea>
+                    </ion-item>
+                </div>
+            </div>
+
+            <!-- STEP 2: DETALLES -->
+            <div class="form-step" *ngIf="currentStep() === 2">
+                <h3 class="step-title">Detalles y Configuración</h3>
+                <div class="form-grid">
+                    <ion-item class="input-item" lines="none">
+                        <ion-label position="stacked">Fecha Inicio</ion-label>
+                        <ion-input type="date" formControlName="start_date"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="input-item" lines="none">
+                        <ion-label position="stacked">Fecha Fin</ion-label>
+                        <ion-input type="date" formControlName="end_date"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="input-item" lines="none">
+                        <ion-label position="stacked">Ubicación</ion-label>
+                        <ion-input type="text" formControlName="location" placeholder="Renca, Chile"></ion-input>
+                    </ion-item>
+
+                    <ion-item class="input-item" lines="none">
+                        <ion-label position="stacked">URL Externa</ion-label>
+                        <ion-input type="url" formControlName="url_externa" placeholder="https://..."></ion-input>
+                    </ion-item>
+
+                    <ion-item class="input-item full-width" lines="none">
+                        <ion-label position="stacked">URL Portada (Cover)</ion-label>
+                        <ion-input type="url" formControlName="image_cover_url" placeholder="https://..."></ion-input>
+                    </ion-item>
+
+                    <div class="settings-grid full-width">
+                        <ion-item lines="none" class="input-item toggle-box">
+                            <ion-label>Publicado</ion-label>
+                            <ion-toggle slot="end" formControlName="is_published" color="success"></ion-toggle>
+                        </ion-item>
+                        <ion-item lines="none" class="input-item toggle-box">
+                            <ion-label>Destacado</ion-label>
+                            <ion-toggle slot="end" formControlName="featured" color="warning"></ion-toggle>
+                        </ion-item>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 3: MIEMBROS Y MULTIMEDIA -->
+            <div class="form-step" *ngIf="currentStep() === 3">
+
+                <!-- Miembros -->
+                <div class="section-block">
+                    <div class="section-header">
+                        <h3 class="step-title">Equipo</h3>
+                        <ion-button size="small" fill="outline" (click)="addMember()">
+                            <ion-icon name="add" slot="start"></ion-icon> Agregar
+                        </ion-button>
+                    </div>
+
+                    <div formArrayName="members">
+                        <div *ngFor="let member of membersArray.controls; let i = index" [formGroupName]="i"
+                            class="array-item">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col size="4">
+                                        <ion-item class="input-item-small" lines="none">
+                                            <ion-input placeholder="Nombre" formControlName="nombre"></ion-input>
+                                        </ion-item>
+                                    </ion-col>
+                                    <ion-col size="3">
+                                        <ion-item class="input-item-small" lines="none">
+                                            <ion-input placeholder="Rol" formControlName="rol"></ion-input>
+                                        </ion-item>
+                                    </ion-col>
+                                    <ion-col size="4">
+                                        <ion-item class="input-item-small" lines="none">
+                                            <ion-input placeholder="Contacto/Email"
+                                                formControlName="contacto"></ion-input>
+                                        </ion-item>
+                                    </ion-col>
+                                    <ion-col size="1" class="col-center">
+                                        <ion-button color="danger" fill="clear" (click)="removeMember(i)">
+                                            <ion-icon name="trash" slot="icon-only"></ion-icon>
+                                        </ion-button>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </div>
+                        <div *ngIf="membersArray.length === 0" class="empty-list-msg">Sin miembros asignados</div>
+                    </div>
+                </div>
+
+                <!-- Multimedia Extra -->
+                <div class="section-block ion-margin-top">
+                    <div class="section-header">
+                        <h3 class="step-title">Galería Extra</h3>
+                        <ion-button size="small" fill="outline" (click)="addImage()">
+                            <ion-icon name="images" slot="start"></ion-icon> Agregar
+                        </ion-button>
+                    </div>
+
+                    <div formArrayName="images">
+                        <div *ngFor="let img of imagesArray.controls; let i = index" [formGroupName]="i"
+                            class="array-item">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col size="7">
+                                        <ion-item class="input-item-small" lines="none">
+                                            <ion-input placeholder="URL Imagen" formControlName="url"></ion-input>
+                                        </ion-item>
+                                    </ion-col>
+                                    <ion-col size="4">
+                                        <ion-item class="input-item-small" lines="none">
+                                            <ion-input placeholder="Alt Text" formControlName="alt_es"></ion-input>
+                                        </ion-item>
+                                    </ion-col>
+                                    <ion-col size="1" class="col-center">
+                                        <ion-button color="danger" fill="clear" (click)="removeImage(i)">
+                                            <ion-icon name="trash" slot="icon-only"></ion-icon>
+                                        </ion-button>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </div>
+                        <div *ngIf="imagesArray.length === 0" class="empty-list-msg">Sin imágenes adicionales</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 4: CLASIFICACIÓN -->
+            <div class="form-step" *ngIf="currentStep() === 4">
+                <h3 class="step-title">Clasificación</h3>
+                <div class="form-grid">
+                    <ion-item class="input-item" lines="none">
+                        <ion-label position="stacked">Etiquetas (Tags)</ion-label>
+                        <ion-select formControlName="tags" multiple="true" placeholder="Seleccionar tags">
+                            <ion-select-option *ngFor="let tag of tagsList()" [value]="tag.id">
+                                {{ tag.nombre }}
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-item>
+
+                    <ion-item class="input-item" lines="none">
+                        <ion-label position="stacked">Categorías</ion-label>
+                        <ion-select formControlName="categories" multiple="true" placeholder="Seleccionar categorías">
+                            <ion-select-option *ngFor="let cat of categoriesList()" [value]="cat.id">
+                                {{ cat.nombre }}
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </div>
+            </div>
+
+            <!-- ACTIONS FOOTER -->
+            <div class="modal-actions ion-margin-top wizard-actions">
+                <ion-button *ngIf="currentStep() > 1" fill="outline" (click)="prevStep()">
+                    <ion-icon name="arrow-back" slot="start"></ion-icon> Anterior
+                </ion-button>
+
+                <div class="spacer"></div>
+
+                <ion-button *ngIf="currentStep() < totalSteps" (click)="nextStep()">
+                    Siguiente <ion-icon name="arrow-forward" slot="end"></ion-icon>
+                </ion-button>
+
+                <ion-button *ngIf="currentStep() === totalSteps" type="submit"
+                    [disabled]="projectForm.invalid || isLoading" color="danger">
+                    <ion-icon name="save" slot="start"></ion-icon> Guardar Proyecto
+                </ion-button>
+            </div>
+
+        </form>
+    </div>
+</ion-content>

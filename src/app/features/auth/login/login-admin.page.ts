@@ -10,7 +10,6 @@ import {
   IonLabel,
   IonInput,
   IonButton,
-  IonSpinner,
   IonText,
   IonIcon
 } from '@ionic/angular/standalone';
@@ -29,7 +28,6 @@ import { AuthService } from '../../../core/services/auth.service';
     IonContent, IonCard, IonCardContent,
     IonItem, IonLabel, IonInput,
     IonButton,
-    IonSpinner,
     IonText,
     IonIcon
   ],

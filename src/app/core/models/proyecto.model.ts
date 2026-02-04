@@ -5,6 +5,41 @@ export enum ProyectoTipo {
 
 /**
  * Interfaz para Proyectos (Presente y Futuro).
+ * Combina configuración base y textos.
+ */
+// --- Interfaces Auxiliares ---
+
+export interface ProyectoMedia {
+    id: number;
+    proyecto_id: number;
+    tipo: 'image' | 'video' | 'audio';
+    url: string;
+    alt_es?: string;
+    alt_en?: string;
+    order_index: number;
+}
+
+export interface ProyectoMiembro {
+    proyecto_id: number;
+    nombre: string;
+    rol?: string;
+    contacto?: string;
+}
+
+export interface ProyectoTag {
+    id: number;
+    nombre: string;
+    slug: string;
+}
+
+export interface ProyectoCategoria {
+    id: number;
+    nombre: string;
+    slug: string;
+}
+
+/**
+ * Interfaz para Proyectos (Presente y Futuro).
  * Combina configuración base y textos localizados.
  */
 export interface Proyecto {
@@ -48,4 +83,10 @@ export interface Proyecto {
     titulo?: string;
     resumen?: string;
     descripcion?: string;
+
+    // --- Relaciones (Optional for listings, Required for Details) ---
+    images?: ProyectoMedia[];
+    members?: ProyectoMiembro[];
+    tags?: ProyectoTag[];
+    categories?: ProyectoCategoria[];
 }

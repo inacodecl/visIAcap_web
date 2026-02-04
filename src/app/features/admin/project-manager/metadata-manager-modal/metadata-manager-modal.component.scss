@@ -1,0 +1,139 @@
+$bg-dark: #1a1d26;
+$neon-blue: #00f3ff;
+$neon-red: #ff2a2a;
+$neon-green: #00ff9d;
+
+ion-toolbar {
+    --background: #{$bg-dark};
+    --color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    .header-icon {
+        color: $neon-blue;
+        font-size: 1.4rem;
+        margin-left: 10px;
+    }
+
+    ion-title {
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+}
+
+.modal-content {
+    --background: #{$bg-dark};
+    --color: white;
+}
+
+.container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.create-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+
+    h3 {
+        margin: 0 0 15px 0;
+        font-size: 1rem;
+        color: #aaa;
+        font-weight: 500;
+    }
+
+    .input-group {
+        display: flex;
+        gap: 10px;
+
+        @media(max-width: 600px) {
+            flex-direction: column;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            .neon-input {
+                --padding-start: 15px;
+                --color: white;
+                --placeholder-color: #666;
+            }
+        }
+
+        .add-btn {
+            --background: #{$neon-blue};
+            --color: black;
+            --border-radius: 8px;
+            height: 45px;
+            width: 50px;
+            margin: 0;
+            font-weight: bold;
+
+            &[disabled] {
+                opacity: 0.5;
+            }
+        }
+    }
+}
+
+.list-box {
+    .list-header {
+        margin-bottom: 10px;
+        color: #666;
+        font-size: 0.9rem;
+        padding-left: 5px;
+    }
+
+    .custom-list {
+        background: transparent;
+        padding: 0;
+
+        .list-item {
+            --background: rgba(30, 34, 45, 0.5);
+            --color: white;
+            --padding-start: 0;
+            --inner-padding-end: 0;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+
+            .item-content {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                padding: 10px 15px;
+                gap: 15px;
+
+                .slug-badge {
+                    font-family: monospace;
+                    background: rgba(255, 255, 255, 0.1);
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    color: $neon-green;
+                    font-size: 0.85rem;
+                }
+
+                .name-text {
+                    font-weight: 500;
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #555;
+        font-style: italic;
+        border: 2px dashed rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+    }
+}

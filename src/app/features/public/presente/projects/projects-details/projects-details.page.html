@@ -1,0 +1,155 @@
+<ion-content [fullscreen]="true" class="project-details-content">
+    <!-- Header con botón atrás flotante -->
+    <div class="back-button-container">
+        <ion-button fill="clear" color="light" routerLink="/presente">
+            <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+        </ion-button>
+    </div>
+
+    @if (isLoading()) {
+    <div class="loading-container">
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+        <p>Cargando proyecto...</p>
+    </div>
+    } @else if (error() || !proyecto()) {
+    <div class="error-container">
+        <h2>Proyecto no encontrado</h2>
+        <p>Lo sentimos, no pudimos cargar la información del proyecto.</p>
+        <ion-button routerLink="/presente/projects" color="primary">Volver a Proyectos</ion-button>
+    </div>
+    } @else {
+    <div class="project-hero"
+        [style.backgroundImage]="'url(' + (proyecto()?.image_cover_url || 'assets/images/placeholder-project.jpg') + ')'">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-text-container">
+                <span class="project-badge">Proyecto Presente</span>
+                <h1>{{ proyecto()?.titulo }}</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="content-card">
+
+            <!-- Metadata Cards Grid -->
+            <div class="meta-grid">
+                @if (proyecto()?.start_date) {
+                <div class="meta-card">
+                    <div class="meta-icon">
+                        <ion-icon name="calendar-number"></ion-icon>
+                    </div>
+                    <div class="meta-info">
+                        <label>Año</label>
+                        <span>{{ proyecto()?.start_date | date:'yyyy' }}</span>
+                    </div>
+                </div>
+                }
+
+                @if (proyecto()?.location) {
+                <div class="meta-card">
+                    <div class="meta-icon">
+                        <ion-icon name="location"></ion-icon>
+                    </div>
+                    <div class="meta-info">
+                        <label>Ubicación</label>
+                        <span>{{ proyecto()?.location }}</span>
+                    </div>
+                </div>
+                }
+
+                <!-- Status Badge as Meta Card -->
+                <div class="meta-card">
+                    <div class="meta-icon status">
+                        <ion-icon name="analytics"></ion-icon>
+                    </div>
+                    <div class="meta-info">
+                        <label>Estado</label>
+                        <span>Activo</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-content">
+                @if (proyecto()?.resumen) {
+                <div class="project-summary">
+                    <p>{{ proyecto()?.resumen }}</p>
+                </div>
+                }
+
+                <div class="separator"></div>
+
+                <div class="project-description">
+                    <h3>Historia del Proyecto</h3>
+                    <div [innerHTML]="proyecto()?.descripcion" class="description-body"></div>
+                </div>
+            </div>
+
+            <!-- Team Section -->
+            @if (proyecto()?.members?.length) {
+            <div class="section-container team-section">
+                <h3>Equipo del Proyecto</h3>
+                <div class="team-grid">
+                    @for (member of proyecto()?.members; track member.nombre) {
+                    <div class="team-member">
+                        <div class="avatar-placeholder">{{ member.nombre.charAt(0) }}</div>
+                        <div class="member-info">
+                            <span class="name">{{ member.nombre }}</span>
+                            <span class="role">{{ member.rol }}</span>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+            }
+
+            <!-- Gallery Section -->
+            <div class="section-container gallery-section">
+                <h3>Galería</h3>
+                @if (proyecto()?.images?.length) {
+                <div class="gallery-grid">
+                    @for (img of proyecto()?.images; track img.url) {
+                    <div class="gallery-item">
+                        <img [src]="img.url" [alt]="img.alt_es || 'Imagen del proyecto'" loading="lazy">
+                    </div>
+                    }
+                </div>
+                } @else {
+                <div class="gallery-placeholder">
+                    <ion-icon name="images-outline"></ion-icon>
+                    <p>No hay imágenes adicionales.</p>
+                </div>
+                }
+            </div>
+
+            <!-- Tags Section -->
+            @if (proyecto()?.tags?.length || proyecto()?.categories?.length) {
+            <div class="section-container tags-section">
+                <div class="chips-container">
+                    @for (cat of proyecto()?.categories; track cat.id) {
+                    <ion-chip color="tertiary">
+                        <ion-icon name="folder-open" color="dark"></ion-icon>
+                        <ion-label>{{ cat.nombre }}</ion-label>
+                    </ion-chip>
+                    }
+                    @for (tag of proyecto()?.tags; track tag.id) {
+                    <ion-chip outline="true" color="medium">
+                        <ion-label>#{{ tag.nombre }}</ion-label>
+                    </ion-chip>
+                    }
+                </div>
+            </div>
+            }
+
+            @if (proyecto()?.url_externa) {
+            <div class="action-container">
+                <ion-button expand="block" (click)="openExternalUrl()" class="action-button gradient-btn">
+                    <span>Visitar Sitio Web Oficial</span>
+                    <ion-icon name="arrow-forward-circle" slot="end"></ion-icon>
+                </ion-button>
+            </div>
+            }
+        </div>
+    </div>
+    }
+</ion-content>
