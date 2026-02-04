@@ -1,0 +1,67 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-icon [name]="icon" slot="icon-only" class="header-icon"></ion-icon>
+        </ion-buttons>
+        <ion-title>{{ title }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="closeModal()">
+                <ion-icon name="close" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="modal-content">
+    <div class="container">
+        <!-- Create New Section -->
+        <div class="create-section">
+            <h3>Agregar Nuevo</h3>
+            <div class="input-group">
+                <div class="input-wrapper">
+                    <ion-item lines="none" class="custom-input">
+                        <ion-icon name="pricetags" slot="start" *ngIf="type === 'tags'"></ion-icon>
+                        <ion-icon name="list" slot="start" *ngIf="type === 'categorias'"></ion-icon>
+                        <ion-input [(ngModel)]="newSlug" placeholder="Slug (ej: python-basico)"></ion-input>
+                    </ion-item>
+                </div>
+                <div class="input-wrapper">
+                    <ion-item lines="none" class="custom-input">
+                        <ion-icon name="add" slot="start"></ion-icon>
+                        <ion-input [(ngModel)]="newNombre" placeholder="Nombre visible (ej: Python Básico)"></ion-input>
+                    </ion-item>
+                </div>
+                <ion-button expand="block" (click)="createItem()" [disabled]="!newSlug || !newNombre || isLoading()"
+                    class="add-btn">
+                    <ion-icon name="add" slot="start"></ion-icon>
+                    Agregar
+                </ion-button>
+            </div>
+        </div>
+
+        <!-- List Section -->
+        <div class="list-section">
+            <h3>Existentes ({{ items().length }})</h3>
+
+            <div class="loading-state" *ngIf="isLoading()">
+                <ion-spinner name="crescent"></ion-spinner>
+            </div>
+
+            <ion-list *ngIf="!isLoading()">
+                <ion-item *ngFor="let item of items()" class="list-item">
+                    <ion-label>
+                        <h2>{{ item.nombre }}</h2>
+                        <p>{{ item.slug }}</p>
+                    </ion-label>
+                    <ion-button fill="clear" color="danger" slot="end" (click)="deleteItem(item.id)">
+                        <ion-icon name="trash" slot="icon-only"></ion-icon>
+                    </ion-button>
+                </ion-item>
+            </ion-list>
+
+            <div class="empty-state" *ngIf="!isLoading() && items().length === 0">
+                <p>No hay elementos creados aún.</p>
+            </div>
+        </div>
+    </div>
+</ion-content>

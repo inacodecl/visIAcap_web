@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
     IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent,
-    IonItem, IonInput, IonList, IonSpinner, ModalController, ToastController
+    IonItem, IonInput, IonList, IonLabel, IonSpinner, ModalController, ToastController
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { close, trash, add, pricetags, list } from 'ionicons/icons';
@@ -18,7 +18,7 @@ import { ProyectoTag, ProyectoCategoria } from '../../../../core/models/proyecto
     imports: [
         CommonModule, FormsModule,
         IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent,
-        IonItem, IonInput, IonList, IonSpinner
+        IonItem, IonInput, IonList, IonLabel, IonSpinner
     ]
 })
 export class MetadataManagerModalComponent implements OnInit {
