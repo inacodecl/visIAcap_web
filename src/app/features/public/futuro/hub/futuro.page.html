@@ -1,9 +1,48 @@
 <ion-content [fullscreen]="true">
     <app-home-header></app-home-header>
 
-    <div class="ion-padding">
-        <h1>Futuro - Hub</h1>
-        <p>Sección de innovación estudiantil</p>
+    <div class="content-container ion-padding">
+        <div class="section-header">
+            <h1>Futuro <span class="highlight">Innovación</span></h1>
+            <p class="subtitle">Descubre los proyectos estudiantiles que tienen potencial de ser grandes a futuro.</p>
+        </div>
+
+        <ion-grid *ngIf="proyectos().length > 0; else emptyState">
+            <ion-row>
+                <ion-col size="12" size-md="6" size-lg="4" *ngFor="let p of proyectos()">
+                    <ion-card class="project-card glass-effect">
+                        <div class="card-image-container">
+                            <ion-img [src]="p.image_cover_url || 'assets/images/placeholder-project.jpg'"
+                                [alt]="p.titulo"></ion-img>
+                            <ion-badge color="tertiary" class="category-badge"
+                                *ngIf="p.categories && p.categories.length > 0">
+                                {{ p.categories[0].nombre }}
+                            </ion-badge>
+                        </div>
+                        <ion-card-header>
+                            <ion-card-title>{{ p.titulo }}</ion-card-title>
+                            <!-- <ion-card-subtitle>{{ p.start_date | date:'yyyy' }}</ion-card-subtitle> -->
+                        </ion-card-header>
+                        <ion-card-content>
+                            <p class="summary">{{ p.resumen }}</p>
+                            <div class="actions">
+                                <ion-button expand="block" fill="outline" color="light" class="view-btn">
+                                    Ver Proyecto <ion-icon name="arrow-forward" slot="end"></ion-icon>
+                                </ion-button>
+                            </div>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <ng-template #emptyState>
+            <div class="empty-state">
+                <img src="assets/icon/logo-inacap-60.png" alt="Inacap" class="opacity-logo">
+                <h3>Próximamente</h3>
+                <p>Estamos preparando los mejores proyectos de innovación para ti.</p>
+            </div>
+        </ng-template>
     </div>
 
     <app-home-footer></app-home-footer>

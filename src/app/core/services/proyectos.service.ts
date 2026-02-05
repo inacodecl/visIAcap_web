@@ -18,11 +18,17 @@ export class ProyectosService {
     constructor() { }
 
     /**
-     * Obtiene todos los proyectos de tipo 'presente'.
+     * Obtiene todos los proyectos filtrados por tipo.
      * @param locale Idioma (es, en)
+     * @param tipo Tipo de proyecto (presente, futuro)
      */
-    getProyectos(locale: string = 'es'): Observable<Proyecto[]> {
-        return this.http.get<Proyecto[]>(`${this.API_URL}/proyectos`, { params: { lang: locale } }).pipe(
+    getProyectos(locale: string = 'es', tipo?: string, isAdmin: boolean = false): Observable<Proyecto[]> {
+        const params: any = { lang: locale };
+        if (tipo) params.tipo = tipo;
+
+        const endpoint = isAdmin ? `${this.API_URL}/proyectos/admin/list` : `${this.API_URL}/proyectos`;
+
+        return this.http.get<Proyecto[]>(endpoint, { params }).pipe(
             tap(data => this._proyectos.set(data))
         );
     }

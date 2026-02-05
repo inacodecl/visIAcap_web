@@ -4,8 +4,9 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormArray } fr
 import {
     IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonProgressBar,
     IonContent, IonItem, IonLabel, IonInput, IonNote, IonTextarea, IonToggle,
-    IonGrid, IonRow, IonCol, IonSelect, IonSelectOption, ModalController
+    IonGrid, IonRow, IonCol, IonSelect, IonSelectOption, ModalController, ToastController
 } from '@ionic/angular/standalone';
+import { HttpErrorResponse } from '@angular/common/http';
 import { addIcons } from 'ionicons';
 import {
     close, create, globe, people, pricetags, add, trash, images, arrowBack, arrowForward, save
@@ -29,6 +30,7 @@ import { forkJoin } from 'rxjs';
 export class ProjectManagerCreateComponent implements OnInit {
     private fb = inject(FormBuilder);
     private modalCtrl = inject(ModalController);
+    private toastCtrl = inject(ToastController);
     private proyectosService = inject(ProyectosService);
 
     @Input() proyecto: Proyecto | null = null; // Si viene, es edición
@@ -45,6 +47,7 @@ export class ProjectManagerCreateComponent implements OnInit {
     projectForm: FormGroup = this.fb.group({
         slug: ['', [Validators.required, Validators.pattern(/^[a-z0-9-]+$/)]],
         titulo: ['', [Validators.required, Validators.maxLength(150)]],
+        tipo: ['presente', Validators.required], // Nuevo campo
         resumen: [''],
         descripcion: [''],
         start_date: [''],
@@ -77,6 +80,26 @@ export class ProjectManagerCreateComponent implements OnInit {
             // Default member if creating fresh
             this.addMember();
         }
+
+        // Auto-generate slug from title
+        this.projectForm.get('titulo')?.valueChanges.subscribe(value => {
+            if (!this.proyecto && value) {
+                const slugValues = this.generateSlug(value);
+                // Solo actualizar si el usuario no ha tocado mucho el slug (opcional)
+                // O simplemente sobrescribir si es creación nueva en tiempo real
+                this.projectForm.patchValue({ slug: slugValues }, { emitEvent: false });
+            }
+        });
+    }
+
+    generateSlug(text: string): string {
+        return text
+            .toString()
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, '-')     // Replace spaces with -
+            .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+            .replace(/\-\-+/g, '-');  // Replace multiple - with single -
     }
 
     loadMetadata() {
@@ -138,6 +161,7 @@ export class ProjectManagerCreateComponent implements OnInit {
         this.projectForm.patchValue({
             slug: p.slug,
             titulo: p.titulo,
+            tipo: p.tipo, // Patch tipo
             resumen: p.resumen,
             descripcion: p.descripcion,
             start_date: startFormatted,
@@ -187,7 +211,6 @@ export class ProjectManagerCreateComponent implements OnInit {
 
         this.isLoading = true;
         const formValue = { ...this.projectForm.value };
-        formValue.tipo = 'presente'; // Force type
 
         const request$ = this.proyecto
             ? this.proyectosService.updateProyecto(this.proyecto.id, formValue)
@@ -196,12 +219,30 @@ export class ProjectManagerCreateComponent implements OnInit {
         request$.subscribe({
             next: () => {
                 this.isLoading = false;
+                this.presentToast('Proyecto guardado exitosamente', 'success');
                 this.modalCtrl.dismiss(true, 'confirm');
             },
-            error: (err) => {
+            error: (err: HttpErrorResponse) => {
                 console.error(err);
                 this.isLoading = false;
+                if (err.status === 409) {
+                    this.presentToast('Error: El Slug (URL) ya existe. Intenta con otro.', 'danger');
+                    // Opcional: mover al paso 1 para que el usuario lo vea
+                    this.goToStep(1);
+                } else {
+                    this.presentToast('Ocurrió un error al guardar el proyecto', 'danger');
+                }
             }
         });
+    }
+
+    async presentToast(message: string, color: 'success' | 'danger') {
+        const toast = await this.toastCtrl.create({
+            message,
+            duration: 3000,
+            color,
+            position: 'bottom'
+        });
+        await toast.present();
     }
 }

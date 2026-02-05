@@ -53,6 +53,14 @@
                         <ion-input type="text" formControlName="titulo" placeholder="Nombre del proyecto"></ion-input>
                     </ion-item>
 
+                    <ion-item class="input-item" lines="none">
+                        <ion-label position="stacked">Tipo de Proyecto</ion-label>
+                        <ion-select formControlName="tipo" placeholder="Seleccione tipo">
+                            <ion-select-option value="presente">Presente (Sede)</ion-select-option>
+                            <ion-select-option value="futuro">Futuro (Innovación)</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+
                     <ion-item class="input-item full-width" lines="none">
                         <ion-label position="stacked">Resumen</ion-label>
                         <ion-textarea formControlName="resumen" rows="3"

@@ -1,9 +1,11 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import {
     IonHeader, IonContent, IonGrid, IonRow, IonCol,
     IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBadge, IonButton, IonBackButton, IonIcon,
-    IonSearchbar, IonButtons, ModalController, AlertController, ToastController
+    IonSearchbar, IonButtons, ModalController, AlertController, ToastController,
+    IonToolbar, IonSegment, IonSegmentButton, IonLabel, IonTitle
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -20,10 +22,10 @@ import { MetadataManagerModalComponent } from './metadata-manager-modal/metadata
     styleUrls: ['./project-manager.page.scss'],
     standalone: true,
     imports: [
-        CommonModule,
+        CommonModule, FormsModule,
         IonHeader, IonContent, IonGrid, IonRow, IonCol,
         IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBadge, IonButton, IonBackButton, IonIcon,
-        IonSearchbar, IonButtons
+        IonSearchbar, IonButtons, IonToolbar, IonSegment, IonSegmentButton, IonLabel
     ]
 })
 export class ProjectManagerPage implements OnInit {
@@ -34,6 +36,7 @@ export class ProjectManagerPage implements OnInit {
 
     // Signals
     searchTerm = signal('');
+    currentType = signal('presente'); // Default tab
     proyectos = this.proyectosService.proyectos;
 
     // Computed Filter
@@ -54,7 +57,12 @@ export class ProjectManagerPage implements OnInit {
     }
 
     loadProyectos() {
-        this.proyectosService.getProyectos('es').subscribe();
+        this.proyectosService.getProyectos('es', this.currentType(), true).subscribe();
+    }
+
+    segmentChanged(event: any) {
+        this.currentType.set(event.detail.value);
+        this.loadProyectos();
     }
 
     // --- PROJECT MODAL HANDLER ---
