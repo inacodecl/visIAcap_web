@@ -32,6 +32,26 @@ $panel-dark: #1E293B;
     justify-content: center;
     zoom: 1.5; //forzando el tamaño del header
 
+    .header-content-wrapper {
+        width: 100%;
+        max-width: 1400px; // Un poco más ancho para dar espacio
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .header-back-btn {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(50%);
+        z-index: 20;
+        // Ajuste de escala dado el zoom del header padre
+        zoom: 0.8;
+    }
+
     app-home-header {
         width: 100%;
         height: 100%;

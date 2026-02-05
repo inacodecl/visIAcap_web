@@ -1,9 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonImg, IonBadge, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { HomeHeaderComponent } from '../../../../components/headers/home-header/home-header.component';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
+import { ButtonBackComponent } from '../../../../components/buttons/button-back/button-back.component';
 import { ProyectosService } from '../../../../core/services/proyectos.service';
 import { addIcons } from 'ionicons';
 import { arrowForward } from 'ionicons/icons';
@@ -14,8 +16,9 @@ import { arrowForward } from 'ionicons/icons';
     styleUrls: ['./futuro.page.scss'],
     standalone: true,
     imports: [
-        IonContent, CommonModule, FormsModule, HomeHeaderComponent, HomeFooterComponent,
-        IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonImg, IonBadge, IonButton, IonIcon
+        IonContent, CommonModule, FormsModule, HomeHeaderComponent, HomeFooterComponent, RouterModule,
+        IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonImg, IonBadge, IonButton, IonIcon,
+        ButtonBackComponent
     ]
 })
 export class FuturoPage implements OnInit {

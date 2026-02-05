@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { HomeHeaderComponent } from '../../../../components/headers/home-header/home-header.component';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
 import { WhiteCubeComponent } from '../../../../components/background/brillo/white-cube/white-cube.component';
+import { ButtonBackComponent } from '../../../../components/buttons/button-back/button-back.component';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, timeOutline, chatbubblesOutline, arrowForwardOutline, playOutline } from 'ionicons/icons';
 
@@ -23,7 +24,9 @@ import { arrowBackOutline, timeOutline, chatbubblesOutline, arrowForwardOutline,
         HomeHeaderComponent,
         HomeFooterComponent,
         WhiteCubeComponent,
-        IonHeader
+        WhiteCubeComponent,
+        IonHeader,
+        ButtonBackComponent
     ]
 })
 export class PasadoPage implements OnInit {

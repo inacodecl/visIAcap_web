@@ -1,37 +1,52 @@
 <ion-content [fullscreen]="true">
-    <app-home-header></app-home-header>
+    <!-- Custom Header: Replicated from Presente for consistency -->
+    <div class="custom-header">
+        <div class="logo-area" routerLink="/home">
+            <img src="assets/icon/logo-inacap-60-v2.png" alt="Inacap 60 Años" class="header-logo">
+        </div>
+        <div class="campus-text">
+            <span class="main-text">SEDE</span>
+            <span class="sub-text">RENCA</span>
+        </div>
+    </div>
 
-    <div class="content-container ion-padding">
-        <div class="section-header">
-            <h1>Futuro <span class="highlight">Innovación</span></h1>
-            <p class="subtitle">Descubre los proyectos estudiantiles que tienen potencial de ser grandes a futuro.</p>
+    <div class="main-container">
+        <!-- Back Button Row -->
+        <div class="header-back-row">
+            <app-button-back></app-button-back>
         </div>
 
-        <ion-grid *ngIf="proyectos().length > 0; else emptyState">
+        <div class="page-header">
+            <h1>Futuro <span class="highlight">Innovación</span></h1>
+            <p>Descubre los proyectos estudiantiles que moldearán el mañana.</p>
+        </div>
+
+        <!-- Grid of Projects (Light Theme) -->
+        <ion-grid class="projects-grid" *ngIf="proyectos().length > 0; else emptyState">
             <ion-row>
-                <ion-col size="12" size-md="6" size-lg="4" *ngFor="let p of proyectos()">
-                    <ion-card class="project-card glass-effect">
-                        <div class="card-image-container">
-                            <ion-img [src]="p.image_cover_url || 'assets/images/placeholder-project.jpg'"
-                                [alt]="p.titulo"></ion-img>
-                            <ion-badge color="tertiary" class="category-badge"
-                                *ngIf="p.categories && p.categories.length > 0">
-                                {{ p.categories[0].nombre }}
-                            </ion-badge>
-                        </div>
-                        <ion-card-header>
-                            <ion-card-title>{{ p.titulo }}</ion-card-title>
-                            <!-- <ion-card-subtitle>{{ p.start_date | date:'yyyy' }}</ion-card-subtitle> -->
-                        </ion-card-header>
-                        <ion-card-content>
-                            <p class="summary">{{ p.resumen }}</p>
-                            <div class="actions">
-                                <ion-button expand="block" fill="outline" color="light" class="view-btn">
-                                    Ver Proyecto <ion-icon name="arrow-forward" slot="end"></ion-icon>
-                                </ion-button>
+                <ion-col size="12" size-md="6" size-lg="4" *ngFor="let p of proyectos(); let i = index"
+                    [style.animation-delay]="(i * 100) + 'ms'">
+
+                    <div class="project-card-custom">
+                        <div class="card-img-container">
+                            <div class="card-img"
+                                [style.backgroundImage]="'url(' + (p.image_cover_url || 'assets/images/placeholder-project.jpg') + ')'">
                             </div>
-                        </ion-card-content>
-                    </ion-card>
+                            <span class="category-badge" *ngIf="p.categories && p.categories.length > 0">
+                                {{ p.categories[0].nombre }}
+                            </span>
+                        </div>
+
+                        <div class="card-info">
+                            <h3>{{ p.titulo }}</h3>
+                            <p class="card-desc">{{ p.resumen }}</p>
+                            <div class="card-action">
+                                <span>Ver Proyecto</span>
+                                <ion-icon name="arrow-forward"></ion-icon>
+                            </div>
+                        </div>
+                    </div>
+
                 </ion-col>
             </ion-row>
         </ion-grid>
