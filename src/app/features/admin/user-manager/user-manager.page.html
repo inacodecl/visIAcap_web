@@ -1,109 +1,187 @@
-<ion-header [translucent]="true" class="admin-header">
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="/admin/dashboard"></ion-back-button>
-        </ion-buttons>
-        <ion-title>Gestión de Usuarios (Super Admin)</ion-title>
-    </ion-toolbar>
+<ion-header class="ion-no-border header-inacap">
+    <div class="top-section">
+        <div class="header-content">
+            <ion-buttons slot="start" class="menu-btn-container">
+                <ion-back-button defaultHref="/admin/dashboard" color="light"></ion-back-button>
+            </ion-buttons>
+
+            <div class="logo-container">
+                <img src="assets/icon/logo-inacap-60.png" alt="Logo Inacap" class="logo-placeholder">
+            </div>
+
+            <div class="header-text">
+                <span class="sede-text">SEDE<br>RENCA (ADMIN)</span>
+            </div>
+        </div>
+    </div>
 </ion-header>
 
 <ion-content [fullscreen]="true" [scrollY]="true" class="admin-content">
-    <div class="container">
+    <div class="glass-container">
 
-        <div class="section-header">
-            <h2>Directorio de Cuentas</h2>
-            <p>Administra accesos y roles del sistema.</p>
+        <!-- HEADER ROW: Título + Buscador -->
+        <div class="page-header-row">
+            <h1 class="page-title">
+                <ion-icon name="people"></ion-icon>
+                Gestión de Usuarios
+            </h1>
+            <div class="search-wrapper">
+                <ion-searchbar placeholder="Buscar por nombre o email..." [debounce]="250"
+                    (ionInput)="searchTerm.set($any($event).target.value)" animated="true" class="neon-searchbar">
+                </ion-searchbar>
+            </div>
+        </div>
+
+        <!-- ACTION CARDS -->
+        <ion-grid class="action-cards-grid ion-margin-bottom">
+            <ion-row>
+                <!-- NEW USER CARD (Full Width) -->
+                <ion-col size="12">
+                    <div class="quick-card" (click)="openCreateModal()">
+                        <div class="icon-bg"><ion-icon name="person-add"></ion-icon></div>
+                        <div class="content">
+                            <h3>Crear Nuevo Usuario</h3>
+                            <p>Registrar un nuevo administrador o editor en la plataforma</p>
+                        </div>
+                        <ion-icon name="arrow-forward" class="arrow-icon"></ion-icon>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <div class="status-summary">
+            <p>Mostrando <span class="highlight">{{ filteredUsers().length }}</span> usuarios</p>
         </div>
 
         <!-- Loading State -->
         <div *ngIf="isLoading" class="ion-text-center ion-padding">
-            <ion-spinner></ion-spinner>
+            <ion-spinner color="light"></ion-spinner>
         </div>
 
-        <!-- Lista de Usuarios -->
-        <ion-list *ngIf="!isLoading" class="user-list">
-            <ion-item-group *ngFor="let user of users">
-                <ion-item lines="full" class="user-item">
-                    <ion-icon slot="start" name="person" class="avatar-icon"></ion-icon>
-                    <ion-label>
-                        <h2>{{ user.nombre }} {{ user.apellido }}</h2>
-                        <p>{{ user.email }}</p>
-                    </ion-label>
+        <!-- LIST GRID (USERS) -->
+        <ion-grid *ngIf="!isLoading">
+            <ion-row>
+                <ion-col size="12" size-md="6" size-xl="4" *ngFor="let user of filteredUsers()">
+                    <ion-card class="glass-card">
+                        <div class="card-glow"></div>
+                        <ion-card-header>
+                            <div class="avatar-container">
+                                <ion-icon name="person"></ion-icon>
+                            </div>
+                            <div class="header-info">
+                                <ion-card-title>{{ user.nombre }} {{ user.apellido }}</ion-card-title>
+                                <span class="email-text">{{ user.email }}</span>
+                            </div>
+                        </ion-card-header>
+                        <ion-card-content>
+                            <!-- Badge de Rol -->
+                            <div>
+                                <span class="role-badge" [ngClass]="user.rol">
+                                    {{ user.rol === 'super_admin' ? 'Super Admin' : user.rol }}
+                                </span>
+                            </div>
 
-                    <div slot="end" class="item-actions">
-                        <ion-badge color="tertiary" class="role-badge">{{ user.rol }}</ion-badge>
-                        <ion-toggle [checked]="user.is_active"
-                            (ionChange)="toggleUserStatus(user, $event)"></ion-toggle>
+                            <div class="actions-panel">
+                                <!-- Status Toggle -->
+                                <div class="status-toggle" [class.active]="user.is_active">
+                                    <ion-toggle [checked]="user.is_active" (ionChange)="toggleUserStatus(user, $event)"
+                                        mode="ios" color="success">
+                                    </ion-toggle>
+                                    <span>{{ user.is_active ? 'Activo' : 'Inactivo' }}</span>
+                                </div>
+
+                                <!-- Buttons (Solo si no es uno mismo, lógica podría mejorar) -->
+                                <div class="buttons">
+                                    <!-- Aquí se podrían agregar botón de editar si hubiera endpoint -->
+                                    <ion-button fill="clear" color="danger" (click)="deleteUser(user.id)"
+                                        title="Eliminar Usuario">
+                                        <ion-icon slot="icon-only" name="trash"></ion-icon>
+                                    </ion-button>
+                                </div>
+                            </div>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <!-- Empty State -->
+        <div class="empty-state" *ngIf="!isLoading && filteredUsers().length === 0">
+            <div class="hologram-circle"></div>
+            <p>No se encontraron usuarios.</p>
+        </div>
+
+    </div>
+
+    <!-- Modal Formulario Rediseñado -->
+    <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="user-modal-neon">
+        <ng-template>
+            <div class="modal-wrapper-custom">
+                <!-- Header con Gradiente -->
+                <div class="modal-header-neon">
+                    <div class="header-text">
+                        <h2>Nuevo <span>Usuario</span></h2>
+                        <p>Complete los datos para registrar acceso</p>
                     </div>
-                </ion-item>
-            </ion-item-group>
-        </ion-list>
+                    <ion-button fill="clear" color="light" class="close-btn" (click)="closeModal()">
+                        <ion-icon name="close" slot="icon-only"></ion-icon>
+                    </ion-button>
+                </div>
 
-        <!-- FAB para Crear -->
-        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-            <ion-fab-button color="tertiary" (click)="openCreateModal()">
-                <ion-icon name="add"></ion-icon>
-            </ion-fab-button>
-        </ion-fab>
+                <!-- Body Estático (sin scroll) -->
+                <div class="modal-body-static">
+                    <form [formGroup]="userForm" (ngSubmit)="createUser()" class="slide-in-form">
 
-        <!-- Modal Formulario -->
-        <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
-            <ng-template>
-                <ion-header>
-                    <ion-toolbar>
-                        <ion-title>Nuevo Usuario</ion-title>
-                        <ion-buttons slot="end">
-                            <ion-button (click)="closeModal()">
-                                <ion-icon name="close"></ion-icon>
-                            </ion-button>
-                        </ion-buttons>
-                    </ion-toolbar>
-                </ion-header>
-                <ion-content class="ion-padding">
-                    <form [formGroup]="userForm" (ngSubmit)="createUser()">
+                        <div class="form-grid">
+                            <ion-item class="form-item-neon" lines="none">
+                                <ion-icon name="person" slot="start" class="input-icon"></ion-icon>
+                                <ion-input label="Nombre" labelPlacement="floating"
+                                    formControlName="nombre"></ion-input>
+                            </ion-item>
 
-                        <ion-item class="form-item">
-                            <ion-label position="stacked">Nombre</ion-label>
-                            <ion-input formControlName="nombre"></ion-input>
-                        </ion-item>
+                            <ion-item class="form-item-neon" lines="none">
+                                <ion-icon name="person" slot="start" class="input-icon"></ion-icon>
+                                <ion-input label="Apellido" labelPlacement="floating"
+                                    formControlName="apellido"></ion-input>
+                            </ion-item>
 
-                        <ion-item class="form-item">
-                            <ion-label position="stacked">Apellido</ion-label>
-                            <ion-input formControlName="apellido"></ion-input>
-                        </ion-item>
+                            <ion-item class="form-item-neon full-width" lines="none">
+                                <ion-icon name="mail" slot="start" class="input-icon"></ion-icon>
+                                <ion-input label="Correo Electrónico" labelPlacement="floating" type="email"
+                                    formControlName="email"></ion-input>
+                            </ion-item>
 
-                        <ion-item class="form-item">
-                            <ion-label position="stacked">Email</ion-label>
-                            <ion-input type="email" formControlName="email"></ion-input>
-                        </ion-item>
+                            <ion-item class="form-item-neon full-width" lines="none">
+                                <ion-icon name="lock-closed" slot="start" class="input-icon"></ion-icon>
+                                <ion-input label="Contraseña" labelPlacement="floating" type="password"
+                                    formControlName="password"></ion-input>
+                            </ion-item>
 
-                        <ion-item class="form-item">
-                            <ion-label position="stacked">Contraseña</ion-label>
-                            <ion-input type="password" formControlName="password"></ion-input>
-                        </ion-item>
+                            <ion-item class="form-item-neon full-width" lines="none">
+                                <ion-icon name="shield" slot="start" class="input-icon"></ion-icon>
+                                <ion-select label="Rol de Usuario" labelPlacement="floating" formControlName="rol"
+                                    interface="popover">
+                                    <ion-select-option value="super_admin">⚡ Super Admin (Acceso
+                                        Total)</ion-select-option>
+                                    <ion-select-option value="admin">🔧 Admin (Gestión de Contenido)</ion-select-option>
+                                    <ion-select-option value="editor">✏️ Editor (Solo Edición)</ion-select-option>
+                                    <ion-select-option value="viewer">👀 Viewer (Solo Lectura)</ion-select-option>
+                                </ion-select>
+                            </ion-item>
+                        </div>
 
-                        <ion-item class="form-item">
-                            <ion-label position="stacked">Rol</ion-label>
-                            <ion-select formControlName="rol">
-                                <ion-select-option value="super_admin">Super Admin</ion-select-option>
-                                <ion-select-option value="admin">Admin</ion-select-option>
-                                <ion-select-option value="editor">Editor</ion-select-option>
-                                <ion-select-option value="viewer">Viewer</ion-select-option>
-                            </ion-select>
-                        </ion-item>
-
-                        <div class="modal-actions ion-margin-top">
-                            <ion-button expand="block" type="submit" [disabled]="userForm.invalid || isLoading">
-                                {{ isLoading ? 'Creando...' : 'Crear Usuario' }}
+                        <div class="modal-actions">
+                            <ion-button expand="block" type="submit" [disabled]="userForm.invalid || isLoading"
+                                class="create-btn-neon">
+                                <ion-icon name="rocket" slot="start"></ion-icon>
+                                {{ isLoading ? 'Procesando...' : 'Crear Cuenta' }}
                             </ion-button>
                         </div>
 
                     </form>
-                </ion-content>
-            </ng-template>
-        </ion-modal>
+                </div>
+            </div>
+        </ng-template>
+    </ion-modal>
 
-    </div>
-    <!-- Spacer for FAB visibility -->
-    <div class="fab-spacer"></div>
 </ion-content>

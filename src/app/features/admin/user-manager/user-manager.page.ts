@@ -1,17 +1,16 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
     IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
-    IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent,
+    IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle,
     IonItem, IonLabel, IonInput, IonSelect, IonSelectOption,
-    IonList, IonBadge, IonModal, IonFab, IonFabButton, IonToggle,
-    IonSpinner, IonItemGroup
+    IonModal, IonToggle, IonSpinner, IonSearchbar
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { add, create, trash, close, person } from 'ionicons/icons';
+import { add, create, trash, close, person, people, personAdd, arrowForward, mail, lockClosed, shield, rocket } from 'ionicons/icons';
 import { UserService } from '../../../core/services/user.service';
-import { Usuario, UsuarioRol } from '../../../core/models/usuario.model';
+import { Usuario } from '../../../core/models/usuario.model';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
@@ -23,19 +22,28 @@ import { AuthService } from '../../../core/services/auth.service';
         CommonModule,
         ReactiveFormsModule,
         IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
-        IonIcon,
+        IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle,
         IonItem, IonLabel, IonInput, IonSelect, IonSelectOption,
-        IonList, IonBadge, IonModal, IonFab, IonFabButton, IonToggle,
-        IonSpinner, IonItemGroup
+        IonModal, IonToggle, IonSpinner, IonSearchbar
     ]
 })
 export class UserManagerPage implements OnInit {
     private userService = inject(UserService);
     private fb = inject(FormBuilder);
 
-    users: Usuario[] = []; // Asumimos array simple por ahora
+    users = signal<Usuario[]>([]);
     isLoading = false;
     isModalOpen = false;
+    searchTerm = signal('');
+
+    // Computed property para filtrar usuarios
+    filteredUsers = computed(() => {
+        const term = this.searchTerm().toLowerCase();
+        return this.users().filter(user => {
+            const fullName = `${user.nombre} ${user.apellido}`.toLowerCase();
+            return fullName.includes(term) || user.email.toLowerCase().includes(term);
+        });
+    });
 
     userForm: FormGroup = this.fb.group({
         nombre: ['', [Validators.required]],
@@ -46,7 +54,7 @@ export class UserManagerPage implements OnInit {
     });
 
     constructor() {
-        addIcons({ add, create, trash, close, person });
+        addIcons({ people, personAdd, arrowForward, person, trash, close, mail, lockClosed, shield, rocket, add, create });
     }
 
     ngOnInit() {
@@ -57,10 +65,8 @@ export class UserManagerPage implements OnInit {
         this.isLoading = true;
         this.userService.getUsuarios().subscribe({
             next: (response: any) => {
-                console.log('DEBUG: Usuarios RAW response:', response);
-                // Adaptar según respuesta. Si es array direct:
-                this.users = Array.isArray(response) ? response : response.data || [];
-                console.log('DEBUG: Usuarios procesados:', this.users);
+                const data = Array.isArray(response) ? response : response.data || [];
+                this.users.set(data);
                 this.isLoading = false;
             },
             error: (err) => {
@@ -102,18 +108,38 @@ export class UserManagerPage implements OnInit {
         });
     }
 
+    deleteUser(id: number | undefined) {
+        if (!id) return;
+        if (confirm('¿Estás seguro de eliminar este usuario?')) {
+            this.userService.deleteUsuario(id).subscribe({
+                next: () => {
+                    this.showToast('Usuario eliminado correctamente');
+                    this.loadUsers();
+                },
+                error: (err) => {
+                    console.error(err);
+                    this.showToast('Error eliminando usuario', 'danger');
+                }
+            })
+        }
+    }
+
     toggleUserStatus(user: Usuario, event: any) {
         const isActive = event.detail.checked;
-
-        // Convert boolean to 1/0 for MySQL if needed, or backend handles it.
-        // Tipado dice is_active: boolean
-        if (user.is_active === isActive) return;
+        if (user.is_active === isActive) return; // Evitar llamadas innecesarias
 
         this.userService.updateUsuario(user.id, { is_active: isActive }).subscribe({
-            next: () => this.showToast(`Usuario ${isActive ? 'activado' : 'desactivado'}`),
+            next: () => {
+                this.showToast(`Usuario ${isActive ? 'activado' : 'desactivado'}`);
+                // Actualizar localmente para reflejar cambio inmediato en UI si fuera necesario
+                // Pero como llamamos al backend, mejor recargar o actualizar el signal específico
+                this.users.update(currentUsers =>
+                    currentUsers.map(u => u.id === user.id ? { ...u, is_active: isActive } : u)
+                );
+            },
             error: (err) => {
                 console.error(err);
-                event.target.checked = !isActive;
+                event.target.checked = !isActive; // Revertir toggle visual
                 this.showToast('Error cambiando estado', 'danger');
             }
         });
