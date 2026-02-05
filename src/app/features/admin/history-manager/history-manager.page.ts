@@ -4,12 +4,12 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import {
     IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
     IonCardTitle, IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
-    IonList, IonListHeader, IonBadge, IonModal, IonFab, IonFabButton,
+    IonList, IonListHeader, IonBadge, IonModal,
     IonSearchbar, IonNote,
     IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { add, create, trash, close, checkmarkCircle, search, eye, hourglass, save } from 'ionicons/icons';
+import { add, create, trash, close, checkmarkCircle, search, eye, hourglass, save, time, arrowForward } from 'ionicons/icons';
 import { TimelineService } from '../../../core/services/timeline.service';
 import { Historia } from '../../../core/models/historia.model';
 
@@ -24,7 +24,7 @@ import { Historia } from '../../../core/models/historia.model';
         IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
         IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle,
         IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
-        IonBadge, IonModal, IonFab, IonFabButton,
+        IonBadge, IonModal,
         IonSearchbar, IonNote,
     ]
 })
@@ -63,7 +63,7 @@ export class HistoryManagerPage implements OnInit {
     });
 
     constructor() {
-        addIcons({ add, create, trash, close, checkmarkCircle, search, eye, hourglass, save });
+        addIcons({ time, arrowForward, create, trash, close, eye, add, checkmarkCircle, search, hourglass, save });
     }
 
     ngOnInit() {

@@ -5,11 +5,12 @@ import {
     IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
     IonIcon, IonCard, IonCardContent, IonCardHeader,
     IonCardTitle, IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
-    IonList, IonBadge, IonModal, IonFab, IonFabButton,
-    IonSearchbar, IonNote, IonSpinner
+    IonList, IonBadge, IonModal,
+    IonSearchbar, IonSpinner,
+    IonGrid, IonRow, IonCol
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { add, create, trash, close, checkmarkCircle, search, videocam, save, refresh } from 'ionicons/icons';
+import { add, create, trash, close, checkmarkCircle, search, videocam, save, refresh, arrowForward } from 'ionicons/icons';
 import { EntrevistaService } from '../../../core/services/entrevista.service';
 import { Entrevista } from '../../../core/models/entrevista.model';
 
@@ -24,8 +25,9 @@ import { Entrevista } from '../../../core/models/entrevista.model';
         IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
         IonIcon,
         IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
-        IonList, IonModal, IonFab, IonFabButton,
-        IonSearchbar, IonNote, IonSpinner
+        IonModal,
+        IonSearchbar, IonSpinner,
+        IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonBadge
     ]
 })
 export class InterviewManagerPage implements OnInit {
@@ -65,7 +67,7 @@ export class InterviewManagerPage implements OnInit {
     });
 
     constructor() {
-        addIcons({ refresh, videocam, create, trash, add, close, save, checkmarkCircle, search });
+        addIcons({ videocam, add, arrowForward, refresh, create, trash, close, save, checkmarkCircle, search });
     }
 
     ngOnInit() {

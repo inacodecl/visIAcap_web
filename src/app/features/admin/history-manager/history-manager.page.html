@@ -20,12 +20,35 @@
 <ion-content [fullscreen]="true" [scrollY]="true" class="admin-content">
     <div class="glass-container">
 
-        <!-- Search Bar Retro-Futurista -->
-        <div class="search-wrapper">
-            <ion-searchbar placeholder="Buscar en la base de datos..." [debounce]="250"
-                (ionInput)="searchTerm.set($any($event).target.value)" animated="true" class="neon-searchbar">
-            </ion-searchbar>
+        <!-- HEADER ROW: Título + Buscador -->
+        <div class="page-header-row">
+            <h1 class="page-title">
+                <ion-icon name="time"></ion-icon>
+                Gestión Timeline
+            </h1>
+            <div class="search-wrapper">
+                <ion-searchbar placeholder="Buscar en la base de datos..." [debounce]="250"
+                    (ionInput)="searchTerm.set($any($event).target.value)" animated="true" class="neon-searchbar">
+                </ion-searchbar>
+            </div>
         </div>
+
+        <!-- ACTION CARDS -->
+        <ion-grid class="action-cards-grid ion-margin-bottom">
+            <ion-row>
+                <!-- CARD: CREAR NUEVO EVENTO -->
+                <ion-col size="12" size-md="12">
+                    <div class="quick-card main-action" (click)="openCreateModal()">
+                        <div class="icon-bg"><ion-icon name="time"></ion-icon></div>
+                        <div class="content">
+                            <h3>Nuevo Hito Histórico</h3>
+                            <p>Agregar un acontecimiento a la línea de tiempo</p>
+                        </div>
+                        <ion-icon name="arrow-forward" class="arrow-icon"></ion-icon>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
 
         <!-- Mensaje de Estado -->
         <div class="status-summary">
@@ -169,9 +192,4 @@
 
         <div class="fab-spacer"></div>
     </div>
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="fixed-fab">
-        <ion-fab-button color="danger" (click)="openCreateModal()" class="create-fab">
-            <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-    </ion-fab>
 </ion-content>

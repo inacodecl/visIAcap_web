@@ -10,8 +10,61 @@ $panel-dark: #1E293B;
 
 .pasado-content {
     --background: #{$bg-dark};
-    --overflow: hidden; // Prevenir scroll en ion-content
+    --overflow: hidden;
 }
+
+// ==============
+// HEADER STYLE 
+// ==============
+.pasado-header {
+    --background: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    overflow: hidden;
+    height: var(--current-height);
+    padding: 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    zoom: 1.5; //forzando el tamaño del header
+
+    app-home-header {
+        width: 100%;
+        height: 100%;
+
+        // Aplicar variables CSS a los elementos internos del header
+        ::ng-deep .top-section {
+            height: 100% !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff !important; // Asegurar fondo blanco
+            padding: 0 !important; // Reset padding
+        }
+
+        ::ng-deep .header-content {
+            width: 100%;
+            padding: 0 2rem !important;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        ::ng-deep .logo-container img {
+            width: var(--current-logo-width) !important;
+            height: auto !important;
+        }
+
+        ::ng-deep .header-text {
+            transform: scale(var(--current-text-scale, 1));
+            transform-origin: right center;
+        }
+    }
+}
+
 
 // ========================================
 // MAIN CONTAINER
@@ -21,28 +74,19 @@ $panel-dark: #1E293B;
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: calc(100vh - 180px); // Header (~100px) + Footer (~80px)
-    max-height: calc(100vh - 180px);
+    margin-top: 230px; // Espacio para el header fijo
+    height: calc(100vh - 230px); // 150px Header + ~80px Footer
+    max-height: calc(100vh - 330px);
     padding: 12px;
-    gap: 12px;
+    gap: 15px;
     overflow: hidden;
 
     // Para pantallas pequeñas, apilar verticalmente
     @media (max-width: 768px) {
         flex-direction: column;
-        height: calc(100vh - 180px);
-        max-height: calc(100vh - 180px);
+        height: calc(100vh - 230px);
+        max-height: calc(100vh - 230px);
     }
-}
-
-// Grid pattern overlay
-.grid-pattern {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    opacity: 0.05;
-    pointer-events: none;
-    background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
 }
 
 // Glow effect
@@ -114,7 +158,7 @@ $panel-dark: #1E293B;
 // TIMELINE PORTAL (LEFT)
 // ========================================
 .timeline-portal {
-    background: #000;
+    background: #000000;
 
     &:hover {
         border-color: rgba($primary-red, 0.4);
@@ -160,7 +204,7 @@ $panel-dark: #1E293B;
         padding: 8px 16px;
         border-radius: 8px;
         font-family: monospace;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         border: 1px solid rgba(255, 255, 255, 0.2);
         animation: float 6s ease-in-out infinite;
 
@@ -170,7 +214,7 @@ $panel-dark: #1E293B;
         }
 
         &.bottom-badge {
-            bottom: 5%;
+            bottom: 14%;
             animation-delay: 1.5s;
         }
     }
@@ -302,7 +346,7 @@ $panel-dark: #1E293B;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding-top: 60%; // Empujar el panel hacia arriba pero dejando espacio para el año superior
+    padding-top: 90%; // Empujar el panel hacia arriba pero dejando espacio para el año superior
     pointer-events: none;
     transition: transform 0.3s;
 }
@@ -403,13 +447,13 @@ $panel-dark: #1E293B;
     z-index: 10;
 
     display: inline-block;
-    margin: 0 auto;
+    margin: 24rem auto;
     width: fit-content;
     padding: 8px 24px;
     border-radius: 50px;
     background: rgba(0, 0, 0, 0.5);
     color: white;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-family: monospace;
     text-transform: uppercase;
     letter-spacing: 3px;

@@ -22,7 +22,8 @@ import { arrowBackOutline, timeOutline, chatbubblesOutline, arrowForwardOutline,
         IonIcon,
         HomeHeaderComponent,
         HomeFooterComponent,
-        WhiteCubeComponent
+        WhiteCubeComponent,
+        IonHeader
     ]
 })
 export class PasadoPage implements OnInit {

@@ -63,35 +63,31 @@ export class DashboardPage implements OnInit {
     loadMetrics() {
         this.isLoading.set(true);
 
-        // Cargar datos en paralelo (simulado para las counts, idealmente el backend tendría un endpoint de stats)
-        // Como no tenemos endpoint de stats, haremos llamadas ligeras o obtendremos los arrays.
+        const isSuperAdmin = this.authService.isSuperAdmin;
 
-        // 1. Historias (Línea de tiempo)
-        const historias$ = this.timelineService.getHistorias('es', true);
+        // Array de promesas
+        const promises: Promise<any>[] = [];
 
-        // 2. Entrevistas
-        const entrevistas$ = this.entrevistaService.getEntrevistas(true);
+        if (isSuperAdmin) {
+            // SuperAdmin: Solo carga usuarios
+            promises.push(Promise.resolve([])); // Historias placeholder
+            promises.push(Promise.resolve([])); // Entrevistas placeholder
+            promises.push(Promise.resolve([])); // Proyectos placeholder
+            promises.push(this.toPromise(this.userService.getUsuarios(1, 1)));
+        } else {
+            // Admin (Content): Carga todo MENOS usuarios
+            promises.push(this.toPromise(this.timelineService.getHistorias('es', true)));
+            promises.push(this.toPromise(this.entrevistaService.getEntrevistas(true)));
+            promises.push(this.toPromise(this.proyectosService.getProyectos('es')));
+            promises.push(Promise.resolve(null)); // Usuarios placeholder
+        }
 
-        // 3. Proyectos
-        const proyectos$ = this.proyectosService.getProyectos('es');
-
-        // Ejecutar llamadas
-        // Nota: Para usuarios solo cargamos si es superadmin, pero para simplificar métricas cargaremos todo si es posible
-        // O manejaremos la lógica aquí.
-
-        // Usamos Promesas para gestionar la asincronía básica de carga simultánea
-        Promise.all([
-            this.toPromise(historias$),
-            this.toPromise(entrevistas$),
-            this.toPromise(proyectos$),
-            this.authService.isSuperAdmin ? this.toPromise(this.userService.getUsuarios(1, 1)) : Promise.resolve(null)
-        ]).then(([historias, entrevistas, proyectos, usuarios]) => {
-
+        Promise.all(promises).then(([historias, entrevistas, proyectos, usuarios]) => {
             this.stats.set({
                 historias: Array.isArray(historias) ? historias.length : 0,
                 entrevistas: Array.isArray(entrevistas) ? entrevistas.length : 0,
                 proyectos: Array.isArray(proyectos) ? proyectos.length : 0,
-                usuarios: usuarios && usuarios.total ? usuarios.total : (Array.isArray(usuarios) ? usuarios.length : 0) // Manejo flexible de respuesta usuarios
+                usuarios: this.extractTotal(usuarios)
             });
 
             this.isLoading.set(false);
@@ -99,6 +95,25 @@ export class DashboardPage implements OnInit {
             console.error('Error cargando métricas', err);
             this.isLoading.set(false);
         });
+    }
+
+    private extractTotal(response: any): number {
+        if (!response) return 0;
+        if (typeof response === 'number') return response;
+        if (Array.isArray(response)) return response.length;
+
+        // Estructura paginada común { data: [], meta: { total: 10 } }
+        if (response.meta) {
+            return response.meta.total || response.meta.totalItems || 0;
+        }
+
+        // Estructura plana con total { data: [], total: 10 }
+        if (response.total) return response.total;
+
+        // Fallback a longitud de data si existe
+        if (response.data && Array.isArray(response.data)) return response.data.length;
+
+        return 0;
     }
 
     // Helper para convertir observable a promesa y manejar errores sin romper el Promise.all
