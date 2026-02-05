@@ -7,7 +7,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { close, trash, add, pricetags, list } from 'ionicons/icons';
-import { ProyectosService } from '../../../../core/services/proyectos.service';
+import { MetadataService } from '../../../../core/services/metadata.service';
 import { ProyectoTag, ProyectoCategoria } from '../../../../core/models/proyecto.model';
 
 @Component({
@@ -23,7 +23,8 @@ import { ProyectoTag, ProyectoCategoria } from '../../../../core/models/proyecto
 })
 export class MetadataManagerModalComponent implements OnInit {
     private modalCtrl = inject(ModalController);
-    private proyectosService = inject(ProyectosService);
+    // Cambiado de ProyectosService a MetadataService
+    private metadataService = inject(MetadataService);
     private toastCtrl = inject(ToastController);
 
     @Input() type: 'tags' | 'categorias' = 'tags';
@@ -54,8 +55,8 @@ export class MetadataManagerModalComponent implements OnInit {
     loadItems() {
         this.isLoading.set(true);
         const request$ = this.type === 'tags'
-            ? this.proyectosService.getTags('es')
-            : this.proyectosService.getCategorias('es');
+            ? this.metadataService.getTags('es')
+            : this.metadataService.getCategorias('es');
 
         request$.subscribe({
             next: (data) => {
@@ -75,8 +76,8 @@ export class MetadataManagerModalComponent implements OnInit {
 
         const payload = { slug: this.newSlug, nombre_es: this.newNombre };
         const request$ = this.type === 'tags'
-            ? this.proyectosService.createTag(payload)
-            : this.proyectosService.createCategoria(payload);
+            ? this.metadataService.createTag(payload)
+            : this.metadataService.createCategoria(payload);
 
         request$.subscribe({
             next: () => {
@@ -97,8 +98,8 @@ export class MetadataManagerModalComponent implements OnInit {
         this.isLoading.set(true);
 
         const request$ = this.type === 'tags'
-            ? this.proyectosService.deleteTag(id)
-            : this.proyectosService.deleteCategoria(id);
+            ? this.metadataService.deleteTag(id)
+            : this.metadataService.deleteCategoria(id);
 
         request$.subscribe({
             next: () => {

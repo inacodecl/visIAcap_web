@@ -28,9 +28,19 @@ export interface Historia {
     categoria_id?: number;
 
     /**
-     * URL del recurso multimedia principal (imagen/video).
+     * URL del recurso multimedia principal (Portada).
      */
     media_url?: string;
+
+    /**
+     * Galería multimedia enriquecida (v2).
+     */
+    media?: HistoriaMedia[];
+
+    /**
+     * Etiquetas asociadas (v2).
+     */
+    tags?: HistoriaTag[];
 
     created_by?: number;
     updated_by?: number;
@@ -38,14 +48,21 @@ export interface Historia {
     updated_at: Date | string;
 
     // --- Datos de Contenido Localizado (Tabla: historia_i18n) ---
-    // Estos campos se unen al objeto principal según el idioma seleccionado.
-
-    /**
-     * Código del idioma (ej: 'es', 'en').
-     */
     locale?: string;
-
     titulo?: string;
     descripcion?: string;
     audio_url?: string;
+}
+
+export interface HistoriaMedia {
+    id?: number;
+    url: string;
+    tipo: 'image' | 'video' | 'audio';
+    alt?: string;
+}
+
+export interface HistoriaTag {
+    id: number;
+    slug: string;
+    nombre: string;
 }

@@ -174,6 +174,63 @@
                                     </ion-item>
                                 </div>
                             </div>
+
+                            <!-- SECCIÓN MULTIMEDIA -->
+                            <div class="form-group full-width">
+                                <h3>Galería Multimedia</h3>
+
+                                <div formArrayName="media">
+                                    <div *ngFor="let m of mediaArray.controls; let i = index" [formGroupName]="i"
+                                        class="media-item-row">
+                                        <ion-item class="input-item" lines="none">
+                                            <ion-icon name="images" slot="start" size="small"></ion-icon>
+                                            <ion-input formControlName="url"
+                                                placeholder="URL de la imagen o video (https://...)"></ion-input>
+
+                                            <!-- Tipo selector mini -->
+                                            <ion-select formControlName="tipo" interface="popover" slot="end"
+                                                class="mini-select">
+                                                <ion-select-option value="image">IMG</ion-select-option>
+                                                <ion-select-option value="video">VID</ion-select-option>
+                                            </ion-select>
+
+                                            <ion-button fill="clear" color="danger" slot="end"
+                                                (click)="removeMediaItem(i)">
+                                                <ion-icon name="trash" slot="icon-only"></ion-icon>
+                                            </ion-button>
+                                        </ion-item>
+                                    </div>
+                                </div>
+
+                                <ion-button expand="block" fill="outline" class="add-media-btn"
+                                    (click)="addMediaItem()">
+                                    <ion-icon name="add" slot="start"></ion-icon>
+                                    Agregar Recurso Multimedia
+                                </ion-button>
+                                <ion-note class="helper-note">La primera imagen actuará como portada.</ion-note>
+                            </div>
+
+                            <!-- SECCIÓN TAGS -->
+                            <div class="form-group full-width">
+                                <div class="section-header-row">
+                                    <h3>Etiquetas (Meta Tags)</h3>
+                                    <ion-button size="small" fill="clear" (click)="openTagsManager()">
+                                        <ion-icon name="link" slot="start"></ion-icon>
+                                        Gestionar Tags
+                                    </ion-button>
+                                </div>
+
+                                <ion-item class="input-item" lines="none">
+                                    <ion-icon name="pricetags" slot="start" size="small"></ion-icon>
+                                    <ion-label position="stacked">Seleccionar Etiquetas</ion-label>
+                                    <ion-select formControlName="tags" multiple="true"
+                                        placeholder="Categorizar este hito...">
+                                        <ion-select-option *ngFor="let tag of tagsList()" [value]="tag.id">
+                                            {{ tag.nombre }}
+                                        </ion-select-option>
+                                    </ion-select>
+                                </ion-item>
+                            </div>
                         </div>
 
                         <div class="modal-actions ion-margin-top">

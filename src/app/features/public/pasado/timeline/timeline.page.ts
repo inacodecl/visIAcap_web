@@ -92,7 +92,25 @@ export class TimelinePage implements OnInit {
             // Si no, fallback al año
             return a.anio - b.anio;
           })
-          .map(h => ({ ...h, expanded: false }));
+          .map(h => {
+            // Fix: Parsear media y tags si vienen como string JSON desde el backend
+            let parsedMedia: any = h.media;
+            let parsedTags: any = h.tags;
+
+            if (typeof h.media === 'string') {
+              try { parsedMedia = JSON.parse(h.media); } catch (e) { parsedMedia = []; }
+            }
+            if (typeof h.tags === 'string') {
+              try { parsedTags = JSON.parse(h.tags); } catch (e) { parsedTags = []; }
+            }
+
+            return {
+              ...h,
+              media: Array.isArray(parsedMedia) ? parsedMedia : [],
+              tags: Array.isArray(parsedTags) ? parsedTags : [],
+              expanded: false
+            };
+          });
 
         this.isLoading = false;
         // La detección de cambios ocurrirá y disparará milestoneElements.changes si aplica

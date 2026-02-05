@@ -13,6 +13,7 @@ import {
 } from 'ionicons/icons';
 import { Proyecto, ProyectoTag, ProyectoCategoria } from '../../../../core/models/proyecto.model';
 import { ProyectosService } from '../../../../core/services/proyectos.service';
+import { MetadataService } from '../../../../core/services/metadata.service';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -32,6 +33,7 @@ export class ProjectManagerCreateComponent implements OnInit {
     private modalCtrl = inject(ModalController);
     private toastCtrl = inject(ToastController);
     private proyectosService = inject(ProyectosService);
+    private metadataService = inject(MetadataService);
 
     @Input() proyecto: Proyecto | null = null; // Si viene, es edición
 
@@ -105,8 +107,8 @@ export class ProjectManagerCreateComponent implements OnInit {
     loadMetadata() {
         this.isLoading = true;
         forkJoin({
-            tags: this.proyectosService.getTags('es'),
-            categories: this.proyectosService.getCategorias('es')
+            tags: this.metadataService.getTags('es'),
+            categories: this.metadataService.getCategorias('es')
         }).subscribe({
             next: (results) => {
                 this.tagsList.set(results.tags);

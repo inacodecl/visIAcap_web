@@ -11,7 +11,23 @@
     <!-- Contenido -->
     <div class="card-content">
       <h2 class="card-title">{{ titulo }}</h2>
+
+      <!-- Tags -->
+      <div class="tags-container" *ngIf="tags && tags.length > 0">
+        <span class="tag-badge" *ngFor="let t of tags">#{{ t.nombre }}</span>
+      </div>
+
       <p class="card-description">{{ descripcion }}</p>
+
+      <!-- Galería Multimedia -->
+      <div class="media-gallery" *ngIf="media && media.length > 0">
+        <div class="media-track">
+          <div class="media-item" *ngFor="let m of media">
+            <img *ngIf="m.tipo === 'image'" [src]="m.url" [alt]="m.alt || 'Imagen histórica'" loading="lazy">
+            <video *ngIf="m.tipo === 'video'" [src]="m.url" controls playsinline></video>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

@@ -30,6 +30,8 @@ export class RedCardComponent {
   @Input() titulo: string = '';
   @Input() descripcion: string = '';
   @Input() anio: number = 0;
+  @Input() media: { url: string, tipo: string, alt?: string }[] = [];
+  @Input() tags: { id: number, nombre: string, slug: string }[] = [];
   @Input() isClosing: boolean = false;
 
   @Output() onClose = new EventEmitter<void>();

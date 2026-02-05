@@ -485,6 +485,73 @@ ion-modal.glass-modal {
             }
         }
 
+        // --- Nuevos Estilos para Media y Tags ---
+        .media-item-row {
+            margin-bottom: 10px;
+
+            .input-item {
+                display: flex;
+                align-items: center;
+                --padding-start: 10px;
+
+                ion-icon[slot="start"] {
+                    margin-right: 10px;
+                    color: #666;
+                }
+
+                .mini-select {
+                    max-width: 80px;
+                    font-size: 0.8rem;
+                    --padding-start: 5px;
+                    --padding-end: 5px;
+                    background: rgba(255, 255, 255, 0.05);
+                    border-radius: 4px;
+                    margin-right: 5px;
+                }
+            }
+        }
+
+        .add-media-btn {
+            --color: #{$neon-green};
+            --border-color: rgba(0, 255, 157, 0.3);
+            margin-top: 10px;
+            height: 45px;
+            font-size: 0.9rem;
+
+            &:hover {
+                --background: rgba(0, 255, 157, 0.1);
+            }
+        }
+
+        .helper-note {
+            display: block;
+            margin-top: 8px;
+            color: #666;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        .section-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            margin-bottom: 10px;
+            margin-top: 15px;
+
+            h3 {
+                border-bottom: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            ion-button {
+                --color: #{$neon-blue};
+                font-size: 0.8rem;
+                height: 30px;
+            }
+        }
+
         .modal-actions {
             display: flex;
             justify-content: flex-end;
