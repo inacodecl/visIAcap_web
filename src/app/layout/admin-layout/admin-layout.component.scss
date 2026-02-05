@@ -1,3 +1,116 @@
+// --- Variables ---
+$bg-menu: #ffffff;
+$text-primary: #333333;
+$text-secondary: #666666;
+$active-color: #D01824; // Rojo Inacap
+$active-bg: rgba(208, 24, 36, 0.05);
+
+// --- Layout ---
+ion-split-pane {
+    --side-width: 280px;
+    --side-max-width: 280px;
+    --side-min-width: 280px;
+}
+
+// --- Menu Styling ---
+ion-menu {
+    --background: #{$bg-menu};
+    border-right: 1px solid #e0e0e0;
+
+    ion-toolbar {
+        --background: #{$active-color};
+        --color: white;
+        --border-color: transparent;
+
+        ion-title {
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+    }
+
+    .menu-content {
+        --padding-top: 20px;
+        --padding-bottom: 20px;
+    }
+
+    .menu-header {
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+
+        .menu-logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin: 0;
+            color: $text-secondary;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+    }
+
+    ion-item {
+        --color: #555;
+        --min-height: 50px;
+        margin: 5px 15px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+
+        ion-icon {
+            font-size: 1.2rem;
+            color: #888;
+            margin-right: 15px;
+        }
+
+        &.selected,
+        &:hover {
+            --background: #{$active-bg};
+            --color: #{$active-color};
+            font-weight: 600;
+
+            ion-icon {
+                color: #{$active-color};
+            }
+        }
+    }
+
+    .menu-footer {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+
+        .logout-item {
+            border-top: 1px solid #eee;
+            margin-top: 0;
+            padding-top: 10px;
+
+            --color: #666;
+
+            &:hover {
+                --color: #D01824;
+
+                ion-icon {
+                    color: #D01824;
+                }
+
+                --background: transparent;
+            }
+        }
+    }
+}
+
+// --- Router Outlet Container ---
+.ion-page {
+    background-color: var(--ion-background-color, #f4f5f8);
+}
+
 #admin-content {
     height: 100%;
     position: relative;
@@ -6,9 +119,4 @@
 
 ion-router-outlet {
     height: 100%;
-}
-
-.logout-item {
-    margin-top: 20px;
-    border-top: 1px solid var(--ion-color-step-150, #ccc);
 }

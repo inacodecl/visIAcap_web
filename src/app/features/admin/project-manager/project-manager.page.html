@@ -14,87 +14,103 @@
             </div>
         </div>
     </div>
-
-    <!-- Secondary Toolbar for Filter -->
-    <ion-toolbar color="light">
-        <ion-segment [value]="currentType()" (ionChange)="segmentChanged($event)" color="danger">
-            <ion-segment-button value="presente">
-                <ion-label>Sede (Presente)</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="futuro">
-                <ion-label>Innovación (Futuro)</ion-label>
-            </ion-segment-button>
-        </ion-segment>
-    </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" [scrollY]="true" class="admin-content">
-    <div class="container-fluid">
+    <div class="glass-container">
 
-        <!-- HEADER ACTIONS -->
-        <div class="actions-header ion-margin-bottom">
-            <div class="search-container">
-                <ion-searchbar [debounce]="500" [searchIcon]="'rocket'" placeholder="Buscar proyecto..."
-                    (ionInput)="searchTerm.set($event.detail.value || '')"></ion-searchbar>
+        <!-- HEADER ROW: Título + Buscador -->
+        <div class="page-header-row">
+            <h1 class="page-title">
+                <ion-icon name="rocket"></ion-icon>
+                Gestión de Proyectos
+            </h1>
+            <div class="search-wrapper">
+                <ion-searchbar placeholder="Buscar proyectos..." [debounce]="250"
+                    (ionInput)="searchTerm.set($any($event).target.value)" animated="true" class="neon-searchbar">
+                </ion-searchbar>
             </div>
-            <ion-button (click)="openCreateModal()" color="danger" shape="round" class="action-btn">
-                <ion-icon name="add" slot="start"></ion-icon>
-                Nuevo Proyecto
-            </ion-button>
         </div>
 
-        <!-- QUICK STATS -->
-        <ion-grid class="stats-grid ion-margin-bottom">
+        <!-- ACTION CARDS -->
+        <ion-grid class="action-cards-grid ion-margin-bottom">
             <ion-row>
-                <ion-col size="12" size-md="4">
-                    <ion-card class="stat-card" (click)="openTagsManager()">
-                        <ion-card-content>
-                            <div class="stat-icon"><ion-icon name="pricetags"></ion-icon></div>
-                            <div class="stat-info">
-                                <h3>Etiquetas</h3>
-                                <p>Gestionar Tags</p>
-                            </div>
-                            <ion-icon name="arrow-forward" class="arrow"></ion-icon>
-                        </ion-card-content>
-                    </ion-card>
+                <!-- NEW PROJECT CARD (Large) -->
+                <ion-col size="12" size-md="6">
+                    <div class="quick-card main-action" (click)="openCreateModal()">
+                        <div class="icon-bg"><ion-icon name="add"></ion-icon></div>
+                        <div class="content">
+                            <h3>Crear Nuevo Proyecto</h3>
+                            <p>Iniciar el asistente de creación</p>
+                        </div>
+                        <ion-icon name="arrow-forward" class="arrow-icon"></ion-icon>
+                    </div>
                 </ion-col>
-                <ion-col size="12" size-md="4">
-                    <ion-card class="stat-card" (click)="openCategoriesManager()">
-                        <ion-card-content>
-                            <div class="stat-icon"><ion-icon name="list"></ion-icon></div>
-                            <div class="stat-info">
-                                <h3>Categorías</h3>
-                                <p>Gestionar Categorías</p>
-                            </div>
-                            <ion-icon name="arrow-forward" class="arrow"></ion-icon>
-                        </ion-card-content>
-                    </ion-card>
+
+                <!-- METADATA CARDS (Small) -->
+                <ion-col size="6" size-md="3">
+                    <div class="quick-card meta-action" (click)="openTagsManager()">
+                        <div class="icon-circle"><ion-icon name="pricetags"></ion-icon></div>
+                        <span>Crear Tag</span>
+                    </div>
+                </ion-col>
+                <ion-col size="6" size-md="3">
+                    <div class="quick-card meta-action" (click)="openCategoriesManager()">
+                        <div class="icon-circle"><ion-icon name="list"></ion-icon></div>
+                        <span>Crear Categoría</span>
+                    </div>
                 </ion-col>
             </ion-row>
         </ion-grid>
 
-        <!-- PROJECTS GRID -->
+        <!-- TYPE FILTER (Local Segment) -->
+        <div class="filter-container">
+            <ion-segment [value]="filterType()" (ionChange)="segmentChanged($event)" class="neon-segment">
+                <ion-segment-button value="presente">
+                    <ion-label>SEDE (PRESENTE)</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="futuro">
+                    <ion-label>INNOVACIÓN (FUTURO)</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+
+        <div class="status-summary">
+            <p>Mostrando <span class="highlight">{{ filteredProyectos().length }}</span> proyectos</p>
+        </div>
+
+        <!-- LIST GRID -->
         <ion-grid>
             <ion-row>
-                <ion-col size="12" size-md="6" size-lg="4" *ngFor="let p of filteredProyectos()">
-                    <ion-card class="project-card">
-                        <div class="card-image"
-                            [style.background-image]="'url(' + (p.image_cover_url || 'assets/images/placeholder.jpg') + ')'">
-                            <ion-badge color="danger" class="status-badge" *ngIf="!p.is_published">Borrador</ion-badge>
-                            <ion-badge color="success" class="status-badge" *ngIf="p.is_published">Publicado</ion-badge>
-                        </div>
+                <ion-col size="12" size-md="6" size-xl="4" *ngFor="let p of filteredProyectos()">
+                    <ion-card class="glass-card" [class.unpublished-item]="!p.is_published">
+                        <div class="card-glow"></div>
                         <ion-card-header>
+                            <div class="header-row">
+                                <div class="slug-badge">{{ p.slug }}</div>
+                                <ion-badge [color]="p.is_published ? 'success' : 'medium'" class="status-badge">
+                                    {{ p.is_published ? 'PUBLICADO' : 'BORRADOR' }}
+                                </ion-badge>
+                            </div>
                             <ion-card-title>{{ p.titulo }}</ion-card-title>
                         </ion-card-header>
                         <ion-card-content>
-                            <p class="slug-text">/{{ p.slug }}</p>
-                            <div class="card-actions">
-                                <ion-button fill="clear" size="small" (click)="openEditModal(p)">
-                                    <ion-icon name="create" slot="icon-only"></ion-icon>
-                                </ion-button>
-                                <ion-button fill="clear" color="danger" size="small" (click)="deleteProyecto(p.id)">
-                                    <ion-icon name="trash" slot="icon-only"></ion-icon>
-                                </ion-button>
+                            <p class="description">{{ p.resumen || 'Sin resumen...' }}</p>
+                            <div class="location-badge" *ngIf="p.location">
+                                <ion-icon name="globe"></ion-icon> {{ p.location }}
+                            </div>
+
+                            <div class="actions-panel">
+                                <div class="buttons">
+                                    <ion-button fill="clear" color="secondary" (click)="openEditModal(p)"
+                                        class="action-btn edit-btn">
+                                        <ion-icon slot="icon-only" name="create"></ion-icon>
+                                    </ion-button>
+                                    <ion-button fill="clear" color="danger" (click)="deleteProyecto(p.id)"
+                                        class="action-btn delete-btn">
+                                        <ion-icon slot="icon-only" name="trash"></ion-icon>
+                                    </ion-button>
+                                </div>
                             </div>
                         </ion-card-content>
                     </ion-card>
@@ -102,13 +118,10 @@
             </ion-row>
         </ion-grid>
 
-        <!-- EMPTY STATE -->
+        <!-- Empty State -->
         <div class="empty-state" *ngIf="filteredProyectos().length === 0">
-            <div class="empty-icon">
-                <ion-icon name="rocket"></ion-icon>
-            </div>
-            <h3>No se encontraron proyectos</h3>
-            <p>Intenta con otra búsqueda o crea uno nuevo.</p>
+            <div class="hologram-circle"></div>
+            <p>No hay proyectos en esta categoría.</p>
         </div>
 
     </div>

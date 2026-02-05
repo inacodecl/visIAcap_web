@@ -9,7 +9,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
-    rocket, trash, create, globe, add, close, list, pricetags, arrowForward
+    rocket, trash, create, globe, add, close, list, pricetags, arrowForward, videocam
 } from 'ionicons/icons';
 import { ProyectosService } from '../../../core/services/proyectos.service';
 import { Proyecto } from '../../../core/models/proyecto.model';
@@ -36,20 +36,25 @@ export class ProjectManagerPage implements OnInit {
 
     // Signals
     searchTerm = signal('');
-    currentType = signal('presente'); // Default tab
+    filterType = signal('presente'); // Filtro LOCAL (ya no recarga API)
     proyectos = this.proyectosService.proyectos;
 
-    // Computed Filter
+    // Computed Filter (Texto + Tipo)
     filteredProyectos = computed(() => {
         const term = this.searchTerm().toLowerCase();
-        return this.proyectos().filter(p =>
-            (p.titulo?.toLowerCase().includes(term) ?? false) ||
-            (p.slug?.toLowerCase().includes(term) ?? false)
-        );
+        const type = this.filterType();
+
+        return this.proyectos().filter(p => {
+            const matchesSearch = (p.titulo?.toLowerCase().includes(term) ?? false) ||
+                (p.slug?.toLowerCase().includes(term) ?? false);
+            const matchesType = p.tipo === type;
+
+            return matchesSearch && matchesType;
+        });
     });
 
     constructor() {
-        addIcons({ rocket, add, arrowForward, pricetags, list, globe, create, trash, close });
+        addIcons({ rocket, add, arrowForward, pricetags, list, globe, create, trash, close, videocam });
     }
 
     ngOnInit() {
@@ -57,12 +62,13 @@ export class ProjectManagerPage implements OnInit {
     }
 
     loadProyectos() {
-        this.proyectosService.getProyectos('es', this.currentType(), true).subscribe();
+        // Pedimos 'all' al backend. El servicio actualiza la señal 'proyectos'.
+        this.proyectosService.getProyectos('es', 'all', true).subscribe();
     }
 
     segmentChanged(event: any) {
-        this.currentType.set(event.detail.value);
-        this.loadProyectos();
+        // Solo actualizamos la señal de filtro local
+        this.filterType.set(event.detail.value);
     }
 
     // --- PROJECT MODAL HANDLER ---
