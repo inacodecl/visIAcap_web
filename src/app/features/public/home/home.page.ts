@@ -35,6 +35,9 @@ export class HomePage implements OnInit {
   ripples: RippleEffect[] = [];
   private rippleIdCounter = 0;
 
+  /** Botón actualmente seleccionado para animación */
+  selectedButton: string | null = null;
+
   constructor(private router: Router) { }
 
   ngOnInit() {
@@ -78,19 +81,23 @@ export class HomePage implements OnInit {
   private navigateWithDelay(route: string) {
     // Retraso de 400ms para que la animación CSS (0.5s) se aprecie al iniciar
     setTimeout(() => {
+      this.selectedButton = null; // Reset selection before navigating
       this.router.navigate([route]);
     }, 400);
   }
 
   navegarPasado() {
+    this.selectedButton = 'pasado';
     this.navigateWithDelay('/pasado');
   }
 
   navegarPresente() {
+    this.selectedButton = 'presente';
     this.navigateWithDelay('/presente');
   }
 
   navegarFuturo() {
+    this.selectedButton = 'futuro';
     this.navigateWithDelay('/futuro');
   }
 

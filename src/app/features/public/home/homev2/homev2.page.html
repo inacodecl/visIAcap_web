@@ -25,31 +25,19 @@
         <div class="cards-container">
 
             <!-- Pasado -->
-            <div class="v2-card" tabindex="0" (click)="navegarPasado()">
-                <div class="card-icon-wrapper">
-                    <ion-icon name="time-outline"></ion-icon>
-                </div>
-                <div class="card-separator"></div>
-                <span class="card-text">PASADO</span>
-            </div>
+            <app-button-home icon="time-outline" variant="pasado" [isActive]="selectedButton === 'pasado'"
+                (click)="navegarPasado()">
+            </app-button-home>
 
             <!-- Presente -->
-            <div class="v2-card" tabindex="0" (click)="navegarPresente()">
-                <div class="card-icon-wrapper">
-                    <ion-icon name="business-outline"></ion-icon>
-                </div>
-                <div class="card-separator"></div>
-                <span class="card-text">PRESENTE</span>
-            </div>
+            <app-button-home icon="business-outline" variant="presente" [isActive]="selectedButton === 'presente'"
+                (click)="navegarPresente()">
+            </app-button-home>
 
             <!-- Futuro -->
-            <div class="v2-card" tabindex="0" (click)="navegarFuturo()">
-                <div class="card-icon-wrapper">
-                    <ion-icon name="rocket-outline"></ion-icon>
-                </div>
-                <div class="card-separator"></div>
-                <span class="card-text">FUTURO</span>
-            </div>
+            <app-button-home icon="rocket-outline" variant="futuro" [isActive]="selectedButton === 'futuro'"
+                (click)="navegarFuturo()">
+            </app-button-home>
 
         </div>
 

@@ -7,6 +7,7 @@
   --btn-accent: #009087; // El color del hover y efectos
   --btn-text-hover: #ffffff;
   --btn-icon-color: #C8102E; // Rojo INACAP para íconos
+  --btn-active-scale: 0.95;
 
   // Variantes
   &.pasado {
@@ -21,101 +22,68 @@
     --btn-icon-color: #7b2cbf; // Violeta para futuro
   }
 
-  display: flex; // Cambiado a flex para alinear ícono y texto
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4em; // Espacio entre ícono y texto
 
-  width: 100%;
+  // Tamaño fijo para botones cuadrados/circulares
+  width: 180px;
+  height: 180px;
   box-sizing: border-box;
 
-  transition: all 0.2s ease-in;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
   z-index: 1;
   color: var(--btn-color);
-  padding: 0.5em 0.8em;
+  padding: 0; // Sin padding textual
 
   cursor: pointer;
-  font-size: 60px;
-  font-weight: bold;
-  border-radius: 0.5em;
+  border-radius: 20%; // Bordes redondeados pero no círculo completo (estilo app icon)
   background: var(--btn-bg);
-  border: 2px solid rgba(0, 0, 0, 0.05); // Borde sutil para mejor contraste
+  border: 4px solid rgba(255, 255, 255, 0.5); // Borde más presente
   // Sombras mejoradas para mayor profundidad y contraste
   box-shadow: 12px 12px 24px var(--btn-shadow-dark),
   -12px -12px 24px var(--btn-shadow-light),
-  0 4px 15px rgba(0, 0, 0, 0.15); // Sombra adicional hacia abajo
+  0 4px 15px rgba(0, 0, 0, 0.15);
 
   // --- Estilos BEM para elementos internos ---
   &__icon {
-    font-size: 0.8em; // Proporción respecto al texto
+    font-size: 100px; // Ícono gigante
     color: var(--btn-icon-color);
-    transition: transform 0.3s ease, color 0.3s ease;
+    transition: transform 0.4s ease, color 0.3s ease, filter 0.3s ease;
   }
 
   &__label {
-    position: relative; // Placeholder para evitar regla vacía
+    display: none; // Ocultar label explícitamente por si acaso
   }
 
-  &:active {
-    color: #666;
-    box-shadow: inset 4px 4px 12px var(--btn-shadow-dark), inset -4px -4px 12px var(--btn-shadow-light);
+  &:active,
+  &.active {
+    transform: scale(var(--btn-active-scale));
+    border-color: var(--btn-accent);
+    box-shadow: inset 6px 6px 18px var(--btn-shadow-dark), inset -6px -6px 18px var(--btn-shadow-light);
 
     .button-home__icon {
       transform: scale(0.9);
+      color: var(--btn-accent); // Cambia al color de acento al activar
+      filter: drop-shadow(0 0 10px var(--btn-accent)); // Glow effect
     }
   }
 
-  &:before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%) scaleY(1) scaleX(1.25);
-    top: 100%;
-    width: 140%;
-    height: 180%;
-    background-color: rgba(0, 0, 0, 0.05);
-    border-radius: 50%;
-    display: block;
-    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
-    z-index: -1;
-  }
+  // Hover Effects (Solo si no es táctil o para feedback visual adicional)
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-5px);
+      border-color: var(--btn-accent);
 
-  &:after {
-    content: "";
-    position: absolute;
-    left: 55%;
-    transform: translateX(-50%) scaleY(1) scaleX(1.45);
-    top: 180%;
-    width: 160%;
-    height: 190%;
-    background-color: var(--btn-accent);
-    border-radius: 50%;
-    display: block;
-    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
-    z-index: -1;
-  }
-
-  &:hover {
-    color: var(--btn-text-hover);
-    border: 2px solid var(--btn-accent);
-
-    .button-home__icon {
-      color: var(--btn-text-hover);
-      transform: scale(1.1);
+      .button-home__icon {
+        transform: scale(1.1) rotate(5deg);
+        color: var(--btn-accent);
+      }
     }
   }
 
-  &:hover:before {
-    top: -35%;
-    background-color: var(--btn-accent);
-    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
-  }
-
-  &:hover:after {
-    top: -45%;
-    background-color: var(--btn-accent);
-    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
-  }
+  // Eliminados los efectos :before/:after complejos para limpieza visual en minimalismo
+  // Se pueden reintroducir si se desea un efecto de "llenado", pero para íconos suele ensuciar.
 }

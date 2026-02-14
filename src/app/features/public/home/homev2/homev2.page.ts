@@ -8,15 +8,19 @@ import { addIcons } from 'ionicons';
 import { timeOutline, businessOutline, rocketOutline, personCircleOutline, informationCircleOutline, accessibilityOutline, logInOutline, languageOutline, closeOutline } from 'ionicons/icons';
 import { GeometricOverlayTopComponent } from './components/geometric-overlay-top/geometric-overlay-top.component';
 import { GeometricOverlayBottomComponent } from './components/geometric-overlay-bottom/geometric-overlay-bottom.component';
+import { ButtonHomeComponent } from '../../../../components/buttons/button-home/button-home.component';
 
 @Component({
     selector: 'app-homev2',
     templateUrl: './homev2.page.html',
     styleUrls: ['./homev2.page.scss'],
     standalone: true,
-    imports: [IonContent, CommonModule, FormsModule, IonIcon, GeometricOverlayTopComponent, GeometricOverlayBottomComponent]
+    imports: [IonContent, CommonModule, FormsModule, IonIcon, GeometricOverlayTopComponent, GeometricOverlayBottomComponent, ButtonHomeComponent]
 })
 export class Homev2Page implements OnInit {
+
+    /** Botón actualmente seleccionado para animación */
+    selectedButton: string | null = null;
 
     constructor(
         private router: Router,
@@ -34,21 +38,25 @@ export class Homev2Page implements OnInit {
      * @param route Ruta a navegar
      */
     private navigateWithDelay(route: string) {
-        // Retraso de 300ms para que la animación CSS (scale) se aprecie
+        // Retraso de 400ms para que la animación CSS (scale) se aprecie
         setTimeout(() => {
+            this.selectedButton = null;
             this.router.navigate([route]);
-        }, 300);
+        }, 400);
     }
 
     navegarPasado() {
+        this.selectedButton = 'pasado';
         this.navigateWithDelay('/pasado');
     }
 
     navegarPresente() {
+        this.selectedButton = 'presente';
         this.navigateWithDelay('/presente');
     }
 
     navegarFuturo() {
+        this.selectedButton = 'futuro';
         this.navigateWithDelay('/futuro');
     }
 

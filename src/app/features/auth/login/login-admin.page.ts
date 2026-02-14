@@ -79,7 +79,13 @@ export class LoginAdminPage implements OnInit {
       },
       error: (err) => {
         this.isLoading = false;
-        this.errorMessage = 'Error de conexión. Intenta más tarde.';
+        if (err.error && err.error.message) {
+          this.errorMessage = err.error.message;
+        } else if (err.status === 401 || err.status === 403) {
+          this.errorMessage = 'Credenciales inválidas o acceso denegado.';
+        } else {
+          this.errorMessage = 'Error de conexión. Intenta más tarde.';
+        }
         console.error(err);
       }
     });
