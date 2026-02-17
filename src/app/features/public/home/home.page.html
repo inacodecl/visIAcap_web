@@ -12,13 +12,16 @@
     </div>
 
     <div class="buttons-container">
-      <app-button-home label="Pasado" icon="time-outline" variant="pasado" (click)="navegarPasado()">
+      <app-button-home icon="time-outline" variant="pasado" [isActive]="selectedButton === 'pasado'"
+        (click)="navegarPasado()">
       </app-button-home>
 
-      <app-button-home label="Presente" icon="location-outline" variant="presente" (click)="navegarPresente()">
+      <app-button-home icon="location-outline" variant="presente" [isActive]="selectedButton === 'presente'"
+        (click)="navegarPresente()">
       </app-button-home>
 
-      <app-button-home label="Futuro" icon="rocket-outline" variant="futuro" (click)="navegarFuturo()">
+      <app-button-home icon="rocket-outline" variant="futuro" [isActive]="selectedButton === 'futuro'"
+        (click)="navegarFuturo()">
       </app-button-home>
     </div>
   </div>

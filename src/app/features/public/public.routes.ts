@@ -10,6 +10,10 @@ export const routes: Routes = [
         loadComponent: () => import('./home/homev2/homev2.page').then(m => m.Homev2Page)
     },
     {
+        path: 'home-legacy',
+        loadComponent: () => import('./home/home.page').then(m => m.HomePage)
+    },
+    {
         path: 'pasado',
         children: [
             {

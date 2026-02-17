@@ -25,6 +25,10 @@ export class ButtonHomeComponent {
      * - futuro: Tonos neón/futuristas
      */
     @Input() variant: 'pasado' | 'presente' | 'futuro' = 'presente';
+    /**
+     * Estado activo para forzar la animación de selección.
+     */
+    @Input() isActive: boolean = false;
 
     constructor() {
         // Registrar íconos para Ionic Standalone

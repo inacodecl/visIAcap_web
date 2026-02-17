@@ -103,7 +103,8 @@ export class UserManagerPage implements OnInit {
             error: (err) => {
                 console.error(err);
                 this.isLoading = false;
-                this.showToast('Error creando usuario. Revisa que el email no exista.', 'danger');
+                const msg = err.error?.message || 'Error creando usuario. Revisa que el email no exista.';
+                this.showToast(msg, 'danger');
             }
         });
     }

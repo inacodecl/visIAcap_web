@@ -1,6 +1,6 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap, of, catchError, map } from 'rxjs';
+import { Observable, tap, of, catchError, map, throwError } from 'rxjs';
 import { Usuario, UsuarioRol } from '../models/usuario.model';
 import { environment } from '../../../environments/environment';
 
@@ -51,7 +51,7 @@ export class AuthService {
             map(response => !!response.token),
             catchError(error => {
                 console.error('Error en login:', error);
-                return of(false);
+                return throwError(() => error);
             })
         );
     }

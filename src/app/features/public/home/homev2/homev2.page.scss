@@ -122,91 +122,11 @@ $text-dark: #333;
 .cards-container {
     display: flex;
     flex-direction: column;
-    gap: 100px;
-    width: 80%; // Aumentado para dar más espacio
-    max-width: 500px; // Aumentado de 450px a 650px
-}
-
-// ==============================================
-// Tarjetas (Botones) - GRANDES con FRANJA ROJA
-// ==============================================
-.v2-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 1.5rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: 0.2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    width: 100%; // Ocupar todo el ancho disponible del contenedor
-    position: relative;
-    z-index: 2; // Sobre los overlays
-
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 40px rgba(220, 20, 60, 0.15); // Sombra rojiza sutil
-        border-color: rgba(220, 20, 60, 0.3);
-    }
-
-    // Efecto de click/touch
-    &:active,
-    &:focus {
-        transform: scale(0.95);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    }
-
-    // FRANJA ROJA a la izquierda
-    &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 20%;
-        height: 60%;
-        width: 8px;
-        background: $inacap-red;
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
-    }
-
-    // Wrapper del icono con círculo (más grande)
-    .card-icon-wrapper {
-        width: 80px;
-        height: 80px;
-        min-width: 80px;
-        border-radius: 50%;
-        background: transparent;
-        border: 4px solid $inacap-red;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-left: 15px;
-
-        ion-icon {
-            font-size: 40px;
-            color: $inacap-red;
-        }
-    }
-
-    // Línea separadora entre icono y texto
-    .card-separator {
-        width: 3px;
-        height: 60%;
-        background-color: #ccc;
-        margin: 0 25px;
-        border-radius: 2px;
-    }
-
-    .card-text {
-        font-size: 2.5rem; // Texto grande
-        font-weight: 700;
-        color: $text-dark;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-    }
+    gap: 80px;
+    align-items: center; // Centrar los botones
+    width: 100%;
+    max-width: 600px;
+    z-index: 2;
 }
 
 // ==============================================
