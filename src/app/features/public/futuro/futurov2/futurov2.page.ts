@@ -11,7 +11,6 @@ import {
     schoolOutline, flaskOutline
 } from 'ionicons/icons';
 import { GeometricOverlayTopComponent } from '../../home/homev2/components/geometric-overlay-top/geometric-overlay-top.component';
-import { GeometricOverlayBottomComponent } from '../../home/homev2/components/geometric-overlay-bottom/geometric-overlay-bottom.component';
 
 // Interfaces para datos mock
 interface ProyectoFuturo {
@@ -56,7 +55,7 @@ interface EventoEsteMes {
     standalone: true,
     imports: [
         IonContent, CommonModule, FormsModule, IonIcon,
-        GeometricOverlayTopComponent, GeometricOverlayBottomComponent
+        GeometricOverlayTopComponent
     ]
 })
 export class Futurov2Page implements OnInit {

@@ -5,7 +5,7 @@ import {
     IonHeader, IonContent, IonGrid, IonRow, IonCol,
     IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBadge, IonButton, IonBackButton, IonIcon,
     IonSearchbar, IonButtons, ModalController, AlertController, ToastController,
-    IonToolbar, IonSegment, IonSegmentButton, IonLabel, IonTitle
+    IonSegment, IonSegmentButton, IonLabel, IonTitle
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -25,7 +25,7 @@ import { MetadataManagerModalComponent } from './metadata-manager-modal/metadata
         CommonModule, FormsModule,
         IonHeader, IonContent, IonGrid, IonRow, IonCol,
         IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBadge, IonButton, IonBackButton, IonIcon,
-        IonSearchbar, IonButtons, IonToolbar, IonSegment, IonSegmentButton, IonLabel
+        IonSearchbar, IonButtons, IonSegment, IonSegmentButton, IonLabel
     ]
 })
 export class ProjectManagerPage implements OnInit {

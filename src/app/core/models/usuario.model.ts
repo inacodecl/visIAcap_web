@@ -1,8 +1,6 @@
 export enum UsuarioRol {
     SuperAdmin = 'super_admin',
-    Admin = 'admin',
-    Editor = 'editor',
-    Viewer = 'viewer'
+    Admin = 'admin'
 }
 
 export interface Usuario {

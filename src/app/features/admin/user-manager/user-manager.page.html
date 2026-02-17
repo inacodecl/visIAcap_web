@@ -90,9 +90,13 @@
                                     <span>{{ user.is_active ? 'Activo' : 'Inactivo' }}</span>
                                 </div>
 
-                                <!-- Buttons (Solo si no es uno mismo, lógica podría mejorar) -->
+                                <!-- Buttons -->
                                 <div class="buttons">
-                                    <!-- Aquí se podrían agregar botón de editar si hubiera endpoint -->
+                                    <ion-button fill="clear" color="warning" (click)="openEditModal(user)"
+                                        title="Editar Usuario">
+                                        <ion-icon slot="icon-only" name="create"></ion-icon>
+                                    </ion-button>
+
                                     <ion-button fill="clear" color="danger" (click)="deleteUser(user.id)"
                                         title="Eliminar Usuario">
                                         <ion-icon slot="icon-only" name="trash"></ion-icon>
@@ -108,7 +112,7 @@
         <!-- Empty State -->
         <div class="empty-state" *ngIf="!isLoading && filteredUsers().length === 0">
             <div class="hologram-circle"></div>
-            <p>No se encontraron usuarios.</p>
+            <p>No se encontraron otros usuarios.</p>
         </div>
 
     </div>
@@ -120,8 +124,9 @@
                 <!-- Header con Gradiente -->
                 <div class="modal-header-neon">
                     <div class="header-text">
-                        <h2>Nuevo <span>Usuario</span></h2>
-                        <p>Complete los datos para registrar acceso</p>
+                        <h2>{{ isEditMode ? 'Editar' : 'Nuevo' }} <span>Usuario</span></h2>
+                        <p>{{ isEditMode ? 'Modificar datos de acceso' : 'Complete los datos para registrar acceso' }}
+                        </p>
                     </div>
                     <ion-button fill="clear" color="light" class="close-btn" (click)="closeModal()">
                         <ion-icon name="close" slot="icon-only"></ion-icon>
@@ -130,7 +135,7 @@
 
                 <!-- Body Estático (sin scroll) -->
                 <div class="modal-body-static">
-                    <form [formGroup]="userForm" (ngSubmit)="createUser()" class="slide-in-form">
+                    <form [formGroup]="userForm" (ngSubmit)="saveUser()" class="slide-in-form">
 
                         <div class="form-grid">
                             <ion-item class="form-item-neon" lines="none">
@@ -153,9 +158,15 @@
 
                             <ion-item class="form-item-neon full-width" lines="none">
                                 <ion-icon name="lock-closed" slot="start" class="input-icon"></ion-icon>
-                                <ion-input label="Contraseña" labelPlacement="floating" type="password"
-                                    formControlName="password"></ion-input>
+                                <ion-input label="Contraseña {{ isEditMode ? '(Opcional)' : '' }}"
+                                    labelPlacement="floating" type="password" formControlName="password"></ion-input>
                             </ion-item>
+
+                            <!-- Nota informativa si es edición -->
+                            <div class="input-note" *ngIf="isEditMode">
+                                <small style="color: var(--neon-blue); padding-left: 10px;">Dejar en blanco para
+                                    mantener la contraseña actual.</small>
+                            </div>
 
                             <ion-item class="form-item-neon full-width" lines="none">
                                 <ion-icon name="shield" slot="start" class="input-icon"></ion-icon>
@@ -164,8 +175,6 @@
                                     <ion-select-option value="super_admin">⚡ Super Admin (Acceso
                                         Total)</ion-select-option>
                                     <ion-select-option value="admin">🔧 Admin (Gestión de Contenido)</ion-select-option>
-                                    <ion-select-option value="editor">✏️ Editor (Solo Edición)</ion-select-option>
-                                    <ion-select-option value="viewer">👀 Viewer (Solo Lectura)</ion-select-option>
                                 </ion-select>
                             </ion-item>
                         </div>
@@ -174,7 +183,7 @@
                             <ion-button expand="block" type="submit" [disabled]="userForm.invalid || isLoading"
                                 class="create-btn-neon">
                                 <ion-icon name="rocket" slot="start"></ion-icon>
-                                {{ isLoading ? 'Procesando...' : 'Crear Cuenta' }}
+                                {{ isLoading ? 'Procesando...' : (isEditMode ? 'Guardar Cambios' : 'Crear Cuenta') }}
                             </ion-button>
                         </div>
 

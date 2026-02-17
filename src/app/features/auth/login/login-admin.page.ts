@@ -53,7 +53,7 @@ export class LoginAdminPage implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/homev2']);
+    this.router.navigate(['/home']);
   }
 
   async onSubmit() {

@@ -1,3 +1,4 @@
+@use "sass:color";
 // ==============================================
 // Variables de Diseño - Futuro V2 (Optimizado para Tótem 1080x1920)
 // ==============================================
@@ -393,6 +394,7 @@ $accent-amber: #d97706;
         margin: 0 0 15px;
         display: -webkit-box;
         -webkit-line-clamp: 3;
+        line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
@@ -487,6 +489,7 @@ $accent-amber: #d97706;
         margin: 0;
         display: -webkit-box;
         -webkit-line-clamp: 2;
+        line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
@@ -623,7 +626,7 @@ $accent-amber: #d97706;
     width: 70px;
     min-width: 70px;
     height: 75px;
-    background: linear-gradient(135deg, $accent-teal, darken($accent-teal, 10%));
+    background: linear-gradient(135deg, $accent-teal, color.adjust($accent-teal, $lightness: -10%));
     border-radius: 16px;
     display: flex;
     flex-direction: column;

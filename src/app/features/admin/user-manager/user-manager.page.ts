@@ -2,9 +2,9 @@ import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
-    IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
+    IonContent, IonHeader, IonButtons, IonBackButton, IonButton,
     IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle,
-    IonItem, IonLabel, IonInput, IonSelect, IonSelectOption,
+    IonItem, IonInput, IonSelect, IonSelectOption,
     IonModal, IonToggle, IonSpinner, IonSearchbar
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -21,14 +21,15 @@ import { AuthService } from '../../../core/services/auth.service';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
+        IonContent, IonHeader, IonButtons, IonBackButton, IonButton,
         IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle,
-        IonItem, IonLabel, IonInput, IonSelect, IonSelectOption,
+        IonItem, IonInput, IonSelect, IonSelectOption,
         IonModal, IonToggle, IonSpinner, IonSearchbar
     ]
 })
 export class UserManagerPage implements OnInit {
     private userService = inject(UserService);
+    private authService = inject(AuthService); // Inject Auth Service
     private fb = inject(FormBuilder);
 
     users = signal<Usuario[]>([]);
@@ -36,21 +37,29 @@ export class UserManagerPage implements OnInit {
     isModalOpen = false;
     searchTerm = signal('');
 
+    // Estado para edición
+    editingUserId: number | null = null;
+    isEditMode = false;
+
     // Computed property para filtrar usuarios
     filteredUsers = computed(() => {
         const term = this.searchTerm().toLowerCase();
-        return this.users().filter(user => {
-            const fullName = `${user.nombre} ${user.apellido}`.toLowerCase();
-            return fullName.includes(term) || user.email.toLowerCase().includes(term);
-        });
+        const currentUserId = this.authService.currentUser()?.id;
+
+        return this.users()
+            .filter(user => user.id !== currentUserId) // Filtro anti-suicidio (No mostrarse a sí mismo)
+            .filter(user => {
+                const fullName = `${user.nombre} ${user.apellido}`.toLowerCase();
+                return fullName.includes(term) || user.email.toLowerCase().includes(term);
+            });
     });
 
     userForm: FormGroup = this.fb.group({
         nombre: ['', [Validators.required]],
         apellido: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        rol: ['editor', [Validators.required]]
+        password: [''], // Password opcional en edición
+        rol: ['', [Validators.required]] // Rol obligatorio, sin default
     });
 
     constructor() {
@@ -77,71 +86,116 @@ export class UserManagerPage implements OnInit {
         });
     }
 
+    // --- MODAL & FORM HANDLING ---
+
     openCreateModal() {
-        this.userForm.reset({ rol: 'editor' });
+        this.isEditMode = false;
+        this.editingUserId = null;
+        this.userForm.reset(); // Reset total, rol queda null/vacío
+        this.userForm.get('password')?.setValidators([Validators.required, Validators.minLength(6)]); // Password obligatoria al crear
+        this.userForm.get('password')?.updateValueAndValidity();
+        this.userForm.get('email')?.enable(); // Email editable al crear
+        this.isModalOpen = true;
+    }
+
+    openEditModal(user: Usuario) {
+        this.isEditMode = true;
+        this.editingUserId = user.id;
+
+        this.userForm.patchValue({
+            nombre: user.nombre,
+            apellido: user.apellido,
+            email: user.email,
+            rol: user.rol,
+            password: '' // Limpiar campo password
+        });
+
+        this.userForm.get('password')?.clearValidators(); // Password opcional al editar
+        this.userForm.get('password')?.updateValueAndValidity();
+        this.userForm.get('email')?.disable(); // No permitir cambiar email (identidad)
+
         this.isModalOpen = true;
     }
 
     closeModal() {
         this.isModalOpen = false;
+        this.userForm.reset();
     }
 
-    async createUser() {
+    async saveUser() {
         if (this.userForm.invalid) {
             this.userForm.markAllAsTouched();
             return;
         }
 
         this.isLoading = true;
-        this.userService.createUsuario(this.userForm.value).subscribe({
-            next: () => {
-                this.isLoading = false;
-                this.closeModal();
-                this.showToast('Usuario creado correctamente');
-                this.loadUsers();
-            },
-            error: (err) => {
-                console.error(err);
-                this.isLoading = false;
-                const msg = err.error?.message || 'Error creando usuario. Revisa que el email no exista.';
-                this.showToast(msg, 'danger');
-            }
-        });
+        const formData = this.userForm.getRawValue(); // getRawValue para incluir campos deshabilitados (email)
+
+        if (this.isEditMode && this.editingUserId) {
+            // UDPATE
+            // Filtrar password si está vacío para no enviarlo
+            if (!formData.password) delete formData.password;
+
+            this.userService.updateUsuario(this.editingUserId, formData).subscribe({
+                next: () => {
+                    this.finishSave('Usuario actualizado correctamente');
+                },
+                error: (err) => this.handleError(err, 'Error actualizando usuario')
+            });
+        } else {
+            // CREATE
+            this.userService.createUsuario(formData).subscribe({
+                next: () => {
+                    this.finishSave('Usuario creado correctamente');
+                },
+                error: (err) => this.handleError(err, 'Error creando usuario. Revisa que el email no exista.')
+            });
+        }
     }
+
+    private finishSave(message: string) {
+        this.isLoading = false;
+        this.closeModal();
+        this.showToast(message);
+        this.loadUsers();
+    }
+
+    private handleError(err: any, defaultMsg: string) {
+        console.error(err);
+        this.isLoading = false;
+        const msg = err.error?.error?.userMessage || err.error?.message || defaultMsg;
+        this.showToast(msg, 'danger');
+    }
+
+    // --- ACTIONS ---
 
     deleteUser(id: number | undefined) {
         if (!id) return;
-        if (confirm('¿Estás seguro de eliminar este usuario?')) {
+        if (confirm('¿Estás seguro de eliminar este usuario? Esta acción no se puede deshacer.')) {
             this.userService.deleteUsuario(id).subscribe({
-                next: () => {
+                next: (res: any) => {
                     this.showToast('Usuario eliminado correctamente');
                     this.loadUsers();
                 },
-                error: (err) => {
-                    console.error(err);
-                    this.showToast('Error eliminando usuario', 'danger');
-                }
+                error: (err) => this.handleError(err, 'Error eliminando usuario')
             })
         }
     }
 
     toggleUserStatus(user: Usuario, event: any) {
         const isActive = event.detail.checked;
-        if (user.is_active === isActive) return; // Evitar llamadas innecesarias
+        if (user.is_active === isActive) return;
 
         this.userService.updateUsuario(user.id, { is_active: isActive }).subscribe({
             next: () => {
                 this.showToast(`Usuario ${isActive ? 'activado' : 'desactivado'}`);
-                // Actualizar localmente para reflejar cambio inmediato en UI si fuera necesario
-                // Pero como llamamos al backend, mejor recargar o actualizar el signal específico
                 this.users.update(currentUsers =>
                     currentUsers.map(u => u.id === user.id ? { ...u, is_active: isActive } : u)
                 );
             },
             error: (err) => {
-                console.error(err);
-                event.target.checked = !isActive; // Revertir toggle visual
-                this.showToast('Error cambiando estado', 'danger');
+                event.target.checked = !isActive; // Revertir toggle
+                this.handleError(err, 'Error cambiando estado');
             }
         });
     }

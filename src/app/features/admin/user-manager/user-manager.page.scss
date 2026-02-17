@@ -1,3 +1,4 @@
+@use "sass:color";
 // --- Variables Neon & Dark ---
 $bg-dark: #0f1115;
 $bg-card: #151921;
@@ -295,20 +296,14 @@ $glass-border: rgba(255, 255, 255, 0.08);
 
             &.super_admin {
                 background: rgba($neon-purple, 0.2);
-                color: mix(white, $neon-purple, 20%);
+                color: color.mix(white, $neon-purple, 20%);
                 border: 1px solid rgba($neon-purple, 0.4);
             }
 
             &.admin {
                 background: rgba($neon-blue, 0.2);
-                color: mix(white, $neon-blue, 20%);
+                color: color.mix(white, $neon-blue, 20%);
                 border: 1px solid rgba($neon-blue, 0.4);
-            }
-
-            &.editor {
-                background: rgba($neon-green, 0.2);
-                color: mix(white, $neon-green, 20%);
-                border: 1px solid rgba($neon-green, 0.4);
             }
         }
 
