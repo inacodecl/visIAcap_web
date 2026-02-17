@@ -1,0 +1,167 @@
+<ion-content [fullscreen]="true" class="futuro-v2-content">
+
+    <!-- Overlays Geométricos (reutilizados de Homev2) -->
+    <app-geometric-overlay-top></app-geometric-overlay-top>
+    <app-geometric-overlay-bottom></app-geometric-overlay-bottom>
+
+    <!-- Header con Logo INACAP -->
+    <header class="v2-header">
+        <div class="header-left">
+            <button class="back-btn" (click)="volverHome()" aria-label="Volver">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+            </button>
+            <div class="logo-container">
+                <img src="assets/icon/logo-inacap-60-v2.png" alt="INACAP 60 Años" class="logo-img">
+            </div>
+        </div>
+        <div class="header-separator"></div>
+        <div class="sede-container">
+            <span class="sede-line">FUTURO</span>
+            <span class="renca-line">RENCA</span>
+        </div>
+    </header>
+
+    <!-- Contenido Principal Scrolleable -->
+    <main class="main-container">
+
+        <!-- ============================== -->
+        <!-- HERO SECTION -->
+        <!-- ============================== -->
+        <section class="hero-section">
+            <div class="hero-icon-wrapper">
+                <ion-icon name="rocket-outline"></ion-icon>
+            </div>
+            <h1 class="hero-title">El Futuro de <span class="highlight">INACAP Renca</span></h1>
+            <p class="hero-subtitle">Innovación, tecnología y talento estudiantil construyendo el mañana.</p>
+        </section>
+
+        <!-- ============================== -->
+        <!-- SECCIÓN: PROYECTOS DESTACADOS -->
+        <!-- ============================== -->
+        <section class="section-block">
+            <div class="section-header">
+                <div class="section-icon-wrapper">
+                    <ion-icon name="bulb-outline"></ion-icon>
+                </div>
+                <div class="section-title-container">
+                    <h2 class="section-title">Proyectos Destacados</h2>
+                    <p class="section-subtitle">Ideas que transforman nuestra comunidad educativa</p>
+                </div>
+            </div>
+
+            <div class="projects-scroll">
+                <div class="project-card" *ngFor="let proyecto of proyectos(); let i = index"
+                    [style.animation-delay]="(i * 150) + 'ms'">
+                    <div class="project-img" [style.backgroundImage]="'url(' + proyecto.imagen + ')'">
+                        <span class="project-badge">
+                            <ion-icon [name]="proyecto.icono"></ion-icon>
+                            {{ proyecto.categoria }}
+                        </span>
+                    </div>
+                    <div class="project-info">
+                        <h3>{{ proyecto.titulo }}</h3>
+                        <p>{{ proyecto.descripcion }}</p>
+                        <div class="project-action">
+                            <span>Ver Proyecto</span>
+                            <ion-icon name="arrow-forward-outline"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================== -->
+        <!-- SECCIÓN: NOTICIAS -->
+        <!-- ============================== -->
+        <section class="section-block">
+            <div class="section-header">
+                <div class="section-icon-wrapper noticias">
+                    <ion-icon name="newspaper-outline"></ion-icon>
+                </div>
+                <div class="section-title-container">
+                    <h2 class="section-title">Noticias</h2>
+                    <p class="section-subtitle">Mantente informado de lo que ocurre en la sede</p>
+                </div>
+            </div>
+
+            <div class="noticias-grid">
+                <div class="noticia-card" *ngFor="let noticia of noticias(); let i = index"
+                    [style.animation-delay]="(i * 150) + 'ms'">
+                    <div class="noticia-img" [style.backgroundImage]="'url(' + noticia.imagen + ')'">
+                        <span class="noticia-etiqueta">{{ noticia.etiqueta }}</span>
+                    </div>
+                    <div class="noticia-info">
+                        <span class="noticia-fecha">{{ noticia.fecha }}</span>
+                        <h3>{{ noticia.titulo }}</h3>
+                        <p>{{ noticia.resumen }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================== -->
+        <!-- SECCIÓN: PRÓXIMAMENTE -->
+        <!-- ============================== -->
+        <section class="section-block">
+            <div class="section-header">
+                <div class="section-icon-wrapper proximamente">
+                    <ion-icon name="sparkles-outline"></ion-icon>
+                </div>
+                <div class="section-title-container">
+                    <h2 class="section-title">Próximamente</h2>
+                    <p class="section-subtitle">Lo que se viene en INACAP Renca</p>
+                </div>
+            </div>
+
+            <div class="proximamente-list">
+                <div class="proximamente-card" *ngFor="let evento of proximamente(); let i = index"
+                    [style.animation-delay]="(i * 150) + 'ms'">
+                    <div class="proximamente-icon">
+                        <ion-icon [name]="evento.icono"></ion-icon>
+                    </div>
+                    <div class="proximamente-content">
+                        <span class="proximamente-fecha">{{ evento.fechaTexto }}</span>
+                        <h3>{{ evento.titulo }}</h3>
+                        <p>{{ evento.descripcion }}</p>
+                    </div>
+                    <div class="proximamente-arrow">
+                        <ion-icon name="arrow-forward-outline"></ion-icon>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================== -->
+        <!-- SECCIÓN: ESTE MES -->
+        <!-- ============================== -->
+        <section class="section-block section-last">
+            <div class="section-header">
+                <div class="section-icon-wrapper estemes">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <div class="section-title-container">
+                    <h2 class="section-title">Este Mes</h2>
+                    <p class="section-subtitle">Agenda de febrero 2026</p>
+                </div>
+            </div>
+
+            <div class="estemes-list">
+                <div class="estemes-card" *ngFor="let evento of esteMes(); let i = index"
+                    [style.animation-delay]="(i * 150) + 'ms'">
+                    <div class="estemes-date">
+                        <span class="estemes-dia">{{ evento.dia }}</span>
+                        <span class="estemes-mes">{{ evento.mes }}</span>
+                    </div>
+                    <div class="estemes-separator"></div>
+                    <div class="estemes-content">
+                        <span class="estemes-tipo">{{ evento.tipo }}</span>
+                        <h3>{{ evento.titulo }}</h3>
+                        <p>{{ evento.descripcion }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</ion-content>

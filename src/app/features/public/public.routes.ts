@@ -7,7 +7,7 @@ export const routes: Routes = [
     },
     {
         path: 'home',
-        loadComponent: () => import('./home/home.page').then(m => m.HomePage)
+        loadComponent: () => import('./home/homev2/homev2.page').then(m => m.Homev2Page)
     },
     {
         path: 'pasado',
@@ -44,7 +44,7 @@ export const routes: Routes = [
         loadComponent: () => import('./futuro/hub/futuro.page').then(m => m.FuturoPage)
     },
     {
-        path: 'homev2',
-        loadComponent: () => import('./home/homev2/homev2.page').then(m => m.Homev2Page)
+        path: 'futurov2',
+        loadComponent: () => import('./futuro/futurov2/futurov2.page').then(m => m.Futurov2Page)
     }
 ];
