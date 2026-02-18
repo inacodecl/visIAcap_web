@@ -6,7 +6,7 @@
             </ion-buttons>
 
             <div class="logo-container">
-                <img src="assets/icon/logo-inacap-60.png" alt="Logo Inacap" class="logo-placeholder">
+                <img src="assets/icon/logo-inacap-60-v2.png" alt="Logo Inacap" class="logo-placeholder">
             </div>
 
             <div class="header-text">
@@ -17,105 +17,125 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" [scrollY]="true" class="admin-content">
-    <div class="glass-container">
+    <ion-grid class="glass-container-grid">
 
         <!-- HEADER ROW: Título + Buscador -->
-        <div class="page-header-row">
-            <h1 class="page-title">
-                <ion-icon name="people"></ion-icon>
-                Gestión de Usuarios
-            </h1>
-            <div class="search-wrapper">
-                <ion-searchbar placeholder="Buscar por nombre o email..." [debounce]="250"
-                    (ionInput)="searchTerm.set($any($event).target.value)" animated="true" class="neon-searchbar">
-                </ion-searchbar>
-            </div>
-        </div>
+        <ion-row class="ion-align-items-center ion-justify-content-between page-header-row">
+            <ion-col size="12" size-md="6">
+                <h1 class="page-title">
+                    <ion-icon name="people"></ion-icon>
+                    Gestión de Usuarios
+                </h1>
+            </ion-col>
+            <ion-col size="12" size-md="6" class="ion-text-end search-col">
+                <div class="search-wrapper">
+                    <ion-searchbar placeholder="Buscar por nombre o email..." [debounce]="250"
+                        (ionInput)="searchTerm.set($any($event).target.value)" animated="true" class="neon-searchbar">
+                    </ion-searchbar>
+                </div>
+            </ion-col>
+        </ion-row>
 
         <!-- ACTION CARDS -->
-        <ion-grid class="action-cards-grid ion-margin-bottom">
-            <ion-row>
-                <!-- NEW USER CARD (Full Width) -->
-                <ion-col size="12">
-                    <div class="quick-card" (click)="openCreateModal()">
-                        <div class="icon-bg"><ion-icon name="person-add"></ion-icon></div>
-                        <div class="content">
-                            <h3>Crear Nuevo Usuario</h3>
-                            <p>Registrar un nuevo administrador o editor en la plataforma</p>
-                        </div>
-                        <ion-icon name="arrow-forward" class="arrow-icon"></ion-icon>
+        <ion-row class="ion-margin-bottom">
+            <!-- NEW USER CARD (Left aligned) -->
+            <ion-col size="12" size-sm="12" size-md="12" size-lg="10" size-xl="6">
+                <div class="quick-card" (click)="openCreateModal()">
+                    <div class="icon-bg"><ion-icon name="person-add"></ion-icon></div>
+                    <div class="content">
+                        <h3>Crear Nuevo Usuario</h3>
+                        <p>Registrar un nuevo administrador en la plataforma</p>
                     </div>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+                    <ion-icon name="arrow-forward" class="arrow-icon"></ion-icon>
+                </div>
+            </ion-col>
+        </ion-row>
 
-        <div class="status-summary">
-            <p>Mostrando <span class="highlight">{{ filteredUsers().length }}</span> usuarios</p>
-        </div>
+        <ion-row class="ion-justify-content-center ion-margin-bottom">
+            <ion-col size="12" class="ion-text-center">
+                <div class="status-summary">
+                    <p>Mostrando <span class="highlight">{{ filteredUsers().length }}</span> usuarios</p>
+                </div>
+            </ion-col>
+        </ion-row>
 
         <!-- Loading State -->
-        <div *ngIf="isLoading" class="ion-text-center ion-padding">
-            <ion-spinner color="light"></ion-spinner>
-        </div>
+        <ion-row *ngIf="isLoading">
+            <ion-col size="12" class="ion-text-center ion-padding">
+                <ion-spinner color="light"></ion-spinner>
+            </ion-col>
+        </ion-row>
 
         <!-- LIST GRID (USERS) -->
-        <ion-grid *ngIf="!isLoading">
-            <ion-row>
-                <ion-col size="12" size-md="6" size-xl="4" *ngFor="let user of filteredUsers()">
-                    <ion-card class="glass-card">
-                        <div class="card-glow"></div>
-                        <ion-card-header>
+        <ion-row *ngIf="!isLoading">
+            <!-- 
+                XS (Móvil): 1 columna
+                MD (Tablet): 2 columnas
+                LG/XL (Desktop): 3 columnas (Más anchas, llenan mejor la pantalla)
+            -->
+            <ion-col size="12" size-sm="12" size-md="6" size-lg="4" size-xl="4" *ngFor="let user of filteredUsers()"
+                class="user-card-column">
+                <ion-card class="glass-card">
+                    <div class="card-glow"></div>
+
+                    <!-- 1. Header Visual (Avatar + Rol) -->
+                    <div class="card-visual-header">
+                        <div class="avatar-wrapper">
                             <div class="avatar-container">
                                 <ion-icon name="person"></ion-icon>
                             </div>
-                            <div class="header-info">
-                                <ion-card-title>{{ user.nombre }} {{ user.apellido }}</ion-card-title>
-                                <span class="email-text">{{ user.email }}</span>
-                            </div>
-                        </ion-card-header>
-                        <ion-card-content>
-                            <!-- Badge de Rol -->
-                            <div>
-                                <span class="role-badge" [ngClass]="user.rol">
-                                    {{ user.rol === 'super_admin' ? 'Super Admin' : user.rol }}
-                                </span>
+                        </div>
+                        <span class="role-badge" [ngClass]="user.rol">
+                            {{ user.rol === 'super_admin' ? 'Super Admin' : user.rol }}
+                        </span>
+                    </div>
+
+                    <ion-card-content>
+                        <!-- 2. Información Usuario (Nombre + Correo) -->
+                        <div class="user-info-section">
+                            <h3 class="user-name">{{ user.nombre }} {{ user.apellido }}</h3>
+                            <p class="user-email">{{ user.email }}</p>
+                        </div>
+
+                        <!-- 3. Acciones (Bottom) -->
+                        <div class="actions-panel">
+                            <!-- Status Toggle -->
+                            <div class="status-toggle" [class.active]="user.is_active">
+                                <ion-toggle [checked]="user.is_active" (ionChange)="toggleUserStatus(user, $event)"
+                                    mode="ios" color="success">
+                                </ion-toggle>
+                                <span>{{ user.is_active ? 'Activo' : 'Inactivo' }}</span>
                             </div>
 
-                            <div class="actions-panel">
-                                <!-- Status Toggle -->
-                                <div class="status-toggle" [class.active]="user.is_active">
-                                    <ion-toggle [checked]="user.is_active" (ionChange)="toggleUserStatus(user, $event)"
-                                        mode="ios" color="success">
-                                    </ion-toggle>
-                                    <span>{{ user.is_active ? 'Activo' : 'Inactivo' }}</span>
-                                </div>
+                            <!-- Buttons -->
+                            <div class="buttons">
+                                <ion-button fill="clear" color="warning" (click)="openEditModal(user)"
+                                    title="Editar Usuario">
+                                    <ion-icon slot="icon-only" name="create"></ion-icon>
+                                </ion-button>
 
-                                <!-- Buttons -->
-                                <div class="buttons">
-                                    <ion-button fill="clear" color="warning" (click)="openEditModal(user)"
-                                        title="Editar Usuario">
-                                        <ion-icon slot="icon-only" name="create"></ion-icon>
-                                    </ion-button>
-
-                                    <ion-button fill="clear" color="danger" (click)="deleteUser(user.id)"
-                                        title="Eliminar Usuario">
-                                        <ion-icon slot="icon-only" name="trash"></ion-icon>
-                                    </ion-button>
-                                </div>
+                                <ion-button fill="clear" color="danger" (click)="deleteUser(user.id)"
+                                    title="Eliminar Usuario">
+                                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                                </ion-button>
                             </div>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+                        </div>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
 
         <!-- Empty State -->
-        <div class="empty-state" *ngIf="!isLoading && filteredUsers().length === 0">
-            <div class="hologram-circle"></div>
-            <p>No se encontraron otros usuarios.</p>
-        </div>
+        <ion-row *ngIf="!isLoading && filteredUsers().length === 0">
+            <ion-col size="12">
+                <div class="empty-state">
+                    <div class="hologram-circle"></div>
+                    <p>No se encontraron otros usuarios.</p>
+                </div>
+            </ion-col>
+        </ion-row>
 
-    </div>
+    </ion-grid>
 
     <!-- Modal Formulario Rediseñado -->
     <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="user-modal-neon">

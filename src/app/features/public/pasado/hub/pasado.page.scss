@@ -1,8 +1,6 @@
 // ========================================
-// PASADO HUB - PORTAL STYLE DESIGN
+// PASADO HUB - PORTAL STYLE DESIGN (RESPONSIVE)
 // ========================================
-
-// Variables
 $primary-red: #D32F2F;
 $primary-dark: #B71C1C;
 $bg-dark: #0F172A;
@@ -10,175 +8,172 @@ $panel-dark: #1E293B;
 
 .pasado-content {
     --background: #{$bg-dark};
-    --overflow: hidden;
 }
 
-// ==============
-// HEADER STYLE 
-// ==============
-.pasado-header {
-    --background: #fff;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    overflow: hidden;
-    height: var(--current-height);
-    padding: 0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+// ==============================================
+// GRID STRUCTURE
+// ==============================================
+.main-grid {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-row {
+    flex: 0 0 auto;
+    z-index: 20;
+    background: white; 
+}
+
+.back-button-row {
+    flex: 0 0 auto;
+    padding: 10px 40px;
+    z-index: 19;
+}
+
+.content-row {
+    flex: 1 1 auto;
+    position: relative;
+    padding: 30px 40px 150px 40px;
+    gap: clamp(20px, 3vw, 50px);
+    overflow-y: auto; // Habilitar scroll vertical
+    overflow-x: hidden; // Prevenir scroll horizontal accidental
+
+    // Mejorar experiencia de scroll en iOS
+    -webkit-overflow-scrolling: touch;
+}
+
+.footer-row {
+    flex: 0 0 auto;
+    z-index: 20;
+}
+
+// ==============================================
+// HEADER WRAPPER (Responsive)
+// ==============================================
+.header-wrapper {
+    position: relative;
+    width: 100%;
+    // Altura Dinámica: 80px (móvil) -> 150px (Desktop/Tótem)
+    height: clamp(80px, 15vh, 150px);
     display: flex;
     align-items: center;
     justify-content: center;
-    zoom: 1.5; //forzando el tamaño del header
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 
-    .header-content-wrapper {
-        width: 100%;
-        max-width: 1400px; // Un poco más ancho para dar espacio
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-    }
 
-    .header-back-btn {
-        position: absolute;
-        left: 20px;
-        top: 50%;
-        transform: translateY(50%);
-        z-index: 20;
-        // Ajuste de escala dado el zoom del header padre
-        zoom: 0.8;
-    }
 
+    // Ajustes al componente hijo app-home-header
     app-home-header {
         width: 100%;
         height: 100%;
 
-        // Aplicar variables CSS a los elementos internos del header
         ::ng-deep .top-section {
             height: 100% !important;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #fff !important; // Asegurar fondo blanco
-            padding: 0 !important; // Reset padding
+            padding: 0 !important;
+            background-color: transparent !important;
         }
 
         ::ng-deep .header-content {
-            width: 100%;
-            padding: 0 2rem !important;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 0 1rem !important;
         }
 
         ::ng-deep .logo-container img {
-            width: var(--current-logo-width) !important;
+            // Logo escala dinámicamente
+            width: clamp(150px, 30vw, 350px) !important;
             height: auto !important;
         }
-
-        ::ng-deep .header-text {
-            transform: scale(var(--current-text-scale, 1));
-            transform-origin: right center;
-        }
     }
 }
 
-
-// ========================================
-// MAIN CONTAINER
-// ========================================
-.portals-container {
-    position: relative;
+// ==============================================
+// PORTAL COLUMNS & CARDS
+// ==============================================
+.portal-col {
     display: flex;
-    flex-direction: row;
-    width: 100%;
-    margin-top: 230px; // Espacio para el header fijo
-    height: calc(100vh - 230px); // 150px Header + ~80px Footer
-    max-height: calc(100vh - 330px);
-    padding: 12px;
-    gap: 15px;
-    overflow: hidden;
-
-    // Para pantallas pequeñas, apilar verticalmente
-    @media (max-width: 768px) {
-        flex-direction: column;
-        height: calc(100vh - 230px);
-        max-height: calc(100vh - 230px);
-    }
+    height: 100%; // Forzar altura total de la columna sin limites
 }
 
-// Glow effect
-.glow-effect {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
-    background: $primary-red;
-    border-radius: 50%;
-    filter: blur(150px);
-    opacity: 0.15;
-    pointer-events: none;
-    z-index: 0;
-    animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse-slow {
-
-    0%,
-    100% {
-        opacity: 0.15;
-    }
-
-    50% {
-        opacity: 0.25;
-    }
-}
-
-// ========================================
-// PORTAL CARD (BASE)
-// ========================================
 .portal-card {
     position: relative;
-    flex: 1;
-    border-radius: 3rem;
+    width: 100%;
+    height: 100%; // Ocupar todo el alto disponible
+    min-height: 300px; // Altura mínima en móvil
+
+    border-radius: clamp(1.5rem, 3vw, 3rem);
+    border: 4px solid transparent;
     overflow: hidden;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
-    border: 4px solid transparent;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 
+    // Hover Effects (Desktop)
     &:hover {
-        .portal-content {
-            transform: translateY(-10px);
-        }
-
-        .dark-overlay {
-            background: rgba(0, 0, 0, 0.2);
-        }
+        transform: translateY(-5px);
 
         .portal-description {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .portal-btn {
-            box-shadow: 0 0 0 8px rgba($primary-red, 0.3);
+        .dark-overlay {
+            background: rgba(0, 0, 0, 0.2);
         }
     }
 
-    @media (max-width: 768px) {
-        min-height: 400px;
+    // Mobile Touch tweaks
+    &:active {
+        transform: scale(0.98);
     }
 }
 
 // ========================================
-// TIMELINE PORTAL (LEFT)
+// BACKGROUND EFECTS (Compartidos)
+// ========================================
+.grid-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.glow-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+    height: 60vw;
+    background: $primary-red;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.1;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.portal-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.dark-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    transition: background 0.5s;
+}
+
+// ========================================
+// TIMELINE PORTAL (Estilos Específicos)
 // ========================================
 .timeline-portal {
-    background: #000000;
+    background: #000;
 
     &:hover {
         border-color: rgba($primary-red, 0.4);
@@ -207,12 +202,6 @@ $panel-dark: #1E293B;
         background: linear-gradient(to bottom, transparent, $primary-red, transparent);
         opacity: 0.8;
         box-shadow: 0 0 20px rgba($primary-red, 0.9);
-        transition: all 0.3s;
-    }
-
-    &:hover .timeline-line {
-        width: 6px;
-        opacity: 1;
     }
 
     .year-badge {
@@ -221,39 +210,23 @@ $panel-dark: #1E293B;
         transform: translateX(-50%);
         background: $panel-dark;
         color: white;
-        padding: 8px 16px;
+        padding: 5px 12px;
         border-radius: 8px;
         font-family: monospace;
-        font-size: 1.2rem;
         border: 1px solid rgba(255, 255, 255, 0.2);
-        animation: float 6s ease-in-out infinite;
 
         &.top-badge {
-            top: 15%;
-            animation-delay: 0s;
+            top: 10%;
         }
 
         &.bottom-badge {
-            bottom: 14%;
-            animation-delay: 1.5s;
+            bottom: 10%;
         }
-    }
-}
-
-@keyframes float {
-
-    0%,
-    100% {
-        transform: translateX(-50%) translateY(0);
-    }
-
-    50% {
-        transform: translateX(-50%) translateY(-10px);
     }
 }
 
 // ========================================
-// INTERVIEWS PORTAL (RIGHT)
+// INTERVIEWS PORTAL (Estilos Específicos)
 // ========================================
 .interviews-portal {
     background: $panel-dark;
@@ -274,89 +247,49 @@ $panel-dark: #1E293B;
         mix-blend-mode: screen;
         filter: blur(60px);
         opacity: 0.3;
-        animation: pulse-slow 4s ease-in-out infinite;
-    }
-
-    .blob-1 {
-        top: 20%;
-        left: 20%;
         width: 150px;
         height: 150px;
-        background: #3B82F6;
-    }
 
-    .blob-2 {
-        bottom: 25%;
-        right: 20%;
-        width: 180px;
-        height: 180px;
-        background: #8B5CF6;
-        animation-delay: 1s;
-    }
+        &.blob-1 {
+            top: 20%;
+            left: 20%;
+            background: #3B82F6;
+        }
 
-    .blob-3 {
-        top: 45%;
-        left: 45%;
-        width: 120px;
-        height: 120px;
-        background: $primary-red;
-        animation-delay: 2s;
+        &.blob-2 {
+            bottom: 25%;
+            right: 20%;
+            background: #8B5CF6;
+        }
+
+        &.blob-3 {
+            top: 45%;
+            left: 45%;
+            background: $primary-red;
+        }
     }
 
     .grid-cards {
         position: absolute;
-        inset: 40px;
+        inset: 20px;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-        gap: 16px;
-        opacity: 0.3;
-        transform: scale(1.1) rotate(3deg);
-        transition: all 0.5s;
+        gap: 10px;
+        opacity: 0.2;
+        transform: rotate(5deg) scale(1.1);
 
         &::before,
-        &::after {
-            content: '';
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        // Simular cards
+        &::after,
         >* {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
     }
-
-    &:hover .grid-cards {
-        opacity: 0.5;
-        transform: scale(1) rotate(0deg);
-    }
-
-    .portal-btn {
-        --background: white;
-        --color: #{$bg-dark};
-
-        &:hover {
-            box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.3) !important;
-        }
-    }
 }
 
 // ========================================
-// DARK OVERLAY (BOTH)
-// ========================================
-.dark-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    transition: background 0.5s;
-}
-
-// ========================================
-// PORTAL CONTENT (CENTER GLASS PANEL)
+// CONTENT LAYER
 // ========================================
 .portal-content {
     position: absolute;
@@ -365,10 +298,9 @@ $panel-dark: #1E293B;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    padding-top: 90%; // Empujar el panel hacia arriba pero dejando espacio para el año superior
+    justify-content: center;
+    padding: 20px;
     pointer-events: none;
-    transition: transform 0.3s;
 }
 
 .glass-panel {
@@ -376,107 +308,91 @@ $panel-dark: #1E293B;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 48px;
+
+    padding: clamp(20px, 4vw, 48px);
     border-radius: 24px;
     text-align: center;
-    width: 80%;
-    max-width: 350px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 
-    @media (max-width: 768px) {
-        padding: 32px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .portal-icon {
+        font-size: clamp(3rem, 6vw, 5rem);
+        color: $primary-red;
+        margin-bottom: 15px;
+        filter: drop-shadow(0 0 15px rgba($primary-red, 0.5));
+
+        &.light-icon {
+            color: white;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+        }
     }
-}
 
-.portal-icon {
-    font-size: 5rem;
-    color: $primary-red;
-    margin-bottom: 24px;
-    filter: drop-shadow(0 0 15px rgba($primary-red, 0.5));
-
-    &.light-icon {
+    h2 {
+        font-family: 'Exo 2', sans-serif;
+        font-size: clamp(1.8rem, 3vw, 2.8rem);
+        font-weight: 700;
         color: white;
-        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+        text-transform: uppercase;
+        line-height: 1.1;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .portal-description {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+        margin-bottom: 20px;
+        // En móvil siempre visible, en desktop hover effect
+        opacity: 1;
+
+        @media (min-width: 992px) {
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
     }
 }
 
-.glass-panel h2 {
-    font-family: 'Exo 2', sans-serif;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: white;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    line-height: 1.2;
-    margin-bottom: 16px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-
-    @media (max-width: 768px) {
-        font-size: 2rem;
-    }
-}
-
-.portal-description {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1rem;
-    max-width: 280px;
-    margin: 0 auto 32px;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: all 0.5s;
-}
-
-// ========================================
-// PORTAL BUTTON
-// ========================================
+// Botones dentro del glass panel
 .portal-btn {
     pointer-events: auto;
     --background: #{$primary-red};
     --color: white;
     --border-radius: 50px;
-    --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     font-weight: 700;
-    font-size: 1.1rem;
-    padding: 20px 32px;
-    transition: all 0.3s;
 
-    ion-icon {
-        margin-left: 8px;
-        font-size: 1.2rem;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    height: clamp(40px, 5vh, 56px);
+
+    transition: transform 0.2s;
+
+    &.light-btn {
+        --background: white;
+        --color: #{$bg-dark};
     }
 
-    &:hover {
-        transform: scale(1.05);
+    &:active {
+        transform: scale(0.95);
     }
 }
 
-.light-btn {
-    --background: white;
-    --color: #{$bg-dark};
-}
-
-// ========================================
-// MODULE LABEL
-// ========================================
 .module-label {
+    margin-top: auto;
     position: absolute;
-    bottom: 32px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 10;
+    bottom: 20px;
 
-    display: inline-block;
-    margin: 24rem auto;
-    width: fit-content;
-    padding: 8px 24px;
+    padding: 6px 16px;
     border-radius: 50px;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     color: white;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-family: monospace;
     text-transform: uppercase;
-    letter-spacing: 3px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(4px);
+    letter-spacing: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }

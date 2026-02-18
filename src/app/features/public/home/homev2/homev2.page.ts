@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { ActionSheetController } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
@@ -15,7 +15,7 @@ import { ButtonHomeComponent } from '../../../../components/buttons/button-home/
     templateUrl: './homev2.page.html',
     styleUrls: ['./homev2.page.scss'],
     standalone: true,
-    imports: [IonContent, CommonModule, FormsModule, IonIcon, GeometricOverlayTopComponent, GeometricOverlayBottomComponent, ButtonHomeComponent]
+    imports: [IonContent, CommonModule, FormsModule, IonIcon, IonGrid, IonRow, IonCol, GeometricOverlayTopComponent, GeometricOverlayBottomComponent, ButtonHomeComponent]
 })
 export class Homev2Page implements OnInit {
 

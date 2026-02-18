@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { RotateCubeComponent } from '../../../components/loading/rotate-cube/rotate-cube.component';
 
+import { IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
+
 /**
  * SplashPage - Pantalla de bienvenida de la aplicación
  * 
@@ -14,7 +16,7 @@ import { RotateCubeComponent } from '../../../components/loading/rotate-cube/rot
     templateUrl: './splash.page.html',
     styleUrls: ['./splash.page.scss'],
     standalone: true,
-    imports: [CommonModule, RotateCubeComponent]
+    imports: [CommonModule, RotateCubeComponent, IonGrid, IonRow, IonCol]
 })
 export class SplashPage implements OnInit {
 

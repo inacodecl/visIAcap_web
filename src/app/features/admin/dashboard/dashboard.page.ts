@@ -2,7 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import {
-    IonContent, IonCard, IonIcon,
+    IonContent, IonCard, IonIcon, IonGrid, IonRow, IonCol,
     IonSkeletonText, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -21,7 +21,7 @@ import { UserService } from '../../../core/services/user.service';
     imports: [
         CommonModule,
         RouterModule,
-        IonContent, IonCard, IonIcon,
+        IonContent, IonCard, IonIcon, IonGrid, IonRow, IonCol,
         IonSkeletonText, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton
     ]
 })

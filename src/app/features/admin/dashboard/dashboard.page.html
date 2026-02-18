@@ -1,11 +1,18 @@
-<ion-header class="ion-no-border">
+<ion-header class="ion-no-border dashboard-header">
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-icon name="grid" slot="icon-only" class="ion-margin-start"></ion-icon>
+            <div class="header-brand">
+                <ion-icon name="grid" class="brand-icon"></ion-icon>
+                <div class="brand-text">
+                    <span class="brand-title">Dashboard</span>
+                    <span class="brand-role">
+                        {{ authService.isSuperAdmin ? 'Super Administrador' : 'Administrador' }}
+                    </span>
+                </div>
+            </div>
         </ion-buttons>
-        <ion-title>Dashboard General</ion-title>
         <ion-buttons slot="end">
-            <ion-button (click)="logout()" color="danger">
+            <ion-button (click)="logout()" class="logout-btn">
                 <ion-icon slot="start" name="log-out"></ion-icon>
                 Salir
             </ion-button>
@@ -15,108 +22,140 @@
 
 <ion-content class="ion-padding">
 
-    <!-- Sección de Bienvenida -->
-    <div class="welcome-section">
-        <h1>Bienvenido, {{ authService.currentUser()?.nombre || 'Administrador' }}</h1>
-        <p>Aquí tienes un resumen de la plataforma Inacap Renca Smart.</p>
-    </div>
+    <ion-grid fixed class="dashboard-grid">
 
-    <!-- CARRUSEL DE MÉTRICAS -->
-    <section class="metrics-section">
-        <h2 class="section-title">Resumen Rápido</h2>
+        <!-- Sección de Bienvenida -->
+        <ion-row class="welcome-section ion-margin-bottom">
+            <ion-col size="12">
+                <h1>Bienvenido, {{ authService.currentUser()?.nombre || 'Administrador' }}</h1>
+                <p>Aquí tienes un resumen de la plataforma Inacap Renca Smart.</p>
+            </ion-col>
+        </ion-row>
+
+        <!-- CARRUSEL DE MÉTRICAS -->
+        <ion-row class="section-header">
+            <ion-col size="12">
+                <h2 class="section-title">Resumen Rápido</h2>
+            </ion-col>
+        </ion-row>
 
         <!-- Skeleton Loader para Métricas -->
-        <div class="metrics-carousel" *ngIf="isLoading()">
-            <div class="metric-card skeleton" *ngFor="let i of [1,2,3,4]">
-                <ion-skeleton-text animated style="width: 50px; height: 50px;"></ion-skeleton-text>
-                <ion-skeleton-text animated style="width: 80%; margin-top: 10px;"></ion-skeleton-text>
-            </div>
-        </div>
+        <ion-row *ngIf="isLoading()" class="metrics-row">
+            <ion-col size="6" size-md="3" *ngFor="let i of [1,2,3,4]">
+                <div class="metric-card skeleton">
+                    <ion-skeleton-text animated style="width: 50px; height: 50px;"></ion-skeleton-text>
+                    <ion-skeleton-text animated style="width: 80%; margin-top: 10px;"></ion-skeleton-text>
+                </div>
+            </ion-col>
+        </ion-row>
 
         <!-- Métricas Reales -->
-        <div class="metrics-carousel" *ngIf="!isLoading()">
+        <ion-row *ngIf="!isLoading()" class="metrics-row">
             <ng-container *ngIf="!authService.isSuperAdmin">
-                <div class="metric-card history">
-                    <span class="metric-value">{{ stats().historias }}</span>
-                    <span class="metric-label">Hitos</span>
-                    <ion-icon name="time" class="metric-icon"></ion-icon>
-                </div>
-                <div class="metric-card interview">
-                    <span class="metric-value">{{ stats().entrevistas }}</span>
-                    <span class="metric-label">Entrevistas</span>
-                    <ion-icon name="videocam" class="metric-icon"></ion-icon>
-                </div>
-                <div class="metric-card project">
-                    <span class="metric-value">{{ stats().proyectos }}</span>
-                    <span class="metric-label">Proyectos</span>
-                    <ion-icon name="rocket" class="metric-icon"></ion-icon>
-                </div>
+                <ion-col size="12" size-md="4">
+                    <div class="metric-card history">
+                        <span class="metric-value">{{ stats().historias }}</span>
+                        <span class="metric-label">Hitos</span>
+                        <ion-icon name="time" class="metric-icon"></ion-icon>
+                    </div>
+                </ion-col>
+                <ion-col size="12" size-md="4">
+                    <div class="metric-card interview">
+                        <span class="metric-value">{{ stats().entrevistas }}</span>
+                        <span class="metric-label">Entrevistas</span>
+                        <ion-icon name="videocam" class="metric-icon"></ion-icon>
+                    </div>
+                </ion-col>
+                <ion-col size="12" size-md="4">
+                    <div class="metric-card project">
+                        <span class="metric-value">{{ stats().proyectos }}</span>
+                        <span class="metric-label">Proyectos</span>
+                        <ion-icon name="rocket" class="metric-icon"></ion-icon>
+                    </div>
+                </ion-col>
             </ng-container>
 
-            <div class="metric-card users" *ngIf="authService.isSuperAdmin">
-                <span class="metric-value">{{ stats().usuarios }}</span>
-                <span class="metric-label">Usuarios</span>
-                <ion-icon name="people" class="metric-icon"></ion-icon>
-            </div>
-        </div>
-    </section>
+            <!-- Solo SuperAdmin -->
+            <ion-col size="6" size-md="4" *ngIf="authService.isSuperAdmin" class="metric-col">
+                <div class="metric-card users">
+                    <span class="metric-value">{{ stats().usuarios }}</span>
+                    <span class="metric-label">Usuarios</span>
+                    <ion-icon name="people" class="metric-icon"></ion-icon>
+                </div>
+            </ion-col>
+        </ion-row>
 
-    <!-- TARJETAS DE ACCESO -->
-    <section class="access-section">
-        <h2 class="section-title">Gestión de Contenido</h2>
+        <!-- TARJETAS DE ACCESO -->
+        <ion-row class="section-header ion-margin-top">
+            <ion-col size="12">
+                <h2 class="section-title">Gestión de Contenido</h2>
+            </ion-col>
+        </ion-row>
 
         <!-- Skeletons para Tarjetas de Acceso -->
-        <div *ngIf="isLoading()" class="access-list">
-            <div class="access-card skeleton" *ngFor="let i of [1,2,3]">
-                <ion-skeleton-text animated style="width: 40px; height: 40px; border-radius: 50%;"></ion-skeleton-text>
-                <ion-skeleton-text animated style="flex: 1; margin-left: 15px;"></ion-skeleton-text>
-            </div>
-        </div>
+        <ion-row *ngIf="isLoading()" class="access-row">
+            <ion-col size="12" size-md="6" size-lg="4" *ngFor="let i of [1,2,3]">
+                <div class="access-card skeleton">
+                    <ion-skeleton-text animated
+                        style="width: 40px; height: 40px; border-radius: 50%;"></ion-skeleton-text>
+                    <ion-skeleton-text animated style="flex: 1; margin-left: 15px;"></ion-skeleton-text>
+                </div>
+            </ion-col>
+        </ion-row>
 
         <!-- Tarjetas Reales -->
-        <div *ngIf="!isLoading()" class="access-list">
+        <ion-row *ngIf="!isLoading()" class="access-row">
             <ng-container *ngIf="!authService.isSuperAdmin">
                 <!-- Línea de Tiempo -->
-                <ion-card class="access-card history" routerLink="/admin/historias" button>
-                    <ion-icon name="time" class="card-watermark-icon"></ion-icon>
-                    <div class="card-content">
-                        <span class="card-title">Línea de Tiempo</span>
-                        <span class="card-subtitle">Gestiona los hitos históricos</span>
-                    </div>
-                    <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
-                </ion-card>
+                <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+                    <ion-card class="access-card history" routerLink="/admin/historias" button>
+                        <ion-icon name="time" class="card-watermark-icon"></ion-icon>
+                        <div class="card-content">
+                            <span class="card-title">Línea de Tiempo</span>
+                            <span class="card-subtitle">Gestiona los hitos históricos</span>
+                        </div>
+                        <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+                    </ion-card>
+                </ion-col>
 
                 <!-- Entrevistas -->
-                <ion-card class="access-card interview" routerLink="/admin/entrevistas" button>
-                    <ion-icon name="videocam" class="card-watermark-icon"></ion-icon>
-                    <div class="card-content">
-                        <span class="card-title">Entrevistas</span>
-                        <span class="card-subtitle">Administra videos y testimonios</span>
-                    </div>
-                    <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
-                </ion-card>
+                <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+                    <ion-card class="access-card interview" routerLink="/admin/entrevistas" button>
+                        <ion-icon name="videocam" class="card-watermark-icon"></ion-icon>
+                        <div class="card-content">
+                            <span class="card-title">Entrevistas</span>
+                            <span class="card-subtitle">Administra videos y testimonios</span>
+                        </div>
+                        <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+                    </ion-card>
+                </ion-col>
 
                 <!-- Proyectos -->
-                <ion-card class="access-card project" routerLink="/admin/proyectos" button>
-                    <ion-icon name="rocket" class="card-watermark-icon"></ion-icon>
-                    <div class="card-content">
-                        <span class="card-title">Proyectos</span>
-                        <span class="card-subtitle">Iniciativas y proyectos activos</span>
-                    </div>
-                    <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
-                </ion-card>
+                <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+                    <ion-card class="access-card project" routerLink="/admin/proyectos" button>
+                        <ion-icon name="rocket" class="card-watermark-icon"></ion-icon>
+                        <div class="card-content">
+                            <span class="card-title">Proyectos</span>
+                            <span class="card-subtitle">Iniciativas y proyectos activos</span>
+                        </div>
+                        <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+                    </ion-card>
+                </ion-col>
             </ng-container>
 
             <!-- Usuarios (Solo SuperAdmin) -->
-            <ion-card class="access-card users" routerLink="/admin/usuarios" button *ngIf="authService.isSuperAdmin">
-                <ion-icon name="people" class="card-watermark-icon"></ion-icon>
-                <div class="card-content">
-                    <span class="card-title">Usuarios</span>
-                    <span class="card-subtitle">Gestión de cuentas y permisos</span>
-                </div>
-                <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
-            </ion-card>
-        </div>
-    </section>
+            <ion-col size="12" *ngIf="authService.isSuperAdmin">
+                <ion-card class="access-card users" routerLink="/admin/usuarios" button>
+                    <ion-icon name="people" class="card-watermark-icon"></ion-icon>
+                    <div class="card-content">
+                        <span class="card-title">Usuarios</span>
+                        <span class="card-subtitle">Gestión de cuentas y permisos</span>
+                    </div>
+                    <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
 
 </ion-content>

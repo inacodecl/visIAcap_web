@@ -1,17 +1,85 @@
-// --- Variables de Diseño ---
+// --- Base Layout ---
 :host {
     display: block;
 }
 
-// Background con gradiente (según ajuste del usuario)
 ion-content {
     --background: linear-gradient(135deg, #ffffff 0%, #1e1f1f 100%);
 }
 
-ion-toolbar {
-    --background: transparent;
-    --color: #222;
-    --border-style: none;
+// =============================================
+// HEADER DEL DASHBOARD - Glassmorphism Adaptativo
+// =============================================
+.dashboard-header {
+    ion-toolbar {
+        --background: rgba(30, 30, 30, 0.85);
+        --border-style: none;
+        --min-height: 60px;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+}
+
+// Brand (icono + texto)
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-left: 8px;
+}
+
+.brand-icon {
+    font-size: 1.6rem;
+    color: #fdcb6e; // Dorado INACAP
+    background: rgba(253, 203, 110, 0.15);
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.brand-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.brand-role {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(253, 203, 110, 0.9); // Dorado suave
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+// Botón Salir
+.logout-btn {
+    --color: #ff7675;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    margin-right: 8px;
+    --border-radius: 10px;
+    --padding-start: 12px;
+    --padding-end: 14px;
+    transition: all 0.3s ease;
+
+    ion-icon {
+        font-size: 1.2rem;
+        margin-right: 4px;
+    }
+
+    &:hover {
+        --color: #ffffff;
+        background: rgba(255, 118, 117, 0.2);
+        border-radius: 10px;
+    }
 }
 
 // --- Animaciones ---
@@ -73,30 +141,15 @@ ion-toolbar {
 // =============================================
 .metrics-section {
     margin-bottom: 30px;
-    animation: fadeInUp 0.6s ease-out;
 }
 
-.metrics-carousel {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding: 10px 5px 15px 5px; // Padding extra para evitar recorte en hover
-    -webkit-overflow-scrolling: touch;
-
-    // Ocultar scrollbar pero permitir scroll
-    &::-webkit-scrollbar {
-        display: none;
-    }
-
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+.metrics-row {
+    margin-bottom: 2rem;
 }
 
 .metric-card {
-    flex: 0 0 auto;
-    width: 130px;
-    min-height: 120px;
+    width: 100%; // Ocupa todo el ancho de la columna
+    min-height: 140px;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 16px;
     padding: 20px 15px;
@@ -106,7 +159,6 @@ ion-toolbar {
     justify-content: center;
     position: relative;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    scroll-snap-align: start;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
 
@@ -127,7 +179,7 @@ ion-toolbar {
     }
 
     .metric-value {
-        font-size: 2.8rem;
+        font-size: 3rem;
         font-weight: 900;
         color: #2c3e50;
         line-height: 1;
@@ -135,23 +187,50 @@ ion-toolbar {
     }
 
     .metric-label {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         color: #7f8c8d;
         font-weight: 600;
         margin-top: 8px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         z-index: 2;
+        text-align: center;
     }
 
     .metric-icon {
         position: absolute;
         bottom: -10px;
         right: -10px;
-        font-size: 4rem;
+        font-size: 5rem;
         color: var(--metric-color, #ccc);
         opacity: 0.15;
         z-index: 1;
+    }
+
+    // Full width specific styles
+    &.full-width-metric {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 40px;
+        align-items: center;
+        gap: 20px;
+
+        .metric-value {
+            font-size: 4rem;
+            order: 2;
+        }
+
+        .metric-label {
+            font-size: 1.5rem;
+            order: 1;
+            text-align: left;
+        }
+
+        .metric-icon {
+            right: 20px;
+            opacity: 0.1;
+            font-size: 8rem;
+        }
     }
 
     // Colores por tipo
@@ -179,24 +258,30 @@ ion-toolbar {
 // =============================================
 // TARJETAS DE ACCESO (Rectangulares Horizontales)
 // =============================================
-.access-section {
-    animation: fadeInUp 0.7s ease-out;
-}
-
-.access-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+// .access-section removed as it was empty
 
 .access-card {
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.95);
+    // CRÍTICO: Usar variables de Ionic para evitar "fondo fantasma" blanco
+    --background: rgba(255, 255, 255, 0.95);
+    background: var(--background);
+    --box-shadow: none; // Desactivar sombra nativa de Ionic
+
+    // SOLUCIÓN: Forzar que el elemento interno (Shadow DOM) de ion-card sea transparente
+    // Esto elimina el rectángulo blanco fantasma que genera Ionic internamente
+    &::part(native) {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0; // Evitar padding doble
+    }
+
     border-radius: 20px;
     padding: 25px 30px;
     margin: 0;
-    min-height: 100px;
+    min-height: 120px; // Un poco más alto para adaptarse mejor
+    width: 100%; // Fill column
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
     cursor: pointer;
@@ -216,21 +301,21 @@ ion-toolbar {
     }
 
     &:hover {
-        transform: translateX(10px) scale(1.01);
+        transform: translateY(-5px);
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 
         &::before {
-            width: 10px;
+            width: 12px;
         }
 
         .card-arrow {
-            transform: translateY(-50%) translateX(8px);
+            transform: translateY(-50%) translateX(5px);
             color: var(--card-color);
         }
 
         .card-watermark-icon {
             opacity: 0.25;
-            transform: translateY(-50%) translateX(40px);
+            transform: translateY(-50%) translateX(20px);
         }
     }
 
@@ -240,7 +325,7 @@ ion-toolbar {
         left: 20px;
         top: 50%;
         transform: translateY(-50%);
-        font-size: 9rem;
+        font-size: 6rem; // Ajustado para no salir tanto
         color: var(--card-color, #ccc);
         opacity: 0.15;
         z-index: 1;
@@ -251,31 +336,36 @@ ion-toolbar {
         flex: 1;
         display: flex;
         flex-direction: column;
-        padding-left: 170px;
+        padding-left: 15px; // Reduced padding, grid handles spacing
+        position: relative; // Z-index context
         z-index: 2;
+        text-align: right;
+        padding-right: 40px; // Espacio para flecha
+    }
 
-        .card-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #2c3e50;
-            margin-bottom: 5px;
-            letter-spacing: -0.5px;
-        }
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #2c3e50;
+        margin-bottom: 5px;
+        letter-spacing: -0.5px;
+        display: block;
+    }
 
-        .card-subtitle {
-            font-size: 1.2rem;
-            color: #7f8c8d;
-            font-weight: 500;
-        }
+    .card-subtitle {
+        font-size: 1rem;
+        color: #7f8c8d;
+        font-weight: 500;
+        display: block;
     }
 
     // Flecha de Navegación (Posicionada a la derecha)
     .card-arrow {
         position: absolute;
-        right: 25px;
+        right: 20px;
         top: 50%;
         transform: translateY(-50%);
-        font-size: 2.9rem;
+        font-size: 2rem;
         color: #bdc3c7;
         transition: transform 0.3s ease, color 0.3s ease;
         z-index: 2;
@@ -305,43 +395,246 @@ ion-toolbar {
 }
 
 // --- Animación Stagger para Tarjetas ---
-.access-list .access-card {
-    opacity: 0;
+// Ahora se aplica a ion-col o los elementos dentro
+.access-card,
+.metric-card {
     animation: fadeInUp 0.5s ease-out forwards;
 }
 
-@for $i from 1 through 5 {
-    .access-list .access-card:nth-child(#{$i}) {
-        animation-delay: #{$i * 100 + 200}ms;
+// --- Responsividad Móvil (Scroll Horizontal para Métricas) ---
+@media (max-width: 576px) {
+
+    // Contenedor de Métricas: Scroll Horizontal
+    .metrics-row {
+        display: flex;
+        flex-wrap: nowrap !important; // Evita que bajen a nueva linea
+        overflow-x: auto; // Permite scroll lateral
+        overflow-y: hidden;
+        gap: 15px; // Espacio entre tarjetas
+        padding-bottom: 10px; // Espacio para scrollbar (aunque la ocultemos)
+        margin-left: -10px; // Compensar padding del grid
+        margin-right: -10px;
+        padding-left: 10px; // Padding inicial del scroll
+        padding-right: 10px;
+
+        // Ocultar barra de scroll para estética limpia
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        scrollbar-width: none; // Firefox
+    }
+
+    // Columnas de métricas en móvil
+    .metrics-row ion-col {
+        flex: 0 0 auto !important; 
+        width: 150px !important; // Ancho fijo cuadrado
+        max-width: 150px !important;
+        padding: 0 !important;
+    }
+
+    // Tarjeta métrica compacta cuadrada
+    .metric-card {
+        min-height: 140px;
+        height: 140px; // Cuadrada
+        padding: 15px;
+        margin: 0; // El margen lo da el gap del row
+
+        .metric-value {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            margin-top: 0;
+            white-space: nowrap; // Texto en una linea
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .metric-icon {
+            font-size: 4rem;
+            bottom: -5px;
+            right: -5px;
+        }
+    }
+
+    // Ajustes para tarjetas de acceso (mantener vertical, pero ajustar padding)
+    .access-card {
+        padding: 20px;
+        min-height: 100px;
+
+        .card-content {
+            text-align: left;
+            padding-left: 50px;
+            padding-right: 20px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+        }
+
+        .card-watermark-icon {
+            font-size: 3rem;
+            left: 15px;
+            opacity: 0.3;
+        }
     }
 }
 
-// --- Responsividad ---
-@media (max-width: 576px) {
-    .metric-card {
-        width: 110px;
-        min-height: 100px;
+@media (min-height: 1500px) and (orientation: portrait) {
 
-        .metric-value {
-            font-size: 2.2rem;
+    .dashboard-grid {
+        padding: 15px;
+    }
+
+    // Header escalado para Tótem
+    .dashboard-header ion-toolbar {
+        --min-height: 100px;
+    }
+
+    .brand-icon {
+        font-size: 2.8rem;
+        padding: 14px;
+        border-radius: 16px;
+    }
+
+    .brand-title {
+        font-size: 2rem;
+    }
+
+    .brand-role {
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+    }
+
+    .logout-btn {
+        font-size: 1.5rem;
+        --padding-start: 24px;
+        --padding-end: 28px;
+        --border-radius: 16px;
+        margin-right: 16px;
+
+        ion-icon {
+            font-size: 2rem;
         }
     }
 
+    .welcome-section {
+        margin-bottom: 60px;
+
+        h1 {
+            font-size: 3.5rem;
+        }
+
+        p {
+            font-size: 2rem;
+        }
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+        margin-bottom: 30px;
+    }
+
+    // =============================================
+    // COLUMNAS DE MÉTRICAS → Compactas (Cuadrado)
+    // Forzamos que la columna Ionic sea pequeña
+    // =============================================
+    .metrics-row>ion-col {
+        flex: 0 0 auto !important;
+        width: auto !important;
+        max-width: none !important;
+    }
+
+    .metric-card {
+        // Cuadrado compacto
+        width: 280px;
+        height: 280px;
+        min-height: unset;
+        border-radius: 30px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .metric-value {
+            font-size: 5rem;
+        }
+
+        .metric-label {
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+
+        .metric-icon {
+            font-size: 6rem;
+            opacity: 0.1;
+        }
+
+        &::before {
+            height: 10px;
+        }
+    }
+
+    // =============================================
+    // COLUMNAS DE ACCESO → Full Width (Rectángulo)
+    // Forzamos 100% de ancho de la columna Ionic
+    // =============================================
+    .access-row>ion-col {
+        flex: 0 0 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
     .access-card {
-        padding: 15px;
+        min-height: 240px; 
+        border-radius: 40px;
+        padding: 30px 60px; 
+        width: 100%;
+        margin: 0 auto; // Centrada horizontalmente
 
-        .card-icon-wrapper {
-            width: 42px;
-            height: 42px;
-            margin-right: 12px;
+        &::before {
+            width: 20px;
+        }
 
-            ion-icon {
-                font-size: 1.3rem;
+        .card-watermark-icon {
+            font-size: 12rem;
+            left: 60px;
+            opacity: 0.12;
+        }
+
+        .card-content {
+            padding-left: 240px; // Espacio para el icono watermark
+            padding-right: 80px; // Espacio para la flecha
+            text-align: left;
+            width: 100%;
+            z-index: 5;
+
+            .card-title {
+                font-size: 2.8rem;
+                margin-bottom: 15px;
+            }
+
+            .card-subtitle {
+                font-size: 1.8rem;
+                opacity: 0.8;
             }
         }
 
-        .card-content .card-title {
-            font-size: 1rem;
+        .card-arrow {
+            font-size: 5rem;
+            right: 50px;
+        }
+
+        &:hover::before {
+            width: 30px;
         }
     }
 }

@@ -1,5 +1,5 @@
 // ==============================================
-// Variables de Diseño - Home V2 (Optimizado para Tótem 1080x1920)
+// Variables de Diseño - Home V2 (Responsive & Adaptive)
 // ==============================================
 $inacap-red: #c8102e;
 $footer-bg: #f5f5f5;
@@ -12,43 +12,83 @@ $text-dark: #333;
 .home-v2-content {
     --background: transparent;
     position: relative;
-    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw; // Asegurar ancho completo del viewport
+        height: 100vh; // Asegurar alto completo del viewport
+        z-index: 0;
+
+        // Imagen de Fondo
+        background-image: url('https://www.eechile.cl/eficiencia-energetica/wp-content/uploads/inacap-valdivia-hd.jpg');
+        background-size: cover; // Cubrir todo el espacio
+        background-repeat: no-repeat;
+        background-position: center;
+
+        filter: brightness(0.85);
+
+        @media (min-width: 992px) {
+            background-position: center top;
+        }
+    }
 }
 
 // ==============================================
-// Fondo con Imagen
+// Sistema de Grilla Principal
 // ==============================================
-.home-v2-content::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    // ============================================
-    // 🖼️ IMAGEN DE FONDO - Cambia esta URL para probar diferentes imágenes
-    // ============================================
-    //background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop');
-    background-image: url('https://www.eechile.cl/eficiencia-energetica/wp-content/uploads/inacap-valdivia-hd.jpg');
-    background-size: cover;
-    background-position: -658px;
-    filter: brightness(0.85);
+.main-grid {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 4;
+    pointer-events: none; // Toda la grilla es transparente a clicks (excepto hijos)
+}
+
+.header-row {
+    flex: 0 0 auto;
+}
+
+.content-row {
+    flex: 1 1 auto;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+
+    // IMPORTANTE: Permitir interacción con los botones
+    pointer-events: none;
+
+    .main-container {
+        pointer-events: auto;
+    }
+}
+
+.footer-row {
+    flex: 0 0 auto;
+    pointer-events: none;
 }
 
 // ==============================================
-// Header (Altura fija para evitar expansión)
+// Header Adaptativo
 // ==============================================
 .v2-header {
+    pointer-events: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 50px;
-    padding-top: max(30px, env(safe-area-inset-top));
+    padding: 10px 20px;
+    padding-top: max(15px, env(safe-area-inset-top));
     width: 100%;
-    height: 260px; // Altura mayor para logo más grande
+
+    // Altura Dinámica: 80px en móvil -> 260px en Tótem
+    height: clamp(80px, 15vh, 260px);
+
     position: relative;
     z-index: 10;
+    transition: all 0.3s ease;
 
     .logo-container {
         flex: 1;
@@ -57,20 +97,25 @@ $text-dark: #333;
         align-items: center;
 
         .logo-img {
-            width: 950px; // Logo más grande
-            height: auto;
-            max-height: 100%;
+            width: auto;
+            max-width: 100%; // Evitar desbordamiento
+            height: clamp(40px, 80%, 150px); // Logo escala con el header
             object-fit: contain;
         }
     }
 
     // Línea vertical separadora
     .header-separator {
-        width: 5px;
-        height: 75%;
+        width: 3px;
+        height: 60%;
         background-color: #333;
-        margin: 0 30px;
+        margin: 0 15px;
         border-radius: 2px;
+
+        @media (min-width: 992px) {
+            width: 5px;
+            margin: 0 30px;
+        }
     }
 
     .sede-container {
@@ -78,91 +123,89 @@ $text-dark: #333;
         flex-direction: column;
         text-align: left;
 
-        .sede-line {
+        span {
             font-weight: 800;
-            font-size: 2.5rem;
             color: $text-dark;
             text-transform: uppercase;
-            letter-spacing: 3px;
             line-height: 1.2;
-        }
 
-        .renca-line {
-            font-weight: 800;
-            font-size: 2.5rem;
-            color: $text-dark;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            line-height: 1.2;
+            // Texto Dinámico: 1rem móvil -> 2.5rem Tótem
+            font-size: clamp(1rem, 2.5vw, 2.5rem);
+            letter-spacing: clamp(1px, 0.2vw, 3px);
+
+            // Sombra blanca para contraste sobre figuras
+            text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.65);
         }
     }
 }
 
 // ==============================================
-// Contenedor Principal (Tarjetas)
+// Contenedor Principal (Tarjetas/Botones)
 // ==============================================
 .main-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 55vh;
     width: 100%;
     position: relative;
-    z-index: 5;
-    padding-top: 13vh; // Padding para evitar que el contenido se quede atrapado por el header
 }
 
-// ==============================================
-// Contenedor de Tarjetas
-// ==============================================
-// ==============================================
-// Contenedor de Tarjetas
-// ==============================================
 .cards-container {
     display: flex;
     flex-direction: column;
-    gap: 80px;
-    align-items: center; // Centrar los botones
+    align-items: center;
     width: 100%;
-    max-width: 600px;
-    z-index: 2;
+
+    // Gap Dinámico: 20px móvil -> 80px Tótem
+    gap: clamp(20px, 5vh, 80px);
+
+    padding: 20px;
 }
 
 // ==============================================
-// Footer (GRANDE para Tótem)
+// Footer Adaptativo
 // ==============================================
 .v2-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 150px; // Footer más alto
-    z-index: 20;
-
+    pointer-events: auto;
+    width: 100%;
     background: $footer-bg;
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
+
+    // Border Radius Dinámico
+    border-top-left-radius: clamp(20px, 4vw, 40px);
+    border-top-right-radius: clamp(20px, 4vw, 40px);
 
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 50px;
+
+    // Padding Dinámico
+    padding: 0 clamp(15px, 4vw, 50px);
     padding-bottom: env(safe-area-inset-bottom);
 
-    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
+    // Altura Dinámica: 70px móvil -> 150px Tótem
+    height: clamp(70px, 12vh, 150px);
+
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.15);
+    z-index: 20;
 
     .footer-btn {
         background: none;
         border: none;
-        padding: 15px;
+        padding: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        transition: transform 0.2s;
+
+        &:active {
+            transform: scale(0.9);
+        }
 
         ion-icon {
-            font-size: 74px; // Iconos grandes
+            // Iconos Dinámicos: 28px móvil -> 74px Tótem
+            font-size: clamp(28px, 6vw, 74px);
             color: #555;
         }
     }
@@ -172,19 +215,23 @@ $text-dark: #333;
 
         .footer-title {
             margin: 0;
-            font-size: 2.1rem; // Texto grande
             font-weight: 800;
             color: $text-dark;
-            letter-spacing: 2px;
             text-transform: uppercase;
+
+            // Texto Título: 0.9rem móvil -> 2.1rem Tótem
+            font-size: clamp(0.9rem, 2vw, 2.1rem);
+            letter-spacing: clamp(0.5px, 0.1vw, 2px);
         }
 
         .footer-subtitle {
-            margin: 5px 0 0 0;
-            font-size: 1.9rem;
+            margin: 2px 0 0 0;
             font-style: italic;
             color: $inacap-red;
             font-family: 'Georgia', serif;
+
+            // Texto Subtítulo: 0.8rem móvil -> 1.9rem Tótem
+            font-size: clamp(0.8rem, 1.8vw, 1.9rem);
         }
     }
 }

@@ -1,11 +1,13 @@
 import { Component, OnInit, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { arrowForward, arrowBack } from 'ionicons/icons';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
+import { HomeHeaderComponent } from '../../../../components/headers/home-header/home-header.component';
+import { ButtonBackComponent } from '../../../../components/buttons/button-back/button-back.component';
 import { ProyectosService } from '../../../../core/services/proyectos.service';
 
 @Component({
@@ -15,8 +17,8 @@ import { ProyectosService } from '../../../../core/services/proyectos.service';
   standalone: true,
   imports: [
     IonContent, CommonModule, FormsModule, RouterModule,
-    IonButton, IonIcon,
-    HomeFooterComponent
+    IonButton, IonIcon, IonGrid, IonRow, IonCol,
+    HomeFooterComponent, HomeHeaderComponent, ButtonBackComponent
   ]
 })
 export class ProjectsPage implements OnInit {

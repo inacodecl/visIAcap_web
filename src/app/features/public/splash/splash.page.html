@@ -2,23 +2,29 @@
     <!-- Fondo animado con colores INACAP -->
     <div class="background-layer"></div>
 
-    <!-- Contenido principal -->
-    <div class="splash-content">
-        <!-- Logo INACAP -->
-        <div class="logo-wrapper">
-            <img src="assets/icon/logo-inacap-60.png" alt="INACAP 60 Años" class="logo-image">
-        </div>
+    <!-- Contenido principal con Grid Responsivo -->
+    <ion-grid class="splash-grid">
+        <ion-row class="ion-justify-content-center ion-align-items-center full-height">
+            <ion-col size="12" size-md="10" size-lg="8" size-xl="6" class="content-col">
 
-        <!-- Texto de bienvenida -->
-        <div class="welcome-text">
-            <span class="sede-label">SEDE RENCA</span>
-            <span class="anniversary-label">60° Aniversario</span>
-        </div>
+                <!-- Logo INACAP -->
+                <div class="logo-wrapper">
+                    <img src="assets/icon/logo-inacap-60.png" alt="INACAP 60 Años" class="logo-image">
+                </div>
 
-        <!-- Loader animado (cubo giratorio) -->
-        <div class="loader-container">
-            <app-rotate-cube></app-rotate-cube>
-            <span class="loading-text">Cargando experiencia...</span>
-        </div>
-    </div>
+                <!-- Texto de bienvenida -->
+                <div class="welcome-text">
+                    <span class="sede-label">SEDE RENCA</span>
+                    <span class="anniversary-label">60° Aniversario</span>
+                </div>
+
+                <!-- Loader animado (cubo giratorio) -->
+                <div class="loader-container">
+                    <app-rotate-cube></app-rotate-cube>
+                    <span class="loading-text">Cargando experiencia...</span>
+                </div>
+
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </div>

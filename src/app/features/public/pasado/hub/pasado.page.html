@@ -1,82 +1,98 @@
-<ion-content [fullscreen]="true" [scrollY]="false" class="pasado-content">
+<ion-content [fullscreen]="true" class="pasado-content">
 
-    <!-- Header Component -->
-    <ion-header class="ion-no-border pasado-header"
-        style="--current-height: 150px; --current-logo-width: 350px; --current-text-scale: 0.7; --current-content-offset: 0;">
-        <div class="header-content-wrapper">
-            <app-button-back class="header-back-btn"></app-button-back>
-            <app-home-header></app-home-header>
-        </div>
-    </ion-header>
+    <!-- Grid Layout Principal -->
+    <ion-grid class="main-grid ion-no-padding">
 
-    <!-- Main Content Section -->
-    <main class="portals-container">
-        <!-- Grid Pattern Background -->
-        <div class="grid-pattern"></div>
-
-        <!-- Glow Effect -->
-        <div class="glow-effect"></div>
-
-        <!-- Portal Card: Línea de Tiempo -->
-        <div class="portal-card timeline-portal" (click)="goToTimeline()">
-            <!-- Background Effects -->
-            <div class="portal-bg">
-                <div class="space-bg"></div>
-                <div class="stars-overlay"></div>
-                <div class="dark-overlay"></div>
-                <div class="timeline-line"></div>
-                <div class="year-badge top-badge">1966</div>
-                <div class="year-badge bottom-badge">2026</div>
-            </div>
-
-            <!-- Content -->
-            <div class="portal-content">
-                <div class="glass-panel">
-                    <ion-icon name="time-outline" class="portal-icon"></ion-icon>
-                    <h2>Línea de<br />Tiempo</h2>
-                    <p class="portal-description">Viaja a través de nuestra historia, desde 1966 hasta el futuro.</p>
-                    <ion-button class="portal-btn primary-btn">
-                        <span>EXPLORAR</span>
-                        <ion-icon name="arrow-forward-outline"></ion-icon>
-                    </ion-button>
+        <!-- HEADER ROW -->
+        <ion-row class="header-row">
+            <ion-col size="12">
+                <div class="header-wrapper">
+                    <app-home-header></app-home-header>
                 </div>
-            </div>
+            </ion-col>
+        </ion-row>
 
-            <!-- Module Label -->
-            <div class="module-label">Módulo 01</div>
-        </div>
+        <!-- BACK BUTTON ROW -->
+        <ion-row class="back-button-row">
+            <ion-col size="12">
+                <app-button-back></app-button-back>
+            </ion-col>
+        </ion-row>
 
-        <!-- Portal Card: Entrevistas -->
-        <div class="portal-card interviews-portal" (click)="goToInterviews()">
-            <!-- Background Effects -->
-            <div class="portal-bg">
-                <div class="abstract-bg"></div>
-                <div class="blob blob-1"></div>
-                <div class="blob blob-2"></div>
-                <div class="blob blob-3"></div>
-                <div class="grid-cards"></div>
-                <div class="dark-overlay"></div>
-            </div>
+        <!-- CONTENT ROW -->
+        <ion-row class="content-row ion-justify-content-center ion-align-items-stretch">
 
-            <!-- Content -->
-            <div class="portal-content">
-                <div class="glass-panel">
-                    <ion-icon name="chatbubbles-outline" class="portal-icon light-icon"></ion-icon>
-                    <h2>Entre<br />Vistas</h2>
-                    <p class="portal-description">Testimonios y visiones de quienes construyen el futuro de Renca.</p>
-                    <ion-button class="portal-btn light-btn">
-                        <span>VER GALERÍA</span>
-                        <ion-icon name="play-outline"></ion-icon>
-                    </ion-button>
+            <!-- Fondo Global (Grid Pattern & Glow) -->
+            <div class="grid-pattern"></div>
+            <div class="glow-effect"></div>
+
+            <!-- Portal 1: Línea de Tiempo -->
+            <ion-col size="12" size-md="6" size-lg="5" size-xl="4" class="portal-col">
+                <div class="portal-card timeline-portal" (click)="goToTimeline()">
+                    <!-- Background Effects -->
+                    <div class="portal-bg">
+                        <div class="space-bg"></div>
+                        <div class="stars-overlay"></div>
+                        <div class="dark-overlay"></div>
+                        <div class="timeline-line"></div>
+                        <div class="year-badge top-badge">1966</div>
+                        <div class="year-badge bottom-badge">2026</div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="portal-content">
+                        <div class="glass-panel">
+                            <ion-icon name="time-outline" class="portal-icon"></ion-icon>
+                            <h2>Línea de<br />Tiempo</h2>
+                            <p class="portal-description">Viaja a través de nuestra historia.</p>
+                            <ion-button class="portal-btn primary-btn">
+                                <span>EXPLORAR</span>
+                                <ion-icon name="arrow-forward-outline"></ion-icon>
+                            </ion-button>
+                        </div>
+                        <div class="module-label">Módulo 01</div>
+                    </div>
                 </div>
-            </div>
+            </ion-col>
 
-            <!-- Module Label -->
-            <div class="module-label">Módulo 02</div>
-        </div>
-    </main>
+            <!-- Portal 2: Entrevistas -->
+            <ion-col size="12" size-md="6" size-lg="5" size-xl="4" class="portal-col">
+                <div class="portal-card interviews-portal" (click)="goToInterviews()">
+                    <!-- Background Effects -->
+                    <div class="portal-bg">
+                        <div class="abstract-bg"></div>
+                        <div class="blob blob-1"></div>
+                        <div class="blob blob-2"></div>
+                        <div class="blob blob-3"></div>
+                        <div class="grid-cards"></div>
+                        <div class="dark-overlay"></div>
+                    </div>
 
-    <!-- Footer Component -->
-    <app-home-footer></app-home-footer>
+                    <!-- Content -->
+                    <div class="portal-content">
+                        <div class="glass-panel">
+                            <ion-icon name="chatbubbles-outline" class="portal-icon light-icon"></ion-icon>
+                            <h2>Entre<br />Vistas</h2>
+                            <p class="portal-description">Testimonios del futuro de Renca.</p>
+                            <ion-button class="portal-btn light-btn">
+                                <span>VER GALERÍA</span>
+                                <ion-icon name="play-outline"></ion-icon>
+                            </ion-button>
+                        </div>
+                        <div class="module-label">Módulo 02</div>
+                    </div>
+                </div>
+            </ion-col>
+
+        </ion-row>
+
+        <!-- FOOTER ROW -->
+        <ion-row class="footer-row">
+            <ion-col size="12">
+                <app-home-footer></app-home-footer>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
 
 </ion-content>

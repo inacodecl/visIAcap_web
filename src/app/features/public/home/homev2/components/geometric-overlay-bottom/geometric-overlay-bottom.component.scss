@@ -3,12 +3,12 @@
 // ==============================================
 .geometric-overlay-bottom {
     position: fixed;
-    top: 0;
+    bottom: 5rem; // Pegado al fondo, sin gap
     left: 0;
     width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none; // El contenedor global no bloquea clicks
+    height: clamp(25vh, 50vh, 60vh); // Altura responsiva
+    z-index: 3; // Encima de main-grid (2), debajo de footer (20)
+    pointer-events: none; // Contenedor transparente a clicks
 
     .geo-pattern {
         width: 100%;

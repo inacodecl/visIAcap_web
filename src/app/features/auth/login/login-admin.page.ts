@@ -4,6 +4,9 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { Router } from '@angular/router';
 import {
   IonContent,
+  IonGrid,
+  IonRow,
+  IonCol,
   IonCard,
   IonCardContent,
   IonItem,
@@ -25,7 +28,8 @@ import { AuthService } from '../../../core/services/auth.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    IonContent, IonCard, IonCardContent,
+    IonContent, IonGrid, IonRow, IonCol,
+    IonCard, IonCardContent,
     IonItem, IonLabel, IonInput,
     IonButton,
     IonText,
