@@ -31,6 +31,21 @@ $glass-border: rgba(255, 255, 255, 0.08);
             position: relative;
         }
 
+        .header-refresh-btn {
+            margin-left: auto;
+            --color: #000000 !important;
+            color: #000000 !important;
+            font-size: 1.2rem;
+
+            ion-icon {
+                color: #000000 !important;
+            }
+
+            @media (min-width: 992px) {
+                font-size: 1.5rem;
+            }
+        }
+
         .menu-btn-container {
             margin-right: 15px;
 
@@ -43,6 +58,10 @@ $glass-border: rgba(255, 255, 255, 0.08);
             img {
                 height: 50px;
                 object-fit: contain;
+
+                @media (max-width: 576px) {
+                    height: 40px;
+                }
             }
         }
 
@@ -66,14 +85,6 @@ $glass-border: rgba(255, 255, 255, 0.08);
 .admin-content {
     --background: #{$bg-dark};
     --color: #eee;
-    padding-top: 10px;
-}
-
-.glass-container {
-    padding: 20px;
-    max-width: 1400px;
-    margin: 0 auto;
-    min-height: 100%;
     background:
         radial-gradient(circle at 10% 20%, rgba(208, 24, 36, 0.05) 0%, transparent 40%),
         radial-gradient(circle at 90% 80%, rgba(0, 243, 255, 0.03) 0%, transparent 40%);
@@ -84,12 +95,9 @@ $glass-border: rgba(255, 255, 255, 0.08);
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
-    margin-left: 1rem;
-    margin-right: 0.4rem;
-    flex-wrap: wrap;
     gap: 15px;
 
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
         flex-direction: column;
         align-items: stretch;
     }
@@ -97,21 +105,30 @@ $glass-border: rgba(255, 255, 255, 0.08);
 
 .page-title {
     color: white;
-    font-size: 1.8rem;
+    font-size: 1.5rem; // Mobile default
     font-weight: 700;
     margin: 0;
     display: flex;
     align-items: center;
     gap: 10px;
 
+    @media (min-width: 768px) {
+        font-size: 1.8rem;
+    }
+
+    @media (min-width: 1200px) {
+        font-size: 2.2rem;
+    }
+
     ion-icon {
-        color: $neon-blue; // Blue for Interviews
+        color: $neon-blue;
     }
 }
 
 // --- Quick Cards ---
 .action-cards-grid {
     margin-bottom: 30px;
+    padding: 0;
 }
 
 .quick-card {
@@ -126,24 +143,31 @@ $glass-border: rgba(255, 255, 255, 0.08);
     position: relative;
     overflow: hidden;
 
-    &:hover {
-        transform: translateY(-5px);
-        background: rgba(30, 34, 45, 0.9);
-        border-color: rgba(255, 255, 255, 0.2);
+    // Adaptability for Touch/Mouse
+    @media (hover: hover) {
+        &:hover {
+            transform: translateY(-5px);
+            background: rgba(30, 34, 45, 0.9);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
     }
 
     &.main-action {
         height: 120px;
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(30, 34, 45, 0.6) 100%); // Blue tint
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(30, 34, 45, 0.6) 100%);
         border: 1px solid rgba(59, 130, 246, 0.3);
 
         .icon-bg {
             position: absolute;
             right: -20px;
             bottom: -30px;
-            font-size: 8rem;
+            font-size: 6rem;
             color: rgba(255, 255, 255, 0.05);
             pointer-events: none;
+
+            @media (min-width: 768px) {
+                font-size: 8rem;
+            }
         }
 
         .content {
@@ -152,15 +176,23 @@ $glass-border: rgba(255, 255, 255, 0.08);
 
             h3 {
                 margin: 0;
-                font-size: 1.2rem;
+                font-size: 1.1rem;
                 font-weight: bold;
                 color: white;
+
+                @media (min-width: 768px) {
+                    font-size: 1.3rem;
+                }
             }
 
             p {
                 margin: 5px 0 0;
-                font-size: 0.9rem;
+                font-size: 0.85rem;
                 color: #aaa;
+
+                @media (min-width: 768px) {
+                    font-size: 0.95rem;
+                }
             }
         }
 
@@ -169,8 +201,10 @@ $glass-border: rgba(255, 255, 255, 0.08);
             color: $neon-blue;
         }
 
-        &:hover {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+        @media (hover: hover) {
+            &:hover {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+            }
         }
     }
 
@@ -200,11 +234,13 @@ $glass-border: rgba(255, 255, 255, 0.08);
             font-weight: 500;
         }
 
-        &:hover {
-            .icon-circle {
-                background: $neon-green;
-                color: black;
-                box-shadow: 0 0 15px rgba(0, 255, 157, 0.5);
+        @media (hover: hover) {
+            &:hover {
+                .icon-circle {
+                    background: $neon-green;
+                    color: black;
+                    box-shadow: 0 0 15px rgba(0, 255, 157, 0.5);
+                }
             }
         }
     }
@@ -212,11 +248,12 @@ $glass-border: rgba(255, 255, 255, 0.08);
 
 // --- Search Bar ---
 .search-wrapper {
-    flex-shrink: 0;
+    flex: 0 1 auto;
 
     .neon-searchbar {
-        width: 520px;
-        height: 70px;
+        width: 400px;
+        max-width: 100%;
+        height: 50px;
         --background: #{$bg-card};
         --color: white;
         --placeholder-color: #777;
@@ -226,7 +263,7 @@ $glass-border: rgba(255, 255, 255, 0.08);
         border: 1px solid #{$glass-border};
         border-radius: 29px;
 
-        @media (max-width: 768px) {
+        @media (max-width: 767px) {
             width: 100%;
         }
     }
@@ -380,5 +417,267 @@ $glass-border: rgba(255, 255, 255, 0.08);
 @keyframes spin {
     100% {
         transform: rotate(360deg);
+    }
+}
+
+// --- TOTEM VERTICAL OVERRIDES (1080x1920) ---
+// Target large screens that are in portrait mode (Totems)
+@media (min-width: 992px) and (orientation: portrait) {
+
+    // --- Header Tótem: más grande y profesional ---
+    .header-inacap {
+        .top-section {
+            padding: 18px 40px;
+
+            .menu-btn-container {
+                margin-right: 25px;
+
+                ion-back-button {
+                    font-size: 1.6rem;
+                }
+            }
+
+            .logo-container img {
+                height: 75px;
+            }
+
+            .header-text {
+                margin-left: 25px;
+                border-left: 3px solid #ccc; // Separador más grueso
+                padding-left: 25px;
+
+                .sede-text {
+                    font-size: 1.4rem;
+                    letter-spacing: 0.5px;
+                }
+            }
+
+            .header-refresh-btn {
+                font-size: 2.5rem;
+                margin-left: auto;
+            }
+        }
+    }
+
+    // Add padding to ion-grid to match user-manager spacing
+    ion-grid {
+        padding-top: 60px;
+    }
+
+    .page-title {
+        font-size: 3rem;
+        margin-bottom: 2.5rem;
+        display: flex;
+        align-items: center;
+
+        .video-icon {
+            font-size: 5rem;
+            padding-right: 1.5rem;
+        }
+    }
+
+
+    .neon-searchbar {
+        height: 90px;
+        --icon-font-size: 2rem;
+        font-size: 1.6rem;
+        --box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .action-cards-grid {
+        margin-bottom: 40px;
+    }
+
+    .quick-card.main-action {
+        height: 180px;
+
+        .content {
+            h3 {
+                font-size: 2.2rem;
+                margin-bottom: 10px;
+            }
+
+            p {
+                font-size: 1.4rem;
+            }
+        }
+
+        .icon-bg {
+            font-size: 12rem;
+            right: -30px;
+            bottom: -50px;
+        }
+
+        .arrow-icon {
+            font-size: 3.5rem;
+        }
+    }
+
+    .quick-card.meta-action {
+        height: 180px;
+        gap: 15px;
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            font-size: 3.5rem;
+        }
+
+        span {
+            font-size: 1.6rem;
+        }
+    }
+
+    .status-summary {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+    }
+
+    .glass-card {
+        border-width: 2px;
+
+        ion-card-header {
+            padding-bottom: 15px;
+
+            .header-row {
+                margin-bottom: 20px;
+            }
+
+            .slug-badge {
+                font-size: 1.1rem;
+                padding: 6px 14px;
+                border-width: 2px;
+            }
+
+            .status-badge {
+                font-size: 1.1rem;
+                padding: 8px 14px;
+            }
+
+            ion-card-title {
+                font-size: 2rem;
+                line-height: 1.3;
+            }
+        }
+
+        ion-card-content {
+            .description {
+                font-size: 1.6rem;
+                margin-bottom: 10px;
+            }
+
+            .small-desc {
+                font-size: 1.3rem;
+                line-height: 1.6;
+                color: #999;
+            }
+
+            .actions-panel {
+                margin-top: 25px;
+                padding-top: 20px;
+
+                .buttons .action-btn {
+                    font-size: 2rem;
+                    height: 3rem;
+                    width: 3rem;
+                    margin-left: 20px;
+                }
+            }
+        }
+
+        &:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+        }
+    }
+
+    .empty-state {
+        margin-top: 100px;
+
+        .hologram-circle {
+            width: 150px;
+            height: 150px;
+        }
+
+        p {
+            font-size: 1.8rem;
+        }
+    }
+}
+
+
+// --- DESKTOP LANDSCAPE OPTIMIZATIONS ---
+// Optimizar uso de espacio solo para computadores (sin afectar Tótem)
+@media (min-width: 1024px) {
+
+    ion-grid,
+    ion-grid[fixed] {
+        max-width: 98% !important;
+        width: 98% !important;
+        padding-left: 20px;
+        padding-right: 20px;
+        margin: 0 auto;
+    }
+
+    // Separar elementos del header
+    .page-header-row {
+        justify-content: space-between;
+
+        ion-col:first-child {
+            display: flex;
+            align-items: center;
+        }
+
+        ion-col:last-child {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+    }
+
+    // Título más grande para escritorio
+    .page-title {
+        font-size: 2.2rem;
+
+        ion-icon {
+            font-size: 2.6rem;
+            margin-right: 15px;
+        }
+    }
+
+    .search-wrapper {
+        max-width: 500px;
+
+        .neon-searchbar {
+            width: 500px;
+            height: 60px;
+            font-size: 1.1rem;
+        }
+    }
+
+    // Tarjetas de acción más robustas
+    .quick-card.main-action,
+    .quick-card.meta-action {
+        height: 160px;
+
+        .content h3 {
+            font-size: 1.5rem;
+        }
+
+        .icon-bg {
+            font-size: 10rem;
+        }
+    }
+
+    // Grid de entrevistas
+    .glass-card {
+        min-height: 280px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        ion-card-title {
+            font-size: 1.4rem;
+        }
     }
 }

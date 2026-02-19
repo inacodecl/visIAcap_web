@@ -6,10 +6,10 @@ import {
     IonCardTitle, IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
     IonList, IonListHeader, IonBadge, IonModal,
     IonSearchbar, IonNote, IonSelect, IonSelectOption,
-    IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, ModalController, ToastController
+    IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, ModalController, ToastController, IonSpinner
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { add, create, trash, close, checkmarkCircle, search, eye, hourglass, save, time, arrowForward, images, pricetags, link } from 'ionicons/icons';
+import { add, create, trash, close, checkmarkCircle, search, eye, hourglass, save, time, arrowForward, images, pricetags, link, refresh } from 'ionicons/icons';
 import { TimelineService } from '../../../core/services/timeline.service';
 import { MetadataService } from '../../../core/services/metadata.service';
 import { Historia, HistoriaTag, HistoriaMedia } from '../../../core/models/historia.model';
@@ -27,7 +27,7 @@ import { MetadataManagerModalComponent } from '../project-manager/metadata-manag
         IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle,
         IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
         IonBadge, IonModal,
-        IonSearchbar, IonNote, IonSelect, IonSelectOption
+        IonSearchbar, IonNote, IonSelect, IonSelectOption, IonSpinner
     ]
 })
 export class HistoryManagerPage implements OnInit {
@@ -74,7 +74,7 @@ export class HistoryManagerPage implements OnInit {
     });
 
     constructor() {
-        addIcons({ time, arrowForward, create, trash, close, eye, add, checkmarkCircle, search, hourglass, save, images, pricetags, link });
+        addIcons({ time, arrowForward, refresh, create, trash, close, eye, images, add, link, pricetags, checkmarkCircle, search, hourglass, save });
     }
 
     ngOnInit() {

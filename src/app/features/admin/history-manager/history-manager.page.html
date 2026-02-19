@@ -13,17 +13,22 @@
             <div class="header-text">
                 <span class="sede-text">SEDE<br>RENCA (ADMIN)</span>
             </div>
+
+            <!-- Botón Actualizar Header -->
+            <ion-button fill="clear" class="header-refresh-btn" (click)="loadData()">
+                <ion-icon slot="icon-only" name="refresh"></ion-icon>
+            </ion-button>
         </div>
     </div>
 </ion-header>
 
 <ion-content [fullscreen]="true" [scrollY]="true" class="admin-content">
-    <div class="glass-container">
+    <ion-grid fixed class="glass-container-grid">
 
         <!-- HEADER ROW: Título + Buscador -->
         <div class="page-header-row">
             <h1 class="page-title">
-                <ion-icon name="time"></ion-icon>
+                <ion-icon name="time" color="danger"></ion-icon>
                 Gestión Timeline
             </h1>
             <div class="search-wrapper">
@@ -34,219 +39,230 @@
         </div>
 
         <!-- ACTION CARDS -->
-        <ion-grid class="action-cards-grid ion-margin-bottom">
-            <ion-row>
-                <!-- CARD: CREAR NUEVO EVENTO -->
-                <ion-col size="12" size-md="12">
-                    <div class="quick-card main-action" (click)="openCreateModal()">
-                        <div class="icon-bg"><ion-icon name="time"></ion-icon></div>
-                        <div class="content">
-                            <h3>Nuevo Hito Histórico</h3>
-                            <p>Agregar un acontecimiento a la línea de tiempo</p>
-                        </div>
-                        <ion-icon name="arrow-forward" class="arrow-icon"></ion-icon>
+        <ion-row class="action-cards-grid ion-margin-bottom">
+            <!-- CREAR NUEVO EVENTO (Full Width) -->
+            <ion-col size="12">
+                <div class="quick-card main-action" (click)="openCreateModal()">
+                    <div class="icon-bg"><ion-icon name="time"></ion-icon></div>
+                    <div class="content">
+                        <h3>Nuevo Hito Histórico</h3>
+                        <p>Agregar un acontecimiento a la línea de tiempo</p>
                     </div>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+                    <ion-icon name="arrow-forward" class="arrow-icon"></ion-icon>
+                </div>
+            </ion-col>
+        </ion-row>
 
         <!-- Mensaje de Estado -->
-        <div class="status-summary">
-            <p>Sistemas Activos: <span class="highlight">{{ filteredHistorias().length }}</span> registros encontrados.
-            </p>
+        <ion-row>
+            <ion-col size="12">
+                <div class="status-summary">
+                    <p>Sistemas Activos: <span class="highlight">{{ filteredHistorias().length }}</span> registros
+                        encontrados.</p>
+                </div>
+            </ion-col>
+        </ion-row>
+
+        <!-- Loading -->
+        <div *ngIf="isLoading" class="ion-text-center ion-padding">
+            <ion-spinner name="crescent" color="danger"></ion-spinner>
         </div>
 
-        <!-- Lista de Tarjetas (Glassmorphism) -->
-        <ion-grid>
-            <ion-row>
-                <ion-col size="12" size-md="6" size-xl="4" *ngFor="let item of filteredHistorias()">
-                    <ion-card class="glass-card" [class.hidden-item]="!item.visible">
-                        <div class="card-glow"></div>
-                        <ion-card-header>
-                            <div class="header-row">
-                                <div class="year-crypto">{{ item.anio }}</div>
-                                <ion-badge [color]="item.visible ? 'success' : 'medium'" class="status-badge">
-                                    {{ item.visible ? 'EN AIRE' : 'OCULTO' }}
-                                </ion-badge>
-                            </div>
-                            <ion-card-title>{{ item.titulo }}</ion-card-title>
-                        </ion-card-header>
-                        <ion-card-content>
-                            <p class="description">{{ item.descripcion | slice:0:120 }}...</p>
 
-                            <div class="actions-panel">
-                                <!-- Toggle Rápido -->
-                                <div class="toggle-control">
-                                    <!-- <ion-icon name="eye" [color]="item.visible ? 'success' : 'medium'"></ion-icon> -->
-                                    <ion-toggle [checked]="item.visible" (ionChange)="toggleVisibility(item, $event)"
-                                        color="success">
-                                    </ion-toggle>
-                                </div>
+        <!-- Lista de Tarjetas (Rediseño basado en Mockup) -->
+        <ion-row *ngIf="!isLoading">
+            <ion-col size="12" size-md="6" size-lg="4" size-xl="4" *ngFor="let item of filteredHistorias()">
+                <div class="hito-card" [class.hidden-item]="!item.visible" (click)="openEditModal(item)">
 
-                                <div class="buttons">
-                                    <ion-button fill="clear" color="secondary" (click)="openEditModal(item)"
-                                        class="action-btn edit-btn">
-                                        <ion-icon slot="icon-only" name="create"></ion-icon>
-                                    </ion-button>
-                                    <ion-button fill="clear" color="danger" (click)="deleteHistoria(item.id)"
-                                        class="action-btn delete-btn">
-                                        <ion-icon slot="icon-only" name="trash"></ion-icon>
-                                    </ion-button>
-                                </div>
+                    <div class="card-glow"></div>
+
+                    <!-- 1. Header Visual (Año como Avatar) -->
+                    <div class="card-visual-header">
+                        <div class="year-wrapper">
+                            <div class="year-container">
+                                {{ item.anio }}
                             </div>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+                        </div>
+                        <ion-badge [color]="item.visible ? 'success' : 'medium'" class="status-badge">
+                            {{ item.visible ? 'VIGENTE' : 'OCULTO' }}
+                        </ion-badge>
+                    </div>
+
+                    <div class="card-content">
+                        <!-- 2. Información (Título + Descripción Limpios) -->
+                        <div class="info-section">
+                            <h3 class="hito-title">{{ item.titulo }}</h3>
+                            <p class="hito-description">{{ item.descripcion | slice:0:120 }}...</p>
+                        </div>
+
+                        <!-- 3. Barra de acciones -->
+                        <div class="actions-panel" (click)="$event.stopPropagation()">
+                            <div class="toggle-container">
+                                <ion-toggle [checked]="item.visible" (ionChange)="toggleVisibility(item, $event)"
+                                    color="success">
+                                </ion-toggle>
+                            </div>
+
+                            <div class="buttons-container">
+                                <ion-button class="action-btn edit-btn" (click)="openEditModal(item)">
+                                    <ion-icon slot="icon-only" name="create"></ion-icon>
+                                </ion-button>
+                                <ion-button class="action-btn delete-btn" (click)="deleteHistoria(item.id)">
+                                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                                </ion-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ion-col>
+        </ion-row>
 
         <!-- Estado Vacío -->
-        <div class="empty-state" *ngIf="filteredHistorias().length === 0">
+        <div class="empty-state" *ngIf="!isLoading && filteredHistorias().length === 0">
             <div class="hologram-circle"></div>
             <p>No se encontraron datos en el sector.</p>
         </div>
 
+    </ion-grid>
 
 
-        <!-- Modal Formulario Pro -->
-        <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="glass-modal">
-            <ng-template>
-                <ion-header class="modal-header">
-                    <ion-toolbar color="dark">
-                        <ion-title>{{ isEditing ? 'Editando Registro #' + currentEditingId : 'Nuevo Evento Histórico'
-                            }}</ion-title>
-                        <ion-buttons slot="end">
-                            <ion-button (click)="closeModal()">
-                                <ion-icon name="close"></ion-icon>
-                            </ion-button>
-                        </ion-buttons>
-                    </ion-toolbar>
-                </ion-header>
-                <div class="ion-padding modal-body">
-                    <form [formGroup]="historyForm" (ngSubmit)="saveHistoria()">
 
-                        <div class="form-grid">
-                            <!-- Fecha (Año derivado) -->
-                            <div class="form-group year-group">
-                                <ion-item class="input-item" lines="none">
-                                    <ion-label position="stacked">Fecha Exacta <span
-                                            class="required">*</span></ion-label>
-                                    <ion-input type="date" formControlName="fecha"></ion-input>
-                                    <ion-note slot="helper">Día/Mes/Año (El año se calcula automáticamente)</ion-note>
-                                    <ion-note slot="error"
-                                        *ngIf="historyForm.get('fecha')?.hasError('required')">Requerido</ion-note>
+    <!-- Modal Formulario Pro -->
+    <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="glass-modal">
+        <ng-template>
+            <ion-header class="modal-header">
+                <ion-toolbar color="dark">
+                    <ion-title>{{ isEditing ? 'Editando Registro #' + currentEditingId : 'Nuevo Evento Histórico'
+                        }}</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button (click)="closeModal()">
+                            <ion-icon name="close"></ion-icon>
+                        </ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+            <div class="ion-padding modal-body">
+                <form [formGroup]="historyForm" (ngSubmit)="saveHistoria()">
+
+                    <div class="form-grid">
+                        <!-- Fecha (Año derivado) -->
+                        <div class="form-group year-group">
+                            <ion-item class="input-item" lines="none">
+                                <ion-label position="stacked">Fecha Exacta <span class="required">*</span></ion-label>
+                                <ion-input type="date" formControlName="fecha"></ion-input>
+                                <ion-note slot="helper">Día/Mes/Año (El año se calcula automáticamente)</ion-note>
+                                <ion-note slot="error"
+                                    *ngIf="historyForm.get('fecha')?.hasError('required')">Requerido</ion-note>
+                            </ion-item>
+                        </div>
+
+                        <!-- Título -->
+                        <div class="form-group title-group">
+                            <ion-item class="input-item" lines="none">
+                                <ion-label position="stacked">Título del Evento <span
+                                        class="required">*</span></ion-label>
+                                <ion-input type="text" formControlName="titulo"
+                                    placeholder="Ej: Fundación de Inacap"></ion-input>
+                                <ion-note slot="helper">Corto y descriptivo (Max 150 caracteres)</ion-note>
+                            </ion-item>
+                        </div>
+
+                        <!-- Descripción -->
+                        <div class="form-group full-width">
+                            <ion-item class="input-item description-item" lines="none">
+                                <ion-label position="stacked">Narrativa Histórica <span
+                                        class="required">*</span></ion-label>
+                                <ion-textarea formControlName="descripcion" rows="15"
+                                    placeholder="Describe qué sucedió en este hito con detalle..."></ion-textarea>
+                                <ion-note slot="helper">Este texto aparecerá en el detalle del hito.</ion-note>
+                            </ion-item>
+                        </div>
+
+                        <!-- Opciones Avanzadas (Visuales por ahora) -->
+                        <div class="form-group full-width settings-group">
+                            <h3>Configuración de Visualización</h3>
+                            <div class="settings-grid">
+                                <ion-item lines="none" class="input-item toggle-box">
+                                    <ion-icon name="eye" slot="start" size="small"></ion-icon>
+                                    <ion-label>
+                                        <h2>Visibilidad Pública</h2>
+                                        <p>Mostrar inmediatamente en el Tótem</p>
+                                    </ion-label>
+                                    <ion-toggle slot="end" formControlName="visible" color="success"></ion-toggle>
                                 </ion-item>
                             </div>
+                        </div>
 
-                            <!-- Título -->
-                            <div class="form-group title-group">
-                                <ion-item class="input-item" lines="none">
-                                    <ion-label position="stacked">Título del Evento <span
-                                            class="required">*</span></ion-label>
-                                    <ion-input type="text" formControlName="titulo"
-                                        placeholder="Ej: Fundación de Inacap"></ion-input>
-                                    <ion-note slot="helper">Corto y descriptivo (Max 150 caracteres)</ion-note>
-                                </ion-item>
-                            </div>
+                        <!-- SECCIÓN MULTIMEDIA -->
+                        <div class="form-group full-width">
+                            <h3>Galería Multimedia</h3>
 
-                            <!-- Descripción -->
-                            <div class="form-group full-width">
-                                <ion-item class="input-item description-item" lines="none">
-                                    <ion-label position="stacked">Narrativa Histórica <span
-                                            class="required">*</span></ion-label>
-                                    <ion-textarea formControlName="descripcion" rows="15"
-                                        placeholder="Describe qué sucedió en este hito con detalle..."></ion-textarea>
-                                    <ion-note slot="helper">Este texto aparecerá en el detalle del hito.</ion-note>
-                                </ion-item>
-                            </div>
+                            <div formArrayName="media">
+                                <div *ngFor="let m of mediaArray.controls; let i = index" [formGroupName]="i"
+                                    class="media-item-row">
+                                    <ion-item class="input-item" lines="none">
+                                        <ion-icon name="images" slot="start" size="small"></ion-icon>
+                                        <ion-input formControlName="url"
+                                            placeholder="URL de la imagen o video (https://...)"></ion-input>
 
-                            <!-- Opciones Avanzadas (Visuales por ahora) -->
-                            <div class="form-group full-width settings-group">
-                                <h3>Configuración de Visualización</h3>
-                                <div class="settings-grid">
-                                    <ion-item lines="none" class="input-item toggle-box">
-                                        <ion-icon name="eye" slot="start" size="small"></ion-icon>
-                                        <ion-label>
-                                            <h2>Visibilidad Pública</h2>
-                                            <p>Mostrar inmediatamente en el Tótem</p>
-                                        </ion-label>
-                                        <ion-toggle slot="end" formControlName="visible" color="success"></ion-toggle>
+                                        <!-- Tipo selector mini -->
+                                        <ion-select formControlName="tipo" interface="popover" slot="end"
+                                            class="mini-select">
+                                            <ion-select-option value="image">IMG</ion-select-option>
+                                            <ion-select-option value="video">VID</ion-select-option>
+                                        </ion-select>
+
+                                        <ion-button fill="clear" color="danger" slot="end" (click)="removeMediaItem(i)">
+                                            <ion-icon name="trash" slot="icon-only"></ion-icon>
+                                        </ion-button>
                                     </ion-item>
                                 </div>
                             </div>
 
-                            <!-- SECCIÓN MULTIMEDIA -->
-                            <div class="form-group full-width">
-                                <h3>Galería Multimedia</h3>
-
-                                <div formArrayName="media">
-                                    <div *ngFor="let m of mediaArray.controls; let i = index" [formGroupName]="i"
-                                        class="media-item-row">
-                                        <ion-item class="input-item" lines="none">
-                                            <ion-icon name="images" slot="start" size="small"></ion-icon>
-                                            <ion-input formControlName="url"
-                                                placeholder="URL de la imagen o video (https://...)"></ion-input>
-
-                                            <!-- Tipo selector mini -->
-                                            <ion-select formControlName="tipo" interface="popover" slot="end"
-                                                class="mini-select">
-                                                <ion-select-option value="image">IMG</ion-select-option>
-                                                <ion-select-option value="video">VID</ion-select-option>
-                                            </ion-select>
-
-                                            <ion-button fill="clear" color="danger" slot="end"
-                                                (click)="removeMediaItem(i)">
-                                                <ion-icon name="trash" slot="icon-only"></ion-icon>
-                                            </ion-button>
-                                        </ion-item>
-                                    </div>
-                                </div>
-
-                                <ion-button expand="block" fill="outline" class="add-media-btn"
-                                    (click)="addMediaItem()">
-                                    <ion-icon name="add" slot="start"></ion-icon>
-                                    Agregar Recurso Multimedia
-                                </ion-button>
-                                <ion-note class="helper-note">La primera imagen actuará como portada.</ion-note>
-                            </div>
-
-                            <!-- SECCIÓN TAGS -->
-                            <div class="form-group full-width">
-                                <div class="section-header-row">
-                                    <h3>Etiquetas (Meta Tags)</h3>
-                                    <ion-button size="small" fill="clear" (click)="openTagsManager()">
-                                        <ion-icon name="link" slot="start"></ion-icon>
-                                        Gestionar Tags
-                                    </ion-button>
-                                </div>
-
-                                <ion-item class="input-item" lines="none">
-                                    <ion-icon name="pricetags" slot="start" size="small"></ion-icon>
-                                    <ion-label position="stacked">Seleccionar Etiquetas</ion-label>
-                                    <ion-select formControlName="tags" multiple="true"
-                                        placeholder="Categorizar este hito...">
-                                        <ion-select-option *ngFor="let tag of tagsList()" [value]="tag.id">
-                                            {{ tag.nombre }}
-                                        </ion-select-option>
-                                    </ion-select>
-                                </ion-item>
-                            </div>
-                        </div>
-
-                        <div class="modal-actions ion-margin-top">
-                            <ion-button fill="outline" color="medium" (click)="closeModal()">Cancelar</ion-button>
-                            <ion-button type="submit" [disabled]="historyForm.invalid || isLoading" color="danger"
-                                class="save-btn">
-                                <ion-icon slot="start" [name]="isLoading ? 'hourglass' : 'save'"></ion-icon>
-                                {{ isLoading ? 'Procesando...' : 'Guardar en Historial' }}
+                            <ion-button expand="block" fill="outline" class="add-media-btn" (click)="addMediaItem()">
+                                <ion-icon name="add" slot="start"></ion-icon>
+                                Agregar Recurso Multimedia
                             </ion-button>
+                            <ion-note class="helper-note">La primera imagen actuará como portada.</ion-note>
                         </div>
 
-                    </form>
-                </div>
-            </ng-template>
-        </ion-modal>
+                        <!-- SECCIÓN TAGS -->
+                        <div class="form-group full-width">
+                            <div class="section-header-row">
+                                <h3>Etiquetas (Meta Tags)</h3>
+                                <ion-button size="small" fill="clear" (click)="openTagsManager()">
+                                    <ion-icon name="link" slot="start"></ion-icon>
+                                    Gestionar Tags
+                                </ion-button>
+                            </div>
 
-        <div class="fab-spacer"></div>
-    </div>
+                            <ion-item class="input-item" lines="none">
+                                <ion-icon name="pricetags" slot="start" size="small"></ion-icon>
+                                <ion-label position="stacked">Seleccionar Etiquetas</ion-label>
+                                <ion-select formControlName="tags" multiple="true"
+                                    placeholder="Categorizar este hito...">
+                                    <ion-select-option *ngFor="let tag of tagsList()" [value]="tag.id">
+                                        {{ tag.nombre }}
+                                    </ion-select-option>
+                                </ion-select>
+                            </ion-item>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions ion-margin-top">
+                        <ion-button fill="outline" color="medium" (click)="closeModal()">Cancelar</ion-button>
+                        <ion-button type="submit" [disabled]="historyForm.invalid || isLoading" color="danger"
+                            class="save-btn">
+                            <ion-icon slot="start" [name]="isLoading ? 'hourglass' : 'save'"></ion-icon>
+                            {{ isLoading ? 'Procesando...' : 'Guardar en Historial' }}
+                        </ion-button>
+                    </div>
+
+                </form>
+            </div>
+        </ng-template>
+    </ion-modal>
+
+    <div class="fab-spacer"></div>
+
 </ion-content>

@@ -12,17 +12,21 @@
             <div class="header-text">
                 <span class="sede-text">SEDE<br>RENCA (ADMIN)</span>
             </div>
+
+            <!-- Botón Actualizar Header -->
+            <ion-button fill="clear" class="header-refresh-btn" (click)="loadData()">
+                <ion-icon slot="icon-only" name="refresh"></ion-icon>
+            </ion-button>
         </div>
     </div>
 </ion-header>
 
 <ion-content [fullscreen]="true" [scrollY]="true" class="admin-content">
-    <div class="glass-container">
-
-        <!-- HEADER ROW: Título + Buscador -->
+    <ion-grid fixed class="glass-container-grid">
+        <!-- HEADER ROW: Título + Buscador (Flexbox puro, sin ion-grid) -->
         <div class="page-header-row">
             <h1 class="page-title">
-                <ion-icon name="videocam"></ion-icon>
+                <ion-icon class="video-icon" name="videocam"></ion-icon>
                 Gestión de Entrevistas
             </h1>
             <div class="search-wrapper">
@@ -33,33 +37,28 @@
         </div>
 
         <!-- ACTION CARDS -->
-        <ion-grid class="action-cards-grid ion-margin-bottom">
-            <ion-row>
-                <!-- NEW INTERVIEW CARD (Large) -->
-                <ion-col size="12" size-md="8">
-                    <div class="quick-card main-action" (click)="openCreateModal()">
-                        <div class="icon-bg"><ion-icon name="add"></ion-icon></div>
-                        <div class="content">
-                            <h3>Nueva Entrevista</h3>
-                            <p>Registrar un nuevo testimonio o video</p>
-                        </div>
-                        <ion-icon name="arrow-forward" class="arrow-icon"></ion-icon>
+        <ion-row class="action-cards-grid ion-margin-bottom">
+            <!-- NEW INTERVIEW CARD (Full Width) -->
+            <ion-col size="12">
+                <div class="quick-card main-action" (click)="openCreateModal()">
+                    <div class="icon-bg"><ion-icon name="add"></ion-icon></div>
+                    <div class="content">
+                        <h3>Nueva Entrevista</h3>
+                        <p>Registrar un nuevo testimonio o video</p>
                     </div>
-                </ion-col>
+                    <ion-icon name="arrow-forward" class="arrow-icon"></ion-icon>
+                </div>
+            </ion-col>
+        </ion-row>
 
-                <!-- REFRESH CARD (Small) -->
-                <ion-col size="12" size-md="4">
-                    <div class="quick-card meta-action" (click)="loadData()">
-                        <div class="icon-circle"><ion-icon name="refresh"></ion-icon></div>
-                        <span>Actualizar Lista</span>
-                    </div>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-
-        <div class="status-summary">
-            <p>Mostrando <span class="highlight">{{ filteredEntrevistas().length }}</span> entrevistas</p>
-        </div>
+        <!-- Status Summary -->
+        <ion-row>
+            <ion-col size="12">
+                <div class="status-summary">
+                    <p>Mostrando <span class="highlight">{{ filteredEntrevistas().length }}</span> entrevistas</p>
+                </div>
+            </ion-col>
+        </ion-row>
 
         <!-- Loading -->
         <div *ngIf="isLoading" class="ion-text-center ion-padding">
@@ -67,42 +66,40 @@
         </div>
 
         <!-- LIST GRID -->
-        <ion-grid *ngIf="!isLoading">
-            <ion-row>
-                <ion-col size="12" size-md="6" size-xl="4" *ngFor="let item of filteredEntrevistas()">
-                    <ion-card class="glass-card" [class.unpublished-item]="!item.visible">
-                        <div class="card-glow"></div>
-                        <ion-card-header>
-                            <div class="header-row">
-                                <div class="slug-badge">ID: {{ item.id }}</div>
-                                <ion-badge [color]="item.visible ? 'success' : 'medium'" class="status-badge">
-                                    {{ item.visible ? 'VISIBLE' : 'OCULTO' }}
-                                </ion-badge>
-                            </div>
-                            <ion-card-title>{{ item.titulo }}</ion-card-title>
-                        </ion-card-header>
-                        <ion-card-content>
-                            <p class="description">{{ item.entrevistado }}</p>
-                            <p class="description small-desc" *ngIf="item.descripcion">{{ item.descripcion | slice:0:100
-                                }}...</p>
+        <ion-row *ngIf="!isLoading">
+            <ion-col size="12" size-md="6" size-lg="4" size-xl="3" *ngFor="let item of filteredEntrevistas()">
+                <ion-card class="glass-card" [class.unpublished-item]="!item.visible">
+                    <div class="card-glow"></div>
+                    <ion-card-header>
+                        <div class="header-row">
+                            <div class="slug-badge">ID: {{ item.id }}</div>
+                            <ion-badge [color]="item.visible ? 'success' : 'medium'" class="status-badge">
+                                {{ item.visible ? 'VISIBLE' : 'OCULTO' }}
+                            </ion-badge>
+                        </div>
+                        <ion-card-title>{{ item.titulo }}</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <p class="description">{{ item.entrevistado }}</p>
+                        <p class="description small-desc" *ngIf="item.descripcion">{{ item.descripcion | slice:0:100
+                            }}...</p>
 
-                            <div class="actions-panel">
-                                <div class="buttons">
-                                    <ion-button fill="clear" color="secondary" (click)="openEditModal(item)"
-                                        class="action-btn edit-btn">
-                                        <ion-icon slot="icon-only" name="create"></ion-icon>
-                                    </ion-button>
-                                    <ion-button fill="clear" color="danger" (click)="deleteEntrevista(item.id)"
-                                        class="action-btn delete-btn">
-                                        <ion-icon slot="icon-only" name="trash"></ion-icon>
-                                    </ion-button>
-                                </div>
+                        <div class="actions-panel">
+                            <div class="buttons">
+                                <ion-button fill="clear" color="secondary" (click)="openEditModal(item)"
+                                    class="action-btn edit-btn">
+                                    <ion-icon slot="icon-only" name="create"></ion-icon>
+                                </ion-button>
+                                <ion-button fill="clear" color="danger" (click)="deleteEntrevista(item.id)"
+                                    class="action-btn delete-btn">
+                                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                                </ion-button>
                             </div>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+                        </div>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
 
         <!-- Empty State -->
         <div class="empty-state" *ngIf="!isLoading && filteredEntrevistas().length === 0">
@@ -110,7 +107,7 @@
             <p>No se encontraron entrevistas.</p>
         </div>
 
-    </div>
+    </ion-grid>
 
     <!-- Modal Formulario -->
     <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
