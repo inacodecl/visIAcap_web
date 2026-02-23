@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
     IonContent, IonHeader, IonButtons, IonBackButton, IonButton,
-    IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle,
+    IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent,
     IonItem, IonInput, IonSelect, IonSelectOption,
     IonModal, IonToggle, IonSpinner, IonSearchbar
 } from '@ionic/angular/standalone';
@@ -22,7 +22,7 @@ import { AuthService } from '../../../core/services/auth.service';
         CommonModule,
         ReactiveFormsModule,
         IonContent, IonHeader, IonButtons, IonBackButton, IonButton,
-        IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle,
+        IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent,
         IonItem, IonInput, IonSelect, IonSelectOption,
         IonModal, IonToggle, IonSpinner, IonSearchbar
     ]

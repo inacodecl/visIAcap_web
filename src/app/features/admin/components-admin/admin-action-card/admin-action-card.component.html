@@ -1,0 +1,8 @@
+<div class="quick-card main-action" [ngClass]="['theme-' + themeColor]" (click)="onClick()">
+    <div class="icon-bg"><ion-icon [name]="icon"></ion-icon></div>
+    <div class="content">
+        <h3>{{ title }}</h3>
+        <p *ngIf="description">{{ description }}</p>
+    </div>
+    <ion-icon name="arrow-forward" class="arrow-icon"></ion-icon>
+</div>

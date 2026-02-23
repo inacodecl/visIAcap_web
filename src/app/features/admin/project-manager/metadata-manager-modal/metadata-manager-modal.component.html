@@ -52,6 +52,10 @@
                     <ion-label>
                         <h2>{{ item.nombre }}</h2>
                         <p>{{ item.slug }}</p>
+                        <p class="audit-text" *ngIf="item.creator_email || item.updater_email">
+                            <ion-icon name="person-outline" style="vertical-align: middle; font-size: 11px;"></ion-icon>
+                            Editado por: {{ item.updater_email || item.creator_email }}
+                        </p>
                     </ion-label>
                     <ion-button fill="clear" color="danger" slot="end" (click)="deleteItem(item.id)">
                         <ion-icon name="trash" slot="icon-only"></ion-icon>

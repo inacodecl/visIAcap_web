@@ -1,0 +1,11 @@
+<div class="page-header-row">
+    <h1 class="page-title">
+        <ion-icon [name]="icon" [class]="'icon-' + themeColor"></ion-icon>
+        {{ title }}
+    </h1>
+    <div class="search-wrapper">
+        <ion-searchbar [placeholder]="searchPlaceholder" [debounce]="250" (ionInput)="onSearchInput($event)"
+            animated="true" class="neon-searchbar" [class]="'searchbar-' + themeColor">
+        </ion-searchbar>
+    </div>
+</div>

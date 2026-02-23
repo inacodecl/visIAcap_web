@@ -30,12 +30,26 @@ export interface ProyectoTag {
     id: number;
     nombre: string;
     slug: string;
+    // --- Auditoría Obligatoria (Golden Standard) ---
+    created_at?: string | Date;
+    updated_at?: string | Date;
+    created_by?: number;
+    updated_by?: number;
+    creator_email?: string;
+    updater_email?: string;
 }
 
 export interface ProyectoCategoria {
     id: number;
     nombre: string;
     slug: string;
+    // --- Auditoría Obligatoria (Golden Standard) ---
+    created_at?: string | Date;
+    updated_at?: string | Date;
+    created_by?: number;
+    updated_by?: number;
+    creator_email?: string;
+    updater_email?: string;
 }
 
 /**
@@ -76,6 +90,10 @@ export interface Proyecto {
     updated_by?: number;
     created_at: Date | string;
     updated_at: Date | string;
+
+    // --- Campos Virtuales (LEFT JOIN Frontend) ---
+    creator_email?: string;
+    updater_email?: string;
 
     // --- Datos Localizados (Tabla: proyectos_i18n) ---
 

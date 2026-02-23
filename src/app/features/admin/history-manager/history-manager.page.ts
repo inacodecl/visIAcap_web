@@ -4,16 +4,20 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormArray } fr
 import {
     IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
     IonCardTitle, IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
-    IonList, IonListHeader, IonBadge, IonModal,
-    IonSearchbar, IonNote, IonSelect, IonSelectOption,
-    IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, ModalController, ToastController, IonSpinner
+    IonBadge, IonModal,
+    IonNote, IonSelect, IonSelectOption,
+    IonIcon, IonGrid, IonRow, IonCol, ModalController, ToastController, IonSpinner
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { add, create, trash, close, checkmarkCircle, search, eye, hourglass, save, time, arrowForward, images, pricetags, link, refresh } from 'ionicons/icons';
+import { add, create, trash, close, checkmarkCircle, search, eye, hourglass, save, time, arrowForward, images, pricetags, link, refresh, location } from 'ionicons/icons';
 import { TimelineService } from '../../../core/services/timeline.service';
 import { MetadataService } from '../../../core/services/metadata.service';
 import { Historia, HistoriaTag, HistoriaMedia } from '../../../core/models/historia.model';
 import { MetadataManagerModalComponent } from '../project-manager/metadata-manager-modal/metadata-manager-modal.component';
+import { AdminHeaderComponent } from '../components-admin/admin-header/admin-header.component';
+import { AdminPageTitleComponent } from '../components-admin/admin-page-title/admin-page-title.component';
+import { AdminActionCardComponent } from '../components-admin/admin-action-card/admin-action-card.component';
+import { AdminEmptyStateComponent } from '../components-admin/admin-empty-state/admin-empty-state.component';
 
 @Component({
     selector: 'app-history-manager',
@@ -23,11 +27,12 @@ import { MetadataManagerModalComponent } from '../project-manager/metadata-manag
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
-        IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle,
+        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton,
+        IonIcon, IonGrid, IonRow, IonCol,
         IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
         IonBadge, IonModal,
-        IonSearchbar, IonNote, IonSelect, IonSelectOption, IonSpinner
+        IonNote, IonSelect, IonSelectOption, IonSpinner,
+        AdminHeaderComponent, AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent
     ]
 })
 export class HistoryManagerPage implements OnInit {
@@ -67,6 +72,10 @@ export class HistoryManagerPage implements OnInit {
         descripcion: ['', [Validators.required]],
         visible: [true],
         media_url: [''], // Portada Legacy/Cover
+        order_index: [0], // Evitar error de nulo en DB
+        location: [''],
+        categoria_id: [null],
+        audio_url: [''],
 
         // Relaciones
         media: this.fb.array([]), // Array de Multimedia extra
@@ -74,7 +83,7 @@ export class HistoryManagerPage implements OnInit {
     });
 
     constructor() {
-        addIcons({ time, arrowForward, refresh, create, trash, close, eye, images, add, link, pricetags, checkmarkCircle, search, hourglass, save });
+        addIcons({ time, arrowForward, refresh, create, trash, close, eye, images, add, link, pricetags, checkmarkCircle, search, hourglass, save, location });
     }
 
     ngOnInit() {
@@ -135,7 +144,13 @@ export class HistoryManagerPage implements OnInit {
         this.mediaArray.clear();
 
         const today = new Date().toISOString().split('T')[0];
-        this.historyForm.reset({ visible: true, fecha: today, media: [], tags: [] });
+        this.historyForm.reset({
+            visible: true,
+            fecha: today,
+            media: [],
+            tags: [],
+            location: ''
+        });
 
         this.addMediaItem(); // Añadir un item por defecto
         this.isModalOpen = true;
@@ -186,7 +201,9 @@ export class HistoryManagerPage implements OnInit {
             descripcion: historia.descripcion,
             visible: historia.visible,
             media_url: historia.media_url,
-            tags: tagIds
+            tags: tagIds,
+            location: historia.location || '',
+            audio_url: historia.audio_url || ''
         });
 
         // Si no hay media, agregar uno vacío por si quiere agregar
@@ -194,6 +211,8 @@ export class HistoryManagerPage implements OnInit {
             this.addMediaItem();
         }
 
+        // Marcar formulario como prístino tras cargar datos para trackear cambios correctamente
+        this.historyForm.markAsPristine();
         this.isModalOpen = true;
     }
 
@@ -210,23 +229,38 @@ export class HistoryManagerPage implements OnInit {
         }
 
         this.isLoading = true;
-        const formValue = { ...this.historyForm.value };
+        let payload: any = {};
 
-        if (formValue.fecha) {
-            const dateObj = new Date(formValue.fecha);
+        // Si es creación, mandamos todo el formulario (los defaults ya están seteados).
+        // Si es edición, mandamos SÓLO lo que se haya ensuciado (dirty) o arreglos forzados.
+        if (!this.isEditing) {
+            payload = { ...this.historyForm.value };
+        } else {
+            Object.keys(this.historyForm.controls).forEach(key => {
+                const control = this.historyForm.get(key);
+                // Si el control fue modificado por el usuario, o si es media/tags (las relaciones siempre las enviamos en PUT/PATCH por seguridad)
+                if (control?.dirty || key === 'media' || key === 'tags' || key === 'fecha') {
+                    payload[key] = control?.value;
+                }
+            });
+        }
+
+        // Asegurar campos calculados si la fecha va en el payload
+        if (payload.fecha) {
+            const dateObj = new Date(payload.fecha);
             if (!isNaN(dateObj.getTime())) {
-                formValue.anio = dateObj.getFullYear();
+                payload.anio = dateObj.getFullYear();
             }
         }
 
-        // Asegurar que media_url tenga valor (usar primera imagen de la galería si está vacío)
-        if (!formValue.media_url && formValue.media && formValue.media.length > 0) {
-            formValue.media_url = formValue.media[0].url;
+        // Asegurar que media_url tenga valor principal (usar primera imagen de la galería si está vacío)
+        if (!payload.media_url && payload.media && payload.media.length > 0) {
+            payload.media_url = payload.media[0].url;
         }
 
         const request$ = (this.isEditing && this.currentEditingId)
-            ? this.timelineService.updateHistoria(this.currentEditingId, formValue)
-            : this.timelineService.createHistoria(formValue);
+            ? this.timelineService.updateHistoria(this.currentEditingId, payload)
+            : this.timelineService.createHistoria(payload);
 
         request$.subscribe({
             next: () => {

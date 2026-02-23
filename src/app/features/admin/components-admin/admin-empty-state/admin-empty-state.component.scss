@@ -1,0 +1,24 @@
+.empty-state {
+    text-align: center;
+    color: #555;
+    margin-top: 50px;
+
+    .hologram-circle {
+        width: 100px;
+        height: 100px;
+        border: 2px dashed rgba(255, 42, 42, 0.7);
+        /* Rojo Neon Transparente */
+        border-right-color: rgba(255, 255, 255, 0.8);
+        /* Blanco de Contraste */
+        box-shadow: 0 0 15px rgba(255, 42, 42, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        animation: spin 8s linear infinite;
+    }
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}

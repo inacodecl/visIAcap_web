@@ -2,19 +2,22 @@ import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
-    IonHeader, IonContent, IonGrid, IonRow, IonCol,
-    IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBadge, IonButton, IonBackButton, IonIcon,
-    IonSearchbar, IonButtons, ModalController, AlertController, ToastController,
-    IonSegment, IonSegmentButton, IonLabel, IonTitle
+    IonContent, IonGrid, IonRow, IonCol,
+    IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBadge, IonButton, IonIcon,
+    IonSegment, IonSegmentButton, IonLabel, IonPopover, ModalController, ToastController, AlertController
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
-    rocket, trash, create, globe, add, close, list, pricetags, arrowForward, videocam
+    rocket, trash, create, globe, add, close, list, pricetags, arrowForward, videocam, personOutline, informationCircleOutline
 } from 'ionicons/icons';
 import { ProyectosService } from '../../../core/services/proyectos.service';
 import { Proyecto } from '../../../core/models/proyecto.model';
 import { ProjectManagerCreateComponent } from './project-manager-create/project-manager-create.component';
 import { MetadataManagerModalComponent } from './metadata-manager-modal/metadata-manager-modal.component';
+import { AdminHeaderComponent } from '../components-admin/admin-header/admin-header.component';
+import { AdminPageTitleComponent } from '../components-admin/admin-page-title/admin-page-title.component';
+import { AdminActionCardComponent } from '../components-admin/admin-action-card/admin-action-card.component';
+import { AdminEmptyStateComponent } from '../components-admin/admin-empty-state/admin-empty-state.component';
 
 @Component({
     selector: 'app-project-manager',
@@ -23,9 +26,10 @@ import { MetadataManagerModalComponent } from './metadata-manager-modal/metadata
     standalone: true,
     imports: [
         CommonModule, FormsModule,
-        IonHeader, IonContent, IonGrid, IonRow, IonCol,
-        IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBadge, IonButton, IonBackButton, IonIcon,
-        IonSearchbar, IonButtons, IonSegment, IonSegmentButton, IonLabel
+        IonContent, IonGrid, IonRow, IonCol,
+        IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBadge, IonButton, IonIcon,
+        IonSegment, IonSegmentButton, IonLabel, IonPopover,
+        AdminHeaderComponent, AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent
     ]
 })
 export class ProjectManagerPage implements OnInit {
@@ -36,7 +40,7 @@ export class ProjectManagerPage implements OnInit {
 
     // Signals
     searchTerm = signal('');
-    filterType = signal('presente'); // Filtro LOCAL (ya no recarga API)
+    filterType = signal('presente'); // Filtro LOCAL
     proyectos = this.proyectosService.proyectos;
 
     // Computed Filter (Texto + Tipo)
@@ -54,7 +58,7 @@ export class ProjectManagerPage implements OnInit {
     });
 
     constructor() {
-        addIcons({ rocket, add, arrowForward, pricetags, list, globe, create, trash, close, videocam });
+        addIcons({ rocket, add, arrowForward, pricetags, list, globe, create, trash, close, videocam, personOutline, informationCircleOutline });
     }
 
     ngOnInit() {

@@ -6,7 +6,7 @@ import {
     IonItem, IonInput, IonList, IonLabel, IonSpinner, ModalController, ToastController
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { close, trash, add, pricetags, list } from 'ionicons/icons';
+import { close, trash, add, pricetags, list, personOutline } from 'ionicons/icons';
 import { MetadataService } from '../../../../core/services/metadata.service';
 import { ProyectoTag, ProyectoCategoria } from '../../../../core/models/proyecto.model';
 
@@ -37,7 +37,7 @@ export class MetadataManagerModalComponent implements OnInit {
     newNombre = '';
 
     constructor() {
-        addIcons({ close, trash, add, pricetags, list });
+        addIcons({ close, trash, add, pricetags, list, personOutline });
     }
 
     ngOnInit() {

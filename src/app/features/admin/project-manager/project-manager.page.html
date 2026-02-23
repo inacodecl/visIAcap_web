@@ -1,50 +1,21 @@
-<ion-header class="ion-no-border header-inacap">
-    <div class="top-section">
-        <div class="header-content">
-            <ion-buttons slot="start" class="menu-btn-container">
-                <ion-back-button defaultHref="/admin/dashboard" color="light"></ion-back-button>
-            </ion-buttons>
-
-            <div class="logo-container">
-                <img src="assets/icon/logo-inacap-60-v2.png" alt="Logo Inacap" class="logo-placeholder">
-            </div>
-
-            <div class="header-text">
-                <span class="sede-text">SEDE<br>RENCA (ADMIN)</span>
-            </div>
-        </div>
-    </div>
-</ion-header>
+<app-admin-header title="SEDE<br>RENCA (ADMIN)" (onRefresh)="loadProyectos()"></app-admin-header>
 
 <ion-content [fullscreen]="true" [scrollY]="true" class="admin-content">
     <div class="glass-container">
 
         <!-- HEADER ROW: Título + Buscador -->
-        <div class="page-header-row">
-            <h1 class="page-title">
-                <ion-icon name="rocket"></ion-icon>
-                Gestión de Proyectos
-            </h1>
-            <div class="search-wrapper">
-                <ion-searchbar placeholder="Buscar proyectos..." [debounce]="250"
-                    (ionInput)="searchTerm.set($any($event).target.value)" animated="true" class="neon-searchbar">
-                </ion-searchbar>
-            </div>
-        </div>
+        <app-admin-page-title title="Gestión de Proyectos" icon="rocket" themeColor="orange"
+            searchPlaceholder="Buscar proyectos..." (searchChange)="searchTerm.set($event)">
+        </app-admin-page-title>
 
         <!-- ACTION CARDS -->
         <ion-grid class="action-cards-grid ion-margin-bottom">
             <ion-row>
                 <!-- NEW PROJECT CARD (Large) -->
                 <ion-col size="12" size-md="6">
-                    <div class="quick-card main-action" (click)="openCreateModal()">
-                        <div class="icon-bg"><ion-icon name="add"></ion-icon></div>
-                        <div class="content">
-                            <h3>Crear Nuevo Proyecto</h3>
-                            <p>Iniciar el asistente de creación</p>
-                        </div>
-                        <ion-icon name="arrow-forward" class="arrow-icon"></ion-icon>
-                    </div>
+                    <app-admin-action-card title="Crear Nuevo Proyecto" description="Iniciar el asistente de creación"
+                        icon="add" themeColor="orange" (cardClick)="openCreateModal()">
+                    </app-admin-action-card>
                 </ion-col>
 
                 <!-- METADATA CARDS (Small) -->
@@ -101,6 +72,33 @@
                             </div>
 
                             <div class="actions-panel">
+                                <div class="audit-trigger" *ngIf="p.updater_email || p.creator_email">
+                                    <ion-button fill="clear" color="medium" id="audit-project-{{p.id}}"
+                                        class="action-btn info-btn">
+                                        <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
+                                    </ion-button>
+                                    <ion-popover trigger="audit-project-{{p.id}}" triggerAction="click"
+                                        alignment="start" side="top" class="neon-popover">
+                                        <ng-template>
+                                            <div class="audit-popover-content">
+                                                <div *ngIf="p.creator_email" class="audit-block">
+                                                    <span class="audit-label">Creado por:</span>
+                                                    <span class="audit-email">{{ p.creator_email }}</span>
+                                                    <span class="audit-date" *ngIf="p.created_at">{{ p.created_at |
+                                                        date:'dd/MM/yyyy HH:mm' }}</span>
+                                                </div>
+                                                <div *ngIf="p.updater_email && (p.updated_at !== p.created_at || !p.creator_email)"
+                                                    class="audit-block">
+                                                    <span class="audit-label">Última edición:</span>
+                                                    <span class="audit-email">{{ p.updater_email }}</span>
+                                                    <span class="audit-date" *ngIf="p.updated_at">{{ p.updated_at |
+                                                        date:'dd/MM/yyyy HH:mm' }}</span>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ion-popover>
+                                </div>
+
                                 <div class="buttons">
                                     <ion-button fill="clear" color="secondary" (click)="openEditModal(p)"
                                         class="action-btn edit-btn">
@@ -119,10 +117,8 @@
         </ion-grid>
 
         <!-- Empty State -->
-        <div class="empty-state" *ngIf="filteredProyectos().length === 0">
-            <div class="hologram-circle"></div>
-            <p>No hay proyectos en esta categoría.</p>
-        </div>
+        <app-admin-empty-state *ngIf="filteredProyectos().length === 0" message="No hay proyectos en esta categoría.">
+        </app-admin-empty-state>
 
     </div>
 </ion-content>

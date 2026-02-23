@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import {
     IonContent, IonCard, IonIcon, IonGrid, IonRow, IonCol,
-    IonSkeletonText, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton
+    IonSkeletonText, IonHeader, IonToolbar, IonButtons, IonButton
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { time, videocam, rocket, people, arrowForwardCircle, grid, logOut, chevronForwardOutline } from 'ionicons/icons';
@@ -22,7 +22,7 @@ import { UserService } from '../../../core/services/user.service';
         CommonModule,
         RouterModule,
         IonContent, IonCard, IonIcon, IonGrid, IonRow, IonCol,
-        IonSkeletonText, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton
+        IonSkeletonText, IonHeader, IonToolbar, IonButtons, IonButton
     ]
 })
 export class DashboardPage implements OnInit {

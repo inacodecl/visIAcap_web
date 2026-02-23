@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonButton, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
+import { IonContent, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { arrowForward, arrowBack } from 'ionicons/icons';
@@ -17,7 +17,7 @@ import { ProyectosService } from '../../../../core/services/proyectos.service';
   standalone: true,
   imports: [
     IonContent, CommonModule, FormsModule, RouterModule,
-    IonButton, IonIcon, IonGrid, IonRow, IonCol,
+    IonIcon, IonGrid, IonRow, IonCol,
     HomeFooterComponent, HomeHeaderComponent, ButtonBackComponent
   ]
 })

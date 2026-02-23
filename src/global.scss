@@ -87,3 +87,59 @@ ion-modal.glass-modal {
         --color: white;
     }
 }
+
+// ========================
+// POPOVERS GLOBALES 
+// ========================
+ion-popover.neon-popover {
+    --background: rgba(18, 20, 30, 0.95);
+    --backdrop-opacity: 0.3;
+    --border-radius: 12px;
+    --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 8px rgba(0, 243, 255, 0.2);
+    --min-width: 250px;
+    --width: auto;
+
+    &::part(content) {
+        border: 1px solid rgba(0, 243, 255, 0.3);
+    }
+
+    .audit-popover-content {
+        padding: 20px;
+        color: #ddd;
+
+        .audit-block {
+            margin-bottom: 12px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .audit-label {
+                display: block;
+                font-size: 0.85rem;
+                color: #00f3ff;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 4px;
+                font-weight: 600;
+            }
+
+            .audit-email {
+                display: block;
+                font-size: 1rem;
+                font-weight: 500;
+                color: white;
+                word-wrap: break-word;
+                /* Evita que correos gigantes rompan la card */
+            }
+
+            .audit-date {
+                display: block;
+                font-size: 0.85rem;
+                color: #888;
+                font-style: italic;
+                margin-top: 2px;
+            }
+        }
+    }
+}

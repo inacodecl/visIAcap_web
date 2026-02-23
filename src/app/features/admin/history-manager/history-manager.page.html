@@ -1,55 +1,21 @@
-<ion-header class="ion-no-border header-inacap">
-    <div class="top-section">
-        <div class="header-content">
-            <!-- Menú Button (Visible siempre para admin) -->
-            <ion-buttons slot="start" class="menu-btn-container">
-                <ion-back-button defaultHref="/admin/dashboard" color="light"></ion-back-button>
-            </ion-buttons>
-
-            <div class="logo-container">
-                <img src="assets/icon/logo-inacap-60-v2.png" alt="Logo Inacap" class="logo-placeholder">
-            </div>
-
-            <div class="header-text">
-                <span class="sede-text">SEDE<br>RENCA (ADMIN)</span>
-            </div>
-
-            <!-- Botón Actualizar Header -->
-            <ion-button fill="clear" class="header-refresh-btn" (click)="loadData()">
-                <ion-icon slot="icon-only" name="refresh"></ion-icon>
-            </ion-button>
-        </div>
-    </div>
-</ion-header>
+<app-admin-header title="SEDE<br>RENCA (ADMIN)" (onRefresh)="loadData()"></app-admin-header>
 
 <ion-content [fullscreen]="true" [scrollY]="true" class="admin-content">
     <ion-grid fixed class="glass-container-grid">
 
         <!-- HEADER ROW: Título + Buscador -->
-        <div class="page-header-row">
-            <h1 class="page-title">
-                <ion-icon name="time" color="danger"></ion-icon>
-                Gestión Timeline
-            </h1>
-            <div class="search-wrapper">
-                <ion-searchbar placeholder="Buscar en la base de datos..." [debounce]="250"
-                    (ionInput)="searchTerm.set($any($event).target.value)" animated="true" class="neon-searchbar">
-                </ion-searchbar>
-            </div>
-        </div>
+        <app-admin-page-title title="Gestión Timeline" icon="time" themeColor="red"
+            searchPlaceholder="Buscar en la base de datos..." (searchChange)="searchTerm.set($event)">
+        </app-admin-page-title>
 
         <!-- ACTION CARDS -->
         <ion-row class="action-cards-grid ion-margin-bottom">
             <!-- CREAR NUEVO EVENTO (Full Width) -->
             <ion-col size="12">
-                <div class="quick-card main-action" (click)="openCreateModal()">
-                    <div class="icon-bg"><ion-icon name="time"></ion-icon></div>
-                    <div class="content">
-                        <h3>Nuevo Hito Histórico</h3>
-                        <p>Agregar un acontecimiento a la línea de tiempo</p>
-                    </div>
-                    <ion-icon name="arrow-forward" class="arrow-icon"></ion-icon>
-                </div>
+                <app-admin-action-card title="Nuevo Hito Histórico"
+                    description="Agregar un acontecimiento a la línea de tiempo" icon="time" themeColor="red"
+                    (cardClick)="openCreateModal()">
+                </app-admin-action-card>
             </ion-col>
         </ion-row>
 
@@ -69,7 +35,7 @@
         </div>
 
 
-        <!-- Lista de Tarjetas (Rediseño basado en Mockup) -->
+        <!-- Lista de Tarjetas -->
         <ion-row *ngIf="!isLoading">
             <ion-col size="12" size-md="6" size-lg="4" size-xl="4" *ngFor="let item of filteredHistorias()">
                 <div class="hito-card" [class.hidden-item]="!item.visible" (click)="openEditModal(item)">
@@ -89,7 +55,7 @@
                     </div>
 
                     <div class="card-content">
-                        <!-- 2. Información (Título + Descripción Limpios) -->
+                        <!-- 2. Información -->
                         <div class="info-section">
                             <h3 class="hito-title">{{ item.titulo }}</h3>
                             <p class="hito-description">{{ item.descripcion | slice:0:120 }}...</p>
@@ -118,16 +84,15 @@
         </ion-row>
 
         <!-- Estado Vacío -->
-        <div class="empty-state" *ngIf="!isLoading && filteredHistorias().length === 0">
-            <div class="hologram-circle"></div>
-            <p>No se encontraron datos en el sector.</p>
-        </div>
+        <app-admin-empty-state *ngIf="!isLoading && filteredHistorias().length === 0"
+            message="No se encontraron datos en el sector.">
+        </app-admin-empty-state>
 
     </ion-grid>
 
 
 
-    <!-- Modal Formulario Pro -->
+    <!-- Modal Formulario -->
     <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="glass-modal">
         <ng-template>
             <ion-header class="modal-header">
@@ -167,6 +132,16 @@
                             </ion-item>
                         </div>
 
+                        <!-- Ubicación -->
+                        <div class="form-group location-group">
+                            <ion-item class="input-item" lines="none">
+                                <ion-label position="stacked">Ubicación (Sede Renca)</ion-label>
+                                <ion-input type="text" formControlName="location"
+                                    placeholder="Ej: Patio Central, Edificio A..."></ion-input>
+                                <ion-note slot="helper">Lugar específico dentro del recinto.</ion-note>
+                            </ion-item>
+                        </div>
+
                         <!-- Descripción -->
                         <div class="form-group full-width">
                             <ion-item class="input-item description-item" lines="none">
@@ -178,7 +153,7 @@
                             </ion-item>
                         </div>
 
-                        <!-- Opciones Avanzadas (Visuales por ahora) -->
+                        <!-- Opciones Avanzadas -->
                         <div class="form-group full-width settings-group">
                             <h3>Configuración de Visualización</h3>
                             <div class="settings-grid">

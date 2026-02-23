@@ -1,0 +1,58 @@
+.header-inacap {
+    background: transparent;
+
+    .top-section {
+        background: white;
+        padding: 10px 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .menu-btn-container {
+            margin-right: 15px;
+        }
+
+        .logo-container {
+            img {
+                height: 50px;
+                object-fit: contain;
+            }
+        }
+
+        .header-text {
+            margin-left: 15px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+
+            ::ng-deep .sede-text {
+                font-family: 'Roboto', sans-serif;
+                font-weight: 900;
+                color: #444;
+                font-size: 0.9rem;
+                line-height: 1.1;
+                display: block;
+            }
+        }
+
+        .header-refresh-btn {
+            margin-left: auto;
+            --color: #0f1115;
+
+            &:hover {
+                --color: #D01824;
+            }
+
+            @media (max-width: 576px) {
+                margin-left: 10px;
+            }
+        }
+    }
+}

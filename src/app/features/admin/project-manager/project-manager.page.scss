@@ -12,102 +12,7 @@ $glass-border: rgba(255, 255, 255, 0.08);
     height: 100%;
 }
 
-// --- Header Inacap Style ---
-.header-inacap {
-    background: transparent;
 
-    .top-section {
-        background: white;
-        padding: 10px 20px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            position: relative;
-        }
-
-        .menu-btn-container {
-            margin-right: 15px;
-
-            ion-menu-button {
-                --color: #D01824;
-            }
-        }
-
-        .logo-container {
-            img {
-                height: 50px;
-                object-fit: contain;
-            }
-        }
-
-        .header-text {
-            margin-left: 15px;
-            border-left: 2px solid #ccc;
-            padding-left: 15px;
-
-            .sede-text {
-                font-family: 'Roboto', sans-serif;
-                font-weight: 900;
-                color: #444;
-                font-size: 0.9rem;
-                line-height: 1.1;
-                display: block;
-            }
-        }
-    }
-}
-
-.admin-content {
-    --background: #{$bg-dark};
-    --color: #eee;
-    padding-top: 10px;
-}
-
-.glass-container {
-    padding: 20px;
-    max-width: 1400px;
-    margin: 0 auto;
-    min-height: 100%;
-    background:
-        radial-gradient(circle at 10% 20%, rgba(208, 24, 36, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(0, 243, 255, 0.03) 0%, transparent 40%);
-}
-
-.page-header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    margin-left: 1rem;
-    margin-right: 0.4rem;
-    flex-wrap: wrap;
-    gap: 15px;
-
-    @media (max-width: 768px) {
-        flex-direction: column;
-        align-items: stretch;
-    }
-}
-
-.page-title {
-    color: white;
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    ion-icon {
-        color: $neon-orange; // Amber for Projects
-    }
-}
 
 // --- Quick Cards ---
 .action-cards-grid {
@@ -210,27 +115,7 @@ $glass-border: rgba(255, 255, 255, 0.08);
     }
 }
 
-// --- Search Bar ---
-.search-wrapper {
-    flex-shrink: 0;
 
-    .neon-searchbar {
-        width: 520px;
-        height: 70px;
-        --background: #{$bg-card};
-        --color: white;
-        --placeholder-color: #777;
-        --icon-color: #{$neon-blue};
-        --border-radius: 30px;
-        --box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-        border: 1px solid #{$glass-border};
-        border-radius: 29px;
-
-        @media (max-width: 768px) {
-            width: 100%;
-        }
-    }
-}
 
 // --- Filter Segment ---
 .filter-container {
@@ -374,11 +259,34 @@ $glass-border: rgba(255, 255, 255, 0.08);
 
         .actions-panel {
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
             margin-top: 15px;
-            padding-top: 15px;
+            padding-top: 5px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+            .audit-trigger {
+                .info-btn {
+                    --color: #{$neon-blue};
+                    margin: 0;
+                    --padding-start: 0;
+                    --padding-end: 0;
+
+                    ion-icon {
+                        font-size: 1.5rem;
+                        transition: 0.3s ease;
+
+                        @media (min-width: 992px) {
+                            font-size: 2rem;
+                        }
+                    }
+
+                    &:hover ion-icon {
+                        transform: scale(1.1);
+                        color: white;
+                    }
+                }
+            }
 
             .buttons {
                 .action-btn {
@@ -395,27 +303,5 @@ $glass-border: rgba(255, 255, 255, 0.08);
                 }
             }
         }
-    }
-}
-
-// --- Empty State ---
-.empty-state {
-    text-align: center;
-    color: #555;
-    margin-top: 50px;
-
-    .hologram-circle {
-        width: 100px;
-        height: 100px;
-        border: 2px dashed #333;
-        border-radius: 50%;
-        margin: 0 auto 20px;
-        animation: spin 10s linear infinite;
-    }
-}
-
-@keyframes spin {
-    100% {
-        transform: rotate(360deg);
     }
 }

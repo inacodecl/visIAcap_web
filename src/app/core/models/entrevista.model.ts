@@ -7,4 +7,14 @@ export interface Entrevista {
     url_imagen: string;  // Thumbnail
     fecha_grabacion?: string;
     visible: boolean;
+
+    // --- Auditoría Obligatoria (Golden Standard) ---
+    created_at?: string;
+    updated_at?: string;
+    created_by?: number;
+    updated_by?: number;
+
+    // --- Campos Virtuales (LEFT JOIN Frontend) ---
+    creator_email?: string;
+    updater_email?: string;
 }

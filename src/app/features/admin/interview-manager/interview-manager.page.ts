@@ -7,12 +7,16 @@ import {
     IonCardTitle, IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
     IonList, IonBadge, IonModal,
     IonSearchbar, IonSpinner,
-    IonGrid, IonRow, IonCol
+    IonGrid, IonRow, IonCol, IonPopover
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { add, create, trash, close, checkmarkCircle, search, videocam, save, refresh, arrowForward } from 'ionicons/icons';
+import { add, create, trash, refresh, arrowForward, closeCircleOutline, videocam, videocamOutline, personOutline, logoYoutube, imageOutline, saveOutline, informationCircleOutline } from 'ionicons/icons';
 import { EntrevistaService } from '../../../core/services/entrevista.service';
 import { Entrevista } from '../../../core/models/entrevista.model';
+import { AdminHeaderComponent } from '../components-admin/admin-header/admin-header.component';
+import { AdminPageTitleComponent } from '../components-admin/admin-page-title/admin-page-title.component';
+import { AdminActionCardComponent } from '../components-admin/admin-action-card/admin-action-card.component';
+import { AdminEmptyStateComponent } from '../components-admin/admin-empty-state/admin-empty-state.component';
 
 @Component({
     selector: 'app-interview-manager',
@@ -22,12 +26,13 @@ import { Entrevista } from '../../../core/models/entrevista.model';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
+        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton,
         IonIcon,
-        IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
+        IonItem, IonInput, IonTextarea, IonToggle,
         IonModal,
-        IonSearchbar, IonSpinner,
-        IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonBadge
+        IonSpinner,
+        IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonBadge, IonPopover,
+        AdminHeaderComponent, AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent
     ]
 })
 export class InterviewManagerPage implements OnInit {
@@ -67,7 +72,7 @@ export class InterviewManagerPage implements OnInit {
     });
 
     constructor() {
-        addIcons({ videocam, add, arrowForward, refresh, create, trash, close, save, checkmarkCircle, search });
+        addIcons({ refresh, videocam, add, arrowForward, create, trash, closeCircleOutline, videocamOutline, personOutline, logoYoutube, imageOutline, saveOutline, informationCircleOutline });
     }
 
     ngOnInit() {
