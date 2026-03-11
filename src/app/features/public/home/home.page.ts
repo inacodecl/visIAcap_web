@@ -1,104 +1,70 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
+import { ActionSheetController } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
-import { ButtonHomeComponent } from '../../../components/buttons/button-home/button-home.component';
-import { HomeHeaderComponent } from '../../../components/headers/home-header/home-header.component';
-import { HomeFooterComponent } from '../../../components/footers/home-footer/home-footer.component';
+import { addIcons } from 'ionicons';
+import { personCircleOutline, informationCircleOutline, accessibilityOutline, logInOutline, languageOutline, closeOutline } from 'ionicons/icons';
+import { GeometricOverlayTopComponent } from './components/geometric-overlay-top/geometric-overlay-top.component';
+import { GeometricOverlayBottomComponent } from './components/geometric-overlay-bottom/geometric-overlay-bottom.component';
 
-/**
- * Interfaz para el efecto ripple
- */
-interface RippleEffect {
-  x: number;
-  y: number;
-  id: number;
-}
+// Componentes Individuales de Botones
+import { BtnPasadoComponent } from './components/btn-pasado/btn-pasado.component';
+import { BtnPresenteComponent } from './components/btn-presente/btn-presente.component';
+import { BtnFuturoComponent } from './components/btn-futuro/btn-futuro.component';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
-  standalone: true,
-  imports: [
-    IonContent,
-    CommonModule,
-    FormsModule,
-    HomeHeaderComponent,
-    HomeFooterComponent,
-    ButtonHomeComponent
-  ]
+    selector: 'app-home',
+    templateUrl: './home.page.html',
+    styleUrls: ['./home.page.scss'],
+    standalone: true,
+    imports: [
+        IonContent, CommonModule, FormsModule, IonIcon, 
+        IonGrid, IonRow, IonCol, 
+        GeometricOverlayTopComponent, GeometricOverlayBottomComponent, 
+        BtnPasadoComponent, BtnPresenteComponent, BtnFuturoComponent
+    ]
 })
 export class HomePage implements OnInit {
-  /** Array de efectos ripple activos */
-  ripples: RippleEffect[] = [];
-  private rippleIdCounter = 0;
 
-  /** Botón actualmente seleccionado para animación */
-  selectedButton: string | null = null;
+    constructor(
+        private router: Router,
+        private actionSheetCtrl: ActionSheetController
+    ) {
+        addIcons({ personCircleOutline, informationCircleOutline, accessibilityOutline, logInOutline, languageOutline, closeOutline });
+    }
 
-  constructor(private router: Router) { }
+    ngOnInit() {
+    }
 
-  ngOnInit() {
-  }
+    async openOptions() {
+        const actionSheet = await this.actionSheetCtrl.create({
+            header: 'Opciones de Sistema',
+            buttons: [
+                {
+                    text: 'Acceso Administrativo',
+                    icon: 'log-in-outline',
+                    handler: () => {
+                        this.router.navigate(['/auth/login']);
+                    }
+                },
+                {
+                    text: 'Idioma (Próximamente)',
+                    icon: 'language-outline',
+                    handler: () => {
+                        console.log('Opción de idioma seleccionada');
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    icon: 'close-outline',
+                    role: 'cancel'
+                }
+            ]
+        });
 
-  /**
-   * Crea un efecto ripple al tocar el fondo.
-   * @param event Evento del click/tap
-   */
-  onBackgroundTap(event: MouseEvent) {
-    // Obtener posición relativa al contenedor
-    const target = event.currentTarget as HTMLElement;
-    const rect = target.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-
-    // Crear nuevo ripple
-    const ripple: RippleEffect = {
-      x,
-      y,
-      id: this.rippleIdCounter++
-    };
-
-    this.ripples.push(ripple);
-
-    // Eliminar ripple después de la animación (1s)
-    setTimeout(() => {
-      this.ripples = this.ripples.filter(r => r.id !== ripple.id);
-    }, 1000);
-  }
-
-  irAGestionUsuarios() {
-    this.router.navigate(['/gestion-usuarios']);
-  }
-
-  /**
-   * Navegación con retraso para permitir ver la animación del botón.
-   * Ideal para Tótems y dispositivos táctiles.
-   * @param route Ruta a navegar
-   */
-  private navigateWithDelay(route: string) {
-    // Retraso de 400ms para que la animación CSS (0.5s) se aprecie al iniciar
-    setTimeout(() => {
-      this.selectedButton = null; // Reset selection before navigating
-      this.router.navigate([route]);
-    }, 400);
-  }
-
-  navegarPasado() {
-    this.selectedButton = 'pasado';
-    this.navigateWithDelay('/pasado');
-  }
-
-  navegarPresente() {
-    this.selectedButton = 'presente';
-    this.navigateWithDelay('/presente');
-  }
-
-  navegarFuturo() {
-    this.selectedButton = 'futuro';
-    this.navigateWithDelay('/futuro');
-  }
+        await actionSheet.present();
+    }
 
 }

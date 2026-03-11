@@ -9,6 +9,7 @@ import { HomeFooterComponent } from '../../../../components/footers/home-footer/
 import { HomeHeaderComponent } from '../../../../components/headers/home-header/home-header.component';
 import { ButtonBackComponent } from '../../../../components/buttons/button-back/button-back.component';
 import { ProyectosService } from '../../../../core/services/proyectos.service';
+import { AnimatedBackgroundComponent } from '../../../../components/background/animated-background/animated-background.component';
 
 @Component({
   selector: 'app-projects',
@@ -18,7 +19,8 @@ import { ProyectosService } from '../../../../core/services/proyectos.service';
   imports: [
     IonContent, CommonModule, FormsModule, RouterModule,
     IonIcon, IonGrid, IonRow, IonCol,
-    HomeFooterComponent, HomeHeaderComponent, ButtonBackComponent
+    HomeFooterComponent, HomeHeaderComponent, ButtonBackComponent,
+    AnimatedBackgroundComponent
   ]
 })
 export class ProjectsPage implements OnInit {

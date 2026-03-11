@@ -1,32 +1,68 @@
-<ion-content [fullscreen]="true" class="home-content">
+<ion-content [fullscreen]="true" class="home-v2-content">
 
-  <!-- Header Component -->
-  <app-home-header></app-home-header>
+    <!-- Overlay geométrico SUPERIOR IZQUIERDO -->
+    <app-geometric-overlay-top></app-geometric-overlay-top>
 
-  <!-- Main Content Section (With Background Image) -->
-  <div class="main-card" (click)="onBackgroundTap($event)">
-    <!-- Ripple Effect Container -->
-    <div class="ripple-container">
-      <div *ngFor="let ripple of ripples" class="ripple" [style.left.px]="ripple.x" [style.top.px]="ripple.y">
-      </div>
-    </div>
+    <!-- Overlay geométrico INFERIOR DERECHO -->
+    <app-geometric-overlay-bottom></app-geometric-overlay-bottom>
 
-    <div class="buttons-container">
-      <app-button-home icon="time-outline" variant="pasado" [isActive]="selectedButton === 'pasado'"
-        (click)="navegarPasado()">
-      </app-button-home>
+    <!-- Estructura Principal con Grid System -->
+    <ion-grid class="main-grid ion-no-padding">
 
-      <app-button-home icon="location-outline" variant="presente" [isActive]="selectedButton === 'presente'"
-        (click)="navegarPresente()">
-      </app-button-home>
+        <!-- HEADER ROW: Adaptable en altura -->
+        <ion-row class="header-row ion-justify-content-center">
+            <ion-col size="12" size-lg="10" size-xl="10">
+                <header class="v2-header">
+                    <div class="logo-container">
+                        <img src="assets/icon/logo-inacap-60-v2.png" alt="INACAP 60 Años" class="logo-img">
+                    </div>
+                    <div class="header-separator"></div>
+                    <div class="sede-container">
+                        <span class="sede-line">SEDE</span>
+                        <span class="renca-line">RENCA</span>
+                    </div>
+                </header>
+            </ion-col>
+        </ion-row>
 
-      <app-button-home icon="rocket-outline" variant="futuro" [isActive]="selectedButton === 'futuro'"
-        (click)="navegarFuturo()">
-      </app-button-home>
-    </div>
-  </div>
+        <!-- MAIN CONTENT ROW: Botones centrados -->
+        <ion-row class="content-row ion-justify-content-center ion-align-items-center">
+            <ion-col size="12" size-md="8" size-lg="6" size-xl="5">
+                <main class="main-container">
+                    <div class="cards-container">
+                        <!-- Pasado -->
+                        <app-btn-pasado></app-btn-pasado>
 
-  <!-- Footer Component -->
-  <app-home-footer></app-home-footer>
+                        <!-- Presente -->
+                        <app-btn-presente></app-btn-presente>
+
+                        <!-- Futuro -->
+                        <app-btn-futuro></app-btn-futuro>
+                    </div>
+                </main>
+            </ion-col>
+        </ion-row>
+
+        <!-- FOOTER ROW -->
+        <ion-row class="footer-row">
+            <ion-col size="12">
+                <footer class="v2-footer">
+                    <button class="footer-btn" aria-label="Usuario">
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                    </button>
+
+                    <div class="footer-text">
+                        <h2 class="footer-title">INACAP RENCA SMART</h2>
+                        <p class="footer-subtitle">60° Aniversario</p>
+                    </div>
+
+                    <button class="footer-btn" aria-label="Información" (click)="openOptions()">
+                        <ion-icon name="information-circle-outline"></ion-icon>
+                    </button>
+                </footer>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
 
 </ion-content>

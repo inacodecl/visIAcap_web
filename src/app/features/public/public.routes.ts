@@ -7,10 +7,6 @@ export const routes: Routes = [
     },
     {
         path: 'home',
-        loadComponent: () => import('./home/homev2/homev2.page').then(m => m.Homev2Page)
-    },
-    {
-        path: 'home-legacy',
         loadComponent: () => import('./home/home.page').then(m => m.HomePage)
     },
     {

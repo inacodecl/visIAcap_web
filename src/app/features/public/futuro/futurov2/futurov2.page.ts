@@ -10,7 +10,7 @@ import {
     peopleOutline, bulbOutline, codeSlashOutline, constructOutline,
     schoolOutline, flaskOutline
 } from 'ionicons/icons';
-import { GeometricOverlayTopComponent } from '../../home/homev2/components/geometric-overlay-top/geometric-overlay-top.component';
+import { GeometricOverlayTopComponent } from '../../home/components/geometric-overlay-top/geometric-overlay-top.component';
 
 // Interfaces para datos mock
 interface ProyectoFuturo {

@@ -1,0 +1,274 @@
+.animated-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-color: #f7f9fc;
+  overflow: hidden;
+  pointer-events: none; // Evita que capture clicks
+  
+  // Variables inspiradas en Inacap
+  --color-red: #d50000;
+  --color-red-light: rgba(213, 0, 0, 0.6);
+  --color-red-glass: rgba(213, 0, 0, 0.15);
+  
+  --color-gray: #e0e5ec;
+  --color-gray-dark: #b0b8c4;
+  --color-blue-glass: rgba(176, 184, 196, 0.4);
+  
+  --line-color: rgba(176, 184, 196, 0.5);
+  --line-red: rgba(213, 0, 0, 0.3);
+}
+
+.shape-group {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+// 1. MÓVIL (Por defecto)
+.top-right {
+  top: -2%;
+  right: -5%;
+  transform: scale(0.75); // Aumentado para que ocupe más pantalla
+  transform-origin: top right;
+}
+
+.bottom-left {
+  // Se cambia de valores muy negativos a valores que lo traigan más al centro
+  bottom: 0%;
+  left: 0%;
+  transform: scale(0.75); // Aumentado para que ocupe más pantalla
+  transform-origin: bottom left;
+}
+
+// 2. TABLET (>= 768px)
+@media (min-width: 768px) {
+  .top-right {
+    top: 2%;
+    right: 2%;
+    transform: scale(0.85);
+  }
+  .bottom-left {
+    bottom: 2%;
+    left: 2%;
+    transform: scale(0.85);
+  }
+}
+
+// 3. ESCRITORIO / DESKTOP (>= 992px)
+@media (min-width: 992px) {
+  .top-right {
+    top: 5%;
+    right: 5%;
+    transform: scale(1);
+  }
+  .bottom-left {
+    bottom: 0%;
+    left: 0%;
+    transform: scale(1);
+  }
+}
+
+// 4. TÓTEM O PANTALLAS EXTRAGRANDES (>= 1200px)
+@media (min-width: 1200px) {
+  .top-right {
+    top: 8%;
+    right: 8%;
+    transform: scale(1.15); // Más grande para pantallas gigantes
+  }
+  .bottom-left {
+    bottom: 5%;
+    left: 5%;
+    transform: scale(1.15);
+  }
+}
+
+// 4.1 TÓTEM VERTICAL (Ej: Pantallas de 1080x1920 en orientación retrato)
+@media (max-width: 1199px) and (min-height: 1200px) {
+  .top-right {
+    top: 2%;
+    right: -2%;
+    transform: scale(1.1);
+  }
+  .bottom-left {
+    bottom: 10%; // Subimos más el cúmulo para tótems
+    left: 5%;
+    transform: scale(1.1);
+  }
+}
+
+// ==============================================
+// LÍNEAS DE CONEXIÓN (Estilo circuito)
+// ==============================================
+.line {
+  position: absolute;
+  border: 1px solid var(--line-color);
+  border-radius: 4px;
+}
+
+// Líneas Superiores
+.line-1 {
+  width: 200px;
+  height: 150px;
+  border-top: 1px solid var(--line-color);
+  border-right: 1px solid var(--line-color);
+  border-bottom: none;
+  border-left: none;
+  top: 10%;
+  right: 15%;
+  border-radius: 0 16px 0 0;
+  transform: rotate(45deg);
+}
+.line-2 {
+  width: 250px;
+  height: 80px;
+  border-bottom: 1px solid var(--line-red);
+  border-left: 1px solid var(--line-red);
+  border-top: none;
+  border-right: none;
+  top: 25%;
+  right: 5%;
+  border-radius: 0 0 0 16px;
+  transform: rotate(45deg);
+}
+.line-3 {
+  width: 300px;
+  height: 1px;
+  background-color: var(--line-color);
+  top: 40%;
+  right: -5%;
+  transform: rotate(135deg);
+}
+
+// Líneas Inferiores
+.line-4 {
+  width: 250px;
+  height: 150px;
+  border-top: 1px solid var(--line-color);
+  border-left: 1px solid var(--line-color);
+  border-bottom: none;
+  border-right: none;
+  bottom: 10%;
+  left: 10%;
+  border-radius: 16px 0 0 0;
+  transform: rotate(45deg);
+}
+.line-5 {
+  width: 180px;
+  height: 100px;
+  border-bottom: 1px solid var(--line-red);
+  border-right: 1px solid var(--line-red);
+  border-top: none;
+  border-left: none;
+  bottom: 5%;
+  left: 20%;
+  border-radius: 0 0 16px 0;
+  transform: rotate(45deg);
+}
+
+// ==============================================
+// FIGURAS GEOMÉTRICAS
+// ==============================================
+.shape {
+  position: absolute;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.square {
+  border-radius: 16px;
+  transform: rotate(45deg);
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  background: transparent !important;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 52px solid var(--color-gray-dark);
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transform: rotate(15deg);
+}
+
+// Colores y Materiales
+.red-solid {
+  background: linear-gradient(135deg, var(--color-red-light) 0%, var(--color-red) 100%);
+}
+.red-glass {
+  background: var(--color-red-glass);
+  border: 1px solid rgba(213, 0, 0, 0.2);
+}
+.gray-glass {
+  background: var(--color-blue-glass);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.outline {
+  background: transparent;
+  border: 2px solid var(--color-red-light);
+  box-shadow: none;
+}
+
+// ==============================================
+// POSICIONES Y TAMAÑOS ESPECÍFICOS
+// ==============================================
+// Top Right Group
+.sq-1 { width: 80px; height: 80px; top: 15%; right: 10%; }
+.sq-2 { width: 120px; height: 120px; top: 20%; right: 5%; z-index: -1; }
+.sq-3 { width: 100px; height: 100px; top: 8%; right: 20%; }
+.tr-1 { border-bottom-color: var(--color-red-light); top: 35%; right: 18%; transform: rotate(110deg); }
+.tr-2 { border-bottom-color: var(--color-blue-glass); top: 12%; right: 28%; transform: rotate(-20deg); }
+
+// Bottom Left Group
+.sq-4 { width: 100px; height: 100px; bottom: 15%; left: 5%; }
+.sq-5 { width: 140px; height: 140px; bottom: 8%; left: 12%; z-index: -1; }
+.sq-6 { width: 60px; height: 60px; bottom: 25%; left: 18%; }
+.sq-7 { width: 90px; height: 90px; bottom: 20%; left: -2%; }
+.tr-3 { border-bottom-color: var(--color-blue-glass); bottom: 10%; left: 25%; transform: rotate(45deg); }
+.tr-4 { border-bottom-color: var(--color-red-light); bottom: 30%; left: 8%; transform: rotate(-55deg); }
+.sq-8 { width: 55px; height: 55px; bottom: -3%; left: 22%; }
+.tr-5 { border-bottom-color: var(--color-red-light); bottom: 2%; left: 32%; transform: rotate(115deg); }
+
+
+// ==============================================
+// ANIMACIONES
+// ==============================================
+.bounce-1 { animation: float-1 8s ease-in-out infinite; }
+.bounce-2 { animation: float-2 10s ease-in-out infinite alternate; }
+.bounce-3 { animation: float-3 12s ease-in-out infinite reverse; }
+
+.rotate-1 { animation: spin-float-1 15s linear infinite; }
+.rotate-2 { animation: spin-float-2 20s linear infinite reverse; }
+
+@keyframes float-1 {
+  0%, 100% { transform: translateY(0) rotate(45deg); }
+  50% { transform: translateY(-20px) rotate(45deg); }
+}
+
+@keyframes float-2 {
+  0% { transform: translateY(0) translateX(0) rotate(45deg) scale(1); }
+  100% { transform: translateY(-15px) translateX(15px) rotate(45deg) scale(1.05); }
+}
+
+@keyframes float-3 {
+  0%, 100% { transform: translateY(0) translateX(0) rotate(45deg); }
+  50% { transform: translateY(15px) translateX(-10px) rotate(50deg); }
+}
+
+@keyframes spin-float-1 {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(180deg); }
+  100% { transform: translateY(0) rotate(360deg); }
+}
+
+@keyframes spin-float-2 {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(20px) rotate(180deg); }
+  100% { transform: translateY(0) rotate(360deg); }
+}

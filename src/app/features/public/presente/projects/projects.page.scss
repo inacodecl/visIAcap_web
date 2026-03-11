@@ -10,8 +10,8 @@
 }
 
 ion-content {
-    // FONDO GRADIENTE FIJO (Blanco -> Rojo Inacap)
-    --background: linear-gradient(to bottom, #ffffff 45%, #d50000 105%) no-repeat fixed;
+    // Fondo base transparente para dejar ver el animated-background
+    --background: transparent;
 }
 
 // ==============================================
