@@ -1,5 +1,185 @@
 :host {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* =========================================
+   ESTILOS GENERALES Y EXTERNOS PARA BUTTON-HOME (Heredados)
+   ========================================= */
+
+.glass-btn {
+    --btn-bg: #e8e8e8;
+    --btn-shadow-light: #ffffff;
+    --btn-shadow-dark: #c5c5c5;
+    --btn-accent: #C8102E; // Color hover (Rojo INACAP)
+    --theme-color: #333333; // Color ícono normal
+    
+    position: relative;
+    width: 180px;
+    height: 180px;
+    border-radius: 20%;
+    
+    background: var(--btn-bg);
+    border: 4px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 12px 12px 24px var(--btn-shadow-dark),
+                -12px -12px 24px var(--btn-shadow-light),
+                0 4px 15px rgba(0, 0, 0, 0.15);
+                
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: visible; 
+}
+
+/* EFECTOS DEL HOVER (Independiente del Click) */
+@media (hover: hover) {
+    .glass-btn:not(.is-animating):hover {
+        transform: translateY(-5px);
+        border-color: var(--btn-accent);
+
+        svg {
+            transform: scale(1.1) rotate(5deg);
+            stroke: var(--btn-accent);
+            filter: drop-shadow(0 0 10px var(--btn-accent));
+        }
+    }
+}
+
+.glass-btn:not(.is-animating):active {
+    transform: scale(0.95);
+    border-color: var(--btn-accent);
+    box-shadow: inset 6px 6px 18px var(--btn-shadow-dark), inset -6px -6px 18px var(--btn-shadow-light);
+    
+    svg {
+        transform: scale(0.9);
+        stroke: var(--btn-accent);
+        filter: drop-shadow(0 0 10px var(--btn-accent));
+    }
+}
+
+/* =========================================
+   ONDAS EXPANSIVAS (RIPPLE AL HACER CLIC)
+   ========================================= */
+
+.ripple-container {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: inherit;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+::ng-deep .ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple-animation 0.6s linear;
+    background-color: rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to { transform: scale(4); opacity: 0; }
+}
+
+/* =========================================
+   ICONOS SVG BASE
+   ========================================= */
+
+.glass-btn svg {
+    position: relative;
+    z-index: 2;
+    width: 120px;
+    height: 120px;
+    fill: none;
+    stroke: var(--theme-color);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    overflow: visible; 
+    transition: transform 0.4s ease, stroke 0.3s ease, filter 0.3s ease;
+}
+
+/* =========================================
+   ANIMACIONES EXAGERADAS AL CLIC - CIUDAD
+   ========================================= */
+
+.glass-btn.btn-building.is-animating {
+    pointer-events: none;
+    z-index: 100;
+    animation: cityExpandBg 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes cityExpandBg {
+    0% { width: 180px; }
+    100% { width: 450px; }
+}
+
+.win {
+    fill: transparent;
+    transition: fill 0.2s ease;
+}
+
+.glass-btn.btn-building.is-animating .win {
+    animation: lightUpBright 0.2s forwards;
+    fill: var(--btn-accent); // Se encienden en rojo INACAP
+}
+
+.extra-building {
+    opacity: 0;
+}
+
+.glass-btn.btn-building.is-animating .extra-building {
+    animation: popUpBuilding 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.glass-btn.btn-building.is-animating .left-building { animation-delay: 0.2s; }
+.glass-btn.btn-building.is-animating .right-building { animation-delay: 0.3s; }
+.glass-btn.btn-building.is-animating .base-line-extra {
+    animation: fadeInLine 0.3s forwards;
+}
+
+@keyframes popUpBuilding {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLine {
+    to { opacity: 1; }
+}
+
+// Secuencias precisas actualizadas con selectores de tipo para SVG
+.glass-btn.btn-building.is-animating > svg > .win:nth-of-type(1) { animation-delay: 0.1s; }
+.glass-btn.btn-building.is-animating > svg > .win:nth-of-type(2) { animation-delay: 0.15s; }
+.glass-btn.btn-building.is-animating > svg > .win:nth-of-type(3) { animation-delay: 0.2s; }
+.glass-btn.btn-building.is-animating > svg > .win:nth-of-type(4) { animation-delay: 0.25s; }
+.glass-btn.btn-building.is-animating > svg > .win:nth-of-type(5) { animation-delay: 0.3s; }
+.glass-btn.btn-building.is-animating > svg > .win:nth-of-type(6) { animation-delay: 0.35s; }
+.glass-btn.btn-building.is-animating > svg > .win:nth-of-type(7) { animation-delay: 0.4s; }
+
+.glass-btn.btn-building.is-animating .left-building .win:nth-of-type(1) { animation-delay: 0.45s; }
+.glass-btn.btn-building.is-animating .left-building .win:nth-of-type(2) { animation-delay: 0.5s; }
+.glass-btn.btn-building.is-animating .left-building .win:nth-of-type(3) { animation-delay: 0.55s; }
+.glass-btn.btn-building.is-animating .left-building .win:nth-of-type(4) { animation-delay: 0.6s; }
+.glass-btn.btn-building.is-animating .left-building .win:nth-of-type(5) { animation-delay: 0.65s; }
+
+.glass-btn.btn-building.is-animating .right-building .win:nth-of-type(1) { animation-delay: 0.5s; }
+.glass-btn.btn-building.is-animating .right-building .win:nth-of-type(2) { animation-delay: 0.55s; }
+.glass-btn.btn-building.is-animating .right-building .win:nth-of-type(3) { animation-delay: 0.6s; }
+.glass-btn.btn-building.is-animating .right-building .win:nth-of-type(4) { animation-delay: 0.65s; }
+.glass-btn.btn-building.is-animating .right-building .win:nth-of-type(5) { animation-delay: 0.7s; }
+.glass-btn.btn-building.is-animating .right-building .win:nth-of-type(6) { animation-delay: 0.75s; }
+
+@keyframes lightUpBright {
+    to { 
+        fill: var(--btn-accent); 
+        stroke-width: 0; 
+        filter: drop-shadow(0 0 6px var(--btn-accent)); 
+    }
 }

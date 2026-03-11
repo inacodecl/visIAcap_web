@@ -1,1 +1,44 @@
-<app-button-home icon="business-outline" variant="presente" [isActive]="isActive" (click)="navegar()"></app-button-home>
+<button class="glass-btn btn-building" [class.is-animating]="isAnimating">
+    <div class="ripple-container" #rippleContainer></div>
+    <!-- SVG de Edificio -->
+    <svg viewBox="0 0 28 28">
+        <!-- Base Arquitectónica -->
+        <path d="M 1 25 h 26" />
+        <path d="M 10 25 V 5 a 1 1 0 0 1 1 -1 h 6 a 1 1 0 0 1 1 1 v 20" />
+        <path d="M 18 25 V 12 a 1 1 0 0 1 1 -1 h 4 a 1 1 0 0 1 1 1 v 13" />
+        <path d="M 4 25 V 16 a 1 1 0 0 1 1 -1 h 5" />
+        
+        <!-- Ventanas Edificio Principal -->
+        <rect class="win" x="13" y="9" width="2" height="2" rx="0.5" />
+        <rect class="win" x="13" y="13" width="2" height="2" rx="0.5" />
+        <rect class="win" x="13" y="17" width="2" height="2" rx="0.5" />
+        <rect class="win" x="13" y="21" width="2" height="2" rx="0.5" />
+        <rect class="win" x="20" y="15" width="2" height="2" rx="0.5" />
+        <rect class="win" x="20" y="21" width="2" height="2" rx="0.5" />
+        <rect class="win" x="6" y="19" width="2" height="2" rx="0.5" />
+
+        <!-- Extensiones de la ciudad (Ocultas inicialmente) -->
+        <path class="extra-building base-line-extra" d="M -16 25 h 17 M 27 25 h 17" />
+        
+        <!-- Edificio Izquierdo -->
+        <g class="extra-building left-building">
+            <path d="M -14 25 V 10 a 1 1 0 0 1 1 -1 h 4 a 1 1 0 0 1 1 1 v 15 M -6 25 V 15 a 1 1 0 0 1 1 -1 h 3 a 1 1 0 0 1 1 1 v 10" />
+            <rect class="win" x="-12" y="13" width="2" height="2" rx="0.5" />
+            <rect class="win" x="-12" y="17" width="2" height="2" rx="0.5" />
+            <rect class="win" x="-12" y="21" width="2" height="2" rx="0.5" />
+            <rect class="win" x="-4.5" y="17" width="2" height="2" rx="0.5" />
+            <rect class="win" x="-4.5" y="21" width="2" height="2" rx="0.5" />
+        </g>
+
+        <!-- Edificio Derecho -->
+        <g class="extra-building right-building">
+            <path d="M 28 25 V 12 a 1 1 0 0 1 1 -1 h 4 a 1 1 0 0 1 1 1 v 13 M 34 25 V 7 a 1 1 0 0 1 1 -1 h 5 a 1 1 0 0 1 1 1 v 18" />
+            <rect class="win" x="30" y="16" width="2" height="2" rx="0.5" />
+            <rect class="win" x="30" y="21" width="2" height="2" rx="0.5" />
+            <rect class="win" x="36.5" y="10" width="2" height="2" rx="0.5" />
+            <rect class="win" x="36.5" y="14" width="2" height="2" rx="0.5" />
+            <rect class="win" x="36.5" y="18" width="2" height="2" rx="0.5" />
+            <rect class="win" x="36.5" y="22" width="2" height="2" rx="0.5" />
+        </g>
+    </svg>
+</button>

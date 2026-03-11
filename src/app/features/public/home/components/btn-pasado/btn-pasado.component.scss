@@ -1,5 +1,231 @@
 :host {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* =========================================
+   ESTILOS GENERALES Y EXTERNOS PARA BUTTON-HOME (Heredados)
+   ========================================= */
+
+.glass-btn {
+    --btn-bg: #e8e8e8;
+    --btn-shadow-light: #ffffff;
+    --btn-shadow-dark: #c5c5c5;
+    --btn-accent: #d4a373; // Color hover (Sepia)
+    --theme-color: #8D5A2B; // Color ícono normal (Marrón)
+    
+    position: relative;
+    width: 180px;
+    height: 180px;
+    border-radius: 20%;
+    
+    background: var(--btn-bg);
+    border: 4px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 12px 12px 24px var(--btn-shadow-dark),
+                -12px -12px 24px var(--btn-shadow-light),
+                0 4px 15px rgba(0, 0, 0, 0.15);
+                
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: visible; // Permite a los efectos salir en animaciones
+}
+
+/* EFECTOS DEL HOVER (Independiente del Click) */
+@media (hover: hover) {
+    .glass-btn:not(.is-animating):hover {
+        transform: translateY(-5px);
+        border-color: var(--btn-accent);
+
+        svg {
+            transform: scale(1.1) rotate(5deg);
+            stroke: var(--btn-accent);
+            filter: drop-shadow(0 0 10px var(--btn-accent));
+        }
+    }
+}
+
+.glass-btn:not(.is-animating):active {
+    transform: scale(0.95);
+    border-color: var(--btn-accent);
+    box-shadow: inset 6px 6px 18px var(--btn-shadow-dark), inset -6px -6px 18px var(--btn-shadow-light);
+    
+    svg {
+        transform: scale(0.9);
+        stroke: var(--btn-accent);
+        filter: drop-shadow(0 0 10px var(--btn-accent));
+    }
+}
+
+/* =========================================
+   ONDAS EXPANSIVAS (RIPPLE AL HACER CLIC)
+   ========================================= */
+
+.ripple-container {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: inherit;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+::ng-deep .ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple-animation 0.6s linear;
+    background-color: rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to { transform: scale(4); opacity: 0; }
+}
+
+/* =========================================
+   ICONOS SVG BASE 
+   ========================================= */
+
+.glass-btn svg {
+    position: relative;
+    z-index: 2;
+    width: 100px;
+    height: 100px;
+    fill: none;
+    stroke: var(--theme-color);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    overflow: visible; 
+    transition: transform 0.4s ease, stroke 0.3s ease, filter 0.3s ease;
+}
+
+/* =========================================
+   ANIMACIONES EXAGERADAS AL CLIC - RELOJ
+   ========================================= */
+
+.glass-btn.btn-clock.is-animating {
+    pointer-events: none;
+    z-index: 100;
+    animation: timePassage 1.2s ease-in-out forwards;
+}
+
+.glass-btn.btn-clock.is-animating svg {
+    animation: adaptStroke 1.2s forwards;
+}
+
+.glass-btn.btn-clock.is-animating .hands {
+    transform-origin: 12px 12px;
+    animation: spinClock 1.2s cubic-bezier(0.5, 0, 0.1, 1) forwards;
+}
+
+@keyframes timePassage {
+    0% { transform: scale(1); }
+    20% { transform: scale(1.15); }
+    100% { transform: scale(1.15); } 
+}
+
+@keyframes adaptStroke {
+    0%, 40% { stroke: var(--theme-color); }
+    60%, 100% { stroke: #ffffff; filter: drop-shadow(0 0 2px rgba(255,255,255,0.8)); }
+}
+
+@keyframes spinClock {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(1440deg); } 
+}
+
+/* --- ELEMENTOS DEL CIELO (SOL, LUNA, ESTRELLAS) --- */
+.sky-container {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: inherit;
+    overflow: hidden;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+
+.glass-btn.btn-clock.is-animating .sky-container {
+    opacity: 1;
+}
+
+.sky-wheel {
+    position: absolute;
+    width: 600px; height: 600px;
+    left: -210px; top: -120px; 
+    border-radius: 50%;
+    transform-origin: center;
+    transform: rotate(0deg);
+    display: flex;
+    flex-direction: column;
+}
+
+.glass-btn.btn-clock.is-animating .sky-wheel {
+    animation: rotateSky 1.2s cubic-bezier(0.5, 0, 0.1, 1) forwards;
+}
+
+@keyframes rotateSky {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(180deg); }
+}
+
+.day-half {
+    width: 100%; height: 50%;
+    background: linear-gradient(to bottom, #74ebd5, #ACB6E5);
+    position: relative;
+}
+
+.night-half {
+    width: 100%; height: 50%;
+    background: linear-gradient(to bottom, #141e30, #243b55);
+    position: relative;
+}
+
+.sun {
+    position: absolute;
+    top: 140px; left: 240px;
+    width: 60px; height: 60px;
+    background: #FFD166;
+    border-radius: 50%;
+    box-shadow: 0 0 40px #FFD166;
+}
+
+.moon {
+    position: absolute;
+    bottom: 150px; right: 250px;
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: 12px 8px 0 0 #F8F9FA;
+}
+
+.cloud {
+    position: absolute;
+    background: white;
+    width: 80px; height: 24px;
+    border-radius: 20px;
+    opacity: 0.9;
+}
+.cloud::before {
+    content: ''; position: absolute; background: white;
+    width: 40px; height: 40px; border-radius: 50%; top: -20px; left: 10px;
+}
+.cloud::after {
+    content: ''; position: absolute; background: white;
+    width: 28px; height: 28px; border-radius: 50%; top: -10px; right: 12px;
+}
+
+.star {
+    position: absolute;
+    background: white;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px 2px rgba(255,255,255,0.8);
 }

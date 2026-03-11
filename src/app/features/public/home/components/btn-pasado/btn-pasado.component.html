@@ -1,1 +1,32 @@
-<app-button-home icon="time-outline" variant="pasado" [isActive]="isActive" (click)="navegar()"></app-button-home>
+<button class="glass-btn btn-clock" [class.is-animating]="isAnimating">
+    <div class="ripple-container" #rippleContainer></div>
+    
+    <!-- CONTENEDOR DEL CIELO (DÍA/NOCHE) -->
+    <div class="sky-container">
+        <div class="sky-wheel">
+            <!-- Día -->
+            <div class="day-half">
+                <div class="sun"></div>
+                <div class="cloud" style="top: 80px; left: 165px; transform: scale(0.6)"></div>
+                <div class="cloud" style="top: 100px; left: 100px; transform: scale(0.4)"></div>
+            </div>
+            <!-- Noche -->
+            <div class="night-half">
+                <div class="moon"></div>
+                <div class="star" style="bottom: 80px; right: 170px;"></div>
+                <div class="star" style="bottom: 100px; right: 100px; transform: scale(1.5)"></div>
+                <div class="star" style="bottom: 60px; right: 130px;"></div>
+                <div class="star" style="bottom: 110px; right: 140px; transform: scale(0.8)"></div>
+                <div class="star" style="bottom: 90px; right: 90px; transform: scale(0.5)"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ICONO RELOJ -->
+    <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" />
+        <g class="hands">
+            <path d="M12 7v5l2.5 2.5" />
+        </g>
+    </svg>
+</button>

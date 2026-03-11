@@ -1,5 +1,185 @@
 :host {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* =========================================
+   ESTILOS GENERALES Y EXTERNOS PARA BUTTON-HOME (Heredados)
+   ========================================= */
+
+.glass-btn {
+    --btn-bg: #f0f0f0;
+    --btn-shadow-light: #ffffff;
+    --btn-shadow-dark: #b8b8b8;
+    --btn-accent: #7b2cbf; // Violeta Neón para el futuro hover
+    --theme-color: #6B21A8; // Púrpura base
+    
+    position: relative;
+    width: 180px;
+    height: 180px;
+    border-radius: 20%;
+    
+    background: var(--btn-bg);
+    border: 4px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 12px 12px 24px var(--btn-shadow-dark),
+                -12px -12px 24px var(--btn-shadow-light),
+                0 4px 15px rgba(0, 0, 0, 0.15);
+                
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: visible; 
+}
+
+/* EFECTOS DEL HOVER (Independiente del Click) */
+@media (hover: hover) {
+    .glass-btn:not(.is-animating):hover {
+        transform: translateY(-5px);
+        border-color: var(--btn-accent);
+
+        svg {
+            transform: scale(1.1) rotate(5deg);
+            stroke: var(--btn-accent);
+            filter: drop-shadow(0 0 10px var(--btn-accent));
+        }
+    }
+}
+
+.glass-btn:not(.is-animating):active {
+    transform: scale(0.95);
+    border-color: var(--btn-accent);
+    box-shadow: inset 6px 6px 18px var(--btn-shadow-dark), inset -6px -6px 18px var(--btn-shadow-light);
+    
+    svg {
+        transform: scale(0.9);
+        stroke: var(--btn-accent);
+        filter: drop-shadow(0 0 10px var(--btn-accent));
+    }
+}
+
+/* =========================================
+   ONDAS EXPANSIVAS (RIPPLE AL HACER CLIC)
+   ========================================= */
+
+.ripple-container {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: inherit;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+::ng-deep .ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple-animation 0.6s linear;
+    background-color: rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to { transform: scale(4); opacity: 0; }
+}
+
+/* =========================================
+   ICONOS SVG BASE 
+   ========================================= */
+
+.glass-btn svg {
+    position: relative;
+    z-index: 2;
+    width: 100px;
+    height: 100px;
+    fill: none;
+    stroke: var(--theme-color);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    overflow: visible; 
+    transition: transform 0.4s ease, stroke 0.3s ease, filter 0.3s ease;
+}
+
+/* =========================================
+   ANIMACIONES EXAGERADAS AL CLIC - COHETE
+   ========================================= */
+
+.glass-btn.btn-rocket.is-animating {
+    pointer-events: none;
+    z-index: 100;
+}
+
+.glass-btn.btn-rocket.is-animating svg {
+    transform-origin: center;
+    animation: rocketStraighten 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards, adaptRocketStroke 1.2s forwards;
+}
+
+.glass-btn.btn-rocket.is-animating .rocket-flame {
+    animation: showFlameContinuous 0.15s ease-in-out infinite;
+    animation-delay: 0.25s;
+}
+
+@keyframes rocketStraighten {
+    0% { transform: translate(0, 0) scale(1) rotate(0); }
+    15% { transform: translate(-2px, 2px) scale(0.9) rotate(5deg); }
+    30% { transform: translate(0, 0) scale(1.3) rotate(-45deg); }
+    40% { transform: translate(1px, 1px) scale(1.3) rotate(-45deg); }
+    50% { transform: translate(-1px, -1px) scale(1.3) rotate(-45deg); }
+    60% { transform: translate(1px, 1px) scale(1.3) rotate(-45deg); }
+    70% { transform: translate(-1px, -1px) scale(1.3) rotate(-45deg); }
+    80% { transform: translate(1px, 1px) scale(1.3) rotate(-45deg); }
+    90% { transform: translate(-1px, -1px) scale(1.3) rotate(-45deg); }
+    100% { transform: translate(0, 0) scale(1.3) rotate(-45deg); }
+}
+
+@keyframes showFlameContinuous {
+    0%, 100% { opacity: 1; stroke: #ff9800; transform: translateY(0); stroke-width: 1.5; }
+    50% { opacity: 0.8; stroke: #ff5722; transform: translateY(3px); stroke-width: 2.5; }
+}
+
+/* --- FONDO ESPACIAL --- */
+.space-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to bottom, #0b0f19, #1a293e);
+    opacity: 0;
+    transform: translateY(-100%);
+    z-index: 0;
+}
+
+.glass-btn.btn-rocket.is-animating .space-bg {
+    animation: dropSpace 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes dropSpace {
+    0%, 15% { transform: translateY(-100%); opacity: 0; }
+    20% { opacity: 1; transform: translateY(-100%); }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.star-fast {
+    position: absolute;
+    top: -30px;
+    width: 2px; height: 30px;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.8), transparent);
+}
+
+.glass-btn.btn-rocket.is-animating .star-fast {
+    animation: hyperspeed 0.3s linear infinite;
+}
+
+@keyframes hyperspeed {
+    0% { transform: translateY(-30px); }
+    100% { transform: translateY(120px); }
+}
+
+@keyframes adaptRocketStroke {
+    0%, 15% { stroke: var(--theme-color); filter: none; }
+    20%, 100% { stroke: #ffffff; filter: drop-shadow(0 0 6px var(--theme-color)); }
 }
