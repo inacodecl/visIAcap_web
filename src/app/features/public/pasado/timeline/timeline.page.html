@@ -6,77 +6,78 @@
 
 <ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="onScroll($event)" class="timeline-content">
 
-  <!-- Background con Efecto de Estrellas/Partículas -->
+  <!-- Background con Efecto de Estrellas/Partículas-->
   <app-background-brillo></app-background-brillo>
 
-  <div class="timeline-container">
-    <div class="page-title">
-      <h1>Línea de Tiempo</h1>
-    </div>
+  <!-- INTRODUCCIÓN -->
+  <section class="hero-section">
+      <h1>Nuestra Trayectoria</h1>
+      <p>Seis décadas transformando el futuro técnico de Chile a través de la excelencia y el compromiso.</p>
+  </section>
 
-    <!-- Loading State -->
-    <div class="loading-state" *ngIf="isLoading">
-      <ion-spinner name="crescent" color="primary"></ion-spinner>
-      <p>Cargando historia...</p>
-    </div>
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="isLoading">
+    <ion-spinner name="crescent" color="danger"></ion-spinner>
+    <p>Cargando historia...</p>
+  </div>
 
-    <!-- Error State -->
-    <div class="error-state" *ngIf="error && !isLoading">
-      <ion-icon name="alert-circle" color="danger"></ion-icon>
-      <p>{{ error }}</p>
-      <ion-button fill="outline" (click)="loadData()">Reintentar</ion-button>
-    </div>
+  <!-- Error State -->
+  <div class="error-state" *ngIf="error && !isLoading">
+    <ion-icon name="alert-circle" color="danger"></ion-icon>
+    <p>{{ error }}</p>
+    <ion-button fill="outline" (click)="loadData()">Reintentar</ion-button>
+  </div>
 
-    <!-- Línea Central Roja (Solo si hay datos) -->
-    <div class="central-line" [class.animate-line]="animateLine" *ngIf="!isLoading && !error && milestones.length > 0">
-    </div>
+  <!-- LÍNEA DE TIEMPO CURVA INMERSIVA -->
+  <div class="timeline-wrapper" id="timeline-wrapper" #timelineWrapper *ngIf="!isLoading && !error && milestones.length > 0">
+      
+      <!-- SVG DINÁMICO PARA LA LÍNEA CURVA Y PROGRESO -->
+      <svg class="timeline-svg" id="timeline-svg" #timelineSvg preserveAspectRatio="none">
+          <path class="path-base" id="path-base" #pathBase></path>
+          <path class="path-progress" id="path-progress" #pathProgress></path>
+      </svg>
 
-    <div class="milestones-list" *ngIf="!isLoading && !error">
-      <div class="milestone-item" #milestoneItem *ngFor="let m of milestones; let i = index; let odd = odd"
-        [class.odd]="odd" [class.even]="!odd" [class.expanded]="m.expanded">
+      <!-- HITOS / NODOS (Generados Dinámicamente) -->
+      <div class="timeline-item" *ngFor="let m of milestones">
+          <div class="timeline-node" #milestoneNode></div>
+          
+          <!-- Tarjeta Expandible Inmersiva -->
+          <div class="card" #milestoneCard [class.expanded]="m.expanded" (click)="expandMilestone(m, milestoneCard)">
+              
+              <!-- Capa 1: Fotografía inyectada dinámicamente con máscara SVG -->
+              <div class="card-bg" [style.backgroundImage]="'url(' + (m.media_url || 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600&auto=format&fit=crop') + ')'"></div>
+              
+              <!-- Capa 2: Gradiente de oscuridad que desaparece al expandir -->
+              <div class="card-overlay"></div>
+              
+              <!-- Botón Fijo para Cerrar -->
+              <div class="close-btn" (click)="closeMilestone(m, $event)">&times;</div>
+              
+              <!-- Capa 3: Contenido de Texto e Interacción -->
+              <div class="card-content">
+                  <div class="content-inner">
+                      <span class="badge" *ngIf="m.fecha">{{ m.fecha | date:'y' }}</span>
+                      <span class="badge" *ngIf="!m.fecha">{{ m.anio }}</span>
+                      <h2>{{ m.titulo }}</h2>
+                      <p class="main-desc">{{ (m.descripcion?.substring(0, 100) + '...') || m.descripcion }}</p>
+                      
+                      <!-- Contenido extra que aparece al expandir la tarjeta -->
+                      <div class="extra-details">
+                          <p>{{ m.descripcion }}</p>
+                      </div>
+                  </div>
+              </div>
 
-        <!-- Marcador de año en la línea -->
-        <div class="timeline-marker"></div>
-
-        <!-- Tarjeta de contenido -->
-        <div class="milestone-content" (click)="toggleMilestone(m)">
-          <div class="image-container">
-            <!-- Imágenes de marcador de año -->
-            <img [src]="m.media_url || 'https://placehold.co/300x200/333/fff?text=' + m.anio" alt="Año {{m.anio}}"
-              onerror="this.src='https://placehold.co/300x200/333/fff?text=No+Image'">
-            <div class="year-badge">
-              <span class="full-date" *ngIf="m.fecha">{{ m.fecha | date:'d MMMM y' : '' : 'es-ES' }}</span>
-              <span class="only-year" *ngIf="!m.fecha">{{ m.anio }}</span>
-            </div>
           </div>
-
-          <div class="details">
-            <h3 class="milestone-title">{{ m.titulo }}</h3>
-            <p>{{ m.descripcion }}</p>
-            <ion-icon [name]="m.expanded ? 'remove' : 'add'" class="expand-icon"></ion-icon>
-          </div>
-        </div>
-
       </div>
-    </div>
 
-    <!-- Empty State -->
-    <div class="empty-state" *ngIf="!isLoading && !error && milestones.length === 0">
-      <p>No hay hitos históricos visibles en este momento.</p>
-    </div>
+  </div>
 
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && !error && milestones.length === 0">
+    <p>No hay hitos históricos visibles en este momento.</p>
   </div>
 
   <app-home-footer></app-home-footer>
-
-  <!-- Modal Overlay para mostrar detalles del hito -->
-  <div class="modal-overlay" *ngIf="selectedMilestone" [class.closing]="isModalClosing" (click)="closeModal()">
-    <div class="modal-container" (click)="$event.stopPropagation()">
-      <app-red-card [titulo]="selectedMilestone.titulo || ''" [descripcion]="selectedMilestone.descripcion || ''"
-        [anio]="selectedMilestone.anio" [media]="selectedMilestone.media || []" [tags]="selectedMilestone.tags || []"
-        [isClosing]="isModalClosing" (onClose)="closeModal()">
-      </app-red-card>
-    </div>
-  </div>
 
 </ion-content>

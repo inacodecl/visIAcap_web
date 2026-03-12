@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChildren, QueryList, ElementRef, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChildren, QueryList, ElementRef, inject, ChangeDetectorRef, HostListener, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
@@ -13,9 +13,7 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
 import { HomeHeaderComponent } from '../../../../components/headers/home-header/home-header.component';
 import { BackgroundBrilloComponent } from '../../../../components/background/brillo/background-brillo.component';
-import { RedCardComponent } from '../../../../components/cards/red-card.component/red-card.component.component';
 
-// Extendemos la interfaz Historia para incluir estado de la UI
 interface TimelineEvent extends Historia {
   expanded: boolean;
 }
@@ -32,40 +30,41 @@ interface TimelineEvent extends Historia {
     IonHeader,
     HomeFooterComponent,
     HomeHeaderComponent,
-    BackgroundBrilloComponent,
-    RedCardComponent
+    BackgroundBrilloComponent
   ]
 })
-export class TimelinePage implements OnInit {
+export class TimelinePage implements OnInit, AfterViewInit, OnDestroy {
 
   private timelineService = inject(TimelineService);
   private cdr = inject(ChangeDetectorRef);
-  public authService = inject(AuthService); // Public for HTML access
+  public authService = inject(AuthService); 
 
-  @ViewChildren('milestoneItem') milestoneElements!: QueryList<ElementRef>;
-
-  // Control para reiniciar la animación CSS de la línea
-  animateLine = false;
+  @ViewChildren('milestoneNode') milestoneNodes!: QueryList<ElementRef>;
+  @ViewChildren('milestoneCard') milestoneCards!: QueryList<ElementRef>;
+  
+  @ViewChild('timelineWrapper') timelineWrapper!: ElementRef;
+  @ViewChild('timelineSvg') timelineSvg!: ElementRef;
+  @ViewChild('pathBase') pathBase!: ElementRef;
+  @ViewChild('pathProgress') pathProgress!: ElementRef;
 
   milestones: TimelineEvent[] = [];
   isLoading = true;
   error: string | null = null;
 
-  // Variables de estado para la animación continua
-  headerHeight = 350; // Altura inicial aproximada 
-  logoWidth = 600; // Ancho inicial
-  textScale = 1; // Escala del texto (1 = 100%)
-  contentOffset = 0; // Desplazamiento vertical del contenido interno
-
-  // Estado del modal
-  selectedMilestone: TimelineEvent | null = null;
-  isModalClosing = false;
+  // Animación del Header
+  headerHeight = 350; 
+  logoWidth = 600; 
+  textScale = 1; 
+  contentOffset = 0; 
 
   readonly MAX_HEIGHT = 350;
   readonly MIN_HEIGHT = 150;
   readonly SCROLL_RANGE = 400;
 
-  private currentScrollTop = 0;
+  // Lógica de Curva Dinámica
+  private pathLength = 0;
+  private lengthMap: {y: number, l: number}[] = [];
+  private cardObserver!: IntersectionObserver;
 
   constructor() {
     addIcons({ add, remove, alertCircle, chevronDown, arrowBack, locationOutline, calendarOutline, settingsSharp });
@@ -75,25 +74,51 @@ export class TimelinePage implements OnInit {
     this.loadData();
   }
 
+  ngAfterViewInit() {
+    // Configurar el IntersectionObserver para las tarjetas Glassmorphism
+    const observerOptions = {
+        root: null,
+        rootMargin: '-10% 0px -10% 0px', 
+        threshold: 0.1
+    };
+
+    this.cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+            } else {
+                entry.target.classList.remove('is-visible');
+            }
+        });
+    }, observerOptions);
+
+    this.milestoneCards.changes.subscribe(() => {
+        this.observeCards();
+        setTimeout(() => this.drawDynamicLine(), 100);
+    });
+  }
+
+  ngOnDestroy() {
+      if (this.cardObserver) {
+          this.cardObserver.disconnect();
+      }
+  }
+
   loadData() {
     this.isLoading = true;
     this.error = null;
 
     this.timelineService.getHistorias().subscribe({
       next: (data) => {
-        // Filtrar solo visibles y mapear a TimelineEvent
         this.milestones = data
           .filter(h => h.visible)
           .sort((a, b) => {
             const dateA = a.fecha ? new Date(a.fecha).getTime() : 0;
             const dateB = b.fecha ? new Date(b.fecha).getTime() : 0;
-            // Si ambas tienen fecha, ordenamos por fecha
             if (dateA !== 0 && dateB !== 0) return dateA - dateB;
-            // Si no, fallback al año
             return a.anio - b.anio;
           })
           .map(h => {
-            // Fix: Parsear media y tags si vienen como string JSON desde el backend
             let parsedMedia: any = h.media;
             let parsedTags: any = h.tags;
 
@@ -108,12 +133,12 @@ export class TimelinePage implements OnInit {
               ...h,
               media: Array.isArray(parsedMedia) ? parsedMedia : [],
               tags: Array.isArray(parsedTags) ? parsedTags : [],
-              expanded: false
+              expanded: false // El Estado de Tarjeta
             };
           });
 
         this.isLoading = false;
-        // La detección de cambios ocurrirá y disparará milestoneElements.changes si aplica
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error cargando timeline', err);
@@ -123,128 +148,155 @@ export class TimelinePage implements OnInit {
     });
   }
 
-  // Se ejecuta cada vez que la vista entra (navegación)
   ionViewWillEnter() {
-    this.animateLine = false; // Reiniciar animación CSS de la línea
-    this.currentScrollTop = 0; // Reiniciar rastreador de scroll
-    this.updateAnimations(0); // Forzar estado inicial (fuera de pantalla)
-
-    // Sincronización en caliente: Recargar datos al entrar
-    // Esto asegura que si se editó en el Admin, se vea aquí de inmediato.
     this.loadData();
   }
 
-  ionViewDidEnter() {
-    // 1. Iniciar animación CSS de la línea con un pequeño retraso
-    setTimeout(() => {
-      this.animateLine = true;
-      this.cdr.detectChanges(); // Notificar cambio a Angular
-
-      // 2. Iniciar animación de entrada de las tarjetas
-      // Si ya hay datos cargados checkeamos los elementos
-      if (this.milestoneElements && this.milestoneElements.length > 0) {
-        this.startEntranceAnimation();
+  @HostListener('window:resize')
+  onResize() {
+      if (!this.isLoading && this.milestones.length > 0) {
+          this.drawDynamicLine();
       }
-
-      // Siempre nos suscribimos a cambios por si los datos llegan tarde (async)
-      if (this.milestoneElements) {
-        this.milestoneElements.changes.subscribe(() => {
-          // Solo iniciar si no ha iniciado o reiniciar si cambian datos drásticamente
-          this.startEntranceAnimation();
-        });
-      }
-    }, 100);
   }
 
-  /**
-   * Inicia el bucle de animación para la entrada suave de las tarjetas.
-   */
-  private startEntranceAnimation() {
-    const startTime = Date.now();
-    const duration = 1200; // Duración de 1.2s
+  // --- LÓGICA DE DIBUJO DE SVG (CURVA) ---
+  private drawDynamicLine() {
+      if (!this.timelineWrapper || !this.timelineSvg || !this.pathBase || !this.pathProgress || this.milestoneNodes.length === 0) return;
 
-    const animate = () => {
-      const now = Date.now();
-      let progress = (now - startTime) / duration;
-      if (progress > 1) progress = 1;
+      const wrapperElement = this.timelineWrapper.nativeElement;
+      const svgElement = this.timelineSvg.nativeElement;
+      const pathBaseEl = this.pathBase.nativeElement;
+      const pathProgressEl = this.pathProgress.nativeElement;
 
-      // Easing: easeOutCubic
-      const easeProgress = 1 - Math.pow(1 - progress, 3);
-      this.updateAnimations(easeProgress);
+      const wrapperRect = wrapperElement.getBoundingClientRect();
+      
+      this.timelineSvg.nativeElement.setAttribute('width', wrapperRect.width);
+      this.timelineSvg.nativeElement.setAttribute('height', wrapperRect.height);
 
-      if (progress < 1) {
-        requestAnimationFrame(animate);
+      let d = '';
+      let toggleCurve = true; 
+
+      const nodes = this.milestoneNodes.toArray().map(ref => ref.nativeElement);
+
+      nodes.forEach((node, index) => {
+          const rect = node.getBoundingClientRect();
+          const x = (rect.left - wrapperRect.left) + (rect.width / 2);
+          const y = (rect.top - wrapperRect.top) + (rect.height / 2);
+
+          if (index === 0) {
+              d += `M ${x} ${y - 100} L ${x} ${y} `;
+          } else {
+              const prevRect = nodes[index - 1].getBoundingClientRect();
+              const prevX = (prevRect.left - wrapperRect.left) + (prevRect.width / 2);
+              const prevY = (prevRect.top - wrapperRect.top) + (prevRect.height / 2);
+
+              const distanceY = y - prevY;
+              const offset = toggleCurve ? -80 : 80; 
+
+              d += `C ${prevX + offset} ${prevY + distanceY/3}, ${x + offset} ${y - distanceY/3}, ${x} ${y} `;
+              toggleCurve = !toggleCurve;
+          }
+
+          if (index === nodes.length - 1) {
+              d += `L ${x} ${y + 150}`;
+          }
+      });
+
+      pathBaseEl.setAttribute('d', d);
+      pathProgressEl.setAttribute('d', d);
+
+      this.pathLength = pathProgressEl.getTotalLength();
+      pathProgressEl.style.strokeDasharray = this.pathLength;
+      pathProgressEl.style.strokeDashoffset = this.pathLength;
+      
+      this.lengthMap = [];
+      const steps = 300; 
+      for (let i = 0; i <= steps; i++) {
+          const l = (i / steps) * this.pathLength;
+          const point = pathProgressEl.getPointAtLength(l);
+          this.lengthMap.push({ y: point.y, l: l });
       }
-    };
-    requestAnimationFrame(animate);
-  }
 
-  toggleMilestone(milestone: TimelineEvent) {
-    // Abrir modal con la información del hito
-    this.selectedMilestone = milestone;
-    this.isModalClosing = false;
-  }
-
-  closeModal() {
-    // Activar animación de salida
-    this.isModalClosing = true;
-
-    // Esperar a que termine la animación antes de cerrar
-    setTimeout(() => {
-      this.selectedMilestone = null;
-      this.isModalClosing = false;
-    }, 300);
+      this.updateScrollProgress(0); 
   }
 
   onScroll(event: any) {
-    this.currentScrollTop = event.detail.scrollTop;
-    this.updateAnimations(1);
-  }
-
-  /**
-   * Actualiza las animaciones de cabecera y tarjetas.
-   * @param entranceFactor 0 -> 1 (0 = inicio carga, 1 = carga completa/scroll normal)
-   */
-  private updateAnimations(entranceFactor: number) {
-    const scrollTop = this.currentScrollTop;
-    const viewportHeight = window.innerHeight;
-
-    // 1. Animación del Encabezado
+    const scrollTop = event.detail.scrollTop;
+    
+    // Header
     let progressHeader = scrollTop / this.SCROLL_RANGE;
     progressHeader = Math.max(0, Math.min(1, progressHeader));
-
     this.headerHeight = this.MAX_HEIGHT + (this.MIN_HEIGHT - this.MAX_HEIGHT) * progressHeader;
-    this.logoWidth = 600 + (350 - 600) * progressHeader; // De 600 a 350px
-    this.textScale = 1 + (0.7 - 1) * progressHeader; // De 1 a 0.7 (no tan pequeño)
-    this.contentOffset = 0; // Ya no usamos offset, el contenido se centra automáticamente
+    this.logoWidth = 600 + (350 - 600) * progressHeader;
+    this.textScale = 1 + (0.7 - 1) * progressHeader;
 
-    // 2. Animación de Tarjetas
-    if (this.milestoneElements) {
-      this.milestoneElements.forEach((elementRef, index) => {
-        const element = elementRef.nativeElement;
-        const rect = element.getBoundingClientRect();
+    // SVG Curva Geometría
+    this.updateScrollProgress(scrollTop);
+  }
 
-        const distanceFromBottom = viewportHeight - rect.top;
-        const animationRange = 500;
-        let itemProgress = distanceFromBottom / animationRange;
+  private updateScrollProgress(scrollTop: number) {
+      if (!this.timelineWrapper || !this.pathProgress) return;
 
-        itemProgress = Math.max(0, Math.min(1, itemProgress));
+      const windowHeight = window.innerHeight;
+      const wrapperRect = this.timelineWrapper.nativeElement.getBoundingClientRect();
+      const pathProgressEl = this.pathProgress.nativeElement;
+      
+      const targetY = (windowHeight / 2) - wrapperRect.top;
+      let drawLength = 0;
+      
+      if (targetY <= 0) {
+          drawLength = 0;
+      } else if (this.lengthMap.length > 0) {
+          let lastMapPoint = this.lengthMap[this.lengthMap.length - 1];
+          if (targetY >= lastMapPoint.y) {
+              drawLength = this.pathLength;
+          } else {
+              for (let i = 0; i < this.lengthMap.length - 1; i++) {
+                  if (targetY >= this.lengthMap[i].y && targetY <= this.lengthMap[i+1].y) {
+                      const t = (targetY - this.lengthMap[i].y) / (this.lengthMap[i+1].y - this.lengthMap[i].y);
+                      drawLength = this.lengthMap[i].l + t * (this.lengthMap[i+1].l - this.lengthMap[i].l);
+                      break;
+                  }
+              }
+          }
+      }
 
-        const targetScale = 0.5 + (0.5 * itemProgress);
-        const targetOpacity = itemProgress;
+      pathProgressEl.style.strokeDashoffset = this.pathLength - drawLength;
 
-        // Alternancia visual (Impares vs Pares)
-        const isOdd = index % 2 !== 0;
-        const startX = isOdd ? -50 : 50; // Unidades en 'vw'
-        const targetX = startX * (1 - itemProgress);
-
-        const finalX = (targetX * entranceFactor) + (startX * (1 - entranceFactor));
-        const finalScale = (targetScale * entranceFactor) + (0.5 * (1 - entranceFactor));
-        const finalOpacity = (targetOpacity * entranceFactor);
-
-        element.style.transform = `translateX(${finalX}vw) scale(${finalScale})`;
-        element.style.opacity = `${finalOpacity}`;
+      const nodes = this.milestoneNodes.toArray().map(ref => ref.nativeElement);
+      nodes.forEach((node) => {
+          const nodeRect = node.getBoundingClientRect();
+          const nodeCenterY = nodeRect.top + (nodeRect.height / 2);
+          if (nodeCenterY < windowHeight / 2) {
+              node.classList.add('active');
+          } else {
+              node.classList.remove('active');
+          }
       });
-    }
+  }
+
+  private observeCards() {
+      this.milestoneCards.forEach(card => this.cardObserver.observe(card.nativeElement));
+  }
+
+  // --- ACCIONES DEL USUARIO (TARJETAS EXPANDIBLES) ---
+  expandMilestone(milestone: TimelineEvent, cardElement: HTMLElement) {
+      if (milestone.expanded) return;
+
+      // Cerrar las demás
+      this.milestones.forEach(m => m.expanded = false);
+      
+      // Expandir actual
+      milestone.expanded = true;
+
+      // Scroll suave hacia la tarjeta para asegurar visibilidad en la caja del Scroll de Ionic
+      setTimeout(() => {
+          cardElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+  }
+
+  closeMilestone(milestone: TimelineEvent, event: Event) {
+      event.stopPropagation(); // Evitar que el clic se propague al div de "expandMilestone"
+      milestone.expanded = false;
   }
 }
