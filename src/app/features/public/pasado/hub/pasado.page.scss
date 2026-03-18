@@ -19,69 +19,96 @@ $panel-dark: #1E293B;
     flex-direction: column;
 }
 
-.header-row {
-    flex: 0 0 auto;
-    z-index: 20;
-    background: white; 
-}
-
-.back-button-row {
-    flex: 0 0 auto;
-    padding: 10px 40px;
-    z-index: 19;
-}
-
-.content-row {
-    flex: 1 1 auto;
-    position: relative;
-    padding: 30px 40px 150px 40px;
-    gap: clamp(20px, 3vw, 50px);
-    overflow-y: auto; // Habilitar scroll vertical
-    overflow-x: hidden; // Prevenir scroll horizontal accidental
-
-    // Mejorar experiencia de scroll en iOS
-    -webkit-overflow-scrolling: touch;
-}
-
-.footer-row {
-    flex: 0 0 auto;
-    z-index: 20;
-}
-
-// ==============================================
-// HEADER WRAPPER (Responsive)
-// ==============================================
-.header-wrapper {
-    position: relative;
-    width: 100%;
-    // Altura Dinámica: 80px (móvil) -> 150px (Desktop/Tótem)
-    height: clamp(80px, 15vh, 150px);
+// ========================================
+// UNIFIED V2 HEADER (DESKTOP/TOTEM)
+// ========================================
+.v2-header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    justify-content: space-between;
+    padding: 15px 40px;
+    height: 180px;
+    position: relative;
+    z-index: 20;
 
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
 
-
-    // Ajustes al componente hijo app-home-header
-    app-home-header {
-        width: 100%;
-        height: 100%;
-
-        ::ng-deep .top-section {
-            height: 100% !important;
-            padding: 0 !important;
-            background-color: transparent !important;
+    .back-btn {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        
+        ion-icon {
+            color: #ffffff;
+            font-size: 28px;
+            transition: color 0.3s;
         }
 
-        ::ng-deep .header-content {
-            padding: 0 1rem !important;
+        &:hover {
+            background: #c8102e;
+            transform: scale(1.05);
+            border-color: #c8102e;
+        }
+        
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+
+    .logo-container {
+        pointer-events: none;
+        .logo-img {
+            height: clamp(50px, 8vw, 150px);
+            max-width: 350px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+        }
+    }
+
+    .header-separator {
+        flex: 1;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        margin: 0 40px;
+    }
+
+    .sede-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        pointer-events: none;
+
+        .sede-line {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            line-height: 1;
         }
 
-        ::ng-deep .logo-container img {
-            // Logo escala dinámicamente
-            width: clamp(150px, 30vw, 350px) !important;
-            height: auto !important;
+        .renca-line {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: #c8102e;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            line-height: 1;
         }
     }
 }
@@ -89,9 +116,16 @@ $panel-dark: #1E293B;
 // ==============================================
 // PORTAL COLUMNS & CARDS
 // ==============================================
+.content-row {
+    flex: 1 1 auto;
+    position: relative;
+    padding: 20px 40px 100px 40px;
+    flex-wrap: nowrap; // Forzar side-by-side
+}
 .portal-col {
     display: flex;
     height: 100%; // Forzar altura total de la columna sin limites
+    padding: 10px; // Espaciado natural entre los botones gigantes
 }
 
 .portal-card {

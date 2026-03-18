@@ -13,6 +13,7 @@ import { GeometricOverlayBottomComponent } from './components/geometric-overlay-
 import { BtnPasadoComponent } from './components/btn-pasado/btn-pasado.component';
 import { BtnPresenteComponent } from './components/btn-presente/btn-presente.component';
 import { BtnFuturoComponent } from './components/btn-futuro/btn-futuro.component';
+import { HomeFooterComponent } from '../../../components/footers/home-footer/home-footer.component';
 
 @Component({
     selector: 'app-home',
@@ -23,48 +24,19 @@ import { BtnFuturoComponent } from './components/btn-futuro/btn-futuro.component
         IonContent, CommonModule, FormsModule, IonIcon, 
         IonGrid, IonRow, IonCol, 
         GeometricOverlayTopComponent, GeometricOverlayBottomComponent, 
-        BtnPasadoComponent, BtnPresenteComponent, BtnFuturoComponent
+        BtnPasadoComponent, BtnPresenteComponent, BtnFuturoComponent,
+        HomeFooterComponent
     ]
 })
 export class HomePage implements OnInit {
 
     constructor(
-        private router: Router,
-        private actionSheetCtrl: ActionSheetController
+        private router: Router
     ) {
         addIcons({ personCircleOutline, informationCircleOutline, accessibilityOutline, logInOutline, languageOutline, closeOutline });
     }
 
     ngOnInit() {
-    }
-
-    async openOptions() {
-        const actionSheet = await this.actionSheetCtrl.create({
-            header: 'Opciones de Sistema',
-            buttons: [
-                {
-                    text: 'Acceso Administrativo',
-                    icon: 'log-in-outline',
-                    handler: () => {
-                        this.router.navigate(['/auth/login']);
-                    }
-                },
-                {
-                    text: 'Idioma (Próximamente)',
-                    icon: 'language-outline',
-                    handler: () => {
-                        console.log('Opción de idioma seleccionada');
-                    }
-                },
-                {
-                    text: 'Cancelar',
-                    icon: 'close-outline',
-                    role: 'cancel'
-                }
-            ]
-        });
-
-        await actionSheet.present();
     }
 
 }

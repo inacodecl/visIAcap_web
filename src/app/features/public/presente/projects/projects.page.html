@@ -1,96 +1,90 @@
-<ion-content [fullscreen]="true">
-  <app-animated-background></app-animated-background>
+<ion-content [fullscreen]="true" class="projects-content">
 
-  <ion-grid class="ion-no-padding main-grid">
+  <!-- Overlays Geométricos -->
+  <app-geometric-overlay-top></app-geometric-overlay-top>
 
-    <!-- Header Row -->
-    <ion-row class="header-row">
-      <ion-col size="12">
-        <div class="header-wrapper">
-          <app-home-header></app-home-header>
-        </div>
-      </ion-col>
-    </ion-row>
-
-    <!-- Back Button Row -->
-    <ion-row class="back-button-row">
-      <ion-col size="12">
-        <app-button-back></app-button-back>
-      </ion-col>
-    </ion-row>
-
-    <!-- Projects Content Row -->
-    <ion-row class="content-row ion-justify-content-center">
-      <ion-col size="12" size-md="11" size-lg="10" size-xl="10">
-
-        <div class="page-header">
-          <div class="header-texts">
-            <h1>Proyectos Presente</h1>
-            <p>Iniciativas que transforman la sede Renca</p>
+  <!-- Header con Logo INACAP -->
+  <header class="v2-header">
+      <div class="header-left">
+          <button class="back-btn" (click)="goBack()" aria-label="Volver">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+          </button>
+          <div class="logo-container">
+              <img src="assets/icon/logo-inacap-60-v2.png" alt="INACAP 60 Años" class="logo-img">
           </div>
-        </div>
+      </div>
+      <div class="header-separator"></div>
+      <div class="sede-container">
+          <span class="sede-line">PRESENTE</span>
+          <span class="renca-line">RENCA</span>
+      </div>
+  </header>
 
-        <!-- Featured Project Hero Section -->
-        @if (featuredProject(); as featured) {
-        <div class="featured-section" [routerLink]="['/presente/projects', featured.id]">
-          <div class="featured-badge">PROYECTO DESTACADO</div>
-          <div class="featured-content">
-            <div class="featured-text">
-              <h2>{{ featured.titulo }}</h2>
-              <p>{{ featured.resumen }}</p>
-              <span class="read-more">Ver Proyecto Completo <ion-icon name="arrow-forward"></ion-icon></span>
-            </div>
-            <div class="featured-image"
-              [style.backgroundImage]="'url(' + (featured.image_cover_url || 'assets/images/placeholder-project.jpg') + ')'">
+  <!-- Contenido Principal Scrolleable -->
+  <main class="main-container">
+
+    <!-- ============================== -->
+    <!-- HERO SECTION -->
+    <!-- ============================== -->
+    <section class="hero-section">
+        <div class="hero-icon-wrapper">
+            <ion-icon name="rocket-outline"></ion-icon>
+        </div>
+        <h1 class="hero-title"><span class="highlight">Proyectos Presente</span></h1>
+        <p class="hero-subtitle">Iniciativas que transforman la sede Renca</p>
+    </section>
+
+    <!-- Featured Project Hero Section -->
+    @if (featuredProject(); as featured) {
+    <div class="featured-section" [routerLink]="['/presente/projects', featured.id]">
+      <div class="featured-badge">PROYECTO DESTACADO</div>
+      <div class="featured-content">
+        <div class="featured-text">
+          <h2>{{ featured.titulo }}</h2>
+          <p>{{ featured.resumen }}</p>
+          <div class="read-more">Ver Proyecto Completo <ion-icon name="arrow-forward-outline"></ion-icon></div>
+        </div>
+        <div class="featured-image"
+          [style.backgroundImage]="'url(' + (featured.image_cover_url || 'assets/images/placeholder-project.jpg') + ')'">
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- Regular Projects Grid -->
+    <div class="projects-list-grid">
+      @if (regularProjects().length === 0 && !featuredProject()) {
+      <div class="empty-state">
+        <ion-icon name="folder-open-outline"></ion-icon>
+        <p>No hay proyectos publicados en este momento.</p>
+      </div>
+      } @else {
+
+      <div class="projects-grid-container">
+        @for (proj of regularProjects(); track proj.id) {
+        <div class="project-card-custom" [routerLink]="['/presente/projects', proj.id]">
+          <div class="card-img"
+            [style.backgroundImage]="'url(' + (proj.image_cover_url || 'assets/images/placeholder-project.jpg') + ')'">
+          </div>
+          <div class="card-info">
+            <span class="card-year">{{ proj.start_date | date:'yyyy' }}</span>
+            <h3>{{ proj.titulo }}</h3>
+            <p class="card-desc">{{ proj.resumen }}</p>
+            <div class="card-action">
+              <span>Leer más</span>
+              <ion-icon name="arrow-forward-outline"></ion-icon>
             </div>
           </div>
         </div>
         }
+      </div>
 
-        <!-- Regular Projects Grid -->
-        <div class="projects-list-grid">
-          @if (regularProjects().length === 0 && !featuredProject()) {
-          <div class="empty-state">
-            <p>No hay proyectos publicados en este momento.</p>
-          </div>
-          } @else {
+      }
+    </div>
 
-          <ion-grid class="inner-grid ion-no-padding">
-            <ion-row>
-              @for (proj of regularProjects(); track proj.id) {
-              <ion-col size="12" size-md="6" size-lg="4" size-xl="3">
-                <div class="project-card-custom" [routerLink]="['/presente/projects', proj.id]">
-                  <div class="card-img"
-                    [style.backgroundImage]="'url(' + (proj.image_cover_url || 'assets/images/placeholder-project.jpg') + ')'">
-                  </div>
-                  <div class="card-info">
-                    <span class="card-year">{{ proj.start_date | date:'yyyy' }}</span>
-                    <h3>{{ proj.titulo }}</h3>
-                    <p class="card-desc">{{ proj.resumen }}</p>
-                    <div class="card-action">
-                      <span>Leer más</span>
-                      <ion-icon name="arrow-forward"></ion-icon>
-                    </div>
-                  </div>
-                </div>
-              </ion-col>
-              }
-            </ion-row>
-          </ion-grid>
+  </main>
 
-          }
-        </div>
-
-      </ion-col>
-    </ion-row>
-
-    <!-- Footer Row -->
-    <ion-row class="footer-row">
-      <ion-col size="12">
-        <app-home-footer></app-home-footer>
-      </ion-col>
-    </ion-row>
-
-  </ion-grid>
+  <!-- Footer Component -->
+  <app-home-footer></app-home-footer>
 
 </ion-content>

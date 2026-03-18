@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { IonContent, IonIcon, IonButton, IonSpinner, IonChip, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { arrowBack, globe, time, location, calendarNumber, analytics, arrowForwardCircle, imagesOutline, folderOpen } from 'ionicons/icons';
+import { arrowBack, arrowBackOutline, globe, time, location, calendarNumber, analytics, arrowForwardCircle, imagesOutline, folderOpen } from 'ionicons/icons';
 import { ProyectosService } from '../../../../../core/services/proyectos.service';
 import { Proyecto } from '../../../../../core/models/proyecto.model';
 
@@ -17,13 +17,14 @@ import { Proyecto } from '../../../../../core/models/proyecto.model';
 export class ProjectsDetailsPage implements OnInit {
     private route = inject(ActivatedRoute);
     private proyectosService = inject(ProyectosService);
+    private router = inject(Router);
 
     proyecto = signal<Proyecto | null>(null);
     isLoading = signal(true);
     error = signal(false);
 
     constructor() {
-        addIcons({ arrowBack, calendarNumber, location, analytics, imagesOutline, folderOpen, arrowForwardCircle, globe, time });
+        addIcons({ arrowBack, arrowBackOutline, calendarNumber, location, analytics, imagesOutline, folderOpen, arrowForwardCircle, globe, time });
     }
 
     ngOnInit() {
@@ -35,6 +36,10 @@ export class ProjectsDetailsPage implements OnInit {
             this.error.set(true);
             this.isLoading.set(false);
         }
+    }
+
+    goBack() {
+        this.router.navigate(['/presente/projects']);
     }
 
     loadProyecto(id: number) {

@@ -117,26 +117,23 @@
 
 .glass-btn.btn-rocket.is-animating svg {
     transform-origin: center;
-    animation: rocketStraighten 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards, adaptRocketStroke 1.2s forwards;
+    animation: rocketTakeoff 1.5s cubic-bezier(0.5, 0, 0.2, 1) forwards, adaptRocketStroke 1.5s forwards;
 }
 
 .glass-btn.btn-rocket.is-animating .rocket-flame {
-    animation: showFlameContinuous 0.15s ease-in-out infinite;
-    animation-delay: 0.25s;
+    animation: showFlameContinuous 0.1s ease-in-out infinite;
+    animation-delay: 0.1s;
 }
 
-@keyframes rocketStraighten {
-    0% { transform: translate(0, 0) scale(1) rotate(0); }
-    15% { transform: translate(-2px, 2px) scale(0.9) rotate(5deg); }
-    30% { transform: translate(0, 0) scale(1.3) rotate(-45deg); }
-    40% { transform: translate(1px, 1px) scale(1.3) rotate(-45deg); }
-    50% { transform: translate(-1px, -1px) scale(1.3) rotate(-45deg); }
-    60% { transform: translate(1px, 1px) scale(1.3) rotate(-45deg); }
-    70% { transform: translate(-1px, -1px) scale(1.3) rotate(-45deg); }
-    80% { transform: translate(1px, 1px) scale(1.3) rotate(-45deg); }
-    90% { transform: translate(-1px, -1px) scale(1.3) rotate(-45deg); }
-    100% { transform: translate(0, 0) scale(1.3) rotate(-45deg); }
+@keyframes rocketTakeoff {
+    0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+    15%  { transform: translate(0, 15px) scale(0.9) rotate(0deg); } /* Anticípate y agáchate */
+    30%  { transform: translate(0, -15px) scale(1.1) rotate(-45deg); } /* Enderezarse apuntando arriba */
+    50%  { transform: translate(0, -80px) scale(1.4) rotate(-45deg); } /* Empuje extra */
+    100% { transform: translate(0, -2500px) scale(2.5) rotate(-45deg); } /* Velocidad supersónica */
 }
+
+
 
 @keyframes showFlameContinuous {
     0%, 100% { opacity: 1; stroke: #ff9800; transform: translateY(0); stroke-width: 1.5; }

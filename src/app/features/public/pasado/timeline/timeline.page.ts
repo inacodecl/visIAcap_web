@@ -8,10 +8,10 @@ import {
 import { TimelineService } from '../../../../core/services/timeline.service';
 import { Historia } from '../../../../core/models/historia.model';
 import { addIcons } from 'ionicons';
-import { chevronDown, arrowBack, locationOutline, calendarOutline, settingsSharp, add, remove, alertCircle } from 'ionicons/icons';
+import { chevronDown, arrowBack, arrowBackOutline, locationOutline, calendarOutline, settingsSharp, add, remove, alertCircle } from 'ionicons/icons';
 import { AuthService } from '../../../../core/services/auth.service';
+import { Router } from '@angular/router';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
-import { HomeHeaderComponent } from '../../../../components/headers/home-header/home-header.component';
 import { BackgroundBrilloComponent } from '../../../../components/background/brillo/background-brillo.component';
 
 interface TimelineEvent extends Historia {
@@ -27,9 +27,7 @@ interface TimelineEvent extends Historia {
     CommonModule,
     IonContent, IonButton, IonIcon, IonSpinner,
     RouterModule,
-    IonHeader,
     HomeFooterComponent,
-    HomeHeaderComponent,
     BackgroundBrilloComponent
   ]
 })
@@ -38,6 +36,7 @@ export class TimelinePage implements OnInit, AfterViewInit, OnDestroy {
   private timelineService = inject(TimelineService);
   private cdr = inject(ChangeDetectorRef);
   public authService = inject(AuthService); 
+  private router = inject(Router); 
 
   @ViewChildren('milestoneNode') milestoneNodes!: QueryList<ElementRef>;
   @ViewChildren('milestoneCard') milestoneCards!: QueryList<ElementRef>;
@@ -67,7 +66,7 @@ export class TimelinePage implements OnInit, AfterViewInit, OnDestroy {
   private cardObserver!: IntersectionObserver;
 
   constructor() {
-    addIcons({ add, remove, alertCircle, chevronDown, arrowBack, locationOutline, calendarOutline, settingsSharp });
+    addIcons({ add, remove, alertCircle, chevronDown, arrowBack, arrowBackOutline, locationOutline, calendarOutline, settingsSharp });
   }
 
   ngOnInit() {
@@ -150,6 +149,10 @@ export class TimelinePage implements OnInit, AfterViewInit, OnDestroy {
 
   ionViewWillEnter() {
     this.loadData();
+  }
+
+  goBack() {
+    this.router.navigate(['/pasado']);
   }
 
   @HostListener('window:resize')

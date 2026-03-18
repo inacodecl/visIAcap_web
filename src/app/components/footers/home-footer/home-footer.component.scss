@@ -1,17 +1,15 @@
-.home-footer {
+.v2-footer {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 0; left: 0; right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 30px;
-
-    // Fondo gris oscuro
-    background: #e0e0e0; // Gris oscuro
-    border-top: 3px solid #C8102E; // Línea roja INACAP superior
-    z-index: 100;
+    padding: 25px 50px; /* Incrementado para más altura (antes 15px 40px) */
+    background: rgba(18, 20, 30, 0.85); /* Oscuro translúcido */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.05); /* Borde sutil */
+    z-index: 1000;
 }
 
 // --- Botones del Footer ---
@@ -19,41 +17,34 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    border: none;
-    background: #2a2a2a;
+    width: 70px; /* Antes 60 */
+    height: 70px; /* Antes 60 */
+    border-radius: 50%; /* Circulares en base al botón Volver V2 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
     color: #ffffff;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow:
-        4px 4px 8px rgba(0, 0, 0, 0.4),
-        -2px -2px 6px rgba(60, 60, 60, 0.3);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 
     ion-icon {
-        font-size: 24px;
+        font-size: 34px; /* Antes 28px */
+        color: #00f3ff; /* Cyan neo V2 */
+        transition: all 0.3s ease;
     }
 
     &:hover,
     &:active {
-        background: #C8102E; // Rojo INACAP
+        background: rgba(255, 255, 255, 0.15);
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(200, 16, 46, 0.4);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+
+        ion-icon {
+            text-shadow: 0 0 12px rgba(0, 243, 255, 0.8);
+        }
     }
-}
-
-.accessibility-btn ion-icon {
-    color: #4CAF50; // Verde accesibilidad
-}
-
-.info-btn ion-icon {
-    color: #64B5F6; // Azul claro info
-}
-
-.footer-btn:hover ion-icon,
-.footer-btn:active ion-icon {
-    color: #ffffff; // Blanco al hover
 }
 
 // --- Marca Central ---
@@ -65,17 +56,19 @@
 }
 
 .brand-text {
-    font-size: 1.3rem;
+    font-size: 1.6rem; /* Antes 1.4rem */
     font-weight: 700;
-    color: #000000;
+    color: #ffffff;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 5px; /* Antes 4px */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .brand-year {
-    font-size: 1.3rem;
-    font-weight: 500;
-    color: #C8102E; // Rojo INACAP
-    margin-top: 2px;
-    letter-spacing: 1px;
+    font-size: 1.2rem; /* Antes 1.1rem */
+    font-weight: 400;
+    color: #8fa0c1; /* Gris azulado del Hub Futuro V2 */
+    margin-top: 4px;
+    letter-spacing: 2px;
+    font-style: italic;
 }

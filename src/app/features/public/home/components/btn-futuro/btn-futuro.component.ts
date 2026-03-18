@@ -54,6 +54,6 @@ export class BtnFuturoComponent {
       this.isAnimating = false;
       this.renderer.removeChild(this.rippleContainer.nativeElement, ripple);
       this.router.navigate(['/futuro']);
-    }, 1200);
+    }, 1500);
   }
 }

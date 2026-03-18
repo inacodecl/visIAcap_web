@@ -2,14 +2,12 @@ import { Component, OnInit, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { arrowForward, arrowBack } from 'ionicons/icons';
+import { arrowForwardOutline, arrowBackOutline, rocketOutline, folderOpenOutline } from 'ionicons/icons';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
-import { HomeHeaderComponent } from '../../../../components/headers/home-header/home-header.component';
-import { ButtonBackComponent } from '../../../../components/buttons/button-back/button-back.component';
+import { GeometricOverlayTopComponent } from '../../home/components/geometric-overlay-top/geometric-overlay-top.component';
 import { ProyectosService } from '../../../../core/services/proyectos.service';
-import { AnimatedBackgroundComponent } from '../../../../components/background/animated-background/animated-background.component';
 
 @Component({
   selector: 'app-projects',
@@ -18,13 +16,13 @@ import { AnimatedBackgroundComponent } from '../../../../components/background/a
   standalone: true,
   imports: [
     IonContent, CommonModule, FormsModule, RouterModule,
-    IonIcon, IonGrid, IonRow, IonCol,
-    HomeFooterComponent, HomeHeaderComponent, ButtonBackComponent,
-    AnimatedBackgroundComponent
+    IonIcon,
+    HomeFooterComponent, GeometricOverlayTopComponent
   ]
 })
 export class ProjectsPage implements OnInit {
   private proyectosService = inject(ProyectosService);
+  private router = inject(Router);
 
   // Computados para separar destacados de normales
   featuredProject = computed(() => this.proyectosService.proyectos().find(p => p.featured));
@@ -34,11 +32,15 @@ export class ProjectsPage implements OnInit {
   });
 
   constructor() {
-    addIcons({ arrowForward, arrowBack });
+    addIcons({ arrowForwardOutline, arrowBackOutline, rocketOutline, folderOpenOutline });
   }
 
   ngOnInit() {
     this.proyectosService.getProyectos('es').subscribe();
+  }
+
+  goBack() {
+    this.router.navigate(['/home']);
   }
 
 }

@@ -3,10 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonButton, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
-import { HomeHeaderComponent } from '../../../../components/headers/home-header/home-header.component';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
-
-import { ButtonBackComponent } from '../../../../components/buttons/button-back/button-back.component';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, timeOutline, chatbubblesOutline, arrowForwardOutline, playOutline } from 'ionicons/icons';
 
@@ -24,9 +21,7 @@ import { arrowBackOutline, timeOutline, chatbubblesOutline, arrowForwardOutline,
         IonGrid,
         IonRow,
         IonCol,
-        HomeHeaderComponent,
-        HomeFooterComponent,
-        ButtonBackComponent
+        HomeFooterComponent
     ]
 })
 export class PasadoPage implements OnInit {
