@@ -15,8 +15,8 @@
         </div>
         <div class="header-separator"></div>
         <div class="sede-container">
-            <span class="sede-line">PASADO</span>
-            <span class="renca-line">RENCA</span>
+            <span class="sede-line">{{ 'PASADO.TITLE' | translate }}</span>
+            <span class="renca-line">{{ 'HOME.RENCA' | translate }}</span>
         </div>
     </header>
 
@@ -30,8 +30,8 @@
             <div class="hero-icon-wrapper">
                 <ion-icon name="videocam-outline"></ion-icon>
             </div>
-            <h1 class="hero-title"><span class="highlight">Entrevistas</span></h1>
-            <p class="hero-subtitle">Memorias, anécdotas e historias de quienes construyeron la sede a lo largo de los años.</p>
+            <h1 class="hero-title"><span class="highlight">{{ 'ENTREVISTAS.HERO_TITLE' | translate }}</span></h1>
+            <p class="hero-subtitle">{{ 'ENTREVISTAS.HERO_SUBTITLE' | translate }}</p>
         </section>
 
         <!-- Loading State (Skeleton) -->
@@ -55,7 +55,7 @@
         <div class="error-container" *ngIf="error() && !isLoading()">
             <ion-icon name="alert-circle-outline"></ion-icon>
             <p>{{ error() }}</p>
-            <ion-button fill="outline" color="light" (click)="loadEntrevistas()">Reintentar</ion-button>
+            <ion-button fill="outline" color="light" (click)="loadEntrevistas()">{{ 'ENTREVISTAS.RETRY' | translate }}</ion-button>
         </div>
 
         <!-- Content State -->
@@ -80,7 +80,7 @@
                         <h3>{{ entrevista.titulo }}</h3>
                         <p>{{ entrevista.descripcion }}</p>
                         <div class="entrevista-action">
-                            <span>Ver Video</span>
+                            <span>{{ 'ENTREVISTAS.WATCH_VIDEO' | translate }}</span>
                             <ion-icon name="arrow-forward-outline"></ion-icon>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
             <!-- Empty State -->
             <div class="empty-state" *ngIf="entrevistas().length === 0">
                 <ion-icon name="film-outline"></ion-icon>
-                <p>No hay entrevistas disponibles por el momento.</p>
+                <p>{{ 'ENTREVISTAS.EMPTY' | translate }}</p>
             </div>
         </div>
 

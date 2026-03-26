@@ -33,6 +33,7 @@
         font-size: 34px; /* Antes 28px */
         color: #00f3ff; /* Cyan neo V2 */
         transition: all 0.3s ease;
+        pointer-events: none;
     }
 
     &:hover,

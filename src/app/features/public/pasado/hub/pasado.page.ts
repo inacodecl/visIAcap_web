@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, timeOutline, chatbubblesOutline, arrowForwardOutline, playOutline } from 'ionicons/icons';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-pasado',
@@ -21,7 +22,8 @@ import { arrowBackOutline, timeOutline, chatbubblesOutline, arrowForwardOutline,
         IonGrid,
         IonRow,
         IonCol,
-        HomeFooterComponent
+        HomeFooterComponent,
+        TranslateModule
     ]
 })
 export class PasadoPage implements OnInit {

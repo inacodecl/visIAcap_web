@@ -12,6 +12,7 @@ import {
 } from 'ionicons/icons';
 import { GeometricOverlayTopComponent } from '../../home/components/geometric-overlay-top/geometric-overlay-top.component';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 // Interfaces para datos mock
 interface ProyectoFuturo {
@@ -56,7 +57,8 @@ interface EventoEsteMes {
     standalone: true,
     imports: [
         IonContent, CommonModule, FormsModule, IonIcon,
-        GeometricOverlayTopComponent, HomeFooterComponent
+        GeometricOverlayTopComponent, HomeFooterComponent,
+        TranslateModule
     ]
 })
 export class FuturoPage implements OnInit {

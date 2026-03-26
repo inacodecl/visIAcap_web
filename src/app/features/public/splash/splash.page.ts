@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { RotateCubeComponent } from '../../../components/loading/rotate-cube/rotate-cube.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
 
@@ -16,7 +17,7 @@ import { IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
     templateUrl: './splash.page.html',
     styleUrls: ['./splash.page.scss'],
     standalone: true,
-    imports: [CommonModule, RotateCubeComponent, IonGrid, IonRow, IonCol]
+    imports: [CommonModule, RotateCubeComponent, IonGrid, IonRow, IonCol, TranslateModule]
 })
 export class SplashPage implements OnInit {
 

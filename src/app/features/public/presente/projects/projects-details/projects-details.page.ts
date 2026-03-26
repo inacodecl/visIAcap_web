@@ -6,18 +6,21 @@ import { addIcons } from 'ionicons';
 import { arrowBack, arrowBackOutline, globe, time, location, calendarNumber, analytics, arrowForwardCircle, imagesOutline, folderOpen } from 'ionicons/icons';
 import { ProyectosService } from '../../../../../core/services/proyectos.service';
 import { Proyecto } from '../../../../../core/models/proyecto.model';
+import { TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '../../../../../core/services/language.service';
 
 @Component({
     selector: 'app-projects-details',
     templateUrl: './projects-details.page.html',
     styleUrls: ['./projects-details.page.scss'],
     standalone: true,
-    imports: [CommonModule, IonContent, IonButton, IonIcon, IonSpinner, RouterModule, IonChip, IonLabel]
+    imports: [CommonModule, IonContent, IonButton, IonIcon, IonSpinner, RouterModule, IonChip, IonLabel, TranslateModule]
 })
 export class ProjectsDetailsPage implements OnInit {
     private route = inject(ActivatedRoute);
     private proyectosService = inject(ProyectosService);
     private router = inject(Router);
+    private languageService = inject(LanguageService);
 
     proyecto = signal<Proyecto | null>(null);
     isLoading = signal(true);
@@ -46,7 +49,7 @@ export class ProjectsDetailsPage implements OnInit {
         this.isLoading.set(true);
         this.error.set(false);
 
-        this.proyectosService.getProyecto(id, 'es').subscribe({
+        this.proyectosService.getProyecto(id, this.languageService.getCurrentLang()).subscribe({
             next: (data: Proyecto) => {
                 this.proyecto.set(data);
                 this.isLoading.set(false);

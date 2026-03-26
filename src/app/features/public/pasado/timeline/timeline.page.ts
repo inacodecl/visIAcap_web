@@ -13,6 +13,8 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
 import { BackgroundBrilloComponent } from '../../../../components/background/brillo/background-brillo.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '../../../../core/services/language.service';
 
 interface TimelineEvent extends Historia {
   expanded: boolean;
@@ -28,7 +30,8 @@ interface TimelineEvent extends Historia {
     IonContent, IonButton, IonIcon, IonSpinner,
     RouterModule,
     HomeFooterComponent,
-    BackgroundBrilloComponent
+    BackgroundBrilloComponent,
+    TranslateModule
   ]
 })
 export class TimelinePage implements OnInit, AfterViewInit, OnDestroy {
@@ -37,6 +40,7 @@ export class TimelinePage implements OnInit, AfterViewInit, OnDestroy {
   private cdr = inject(ChangeDetectorRef);
   public authService = inject(AuthService); 
   private router = inject(Router); 
+  private languageService = inject(LanguageService);
 
   @ViewChildren('milestoneNode') milestoneNodes!: QueryList<ElementRef>;
   @ViewChildren('milestoneCard') milestoneCards!: QueryList<ElementRef>;
@@ -107,7 +111,7 @@ export class TimelinePage implements OnInit, AfterViewInit, OnDestroy {
     this.isLoading = true;
     this.error = null;
 
-    this.timelineService.getHistorias().subscribe({
+    this.timelineService.getHistorias(this.languageService.getCurrentLang()).subscribe({
       next: (data) => {
         this.milestones = data
           .filter(h => h.visible)

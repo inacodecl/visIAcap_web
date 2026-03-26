@@ -8,6 +8,8 @@ import { arrowForwardOutline, arrowBackOutline, rocketOutline, folderOpenOutline
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
 import { GeometricOverlayTopComponent } from '../../home/components/geometric-overlay-top/geometric-overlay-top.component';
 import { ProyectosService } from '../../../../core/services/proyectos.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '../../../../core/services/language.service';
 
 @Component({
   selector: 'app-projects',
@@ -17,12 +19,14 @@ import { ProyectosService } from '../../../../core/services/proyectos.service';
   imports: [
     IonContent, CommonModule, FormsModule, RouterModule,
     IonIcon,
-    HomeFooterComponent, GeometricOverlayTopComponent
+    HomeFooterComponent, GeometricOverlayTopComponent,
+    TranslateModule
   ]
 })
 export class ProjectsPage implements OnInit {
   private proyectosService = inject(ProyectosService);
   private router = inject(Router);
+  private languageService = inject(LanguageService);
 
   // Computados para separar destacados de normales
   featuredProject = computed(() => this.proyectosService.proyectos().find(p => p.featured));
@@ -36,7 +40,7 @@ export class ProjectsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.proyectosService.getProyectos('es').subscribe();
+    this.proyectosService.getProyectos(this.languageService.getCurrentLang()).subscribe();
   }
 
   goBack() {

@@ -15,8 +15,8 @@
       </div>
       <div class="header-separator"></div>
       <div class="sede-container">
-          <span class="sede-line">PRESENTE</span>
-          <span class="renca-line">RENCA</span>
+          <span class="sede-line">{{ 'PRESENTE.TITLE' | translate }}</span>
+          <span class="renca-line">{{ 'HOME.RENCA' | translate }}</span>
       </div>
   </header>
 
@@ -30,19 +30,19 @@
         <div class="hero-icon-wrapper">
             <ion-icon name="rocket-outline"></ion-icon>
         </div>
-        <h1 class="hero-title"><span class="highlight">Proyectos Presente</span></h1>
-        <p class="hero-subtitle">Iniciativas que transforman la sede Renca</p>
+        <h1 class="hero-title"><span class="highlight">{{ 'PRESENTE.HERO_TITLE' | translate }}</span></h1>
+        <p class="hero-subtitle">{{ 'PRESENTE.HERO_SUBTITLE' | translate }}</p>
     </section>
 
     <!-- Featured Project Hero Section -->
     @if (featuredProject(); as featured) {
     <div class="featured-section" [routerLink]="['/presente/projects', featured.id]">
-      <div class="featured-badge">PROYECTO DESTACADO</div>
+      <div class="featured-badge">{{ 'PRESENTE.FEATURED_BADGE' | translate }}</div>
       <div class="featured-content">
         <div class="featured-text">
           <h2>{{ featured.titulo }}</h2>
           <p>{{ featured.resumen }}</p>
-          <div class="read-more">Ver Proyecto Completo <ion-icon name="arrow-forward-outline"></ion-icon></div>
+          <div class="read-more">{{ 'PRESENTE.VIEW_FULL' | translate }} <ion-icon name="arrow-forward-outline"></ion-icon></div>
         </div>
         <div class="featured-image"
           [style.backgroundImage]="'url(' + (featured.image_cover_url || 'assets/images/placeholder-project.jpg') + ')'">
@@ -56,7 +56,7 @@
       @if (regularProjects().length === 0 && !featuredProject()) {
       <div class="empty-state">
         <ion-icon name="folder-open-outline"></ion-icon>
-        <p>No hay proyectos publicados en este momento.</p>
+        <p>{{ 'PRESENTE.EMPTY' | translate }}</p>
       </div>
       } @else {
 
@@ -71,7 +71,7 @@
             <h3>{{ proj.titulo }}</h3>
             <p class="card-desc">{{ proj.resumen }}</p>
             <div class="card-action">
-              <span>Leer más</span>
+              <span>{{ 'PRESENTE.READ_MORE' | translate }}</span>
               <ion-icon name="arrow-forward-outline"></ion-icon>
             </div>
           </div>

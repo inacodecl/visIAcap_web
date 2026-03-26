@@ -1,0 +1,97 @@
+{
+    "SPLASH": {
+        "SEDE": "SEDE RENCA",
+        "ANNIVERSARY": "60° Aniversario",
+        "LOADING": "Cargando experiencia..."
+    },
+    "HOME": {
+        "SEDE": "SEDE",
+        "RENCA": "RENCA"
+    },
+    "HEADER": {
+        "BACK": "Volver"
+    },
+    "PASADO": {
+        "TITLE": "PASADO",
+        "TIMELINE_TITLE": "Línea de",
+        "TIMELINE_TITLE2": "Tiempo",
+        "TIMELINE_DESC": "Viaja a través de nuestra historia.",
+        "TIMELINE_BTN": "EXPLORAR",
+        "TIMELINE_MODULE": "Módulo 01",
+        "INTERVIEWS_TITLE": "Entre",
+        "INTERVIEWS_TITLE2": "Vistas",
+        "INTERVIEWS_DESC": "Testimonios del futuro de Renca.",
+        "INTERVIEWS_BTN": "VER GALERÍA",
+        "INTERVIEWS_MODULE": "Módulo 02"
+    },
+    "ENTREVISTAS": {
+        "HERO_TITLE": "Entrevistas",
+        "HERO_SUBTITLE": "Memorias, anécdotas e historias de quienes construyeron la sede a lo largo de los años.",
+        "RETRY": "Reintentar",
+        "WATCH_VIDEO": "Ver Video",
+        "EMPTY": "No hay entrevistas disponibles por el momento."
+    },
+    "TIMELINE": {
+        "HERO_TITLE": "Nuestra Trayectoria",
+        "HERO_SUBTITLE": "Seis décadas transformando el futuro técnico de Chile a través de la excelencia y el compromiso.",
+        "LOADING": "Cargando historia...",
+        "RETRY": "Reintentar",
+        "EMPTY": "No hay hitos históricos visibles en este momento."
+    },
+    "FUTURO": {
+        "TITLE": "FUTURO",
+        "HERO_TITLE": "El Futuro de",
+        "HERO_HIGHLIGHT": "INACAP Renca",
+        "HERO_SUBTITLE": "Innovación, tecnología y talento estudiantil construyendo el mañana.",
+        "PROJECTS_TITLE": "Proyectos Destacados",
+        "PROJECTS_SUBTITLE": "Ideas que transforman nuestra comunidad educativa",
+        "VIEW_PROJECT": "Ver Proyecto",
+        "NEWS_TITLE": "Noticias",
+        "NEWS_SUBTITLE": "Mantente informado de lo que ocurre en la sede",
+        "COMING_SOON_TITLE": "Próximamente",
+        "COMING_SOON_SUBTITLE": "Lo que se viene en INACAP Renca",
+        "THIS_MONTH_TITLE": "Este Mes",
+        "THIS_MONTH_SUBTITLE": "Agenda de febrero 2026"
+    },
+    "PRESENTE": {
+        "TITLE": "PRESENTE",
+        "HERO_TITLE": "Proyectos Presente",
+        "HERO_SUBTITLE": "Iniciativas que transforman la sede Renca",
+        "FEATURED_BADGE": "PROYECTO DESTACADO",
+        "VIEW_FULL": "Ver Proyecto Completo",
+        "READ_MORE": "Leer más",
+        "EMPTY": "No hay proyectos publicados en este momento."
+    },
+    "PROJECT_DETAIL": {
+        "LOADING": "Cargando proyecto...",
+        "NOT_FOUND_TITLE": "Proyecto no encontrado",
+        "NOT_FOUND_DESC": "Lo sentimos, no pudimos cargar la información del proyecto.",
+        "BACK_TO_PROJECTS": "Volver a Proyectos",
+        "BADGE": "Proyecto Presente",
+        "YEAR": "Año",
+        "LOCATION": "Ubicación",
+        "STATUS": "Estado",
+        "STATUS_ACTIVE": "Activo",
+        "HISTORY": "Historia del Proyecto",
+        "TEAM": "Equipo del Proyecto",
+        "GALLERY": "Galería",
+        "GALLERY_EMPTY": "No hay imágenes adicionales.",
+        "VISIT_WEBSITE": "Visitar Sitio Web Oficial"
+    },
+    "FOOTER": {
+        "BRAND": "INACAP Renca Smart",
+        "ANNIVERSARY": "60° Aniversario",
+        "OPTIONS_HEADER": "Opciones de Sistema",
+        "ADMIN_ACCESS": "Acceso Administrativo",
+        "LANGUAGE": "Cambiar Idioma",
+        "CANCEL": "Cancelar",
+        "LANG_ES": "🇨🇱 Español",
+        "LANG_EN": "🇺🇸 English",
+        "LANG_HT": "🇭🇹 Kreyòl"
+    },
+    "COMMON": {
+        "RETRY": "Reintentar",
+        "CANCEL": "Cancelar",
+        "LOADING": "Cargando..."
+    }
+}

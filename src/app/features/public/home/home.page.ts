@@ -6,6 +6,7 @@ import { ActionSheetController } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { personCircleOutline, informationCircleOutline, accessibilityOutline, logInOutline, languageOutline, closeOutline } from 'ionicons/icons';
+import { TranslateModule } from '@ngx-translate/core';
 import { GeometricOverlayTopComponent } from './components/geometric-overlay-top/geometric-overlay-top.component';
 import { GeometricOverlayBottomComponent } from './components/geometric-overlay-bottom/geometric-overlay-bottom.component';
 
@@ -25,7 +26,7 @@ import { HomeFooterComponent } from '../../../components/footers/home-footer/hom
         IonGrid, IonRow, IonCol, 
         GeometricOverlayTopComponent, GeometricOverlayBottomComponent, 
         BtnPasadoComponent, BtnPresenteComponent, BtnFuturoComponent,
-        HomeFooterComponent
+        HomeFooterComponent, TranslateModule
     ]
 })
 export class HomePage implements OnInit {

@@ -1,0 +1,97 @@
+{
+    "SPLASH": {
+        "SEDE": "RENCA CAMPUS",
+        "ANNIVERSARY": "60th Anniversary",
+        "LOADING": "Loading experience..."
+    },
+    "HOME": {
+        "SEDE": "CAMPUS",
+        "RENCA": "RENCA"
+    },
+    "HEADER": {
+        "BACK": "Back"
+    },
+    "PASADO": {
+        "TITLE": "PAST",
+        "TIMELINE_TITLE": "Time",
+        "TIMELINE_TITLE2": "Line",
+        "TIMELINE_DESC": "Travel through our history.",
+        "TIMELINE_BTN": "EXPLORE",
+        "TIMELINE_MODULE": "Module 01",
+        "INTERVIEWS_TITLE": "Inter",
+        "INTERVIEWS_TITLE2": "Views",
+        "INTERVIEWS_DESC": "Testimonies from Renca's future.",
+        "INTERVIEWS_BTN": "VIEW GALLERY",
+        "INTERVIEWS_MODULE": "Module 02"
+    },
+    "ENTREVISTAS": {
+        "HERO_TITLE": "Interviews",
+        "HERO_SUBTITLE": "Memories, anecdotes, and stories from those who built the campus over the years.",
+        "RETRY": "Retry",
+        "WATCH_VIDEO": "Watch Video",
+        "EMPTY": "No interviews available at this time."
+    },
+    "TIMELINE": {
+        "HERO_TITLE": "Our Journey",
+        "HERO_SUBTITLE": "Six decades transforming Chile's technical future through excellence and commitment.",
+        "LOADING": "Loading history...",
+        "RETRY": "Retry",
+        "EMPTY": "No historical milestones visible at this time."
+    },
+    "FUTURO": {
+        "TITLE": "FUTURE",
+        "HERO_TITLE": "The Future of",
+        "HERO_HIGHLIGHT": "INACAP Renca",
+        "HERO_SUBTITLE": "Innovation, technology, and student talent building tomorrow.",
+        "PROJECTS_TITLE": "Featured Projects",
+        "PROJECTS_SUBTITLE": "Ideas transforming our educational community",
+        "VIEW_PROJECT": "View Project",
+        "NEWS_TITLE": "News",
+        "NEWS_SUBTITLE": "Stay informed about what's happening on campus",
+        "COMING_SOON_TITLE": "Coming Soon",
+        "COMING_SOON_SUBTITLE": "What's next at INACAP Renca",
+        "THIS_MONTH_TITLE": "This Month",
+        "THIS_MONTH_SUBTITLE": "February 2026 schedule"
+    },
+    "PRESENTE": {
+        "TITLE": "PRESENT",
+        "HERO_TITLE": "Present Projects",
+        "HERO_SUBTITLE": "Initiatives transforming the Renca campus",
+        "FEATURED_BADGE": "FEATURED PROJECT",
+        "VIEW_FULL": "View Full Project",
+        "READ_MORE": "Read more",
+        "EMPTY": "No projects published at this time."
+    },
+    "PROJECT_DETAIL": {
+        "LOADING": "Loading project...",
+        "NOT_FOUND_TITLE": "Project not found",
+        "NOT_FOUND_DESC": "Sorry, we couldn't load the project information.",
+        "BACK_TO_PROJECTS": "Back to Projects",
+        "BADGE": "Present Project",
+        "YEAR": "Year",
+        "LOCATION": "Location",
+        "STATUS": "Status",
+        "STATUS_ACTIVE": "Active",
+        "HISTORY": "Project History",
+        "TEAM": "Project Team",
+        "GALLERY": "Gallery",
+        "GALLERY_EMPTY": "No additional images.",
+        "VISIT_WEBSITE": "Visit Official Website"
+    },
+    "FOOTER": {
+        "BRAND": "INACAP Renca Smart",
+        "ANNIVERSARY": "60th Anniversary",
+        "OPTIONS_HEADER": "System Options",
+        "ADMIN_ACCESS": "Administrative Access",
+        "LANGUAGE": "Change Language",
+        "CANCEL": "Cancel",
+        "LANG_ES": "🇨🇱 Español",
+        "LANG_EN": "🇺🇸 English",
+        "LANG_HT": "🇭🇹 Kreyòl"
+    },
+    "COMMON": {
+        "RETRY": "Retry",
+        "CANCEL": "Cancel",
+        "LOADING": "Loading..."
+    }
+}

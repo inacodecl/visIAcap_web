@@ -12,8 +12,8 @@
       </div>
       <div class="header-separator"></div>
       <div class="sede-container">
-          <span class="sede-line">PASADO</span>
-          <span class="renca-line">RENCA</span>
+          <span class="sede-line">{{ 'PASADO.TITLE' | translate }}</span>
+          <span class="renca-line">{{ 'HOME.RENCA' | translate }}</span>
       </div>
   </header>
 
@@ -22,21 +22,21 @@
 
   <!-- INTRODUCCIÓN -->
   <section class="hero-section">
-      <h1>Nuestra Trayectoria</h1>
-      <p>Seis décadas transformando el futuro técnico de Chile a través de la excelencia y el compromiso.</p>
+      <h1>{{ 'TIMELINE.HERO_TITLE' | translate }}</h1>
+      <p>{{ 'TIMELINE.HERO_SUBTITLE' | translate }}</p>
   </section>
 
   <!-- Loading State -->
   <div class="loading-state" *ngIf="isLoading">
     <ion-spinner name="crescent" color="danger"></ion-spinner>
-    <p>Cargando historia...</p>
+    <p>{{ 'TIMELINE.LOADING' | translate }}</p>
   </div>
 
   <!-- Error State -->
   <div class="error-state" *ngIf="error && !isLoading">
     <ion-icon name="alert-circle" color="danger"></ion-icon>
     <p>{{ error }}</p>
-    <ion-button fill="outline" (click)="loadData()">Reintentar</ion-button>
+    <ion-button fill="outline" (click)="loadData()">{{ 'TIMELINE.RETRY' | translate }}</ion-button>
   </div>
 
   <!-- LÍNEA DE TIEMPO CURVA INMERSIVA -->
@@ -86,7 +86,7 @@
 
   <!-- Empty State -->
   <div class="empty-state" *ngIf="!isLoading && !error && milestones.length === 0">
-    <p>No hay hitos históricos visibles en este momento.</p>
+    <p>{{ 'TIMELINE.EMPTY' | translate }}</p>
   </div>
 
   <app-home-footer></app-home-footer>

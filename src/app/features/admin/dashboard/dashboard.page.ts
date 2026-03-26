@@ -75,7 +75,7 @@ export class DashboardPage implements OnInit {
         } else {
             // Admin (Content): Carga todo MENOS usuarios
             promises.push(this.toPromise(this.timelineService.getHistorias('es', true)));
-            promises.push(this.toPromise(this.entrevistaService.getEntrevistas(true)));
+            promises.push(this.toPromise(this.entrevistaService.getEntrevistas('es', true)));
             promises.push(this.toPromise(this.proyectosService.getProyectos('es')));
             promises.push(Promise.resolve(null)); // Usuarios placeholder
         }

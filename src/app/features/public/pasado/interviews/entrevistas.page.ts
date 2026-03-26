@@ -16,6 +16,8 @@ import { GeometricOverlayTopComponent } from '../../home/components/geometric-ov
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
 import { arrowBackOutline, playCircleOutline, alertCircleOutline, videocamOutline, filmOutline, closeCircleOutline } from 'ionicons/icons';
 import { Subscription } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '../../../../core/services/language.service';
 
 @Component({
     selector: 'app-entrevistas',
@@ -27,13 +29,15 @@ import { Subscription } from 'rxjs';
         IonButton, IonIcon, IonGrid, IonRow, IonCol, IonCard,
         IonCardHeader, IonCardTitle,
         IonSkeletonText, IonModal,
-        GeometricOverlayTopComponent, HomeFooterComponent
+        GeometricOverlayTopComponent, HomeFooterComponent,
+        TranslateModule
     ]
 })
 export class EntrevistasPage implements OnInit, AfterViewInit, OnDestroy {
 
     private entrevistaService = inject(EntrevistaService);
     private router = inject(Router);
+    private languageService = inject(LanguageService);
 
     // States
     entrevistas = signal<Entrevista[]>([]);
@@ -74,7 +78,7 @@ export class EntrevistasPage implements OnInit, AfterViewInit, OnDestroy {
         this.isLoading.set(true);
         this.error.set(null);
 
-        this.entrevistaService.getEntrevistas().subscribe({
+        this.entrevistaService.getEntrevistas(this.languageService.getCurrentLang()).subscribe({
             next: (data) => {
                 // Simular un pequeño delay para que se aprecie la animación de carga (opcional, quitar en prod si es muy lento)
                 setTimeout(() => {

@@ -6,6 +6,8 @@ import { authInterceptor } from './app/core/interceptors/auth.interceptor';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
@@ -18,6 +20,14 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withInterceptors([authInterceptor])),
-    { provide: LOCALE_ID, useValue: 'es-ES' }
+    { provide: LOCALE_ID, useValue: 'es-ES' },
+    provideTranslateService({
+        defaultLanguage: 'es'
+    }),
+    provideTranslateHttpLoader({
+        prefix: './assets/i18n/',
+        suffix: '.json'
+    })
   ],
 });
+

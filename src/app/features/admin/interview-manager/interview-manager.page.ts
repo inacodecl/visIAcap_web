@@ -81,7 +81,7 @@ export class InterviewManagerPage implements OnInit {
 
     loadData() {
         this.isLoading = true;
-        this.entrevistaService.getEntrevistas(true).subscribe({
+        this.entrevistaService.getEntrevistas('es', true).subscribe({
             next: () => this.isLoading = false,
             error: (err) => {
                 console.error(err);

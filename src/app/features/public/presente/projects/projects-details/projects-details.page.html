@@ -10,21 +10,21 @@
         </div>
         <div class="header-separator"></div>
         <div class="sede-container">
-            <span class="sede-line">PRESENTE</span>
-            <span class="renca-line">RENCA</span>
+            <span class="sede-line">{{ 'PRESENTE.TITLE' | translate }}</span>
+            <span class="renca-line">{{ 'HOME.RENCA' | translate }}</span>
         </div>
     </header>
 
     @if (isLoading()) {
     <div class="loading-container">
         <ion-spinner name="crescent" color="primary"></ion-spinner>
-        <p>Cargando proyecto...</p>
+        <p>{{ 'PROJECT_DETAIL.LOADING' | translate }}</p>
     </div>
     } @else if (error() || !proyecto()) {
     <div class="error-container">
-        <h2>Proyecto no encontrado</h2>
-        <p>Lo sentimos, no pudimos cargar la información del proyecto.</p>
-        <ion-button routerLink="/presente/projects" color="primary">Volver a Proyectos</ion-button>
+        <h2>{{ 'PROJECT_DETAIL.NOT_FOUND_TITLE' | translate }}</h2>
+        <p>{{ 'PROJECT_DETAIL.NOT_FOUND_DESC' | translate }}</p>
+        <ion-button routerLink="/presente/projects" color="primary">{{ 'PROJECT_DETAIL.BACK_TO_PROJECTS' | translate }}</ion-button>
     </div>
     } @else {
     <div class="project-hero"
@@ -32,7 +32,7 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-text-container">
-                <span class="project-badge">Proyecto Presente</span>
+                <span class="project-badge">{{ 'PROJECT_DETAIL.BADGE' | translate }}</span>
                 <h1>{{ proyecto()?.titulo }}</h1>
             </div>
         </div>
@@ -49,7 +49,7 @@
                         <ion-icon name="calendar-number"></ion-icon>
                     </div>
                     <div class="meta-info">
-                        <label>Año</label>
+                        <label>{{ 'PROJECT_DETAIL.YEAR' | translate }}</label>
                         <span>{{ proyecto()?.start_date | date:'yyyy' }}</span>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                         <ion-icon name="location"></ion-icon>
                     </div>
                     <div class="meta-info">
-                        <label>Ubicación</label>
+                        <label>{{ 'PROJECT_DETAIL.LOCATION' | translate }}</label>
                         <span>{{ proyecto()?.location }}</span>
                     </div>
                 </div>
@@ -73,8 +73,8 @@
                         <ion-icon name="analytics"></ion-icon>
                     </div>
                     <div class="meta-info">
-                        <label>Estado</label>
-                        <span>Activo</span>
+                        <label>{{ 'PROJECT_DETAIL.STATUS' | translate }}</label>
+                        <span>{{ 'PROJECT_DETAIL.STATUS_ACTIVE' | translate }}</span>
                     </div>
                 </div>
             </div>
@@ -89,7 +89,7 @@
                 <div class="separator"></div>
 
                 <div class="project-description">
-                    <h3>Historia del Proyecto</h3>
+                    <h3>{{ 'PROJECT_DETAIL.HISTORY' | translate }}</h3>
                     <div [innerHTML]="proyecto()?.descripcion" class="description-body"></div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
             <!-- Team Section -->
             @if (proyecto()?.members?.length) {
             <div class="section-container team-section">
-                <h3>Equipo del Proyecto</h3>
+                <h3>{{ 'PROJECT_DETAIL.TEAM' | translate }}</h3>
                 <div class="team-grid">
                     @for (member of proyecto()?.members; track member.nombre) {
                     <div class="team-member">
@@ -114,7 +114,7 @@
 
             <!-- Gallery Section -->
             <div class="section-container gallery-section">
-                <h3>Galería</h3>
+                <h3>{{ 'PROJECT_DETAIL.GALLERY' | translate }}</h3>
                 @if (proyecto()?.images?.length) {
                 <div class="gallery-grid">
                     @for (img of proyecto()?.images; track img.url) {
@@ -126,7 +126,7 @@
                 } @else {
                 <div class="gallery-placeholder">
                     <ion-icon name="images-outline"></ion-icon>
-                    <p>No hay imágenes adicionales.</p>
+                    <p>{{ 'PROJECT_DETAIL.GALLERY_EMPTY' | translate }}</p>
                 </div>
                 }
             </div>
@@ -153,7 +153,7 @@
             @if (proyecto()?.url_externa) {
             <div class="action-container">
                 <ion-button expand="block" (click)="openExternalUrl()" class="action-button gradient-btn">
-                    <span>Visitar Sitio Web Oficial</span>
+                    <span>{{ 'PROJECT_DETAIL.VISIT_WEBSITE' | translate }}</span>
                     <ion-icon name="arrow-forward-circle" slot="end"></ion-icon>
                 </ion-button>
             </div>

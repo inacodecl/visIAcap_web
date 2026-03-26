@@ -19,11 +19,12 @@ export class EntrevistaService {
 
     /**
      * Obtiene la lista de entrevistas.
+     * @param lang Idioma para obtener traducciones
      * @param includeHidden Si es true, trae todas (admin). Si es false, solo visibles (public).
      */
-    getEntrevistas(includeHidden: boolean = false): Observable<Entrevista[]> {
+    getEntrevistas(lang: string = 'es', includeHidden: boolean = false): Observable<Entrevista[]> {
         const url = includeHidden ? `${this.API_URL}/entrevistas/all` : `${this.API_URL}/entrevistas`;
-        return this.http.get<Entrevista[]>(url).pipe(
+        return this.http.get<Entrevista[]>(url, { params: { lang } }).pipe(
             tap(data => this._entrevistas.set(data))
         );
     }
