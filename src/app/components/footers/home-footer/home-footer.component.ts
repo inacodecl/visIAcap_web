@@ -5,8 +5,9 @@ import { IonIcon, IonButton } from '@ionic/angular/standalone';
 import { ActionSheetController } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { accessibilityOutline, informationCircleOutline, logInOutline, languageOutline, closeOutline } from 'ionicons/icons';
+import { accessibilityOutline, informationCircleOutline, logInOutline, languageOutline, closeOutline, colorPaletteOutline, codeWorkingOutline } from 'ionicons/icons';
 import { LanguageService } from '../../../core/services/language.service';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
     selector: 'app-home-footer',
@@ -21,9 +22,10 @@ export class HomeFooterComponent implements OnInit {
     private actionSheetCtrl = inject(ActionSheetController);
     private languageService = inject(LanguageService);
     private translateService = inject(TranslateService);
+    private themeService = inject(ThemeService);
 
     constructor() {
-        addIcons({ accessibilityOutline, informationCircleOutline, logInOutline, languageOutline, closeOutline });
+        addIcons({ accessibilityOutline, informationCircleOutline, logInOutline, languageOutline, closeOutline, colorPaletteOutline, codeWorkingOutline });
     }
 
     ngOnInit() { }
@@ -37,6 +39,20 @@ export class HomeFooterComponent implements OnInit {
                     icon: 'log-in-outline',
                     handler: () => {
                         this.router.navigate(['/auth/login']);
+                    }
+                },
+                {
+                    text: this.translateService.instant('FOOTER.THEME_TOGGLE'),
+                    icon: 'color-palette-outline',
+                    handler: () => {
+                        this.themeService.toggleTheme();
+                    }
+                },
+                {
+                    text: this.translateService.instant('FOOTER.DEVELOPERS'),
+                    icon: 'code-working-outline',
+                    handler: () => {
+                        this.router.navigate(['/desarrolladores']);
                     }
                 },
                 {

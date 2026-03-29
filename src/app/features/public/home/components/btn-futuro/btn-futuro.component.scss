@@ -5,60 +5,112 @@
 }
 
 /* =========================================
-   ESTILOS GENERALES Y EXTERNOS PARA BUTTON-HOME (Heredados)
+   ESTILOS GENERALES: WHITE GLASSMORPHISM
    ========================================= */
 
 .glass-btn {
-    --btn-bg: #f0f0f0;
-    --btn-shadow-light: #ffffff;
-    --btn-shadow-dark: #b8b8b8;
+    --btn-bg: rgba(255, 255, 255, 0.85);
+    --btn-border: rgba(255, 255, 255, 1);
+    --btn-shadow: rgba(255, 255, 255, 0.6);
     --btn-accent: #7b2cbf; // Violeta Neón para el futuro hover
     --theme-color: #6B21A8; // Púrpura base
     
     position: relative;
-    width: 180px;
-    height: 180px;
-    border-radius: 20%;
+    width: 150px;
+    height: 150px;
+    border-radius: 35px;
     
     background: var(--btn-bg);
-    border: 4px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 12px 12px 24px var(--btn-shadow-dark),
-                -12px -12px 24px var(--btn-shadow-light),
-                0 4px 15px rgba(0, 0, 0, 0.15);
+    border: 3px solid var(--btn-border);
+    box-shadow: 0 0 30px var(--btn-shadow);
                 
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     cursor: pointer;
     outline: none;
     -webkit-tap-highlight-color: transparent;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    overflow: visible; 
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    overflow: hidden; 
+    
+    /* ESTADO EXPANDIDO - PRIMER CLIC */
+    &.expanded {
+        width: 380px;
+        box-shadow: 0 0 40px var(--btn-shadow);
+        
+        .text-container {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
 }
 
-/* EFECTOS DEL HOVER (Independiente del Click) */
+/* =========================================
+   CONTENEDOR DEL ICONO
+   ========================================= */
+.icon-container {
+    width: 150px;
+    height: 150px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 35px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+/* =========================================
+   CONTENEDOR DE TEXTO
+   ========================================= */
+.text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 20px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    white-space: nowrap; 
+    z-index: 5;
+
+    .title {
+        font-size: 32px;
+        font-weight: 900;
+        color: #333;
+        letter-spacing: 2px;
+        line-height: 1.1;
+    }
+
+    .subtitle {
+        font-size: 20px;
+        font-weight: 500;
+        color: #666;
+        letter-spacing: 4px;
+    }
+}
+
+/* EFECTOS DEL HOVER Y ACTIVE */
 @media (hover: hover) {
-    .glass-btn:not(.is-animating):hover {
-        transform: translateY(-5px);
+    .glass-btn:not(.expanded):hover {
         border-color: var(--btn-accent);
 
         svg {
             transform: scale(1.1) rotate(5deg);
             stroke: var(--btn-accent);
-            filter: drop-shadow(0 0 10px var(--btn-accent));
         }
     }
 }
 
-.glass-btn:not(.is-animating):active {
+.glass-btn:not(.expanded):active {
     transform: scale(0.95);
     border-color: var(--btn-accent);
-    box-shadow: inset 6px 6px 18px var(--btn-shadow-dark), inset -6px -6px 18px var(--btn-shadow-light);
     
     svg {
         transform: scale(0.9);
         stroke: var(--btn-accent);
-        filter: drop-shadow(0 0 10px var(--btn-accent));
     }
 }
 
@@ -80,7 +132,7 @@
     border-radius: 50%;
     transform: scale(0);
     animation: ripple-animation 0.6s linear;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(220, 220, 220, 0.6);
     pointer-events: none;
 }
 
@@ -95,32 +147,32 @@
 .glass-btn svg {
     position: relative;
     z-index: 2;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     fill: none;
     stroke: var(--theme-color);
     stroke-width: 1.5;
     stroke-linecap: round;
     stroke-linejoin: round;
     overflow: visible; 
-    transition: transform 0.4s ease, stroke 0.3s ease, filter 0.3s ease;
+    transition: transform 0.4s ease, stroke 0.3s ease;
 }
 
 /* =========================================
-   ANIMACIONES EXAGERADAS AL CLIC - COHETE
+   ANIMACIONES AL EXPANDIR - COHETE
    ========================================= */
 
-.glass-btn.btn-rocket.is-animating {
-    pointer-events: none;
+.glass-btn.btn-rocket.expanded {
+    pointer-events: auto;
     z-index: 100;
 }
 
-.glass-btn.btn-rocket.is-animating svg {
+.glass-btn.btn-rocket.expanded svg {
     transform-origin: center;
     animation: rocketTakeoff 1.5s cubic-bezier(0.5, 0, 0.2, 1) forwards, adaptRocketStroke 1.5s forwards;
 }
 
-.glass-btn.btn-rocket.is-animating .rocket-flame {
+.glass-btn.btn-rocket.expanded .rocket-flame {
     animation: showFlameContinuous 0.1s ease-in-out infinite;
     animation-delay: 0.1s;
 }
@@ -132,8 +184,6 @@
     50%  { transform: translate(0, -80px) scale(1.4) rotate(-45deg); } /* Empuje extra */
     100% { transform: translate(0, -2500px) scale(2.5) rotate(-45deg); } /* Velocidad supersónica */
 }
-
-
 
 @keyframes showFlameContinuous {
     0%, 100% { opacity: 1; stroke: #ff9800; transform: translateY(0); stroke-width: 1.5; }
@@ -150,7 +200,7 @@
     z-index: 0;
 }
 
-.glass-btn.btn-rocket.is-animating .space-bg {
+.glass-btn.btn-rocket.expanded .space-bg {
     animation: dropSpace 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
@@ -167,7 +217,7 @@
     background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.8), transparent);
 }
 
-.glass-btn.btn-rocket.is-animating .star-fast {
+.glass-btn.btn-rocket.expanded .star-fast {
     animation: hyperspeed 0.3s linear infinite;
 }
 
@@ -178,5 +228,5 @@
 
 @keyframes adaptRocketStroke {
     0%, 15% { stroke: var(--theme-color); filter: none; }
-    20%, 100% { stroke: #ffffff; filter: drop-shadow(0 0 6px var(--theme-color)); }
+    20%, 100% { stroke: #ffffff; filter: drop-shadow(0 0 6px rgba(255,255,255,0.8)); }
 }

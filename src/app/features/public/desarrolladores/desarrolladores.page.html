@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" [text]="'HEADER.BACK' | translate"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="dev-container">
+    <div class="header-section">
+      <h1 class="main-title">Desarrolladores</h1>
+      <p class="subtitle">Conoce al equipo detrás de este proyecto</p>
+    </div>
+
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        
+        <!-- Desarrollador 1 -->
+        <ion-col size="12" size-sm="8" size-md="4">
+          <div class="dev-card glass-style">
+            <div class="image-wrapper">
+              <!-- Espacio para la imagen -->
+              <div class="image-placeholder">
+                <span class="placeholder-text">FOTO 1</span>
+              </div>
+            </div>
+            <div class="info-wrapper">
+              <h2 class="dev-name">Nombre Desarrollador 1</h2>
+              <p class="dev-role">Rol / Título</p>
+            </div>
+          </div>
+        </ion-col>
+
+        <!-- Desarrollador 2 -->
+        <ion-col size="12" size-sm="8" size-md="4">
+          <div class="dev-card glass-style">
+            <div class="image-wrapper">
+              <!-- Espacio para la imagen -->
+              <div class="image-placeholder">
+                <span class="placeholder-text">FOTO 2</span>
+              </div>
+            </div>
+            <div class="info-wrapper">
+              <h2 class="dev-name">Nombre Desarrollador 2</h2>
+              <p class="dev-role">Rol / Título</p>
+            </div>
+          </div>
+        </ion-col>
+
+        <!-- Desarrollador 3 -->
+        <ion-col size="12" size-sm="8" size-md="4">
+          <div class="dev-card glass-style">
+            <div class="image-wrapper">
+              <!-- Espacio para la imagen -->
+              <div class="image-placeholder">
+                <span class="placeholder-text">FOTO 3</span>
+              </div>
+            </div>
+            <div class="info-wrapper">
+              <h2 class="dev-name">Nombre Desarrollador 3</h2>
+              <p class="dev-role">Rol / Título</p>
+            </div>
+          </div>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

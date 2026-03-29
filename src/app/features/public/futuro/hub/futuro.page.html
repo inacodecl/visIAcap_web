@@ -99,9 +99,40 @@
         </section>
 
         <!-- ============================== -->
-        <!-- SECCIÓN: PRÓXIMAMENTE -->
+        <!-- SECCIÓN: ESTE MES -->
         <!-- ============================== -->
         <section class="section-block">
+            <div class="section-header">
+                <div class="section-icon-wrapper estemes">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+                <div class="section-title-container">
+                    <h2 class="section-title">{{ 'FUTURO.THIS_MONTH_TITLE' | translate }}</h2>
+                    <p class="section-subtitle">{{ 'FUTURO.THIS_MONTH_SUBTITLE' | translate }}</p>
+                </div>
+            </div>
+
+            <div class="estemes-list">
+                <div class="estemes-card" *ngFor="let evento of esteMes(); let i = index"
+                    [style.animation-delay]="(i * 150) + 'ms'">
+                    <div class="estemes-date">
+                        <span class="estemes-dia">{{ evento.dia }}</span>
+                        <span class="estemes-mes">{{ evento.mes }}</span>
+                    </div>
+                    <div class="estemes-separator"></div>
+                    <div class="estemes-content">
+                        <span class="estemes-tipo">{{ evento.tipo }}</span>
+                        <h3>{{ evento.titulo }}</h3>
+                        <p>{{ evento.descripcion }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================== -->
+        <!-- SECCIÓN: PRÓXIMAMENTE -->
+        <!-- ============================== -->
+        <section class="section-block section-last">
             <div class="section-header">
                 <div class="section-icon-wrapper proximamente">
                     <ion-icon name="sparkles-outline"></ion-icon>
@@ -125,37 +156,6 @@
                     </div>
                     <div class="proximamente-arrow">
                         <ion-icon name="arrow-forward-outline"></ion-icon>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ============================== -->
-        <!-- SECCIÓN: ESTE MES -->
-        <!-- ============================== -->
-        <section class="section-block section-last">
-            <div class="section-header">
-                <div class="section-icon-wrapper estemes">
-                    <ion-icon name="calendar-outline"></ion-icon>
-                </div>
-                <div class="section-title-container">
-                    <h2 class="section-title">{{ 'FUTURO.THIS_MONTH_TITLE' | translate }}</h2>
-                    <p class="section-subtitle">{{ 'FUTURO.THIS_MONTH_SUBTITLE' | translate }}</p>
-                </div>
-            </div>
-
-            <div class="estemes-list">
-                <div class="estemes-card" *ngFor="let evento of esteMes(); let i = index"
-                    [style.animation-delay]="(i * 150) + 'ms'">
-                    <div class="estemes-date">
-                        <span class="estemes-dia">{{ evento.dia }}</span>
-                        <span class="estemes-mes">{{ evento.mes }}</span>
-                    </div>
-                    <div class="estemes-separator"></div>
-                    <div class="estemes-content">
-                        <span class="estemes-tipo">{{ evento.tipo }}</span>
-                        <h3>{{ evento.titulo }}</h3>
-                        <p>{{ evento.descripcion }}</p>
                     </div>
                 </div>
             </div>

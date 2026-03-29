@@ -42,5 +42,9 @@ export const routes: Routes = [
     {
         path: 'futuro',
         loadComponent: () => import('./futuro/hub/futuro.page').then(m => m.FuturoPage)
-    }
+    },  {
+    path: 'desarrolladores',
+    loadComponent: () => import('./desarrolladores/desarrolladores.page').then( m => m.DesarrolladoresPage)
+  }
+
 ];

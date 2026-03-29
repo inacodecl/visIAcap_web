@@ -84,6 +84,8 @@
         "OPTIONS_HEADER": "System Options",
         "ADMIN_ACCESS": "Administrative Access",
         "LANGUAGE": "Change Language",
+        "THEME_TOGGLE": "Toggle Theme",
+        "DEVELOPERS": "Developers",
         "CANCEL": "Cancel",
         "LANG_ES": "🇨🇱 Español",
         "LANG_EN": "🇺🇸 English",

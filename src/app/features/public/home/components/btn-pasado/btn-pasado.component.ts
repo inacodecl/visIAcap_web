@@ -9,21 +9,46 @@ import { Router } from '@angular/router';
 })
 export class BtnPasadoComponent {
   @ViewChild('rippleContainer') rippleContainer!: ElementRef;
-  isAnimating = false;
+  isExpanded = false;
+  isNavigating = false;
+  expansionTimeout: any;
 
   constructor(private router: Router, private renderer: Renderer2, private elRef: ElementRef) {}
 
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent | TouchEvent) {
-    if (this.isAnimating) return;
+    if (this.isNavigating) return;
 
-    this.isAnimating = true;
+    if (!this.isExpanded) {
+        // PRIMER CLIC: Expandir y animar icono
+        this.isExpanded = true;
+        this.createRipple(event);
 
-    // Crear el ripple dinámico
+        // Auto-colapsar después de 5 segundos
+        clearTimeout(this.expansionTimeout);
+        this.expansionTimeout = setTimeout(() => {
+            if (!this.isNavigating) this.isExpanded = false;
+        }, 5000);
+        return;
+    }
+
+    // SEGUNDO CLIC: Navegar
+    clearTimeout(this.expansionTimeout);
+    this.isNavigating = true;
+    this.createRipple(event);
+    
+    // Iniciar Navegación en un timeout breve para ver el ripple
+    setTimeout(() => {
+      this.isNavigating = false;
+      this.isExpanded = false;
+      this.router.navigate(['/pasado']);
+    }, 400);
+  }
+
+  private createRipple(event: MouseEvent | TouchEvent) {
     const ripple = this.renderer.createElement('span');
     this.renderer.addClass(ripple, 'ripple');
     
-    // Calcular posición del click/touch basado en el botón HTML original de Ionic (btn-clock)
     const btnElement = this.elRef.nativeElement.querySelector('.glass-btn');
     const rect = btnElement.getBoundingClientRect();
     const size = Math.max(rect.width, rect.height);
@@ -48,12 +73,11 @@ export class BtnPasadoComponent {
     this.renderer.setStyle(ripple, 'top', `${top}px`);
 
     this.renderer.appendChild(this.rippleContainer.nativeElement, ripple);
-    
-    // Iniciar Navegación después de la animación de 1.2s
+
     setTimeout(() => {
-      this.isAnimating = false;
-      this.renderer.removeChild(this.rippleContainer.nativeElement, ripple);
-      this.router.navigate(['/pasado']);
-    }, 1200);
+        if (this.rippleContainer?.nativeElement?.contains(ripple)) {
+            this.renderer.removeChild(this.rippleContainer.nativeElement, ripple);
+        }
+    }, 600);
   }
 }
