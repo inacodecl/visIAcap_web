@@ -1,65 +1,101 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home" [text]="'HEADER.BACK' | translate"></ion-back-button>
+      <ion-back-button defaultHref="/home" text="Volver"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content [fullscreen]="true" class="ion-padding dev-page-content">
+  <!-- Overlays Geométricos -->
+  <app-geometric-overlay-top></app-geometric-overlay-top>
+
   <div class="dev-container">
     <div class="header-section">
-      <h1 class="main-title">Desarrolladores</h1>
-      <p class="subtitle">Conoce al equipo detrás de este proyecto</p>
+      <h1 class="main-title">Nuestro equipo de Desarrolladores</h1>
+      <h3 class="subtitle">Conoce al equipo detrás de este proyecto</h3>
     </div>
 
     <ion-grid>
       <ion-row class="ion-justify-content-center">
         
-        <!-- Desarrollador 1 -->
-        <ion-col size="12" size-sm="8" size-md="4">
-          <div class="dev-card glass-style">
-            <div class="image-wrapper">
-              <!-- Espacio para la imagen -->
+        
+        <ion-col size="12" size-md="11" size-lg="10">
+          <div class="dev-card-horizontal glass-style" [class.expanded]="expandedCard === 'jarod'" (click)="toggleCard('jarod')">
+            <div class="dev-image">
               <div class="image-placeholder">
-                <span class="placeholder-text">FOTO 1</span>
+                <img src="/assets/img/dev-jarod.png" alt="Jarod Pinto">
               </div>
             </div>
-            <div class="info-wrapper">
-              <h2 class="dev-name">Nombre Desarrollador 1</h2>
-              <p class="dev-role">Rol / Título</p>
+            <div class="dev-info">
+              <div class="dev-info-header">
+                <div>
+                  <h2 class="dev-name">Jarod Pinto</h2>
+                  <p class="dev-role">Desarrollador Full-Stack</p>
+                </div>
+                <ion-icon class="toggle-icon" [name]="expandedCard === 'jarod' ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+              </div>
+              <div class="dev-description-wrapper">
+                <p class="dev-description">
+                  Hola
+                </p>
+                <div class="dev-socials">
+                </div>
+              </div>
             </div>
           </div>
         </ion-col>
 
-        <!-- Desarrollador 2 -->
-        <ion-col size="12" size-sm="8" size-md="4">
-          <div class="dev-card glass-style">
-            <div class="image-wrapper">
-              <!-- Espacio para la imagen -->
-              <div class="image-placeholder">
-                <span class="placeholder-text">FOTO 2</span>
-              </div>
+
+        <ion-col size="12" size-md="11" size-lg="10">
+          <div class="dev-card-horizontal glass-style" [class.expanded]="expandedCard === 'nicolas'" (click)="toggleCard('nicolas')">
+            <div class="dev-image">
+                <div class="image-placeholder">
+                  <img src="/assets/img/dev-nicolas.png" alt="Nicolas Garcia">
+                </div>
             </div>
-            <div class="info-wrapper">
-              <h2 class="dev-name">Nombre Desarrollador 2</h2>
-              <p class="dev-role">Rol / Título</p>
+            <div class="dev-info">
+              <div class="dev-info-header">
+                <div>
+                  <h2 class="dev-name">Nicolas García</h2>
+                  <p class="dev-role">Desarrollador Ia</p>
+                </div>
+                <ion-icon class="toggle-icon" [name]="expandedCard === 'nicolas' ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+              </div>
+              <div class="dev-description-wrapper">
+                <p class="dev-description">
+                  (Escribe aquí tu descripción, experiencia profesional o rol exacto en el proyecto).
+                </p>
+                <div class="dev-socials">
+                </div>
+              </div>
             </div>
           </div>
         </ion-col>
 
-        <!-- Desarrollador 3 -->
-        <ion-col size="12" size-sm="8" size-md="4">
-          <div class="dev-card glass-style">
-            <div class="image-wrapper">
-              <!-- Espacio para la imagen -->
-              <div class="image-placeholder">
-                <span class="placeholder-text">FOTO 3</span>
-              </div>
+      
+        <ion-col size="12" size-md="11" size-lg="10">
+          <div class="dev-card-horizontal glass-style" [class.expanded]="expandedCard === 'benjamin'" (click)="toggleCard('benjamin')">
+            <div class="dev-image">
+                <div class="image-placeholder">
+                  <img src="/assets/img/dev-benjamin.png" alt="Benjamin Gonzalez">
+                </div>
             </div>
-            <div class="info-wrapper">
-              <h2 class="dev-name">Nombre Desarrollador 3</h2>
-              <p class="dev-role">Rol / Título</p>
+            <div class="dev-info">
+              <div class="dev-info-header">
+                <div>
+                  <h2 class="dev-name">Benjamin Gonzalez</h2>
+                  <p class="dev-role">Desarrollador Frontend</p>
+                </div>
+                <ion-icon class="toggle-icon" [name]="expandedCard === 'benjamin' ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+              </div>
+              <div class="dev-description-wrapper">
+                <p class="dev-description">
+                  Hola! Soy Benjamin, estudiante de Ingeniería en Informática y apasionado por el desarrollo de software, me gusta crear aplicaciones web, en este proyecto me encargue del desarrollo del frontend.
+                </p>
+                <div class="dev-socials">
+                </div>
+              </div>
             </div>
           </div>
         </ion-col>
@@ -67,4 +103,6 @@
       </ion-row>
     </ion-grid>
   </div>
+
+  <app-home-footer></app-home-footer>
 </ion-content>

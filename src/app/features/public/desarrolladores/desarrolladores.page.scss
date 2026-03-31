@@ -1,5 +1,5 @@
 ion-toolbar {
-  --background: transparent;
+  --background: var(--ion-background-color, #ffffff);
   --border-width: 0;
 }
 
@@ -9,91 +9,186 @@ ion-toolbar {
   align-items: center;
   justify-content: flex-start;
   min-height: 100%;
-  padding: 40px 20px;
+  padding: 40px 20px 120px 20px; /* 120px de padding inferior para que el footer no tape la última tarjeta */
 }
 
 .header-section {
   text-align: center;
   margin-bottom: 50px;
+  position: relative;
+  z-index: 10; /* para no solaparse con los overlays */
 
   .main-title {
-    font-size: 3rem;
-    font-weight: 800;
+    font-size: 2.8rem;
+    font-weight: 900;
     margin: 0;
-    color: var(--ion-text-color, #222);
-    letter-spacing: 2px;
+    /* Un gradiente elegante para el título basado en los colores rojizos de Inacap */
+    background: linear-gradient(90deg, #421ceb 0%, #ff5252 50%, #4810cc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.5px;
   }
 
   .subtitle {
     font-size: 1.2rem;
     color: var(--ion-color-medium, #666);
     margin-top: 10px;
+    font-weight: 500;
   }
 }
 
-.dev-card.glass-style {
-  background: rgba(255, 255, 255, 0.05); /* Funciona en claro y oscuro si hay fondo debajo, o usemos colores base */
-  border-radius: 20px;
-  border: 1px solid rgba(128, 128, 128, 0.2);
-  padding: 30px;
-  text-align: center;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  margin-bottom: 30px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* KEYFRAMES DE ENTRADA */
+@keyframes fadeInUpCard {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* HORIZONTAL CARD STYLE (REAL GLASSMORPHISM) */
+.dev-card-horizontal.glass-style {
+  display: flex;
+  flex-direction: column;
+  background: rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 16px;
+  border: 1px solid rgba(128, 128, 128, 0.15);
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+  cursor: pointer;
+  
+  /* Animación escalonada nativa */
+  animation: fadeInUpCard 0.6s ease-out both;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: stretch;
+  }
 
   &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(211, 47, 47, 0.3); /* Soft Inacap Red Outline en Hover */
   }
-
-  /* Si el tema es claro, el glass de fondo puede ser diferente, 
-     pero ionic maneja bien semi-transparentes */
 }
 
-.image-wrapper {
+.dev-image {
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   margin-bottom: 20px;
 
-  .image-placeholder {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background-color: var(--ion-color-light, #f4f5f8);
-    border: 3px dashed var(--ion-color-medium, #92949c);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+    margin-right: 24px;
+  }
 
-    .placeholder-text {
-      color: var(--ion-color-medium, #92949c);
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
+  .image-placeholder {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%; /* Convertimos la foto a un circulo premium */
+    background-color: var(--ion-color-light, #f4f5f8);
+    position: relative;
+    padding: 6px;
+    /* Borde gradiente circular usando background en el wrapper */
+    background: linear-gradient(135deg, #1b57b3, #fca5a5);
+    box-shadow: 0 10px 25px rgba(211, 47, 47, 0.15);
 
     img {
+      display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid var(--ion-background-color, #ffffff);
     }
   }
 }
 
-.info-wrapper {
+.dev-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left; /* Alineado a la izquierda según la imagen */
+
+  .dev-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .toggle-icon {
+      font-size: 1.5rem;
+      color: var(--ion-color-medium, #666);
+      transition: transform 0.3s ease;
+    }
+  }
+
+  .dev-description-wrapper {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), margin-top 0.3s ease, opacity 0.3s ease;
+  }
+
   .dev-name {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
     margin: 0 0 5px 0;
-    color: var(--ion-text-color);
+    color: var(--ion-text-color, #111);
   }
 
   .dev-role {
     font-size: 1rem;
-    color: var(--ion-color-medium);
+    color: var(--ion-color-medium, #666);
     margin: 0;
     font-weight: 500;
+  }
+
+  .dev-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--ion-text-color, #333);
+    margin: 0 0 20px 0;
+    opacity: 0.9;
+  }
+}
+
+.dev-card-horizontal.expanded {
+  .dev-description-wrapper {
+    max-height: 500px; /* Suficiente para el contenido */
+    margin-top: 15px;
+    opacity: 1;
+  }
+}
+
+.dev-socials {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  .social-btn {
+    --background: #4b5563; /* Gris oscuro para LinkedIn/GitHub como en la imagen */
+    --background-activated: #374151;
+    --background-focused: #374151;
+    --background-hover: #374151;
+    --border-radius: 6px;
+    text-transform: none;
+    font-weight: 500;
+    letter-spacing: normal;
+    margin: 0;
+    
+    ion-icon {
+      font-size: 18px;
+    }
   }
 }

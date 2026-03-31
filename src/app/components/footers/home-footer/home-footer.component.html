@@ -1,16 +1,15 @@
 <footer class="v2-footer">
-    <!-- Botón de Accesibilidad -->
-    <button class="footer-btn accessibility-btn" aria-label="Opciones de Accesibilidad">
+    <button class="footer-btn accessibility-btn" aria-label="Desarrolladores" (click)="goToDevelopers()">
         <ion-icon name="accessibility-outline"></ion-icon>
     </button>
 
-    <!-- Logo/Marca Central -->
-    <div class="footer-brand">
+    
+    <div class="footer-brand" (click)="onSecretClick()">
         <span class="brand-text">{{ 'FOOTER.BRAND' | translate }}</span>
         <span class="brand-year">{{ 'FOOTER.ANNIVERSARY' | translate }}</span>
     </div>
 
-    <!-- Botón de Info/Ayuda -->
+    
     <button class="footer-btn info-btn" aria-label="Información" (click)="openOptions()">
         <ion-icon name="information-circle-outline"></ion-icon>
     </button>

@@ -28,31 +28,40 @@ export class HomeFooterComponent implements OnInit {
         addIcons({ accessibilityOutline, informationCircleOutline, logInOutline, languageOutline, closeOutline, colorPaletteOutline, codeWorkingOutline });
     }
 
+    adminClickCount = 0;
+    adminClickTimer: any;
+
     ngOnInit() { }
+
+    goToDevelopers() {
+        this.router.navigate(['/desarrolladores']);
+    }
+
+    onSecretClick() {
+        this.adminClickCount++;
+        clearTimeout(this.adminClickTimer);
+        
+        if (this.adminClickCount >= 5) {
+            this.adminClickCount = 0;
+            // Redirige al acceso administrativo de forma secreta
+            this.router.navigate(['/auth/login']);
+        } else {
+            // Reinicia el contador si pausan más de 1 segundo
+            this.adminClickTimer = setTimeout(() => {
+                this.adminClickCount = 0;
+            }, 1000);
+        }
+    }
 
     async openOptions() {
         const actionSheet = await this.actionSheetCtrl.create({
             header: this.translateService.instant('FOOTER.OPTIONS_HEADER'),
             buttons: [
                 {
-                    text: this.translateService.instant('FOOTER.ADMIN_ACCESS'),
-                    icon: 'log-in-outline',
-                    handler: () => {
-                        this.router.navigate(['/auth/login']);
-                    }
-                },
-                {
                     text: this.translateService.instant('FOOTER.THEME_TOGGLE'),
                     icon: 'color-palette-outline',
                     handler: () => {
                         this.themeService.toggleTheme();
-                    }
-                },
-                {
-                    text: this.translateService.instant('FOOTER.DEVELOPERS'),
-                    icon: 'code-working-outline',
-                    handler: () => {
-                        this.router.navigate(['/desarrolladores']);
                     }
                 },
                 {
