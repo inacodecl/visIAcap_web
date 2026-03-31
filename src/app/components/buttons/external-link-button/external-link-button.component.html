@@ -1,0 +1,31 @@
+<div class="external-btn-wrapper">
+  <ion-button
+    expand="block"
+    class="external-link-btn"
+    [class.on-cooldown]="isOnCooldown()"
+    [disabled]="isOnCooldown()"
+    (click)="handleClick()"
+    aria-label="Abrir sitio web externo">
+
+    <!-- Estado normal: ícono y texto del botón -->
+    <ng-container *ngIf="!isOnCooldown()">
+      <span class="btn-label">{{ label }}</span>
+      <ion-icon [name]="icon" slot="end"></ion-icon>
+    </ng-container>
+
+    <!-- Estado cooldown: ícono de reloj y contador regresivo -->
+    <ng-container *ngIf="isOnCooldown()">
+      <ion-icon name="time-outline" slot="start"></ion-icon>
+      <span class="btn-label cooldown-label">Espera {{ remainingSeconds() }}s...</span>
+    </ng-container>
+
+  </ion-button>
+
+  <!-- Barra de progreso de cooldown -->
+  <div class="cooldown-track" [class.visible]="isOnCooldown()">
+    <div
+      class="cooldown-fill"
+      [style.width.%]="cooldownProgress()">
+    </div>
+  </div>
+</div>

@@ -1,20 +1,21 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { IonContent, IonIcon, IonButton, IonSpinner, IonChip, IonLabel } from '@ionic/angular/standalone';
+import { IonContent, IonIcon, IonSpinner, IonChip, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { arrowBack, arrowBackOutline, globe, time, location, calendarNumber, analytics, arrowForwardCircle, imagesOutline, folderOpen } from 'ionicons/icons';
+import { arrowBack, arrowBackOutline, globe, time, location, calendarNumber, analytics, imagesOutline, folderOpen } from 'ionicons/icons';
 import { ProyectosService } from '../../../../../core/services/proyectos.service';
 import { Proyecto } from '../../../../../core/models/proyecto.model';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../../../core/services/language.service';
+import { ExternalLinkButtonComponent } from '../../../../../components/buttons/external-link-button/external-link-button.component';
 
 @Component({
     selector: 'app-projects-details',
     templateUrl: './projects-details.page.html',
     styleUrls: ['./projects-details.page.scss'],
     standalone: true,
-    imports: [CommonModule, IonContent, IonButton, IonIcon, IonSpinner, RouterModule, IonChip, IonLabel, TranslateModule]
+    imports: [CommonModule, IonContent, IonIcon, IonSpinner, RouterModule, IonChip, IonLabel, TranslateModule, ExternalLinkButtonComponent]
 })
 export class ProjectsDetailsPage implements OnInit {
     private route = inject(ActivatedRoute);
@@ -27,7 +28,7 @@ export class ProjectsDetailsPage implements OnInit {
     error = signal(false);
 
     constructor() {
-        addIcons({ arrowBack, arrowBackOutline, calendarNumber, location, analytics, imagesOutline, folderOpen, arrowForwardCircle, globe, time });
+        addIcons({ arrowBack, arrowBackOutline, calendarNumber, location, analytics, imagesOutline, folderOpen, globe, time });
     }
 
     ngOnInit() {
@@ -62,10 +63,6 @@ export class ProjectsDetailsPage implements OnInit {
         });
     }
 
-    openExternalUrl() {
-        const url = this.proyecto()?.url_externa;
-        if (url) {
-            window.open(url, '_blank');
-        }
-    }
+    // openExternalUrl() fue reemplazado por <app-external-link-button>
+    // que delega la lógica al ExternalTabService (cooldown + cierre automático).
 }

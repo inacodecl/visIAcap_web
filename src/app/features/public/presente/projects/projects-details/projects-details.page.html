@@ -152,10 +152,11 @@
 
             @if (proyecto()?.url_externa) {
             <div class="action-container">
-                <ion-button expand="block" (click)="openExternalUrl()" class="action-button gradient-btn">
-                    <span>{{ 'PROJECT_DETAIL.VISIT_WEBSITE' | translate }}</span>
-                    <ion-icon name="arrow-forward-circle" slot="end"></ion-icon>
-                </ion-button>
+                <app-external-link-button
+                  [url]="proyecto()!.url_externa!"
+                  [label]="'PROJECT_DETAIL.VISIT_WEBSITE' | translate"
+                  icon="arrow-forward-circle">
+                </app-external-link-button>
             </div>
             }
         </div>

@@ -1,0 +1,77 @@
+// ============================================================
+// ExternalLinkButtonComponent Styles
+// ============================================================
+
+.external-btn-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+// ─── Botón Principal ─────────────────────────────────────────
+.external-link-btn {
+  height: 55px;
+  --border-radius: 14px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  --background: linear-gradient(135deg, #c8102e 0%, #b71c1c 100%);
+  --background-activated: linear-gradient(135deg, #a00d24 0%, #8b1515 100%);
+  --box-shadow: 0 10px 25px rgba(200, 16, 46, 0.25);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  width: 100%;
+
+  &:not([disabled]):hover {
+    transform: translateY(-2px);
+    --box-shadow: 0 14px 30px rgba(200, 16, 46, 0.35);
+  }
+
+  &:not([disabled]):active {
+    transform: scale(0.98);
+  }
+
+  // Estado cooldown: apariencia atenuada
+  &.on-cooldown {
+    --background: linear-gradient(135deg, #555 0%, #333 100%);
+    --box-shadow: none;
+    opacity: 0.85;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  .btn-label {
+    flex: 1;
+    text-align: center;
+  }
+
+  .cooldown-label {
+    font-size: 1.05rem;
+    letter-spacing: 0.3px;
+  }
+}
+
+// ─── Barra de Progreso de Cooldown ───────────────────────────
+.cooldown-track {
+  position: absolute;
+  bottom: 0;
+  left: 14px;     // Alineado con el border-radius del botón
+  right: 14px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0 0 14px 14px;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  &.visible {
+    opacity: 1;
+  }
+}
+
+.cooldown-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #c8102e, #ff6b6b);
+  border-radius: 0 0 14px 14px;
+  // La anchura se controla desde el componente con [style.width.%]
+  // La transición suaviza el cambio cada 100ms
+  transition: width 0.1s linear;
+}
