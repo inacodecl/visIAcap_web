@@ -4,51 +4,19 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import {
-    rocketOutline, newspaperOutline, calendarOutline, timeOutline,
-    arrowForwardOutline, arrowBackOutline, sparklesOutline, trophyOutline,
-    peopleOutline, bulbOutline, codeSlashOutline, constructOutline,
-    schoolOutline, flaskOutline
-} from 'ionicons/icons';
-import { GeometricOverlayTopComponent } from '../../home/components/geometric-overlay-top/geometric-overlay-top.component';
+import { arrowBackOutline } from 'ionicons/icons';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
 import { TranslateModule } from '@ngx-translate/core';
 
-// Interfaces para datos mock
-interface ProyectoFuturo {
-    id: number;
-    titulo: string;
-    descripcion: string;
-    imagen: string;
-    categoria: string;
-    icono: string;
-}
+// Modelos migrados
+import { ProyectoFuturo, Noticia, EventoProximamente, EventoEsteMes } from '../futuro.models';
 
-interface Noticia {
-    id: number;
-    titulo: string;
-    resumen: string;
-    fecha: string;
-    imagen: string;
-    etiqueta: string;
-}
-
-interface EventoProximamente {
-    id: number;
-    titulo: string;
-    descripcion: string;
-    fechaTexto: string;
-    icono: string;
-}
-
-interface EventoEsteMes {
-    id: number;
-    titulo: string;
-    descripcion: string;
-    dia: string;
-    mes: string;
-    tipo: string;
-}
+// Componentes modulares
+import { HeroFuturoComponent } from '../components-futuro/hero-futuro/hero-futuro.component';
+import { ProyectosFuturoComponent } from '../components-futuro/proyectos-futuro/proyectos-futuro.component';
+import { NoticiasFuturoComponent } from '../components-futuro/noticias-futuro/noticias-futuro.component';
+import { EsteMesFuturoComponent } from '../components-futuro/este-mes-futuro/este-mes-futuro.component';
+import { ProximamenteFuturoComponent } from '../components-futuro/proximamente-futuro/proximamente-futuro.component';
 
 @Component({
     selector: 'app-futuro',
@@ -57,11 +25,21 @@ interface EventoEsteMes {
     standalone: true,
     imports: [
         IonContent, CommonModule, FormsModule, IonIcon,
-        GeometricOverlayTopComponent, HomeFooterComponent,
-        TranslateModule
+        HomeFooterComponent,
+        TranslateModule,
+        HeroFuturoComponent,
+        ProyectosFuturoComponent,
+        NoticiasFuturoComponent,
+        EsteMesFuturoComponent,
+        ProximamenteFuturoComponent
     ]
 })
 export class FuturoPage implements OnInit {
+
+    // Mes actual del dispositivo
+    nombreMesActual = signal<string>(
+        new Date().toLocaleString('es-ES', { month: 'long' }).toUpperCase()
+    );
 
     // ========================================
     // Datos Mock — Proyectos Destacados
@@ -71,7 +49,7 @@ export class FuturoPage implements OnInit {
             id: 1,
             titulo: 'Sistema IoT Campus Verde',
             descripcion: 'Monitoreo ambiental inteligente con sensores distribuidos por todo el campus para optimizar el consumo energético.',
-            imagen: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?q=80&w=800&auto=format&fit=crop',
+            imagen: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?fm=jpg&q=60&w=3000&auto=format&fit=crop',
             categoria: 'IoT',
             icono: 'bulb-outline'
         },
@@ -110,7 +88,7 @@ export class FuturoPage implements OnInit {
             titulo: 'INACAP Renca gana premio nacional de innovación',
             resumen: 'El proyecto de energía solar desarrollado por estudiantes de Ingeniería fue reconocido a nivel nacional.',
             fecha: '10 Feb 2026',
-            imagen: 'https://images.unsplash.com/photo-1523050854058-8df90110c476?q=80&w=800&auto=format&fit=crop',
+            imagen: 'https://images.unsplash.com/photo-1595437193398-f24279553f4f?fm=jpg&q=60&w=3000&auto=format&fit=crop',
             etiqueta: 'Destacado'
         },
         {
@@ -139,22 +117,28 @@ export class FuturoPage implements OnInit {
             id: 1,
             titulo: 'Hackathon INACAP 2026',
             descripcion: '48 horas de desarrollo intensivo. Equipos multidisciplinarios compitiendo por el mejor proyecto tecnológico.',
-            fechaTexto: 'Marzo 2026',
-            icono: 'code-slash-outline'
+            fechaTexto: '14-16 Marzo, 2026',
+            icono: 'code-slash-outline',
+            ubicacion: 'Atrio Principal INACAP',
+            imagen: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=2670&auto=format&fit=crop'
         },
         {
             id: 2,
             titulo: 'Feria de Innovación',
             descripcion: 'Muestra abierta a la comunidad con los mejores proyectos estudiantiles del semestre.',
-            fechaTexto: 'Abril 2026',
-            icono: 'trophy-outline'
+            fechaTexto: '10-12 Abril, 2026',
+            icono: 'trophy-outline',
+            ubicacion: 'Patio Central',
+            imagen: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2670&auto=format&fit=crop'
         },
         {
             id: 3,
             titulo: 'Semana de la Ciencia',
             descripcion: 'Talleres, charlas y experimentos en vivo para explorar el mundo de la ciencia y tecnología.',
-            fechaTexto: 'Mayo 2026',
-            icono: 'flask-outline'
+            fechaTexto: '05-09 Mayo, 2026',
+            icono: 'flask-outline',
+            ubicacion: 'Auditorio Central',
+            imagen: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=2670&auto=format&fit=crop'
         }
     ]);
 
@@ -196,13 +180,11 @@ export class FuturoPage implements OnInit {
         }
     ]);
 
+    // Lógica para 'Ver más' eventos
+    mostrarTodosEventos = signal(false);
+
     constructor(private router: Router) {
-        addIcons({
-            rocketOutline, newspaperOutline, calendarOutline, timeOutline,
-            arrowForwardOutline, arrowBackOutline, sparklesOutline, trophyOutline,
-            peopleOutline, bulbOutline, codeSlashOutline, constructOutline,
-            schoolOutline, flaskOutline
-        });
+        addIcons({ arrowBackOutline });
     }
 
     ngOnInit() { }

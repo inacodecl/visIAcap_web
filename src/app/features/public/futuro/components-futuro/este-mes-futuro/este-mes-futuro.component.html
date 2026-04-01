@@ -1,0 +1,49 @@
+<section class="stitch-section mb-extra">
+    <!-- Títulos arriba, ancho completo -->
+    <div class="section-header-row">
+        <span class="stitch-eyebrow">{{ 'FUTURO.THIS_MONTH_SUBTITLE' | translate }}</span>
+        <h3 class="stitch-title">{{ 'FUTURO.THIS_MONTH_TITLE' | translate }}</h3>
+    </div>
+
+    <!-- Grid: Tarjeta Mes (izquierda) + Eventos (derecha) -->
+    <div class="calendar-grid">
+        <!-- Columna Izquierda: Tarjeta del Mes Vertical -->
+        <div class="month-card glass-surface">
+            <div class="month-name-vertical">
+                <span class="month-char" *ngFor="let char of monthChars">{{ char }}</span>
+            </div>
+            <p class="month-desc">{{ 'FUTURO.EVENTS_MONTH_DESC' | translate }}</p>
+        </div>
+
+        <!-- Columna Derecha: Lista de Eventos -->
+        <div class="calendar-events">
+            <div class="event-item" 
+                 *ngFor="let evento of (esteMes | slice:0:visibleEventsCount); let i = index"
+                 [style.animation-delay]="(i * 100) + 'ms'">
+                
+                <div class="event-date">
+                    <span class="day">{{ evento.dia }}</span>
+                    <span class="dow">{{ evento.mes }}</span>
+                </div>
+                
+                <div class="event-details">
+                    <span class="badge">{{ evento.tipo }}</span>
+                    <h4 class="title">{{ evento.titulo }}</h4>
+                    <p class="desc">{{ evento.descripcion }}</p>
+                </div>
+                
+                <button class="add-btn">
+                    <ion-icon name="add-outline"></ion-icon>
+                </button>
+            </div>
+
+            <!-- Botón Ver Más / Ver Menos -->
+            <div class="toggle-container" *ngIf="esteMes.length > 3">
+                <button class="toggle-btn" (click)="toggleEvents()">
+                    <span>{{ isExpanded ? ('FUTURO.VIEW_LESS' | translate) : ('FUTURO.VIEW_MORE' | translate) }}</span>
+                    <ion-icon [name]="isExpanded ? 'arrow-up-outline' : 'arrow-down-outline'"></ion-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,9 +1,6 @@
 <ion-content [fullscreen]="true" class="futuro-v2-content">
-
-    <!-- Overlays Geométricos (reutilizados de Homev2) -->
-    <app-geometric-overlay-top></app-geometric-overlay-top>
-
-    <!-- Header con Logo INACAP -->
+    
+    <!-- MANTENIDO: Header con Logo INACAP y "Futuro Renca" -->
     <header class="v2-header">
         <div class="header-left">
             <button class="back-btn" (click)="volverHome()" aria-label="Volver">
@@ -20,150 +17,26 @@
         </div>
     </header>
 
-    <!-- Contenido Principal Scrolleable -->
+    <!-- Contenido Principal Tótem Digital Gallery -->
     <main class="main-container">
 
-        <!-- ============================== -->
-        <!-- HERO SECTION -->
-        <!-- ============================== -->
-        <section class="hero-section">
-            <div class="hero-icon-wrapper">
-                <ion-icon name="rocket-outline"></ion-icon>
-            </div>
-            <h1 class="hero-title">{{ 'FUTURO.HERO_TITLE' | translate }} <span class="highlight">{{ 'FUTURO.HERO_HIGHLIGHT' | translate }}</span></h1>
-            <p class="hero-subtitle">{{ 'FUTURO.HERO_SUBTITLE' | translate }}</p>
-        </section>
-
-        <!-- ============================== -->
-        <!-- SECCIÓN: PROYECTOS DESTACADOS -->
-        <!-- ============================== -->
-        <section class="section-block">
-            <div class="section-header">
-                <div class="section-icon-wrapper">
-                    <ion-icon name="bulb-outline"></ion-icon>
-                </div>
-                <div class="section-title-container">
-                    <h2 class="section-title">{{ 'FUTURO.PROJECTS_TITLE' | translate }}</h2>
-                    <p class="section-subtitle">{{ 'FUTURO.PROJECTS_SUBTITLE' | translate }}</p>
-                </div>
-            </div>
-
-            <div class="projects-scroll">
-                <div class="project-card" *ngFor="let proyecto of proyectos(); let i = index"
-                    [style.animation-delay]="(i * 150) + 'ms'">
-                    <div class="project-img" [style.backgroundImage]="'url(' + proyecto.imagen + ')'">
-                        <span class="project-badge">
-                            <ion-icon [name]="proyecto.icono"></ion-icon>
-                            {{ proyecto.categoria }}
-                        </span>
-                    </div>
-                    <div class="project-info">
-                        <h3>{{ proyecto.titulo }}</h3>
-                        <p>{{ proyecto.descripcion }}</p>
-                        <div class="project-action">
-                            <span>{{ 'FUTURO.VIEW_PROJECT' | translate }}</span>
-                            <ion-icon name="arrow-forward-outline"></ion-icon>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ============================== -->
-        <!-- SECCIÓN: NOTICIAS -->
-        <!-- ============================== -->
-        <section class="section-block">
-            <div class="section-header">
-                <div class="section-icon-wrapper noticias">
-                    <ion-icon name="newspaper-outline"></ion-icon>
-                </div>
-                <div class="section-title-container">
-                    <h2 class="section-title">{{ 'FUTURO.NEWS_TITLE' | translate }}</h2>
-                    <p class="section-subtitle">{{ 'FUTURO.NEWS_SUBTITLE' | translate }}</p>
-                </div>
-            </div>
-
-            <div class="noticias-grid">
-                <div class="noticia-card" *ngFor="let noticia of noticias(); let i = index"
-                    [style.animation-delay]="(i * 150) + 'ms'">
-                    <div class="noticia-img" [style.backgroundImage]="'url(' + noticia.imagen + ')'">
-                        <span class="noticia-etiqueta">{{ noticia.etiqueta }}</span>
-                    </div>
-                    <div class="noticia-info">
-                        <span class="noticia-fecha">{{ noticia.fecha }}</span>
-                        <h3>{{ noticia.titulo }}</h3>
-                        <p>{{ noticia.resumen }}</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ============================== -->
-        <!-- SECCIÓN: ESTE MES -->
-        <!-- ============================== -->
-        <section class="section-block">
-            <div class="section-header">
-                <div class="section-icon-wrapper estemes">
-                    <ion-icon name="calendar-outline"></ion-icon>
-                </div>
-                <div class="section-title-container">
-                    <h2 class="section-title">{{ 'FUTURO.THIS_MONTH_TITLE' | translate }}</h2>
-                    <p class="section-subtitle">{{ 'FUTURO.THIS_MONTH_SUBTITLE' | translate }}</p>
-                </div>
-            </div>
-
-            <div class="estemes-list">
-                <div class="estemes-card" *ngFor="let evento of esteMes(); let i = index"
-                    [style.animation-delay]="(i * 150) + 'ms'">
-                    <div class="estemes-date">
-                        <span class="estemes-dia">{{ evento.dia }}</span>
-                        <span class="estemes-mes">{{ evento.mes }}</span>
-                    </div>
-                    <div class="estemes-separator"></div>
-                    <div class="estemes-content">
-                        <span class="estemes-tipo">{{ evento.tipo }}</span>
-                        <h3>{{ evento.titulo }}</h3>
-                        <p>{{ evento.descripcion }}</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ============================== -->
-        <!-- SECCIÓN: PRÓXIMAMENTE -->
-        <!-- ============================== -->
-        <section class="section-block section-last">
-            <div class="section-header">
-                <div class="section-icon-wrapper proximamente">
-                    <ion-icon name="sparkles-outline"></ion-icon>
-                </div>
-                <div class="section-title-container">
-                    <h2 class="section-title">{{ 'FUTURO.COMING_SOON_TITLE' | translate }}</h2>
-                    <p class="section-subtitle">{{ 'FUTURO.COMING_SOON_SUBTITLE' | translate }}</p>
-                </div>
-            </div>
-
-            <div class="proximamente-list">
-                <div class="proximamente-card" *ngFor="let evento of proximamente(); let i = index"
-                    [style.animation-delay]="(i * 150) + 'ms'">
-                    <div class="proximamente-icon">
-                        <ion-icon [name]="evento.icono"></ion-icon>
-                    </div>
-                    <div class="proximamente-content">
-                        <span class="proximamente-fecha">{{ evento.fechaTexto }}</span>
-                        <h3>{{ evento.titulo }}</h3>
-                        <p>{{ evento.descripcion }}</p>
-                    </div>
-                    <div class="proximamente-arrow">
-                        <ion-icon name="arrow-forward-outline"></ion-icon>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Componentes Modulares -->
+        <app-hero-futuro></app-hero-futuro>
+        
+        <app-proyectos-futuro [proyectos]="proyectos()"></app-proyectos-futuro>
+        
+        <app-noticias-futuro [noticias]="noticias()"></app-noticias-futuro>
+        
+        <app-este-mes-futuro 
+            [esteMes]="esteMes()" 
+            [currentMonthName]="nombreMesActual()">
+        </app-este-mes-futuro>
+        
+        <app-proximamente-futuro [proximamente]="proximamente()"></app-proximamente-futuro>
 
     </main>
 
-    <!-- Footer Universal V2 -->
+    <!-- Footer Universal -->
     <app-home-footer></app-home-footer>
 
 </ion-content>

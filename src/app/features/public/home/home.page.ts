@@ -7,8 +7,7 @@ import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { personCircleOutline, informationCircleOutline, accessibilityOutline, logInOutline, languageOutline, closeOutline } from 'ionicons/icons';
 import { TranslateModule } from '@ngx-translate/core';
-import { GeometricOverlayTopComponent } from './components/geometric-overlay-top/geometric-overlay-top.component';
-import { GeometricOverlayBottomComponent } from './components/geometric-overlay-bottom/geometric-overlay-bottom.component';
+
 
 // Componentes Individuales de Botones
 import { BtnPasadoComponent } from './components/btn-pasado/btn-pasado.component';
@@ -23,9 +22,7 @@ import { HomeFooterComponent } from '../../../components/footers/home-footer/hom
     standalone: true,
     imports: [
         IonContent, CommonModule, FormsModule, IonIcon, 
-        IonGrid, IonRow, IonCol, 
-        GeometricOverlayTopComponent, GeometricOverlayBottomComponent, 
-        BtnPasadoComponent, BtnPresenteComponent, BtnFuturoComponent,
+        IonGrid, IonRow, IonCol, BtnPasadoComponent, BtnPresenteComponent, BtnFuturoComponent,
         HomeFooterComponent, TranslateModule
     ]
 })

@@ -1,0 +1,98 @@
+@import '../shared-futuro.scss';
+
+// ==============================================
+// Proyectos Destacado (Horizontal Premium)
+// ==============================================
+.projects-gallery {
+    display: flex;
+    gap: 40px;
+    overflow-x: auto;
+    padding-bottom: 60px; // Espacio extra para el efecto stagger
+    padding-right: 6vw;
+    scroll-snap-type: x mandatory;
+    margin-right: -6vw; // Bleed effect
+    align-items: flex-start; // Necesario para que el margin-top del stagger funcione
+    &::-webkit-scrollbar { display: none; }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.gallery-card {
+    min-width: 450px;
+    background: $glass-fill;
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+
+    &:active {
+        background: rgba(255,255,255,0.05);
+    }
+}
+
+.gallery-card-img {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+    .gallery-badge {
+        position: absolute;
+        bottom: -20px;
+        left: 30px;
+        background: $inacap-red;
+        color: white;
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-weight: 700;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 10px 20px rgba(226, 6, 19, 0.3);
+        z-index: 2;
+    }
+}
+
+.gallery-card-content {
+    padding: 40px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin: 0 0 15px;
+        line-height: 1.2;
+    }
+    p {
+        font-size: 1.1rem;
+        color: $text-secondary;
+        line-height: 1.6;
+        margin: 0 0 25px;
+        font-family: 'Manrope', system-ui, sans-serif;
+    }
+
+    .gallery-action {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: $inacap-red;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+}
+
+// Tarjeta intercalada: se baja 80px para el efecto de alturas distintas
+.gallery-card--staggered {
+    margin-top: 80px;
+}
