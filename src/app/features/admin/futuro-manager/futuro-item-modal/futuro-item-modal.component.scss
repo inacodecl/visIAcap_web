@@ -1,0 +1,117 @@
+.glass-toolbar {
+    --background: rgba(18, 18, 24, 0.95);
+    background: transparent;
+    border-bottom: 1px solid rgba(0, 255, 234, 0.2);
+    --color: #00ffea;
+    font-weight: 700;
+}
+
+.glass-modal-content {
+    --background: rgba(18, 18, 24, 0.95);
+    backdrop-filter: blur(20px);
+}
+
+.assistive-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem 0;
+
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding-left: 4px;
+        }
+
+        .input-wrapper {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            padding: 2px 12px;
+            transition: all 0.3s ease;
+
+            &:focus-within {
+                border-color: rgba(0, 255, 234, 0.5);
+                background: rgba(255, 255, 255, 0.08);
+                box-shadow: 0 0 15px rgba(0, 255, 234, 0.1);
+            }
+
+            ion-icon {
+                color: #00ffea;
+                font-size: 1.2rem;
+                margin-right: 10px;
+                opacity: 0.8;
+            }
+
+            input, textarea {
+                background: transparent;
+                border: none;
+                color: white;
+                flex: 1;
+                font-size: 0.95rem;
+                padding: 10px 0;
+                outline: none;
+
+                &::placeholder {
+                    color: rgba(255, 255, 255, 0.3);
+                }
+            }
+        }
+    }
+
+    .row-inputs {
+        display: flex;
+        gap: 1.5rem;
+        
+        .input-group.half {
+            flex: 1;
+        }
+    }
+
+    .v-center {
+        align-items: center;
+    }
+
+    .glass-item.transparent {
+        background: transparent;
+        --background: transparent;
+        --color: white;
+        flex: 1;
+        margin: 0;
+        padding: 0;
+    }
+
+    .small-input {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: white;
+        padding: 8px;
+        width: 100%;
+        text-align: center;
+        outline: none;
+        
+        &:focus { border-color: rgba(0, 255, 234, 0.5); }
+    }
+}
+
+.form-actions {
+    margin-top: 1rem;
+    
+    .save-btn.cyan {
+        --background: linear-gradient(135deg, #00ffea 0%, #0096ff 100%);
+        --color: #000;
+        font-weight: 700;
+        letter-spacing: 1px;
+        height: 52px;
+        --box-shadow: 0 10px 30px rgba(0, 255, 234, 0.3);
+    }
+}

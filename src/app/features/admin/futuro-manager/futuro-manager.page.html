@@ -1,0 +1,91 @@
+<app-admin-header title="FUTURO<br>MANAGER" (onRefresh)="loadCurrentSegment()"></app-admin-header>
+
+<ion-content [fullscreen]="true" [scrollY]="true" class="admin-content">
+    <div class="glass-container">
+
+        <!-- HEADER ROW: Título -->
+        <app-admin-page-title title="Gestión del Futuro" icon="rocket-outline" themeColor="blue"
+            [searchPlaceholder]="'Buscar en ' + activeSegment() + '...'" (searchChange)="searchTerm.set($event)">
+        </app-admin-page-title>
+
+        <!-- ACTION CARDS -->
+        <ion-grid class="action-cards-grid ion-margin-bottom">
+            <ion-row>
+                <ion-col size="12">
+                    <app-admin-action-card [title]="'Crear ' + getActiveLabelSingular()" [description]="'Añadir nueva entrada a ' + activeSegment()"
+                        icon="add-circle-outline" themeColor="blue" (cardClick)="openCreateModal()">
+                    </app-admin-action-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <!-- TYPE FILTER (Local Segment) -->
+        <div class="filter-container">
+            <ion-segment [value]="activeSegment()" (ionChange)="segmentChanged($event)" class="neon-segment cyan">
+                <ion-segment-button value="noticias">
+                    <ion-label>NOTICIAS</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="este-mes">
+                    <ion-label>ESTE MES</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="proximamente">
+                    <ion-label>PRÓXIMAMENTE</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+
+        <div class="status-summary">
+            <p>Mostrando <span class="highlight">{{ filteredItems().length }}</span> items</p>
+        </div>
+
+        <!-- LIST GRID -->
+        <ion-grid>
+            <ion-row>
+                <ion-col size="12" size-md="6" size-xl="4" *ngFor="let item of filteredItems()">
+                    <ion-card class="glass-card" [class.unpublished-item]="!item.is_published">
+                        <div class="card-glow"></div>
+                        <ion-card-header>
+                            <div class="header-row">
+                                <div class="slug-badge">{{ getEventMetadata(item) }}</div>
+                                <ion-badge [color]="item.is_published ? 'success' : 'medium'" class="status-badge">
+                                    {{ item.is_published ? 'PUBLICADO' : 'BORRADOR' }}
+                                </ion-badge>
+                            </div>
+                            <ion-card-title>{{ item.titulo }}</ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content>
+                            <p class="description">{{ item.resumen || item.descripcion || 'Sin descripción...' }}</p>
+                            
+                            <div class="meta-row">
+                                <div class="meta-item" *ngIf="item.etiqueta || item.tipo || item.icono">
+                                    <ion-icon name="bookmark"></ion-icon> {{ item.etiqueta || item.tipo || item.icono }}
+                                </div>
+                                <div class="meta-item" *ngIf="item.fecha || item.fechaTexto">
+                                    <ion-icon name="calendar-outline"></ion-icon> {{ item.fecha || item.fechaTexto }}
+                                </div>
+                            </div>
+
+                            <div class="actions-panel">
+                                <div class="buttons">
+                                    <ion-button fill="clear" color="secondary" (click)="openEditModal(item)"
+                                        class="action-btn edit-btn">
+                                        <ion-icon slot="icon-only" name="create"></ion-icon>
+                                    </ion-button>
+                                    <ion-button fill="clear" color="danger" (click)="deleteItem(item)"
+                                        class="action-btn delete-btn">
+                                        <ion-icon slot="icon-only" name="trash"></ion-icon>
+                                    </ion-button>
+                                </div>
+                            </div>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <!-- Empty State -->
+        <app-admin-empty-state *ngIf="filteredItems().length === 0" message="No hay elementos en esta sección.">
+        </app-admin-empty-state>
+
+    </div>
+</ion-content>

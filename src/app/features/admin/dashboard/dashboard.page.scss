@@ -250,6 +250,10 @@ ion-content {
         --metric-color: #fdcb6e;
     }
 
+    &.futuro {
+        --metric-color: #00ffea;
+    }
+
     &.skeleton {
         background: rgba(200, 200, 200, 0.3);
     }
@@ -386,6 +390,10 @@ ion-content {
 
     &.users {
         --card-color: #fdcb6e;
+    }
+
+    &.futuro {
+        --card-color: #00ffea;
     }
 
     &.skeleton {
