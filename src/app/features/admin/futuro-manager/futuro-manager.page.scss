@@ -1,0 +1,198 @@
+.admin-content {
+    --background: transparent;
+}
+
+.glass-container {
+    padding: 2.5rem 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: 100%;
+}
+
+.filter-container {
+    margin: 2rem 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.neon-segment.cyan {
+    --background: rgba(0, 0, 0, 0.4);
+    --background-checked: rgba(0, 255, 234, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 234, 0.3);
+    border-radius: 12px;
+    padding: 4px;
+
+    ion-segment-button {
+        --color: #a0aec0;
+        --color-checked: #00ffea;
+        --indicator-color: transparent;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+
+        &::before {
+            border-radius: 8px;
+        }
+
+        &.segment-button-checked {
+            text-shadow: 0 0 10px rgba(0, 255, 234, 0.5);
+            box-shadow: inset 0 0 15px rgba(0, 255, 234, 0.1);
+        }
+    }
+}
+
+.status-summary {
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    
+    .highlight {
+        color: #00ffea;
+        font-weight: bold;
+        padding: 0 0.5rem;
+        font-size: 1.1rem;
+    }
+}
+
+.glass-card {
+    background: rgba(18, 18, 24, 0.8);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    margin: 0;
+    margin-bottom: 1.5rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+        transform: translateY(-8px);
+        border-color: rgba(0, 255, 234, 0.4);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 255, 234, 0.1);
+        
+        .card-glow { opacity: 1; }
+    }
+
+    &.unpublished-item {
+        opacity: 0.8;
+        border-style: dashed;
+        
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            pointer-events: none;
+        }
+    }
+
+    .card-glow {
+        position: absolute;
+        top: 0; right: 0; width: 150px; height: 150px;
+        background: radial-gradient(circle, rgba(0, 255, 234, 0.15) 0%, transparent 70%);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    ion-card-header {
+        padding: 1.5rem;
+        
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .slug-badge {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .status-badge {
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        ion-card-title {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+    }
+
+    ion-card-content {
+        padding: 0 1.5rem 1.5rem 1.5rem;
+
+        .description {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+
+        .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            
+            .meta-item {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                background: rgba(255, 255, 255, 0.05);
+                padding: 6px 12px;
+                border-radius: 8px;
+                font-size: 0.8rem;
+                color: #a0aec0;
+
+                ion-icon {
+                    color: #00ffea;
+                }
+            }
+        }
+    }
+}
+
+.actions-panel {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 1rem;
+
+    .buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .action-btn {
+        --padding-start: 10px;
+        --padding-end: 10px;
+        margin: 0;
+        height: 38px;
+        width: 38px;
+        border-radius: 10px;
+        
+        &.edit-btn:hover { background: rgba(0, 150, 255, 0.1); }
+        &.delete-btn:hover { background: rgba(255, 0, 0, 0.1); }
+        
+        ion-icon { font-size: 1.2rem; }
+    }
+}

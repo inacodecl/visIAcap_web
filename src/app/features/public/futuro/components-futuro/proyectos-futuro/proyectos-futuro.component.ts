@@ -16,23 +16,9 @@ import { ProyectoFuturo } from '../../futuro.models';
 export class ProyectosFuturoComponent {
   @Input() proyectos: ProyectoFuturo[] = [];
   @ViewChild('proyectosCarousel') proyectosCarouselRef!: ElementRef<HTMLElement>;
-  activeSlideIndex = 0;
 
   constructor() {
     addIcons({ bulbOutline, arrowBackOutline, arrowForwardOutline });
-  }
-
-  onCarouselScroll() {
-    const el = this.proyectosCarouselRef?.nativeElement;
-    if (!el) return;
-    
-    // En Proyectos, las tarjetas tienen min-width: 450px + gap: 40px = 490px aprox.
-    // Usamos el ancho de la primera tarjeta + gap para granularidad
-    const cardWidth = 450 + 40; 
-    const index = Math.round(el.scrollLeft / cardWidth);
-    if (this.activeSlideIndex !== index) {
-      this.activeSlideIndex = index;
-    }
   }
 
   scrollProyectos(direction: 'prev' | 'next') {

@@ -1,0 +1,145 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar class="glass-toolbar">
+        <ion-title>{{ isEdit ? 'Editar ' : 'Nueva ' }}{{ getLabelSingular() }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="close()">
+                <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding glass-modal-content">
+    <form (ngSubmit)="save()" class="assistive-form">
+
+        <!-- COMÚN: Título -->
+        <div class="input-group">
+            <label>Título</label>
+            <div class="input-wrapper">
+                <ion-icon name="text-outline"></ion-icon>
+                <input type="text" [(ngModel)]="formData.titulo" name="titulo" placeholder="Ej: Nueva innovación..." required>
+            </div>
+        </div>
+
+        <!-- ESPECÍFICO: Noticias -->
+        <ng-container *ngIf="type === 'noticias'">
+            <div class="input-group">
+                <label>Resumen</label>
+                <div class="input-wrapper">
+                    <ion-icon name="document-text-outline"></ion-icon>
+                    <textarea [(ngModel)]="formData.resumen" name="resumen" rows="3" placeholder="Resumen de la noticia..."></textarea>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Etiqueta</label>
+                <div class="input-wrapper">
+                    <ion-icon name="bookmark"></ion-icon>
+                    <input type="text" [(ngModel)]="formData.etiqueta" name="etiqueta" placeholder="Ej: Destacado">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>URL Imagen</label>
+                <div class="input-wrapper">
+                    <ion-icon name="image-outline"></ion-icon>
+                    <input type="text" [(ngModel)]="formData.imagen_url" name="img" placeholder="https://unsplash.com/...">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Fecha (Opcional)</label>
+                <div class="input-wrapper">
+                    <ion-icon name="calendar-clear-outline"></ion-icon>
+                    <input type="date" [(ngModel)]="formData.fecha" name="fecha">
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- ESPECÍFICO: Este Mes -->
+        <ng-container *ngIf="type === 'este-mes'">
+            <div class="input-group">
+                <label>Descripción</label>
+                <div class="input-wrapper">
+                    <ion-icon name="document-text-outline"></ion-icon>
+                    <textarea [(ngModel)]="formData.descripcion" name="descripcion" rows="3" placeholder="Detalles del evento..."></textarea>
+                </div>
+            </div>
+            <div class="row-inputs">
+                <div class="input-group half">
+                    <label>Día</label>
+                    <div class="input-wrapper">
+                        <input type="text" [(ngModel)]="formData.dia" name="dia" maxlength="2" placeholder="Ej: 15">
+                    </div>
+                </div>
+                <div class="input-group half">
+                    <label>Mes</label>
+                    <div class="input-wrapper">
+                        <input type="text" [(ngModel)]="formData.mes" name="mes" maxlength="3" placeholder="Ej: FEB">
+                    </div>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Tipo de Evento</label>
+                <div class="input-wrapper">
+                    <ion-icon name="list-outline"></ion-icon>
+                    <input type="text" [(ngModel)]="formData.tipo" name="tipo_evento" placeholder="Ej: Charla, Taller...">
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- ESPECÍFICO: Próximamente -->
+        <ng-container *ngIf="type === 'proximamente'">
+            <div class="input-group">
+                <label>Descripción</label>
+                <div class="input-wrapper">
+                    <ion-icon name="document-text-outline"></ion-icon>
+                    <textarea [(ngModel)]="formData.descripcion" name="descripcion_p" rows="3" placeholder="Detalles del evento..."></textarea>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Texto de Fecha</label>
+                <div class="input-wrapper">
+                    <ion-icon name="time-outline"></ion-icon>
+                    <input type="text" [(ngModel)]="formData.fecha_texto" name="fechaTexto" placeholder="Ej: 10-12 Abril, 2026">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Ubicación</label>
+                <div class="input-wrapper">
+                    <ion-icon name="location-outline"></ion-icon>
+                    <input type="text" [(ngModel)]="formData.ubicacion" name="ubi" placeholder="Ej: Auditorio Central">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>URL Imagen</label>
+                <div class="input-wrapper">
+                    <ion-icon name="image-outline"></ion-icon>
+                    <input type="text" [(ngModel)]="formData.imagen_url" name="img_p" placeholder="URL de la imagen...">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Icono (Ionicons Name)</label>
+                <div class="input-wrapper">
+                    <ion-icon name="bulb-outline"></ion-icon>
+                    <input type="text" [(ngModel)]="formData.icono" name="icon_p" placeholder="Ej: flask-outline">
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- COMÚN: Publicado y Orden -->
+        <div class="row-inputs v-center">
+            <ion-item lines="none" class="glass-item transparent">
+                <ion-label>Publicado</ion-label>
+                <ion-toggle slot="end" [(ngModel)]="formData.is_published" name="published"></ion-toggle>
+            </ion-item>
+            <div class="input-group half">
+                <label>Prioridad / Orden</label>
+                <input type="number" [(ngModel)]="formData.order_index" name="order" class="small-input" placeholder="0">
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <ion-button type="submit" expand="block" shape="round" class="save-btn cyan">
+                {{ isEdit ? 'Guardar Cambios' : 'Crear Entrada' }}
+            </ion-button>
+        </div>
+    </form>
+</ion-content>
