@@ -110,6 +110,7 @@ $inacap-gray-light: #F5F5F5;
 .logo-wrapper {
     margin-bottom: clamp(1.5rem, 4vh, 3rem);
     animation: logoEnter 1s ease-out 0.3s both;
+    padding-bottom: 10rem;
 }
 
 .logo-image {

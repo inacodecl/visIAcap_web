@@ -47,11 +47,16 @@
         "PROJECTS_SUBTITLE": "Lide ki chanje kominote edikatif nou an",
         "VIEW_PROJECT": "Wè Pwojè",
         "NEWS_TITLE": "Nouvèl",
-        "NEWS_SUBTITLE": "Rete enfòme sou sa k ap pase nan kanpis la",
+        "NEWS_SUBTITLE": "Dènye nouvèl kanpis la",
         "COMING_SOON_TITLE": "Byento",
         "COMING_SOON_SUBTITLE": "Sa k ap vini nan INACAP Renca",
         "THIS_MONTH_TITLE": "Mwa Sa a",
-        "THIS_MONTH_SUBTITLE": "Ajanda fevriye 2026"
+        "THIS_MONTH_SUBTITLE": "Kalandriye evènman",
+        "EVENTS_MONTH_DESC": "Yon sezon konvèjans entèdisiplinè ak konsepsyon inovatè.",
+        "VIEW_MORE": "Wè plis",
+        "VIEW_LESS": "Wè mwens",
+        "IN_PREPARATION": "An preparasyon",
+        "NOTIFY_ME": "Enskri"
     },
     "PRESENTE": {
         "TITLE": "PREZAN",
@@ -76,7 +81,10 @@
         "TEAM": "Ekip Pwojè a",
         "GALLERY": "Galri",
         "GALLERY_EMPTY": "Pa gen imaj adisyonèl.",
-        "VISIT_WEBSITE": "Vizite Sit Wèb Ofisyèl"
+        "VISIT_WEBSITE": "Vizite Sit Wèb Ofisyèl",
+        "QR_TITLE": "Pataje pwojè sa a",
+        "QR_SUBTITLE": "Eskane kòd la pou louvri l nan aparèy ou",
+        "QR_CAPTION": "Eskane avèk kamera telefòn ou"
     },
     "FOOTER": {
         "BRAND": "INACAP Renca Smart",

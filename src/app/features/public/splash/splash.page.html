@@ -9,11 +9,11 @@
 
                 <!-- Logo INACAP -->
                 <div class="logo-wrapper">
-                    <img src="assets/icon/logo-inacap-60.png" alt="INACAP 60 Años" class="logo-image">
+                    <img src="assets/icon/logo-inacap-60-v2.png" alt="INACAP 60 Años" class="logo-image">
                 </div>
 
-                <!-- Texto de bienvenida -->
-                <div class="welcome-text">
+                <!-- Texto de bienvenida (visible solo cuando las traducciones están listas) -->
+                <div class="welcome-text" *ngIf="translationsReady">
                     <span class="sede-label">{{ 'SPLASH.SEDE' | translate }}</span>
                     <span class="anniversary-label">{{ 'SPLASH.ANNIVERSARY' | translate }}</span>
                 </div>
@@ -21,7 +21,7 @@
                 <!-- Loader animado (cubo giratorio) -->
                 <div class="loader-container">
                     <app-rotate-cube></app-rotate-cube>
-                    <span class="loading-text">{{ 'SPLASH.LOADING' | translate }}</span>
+                    <span class="loading-text" *ngIf="translationsReady">{{ 'SPLASH.LOADING' | translate }}</span>
                 </div>
 
             </ion-col>

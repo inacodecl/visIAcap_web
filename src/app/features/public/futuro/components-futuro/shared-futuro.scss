@@ -1,0 +1,159 @@
+@use "sass:color";
+
+// ==============================================
+// Variables de Diseño - Tótem Digital Gallery V3
+// ==============================================
+$inacap-red: #E20613;
+$carbon-depth: #020617;
+$surface: #0c1324;
+$surface-dim: #0c1324;
+$surface-light: #2e3447;
+$text-primary: #dce1fb;
+$text-secondary: rgba(220, 225, 251, 0.7);
+$glass-fill: rgba(30, 41, 59, 0.4);
+
+// ==============================================
+// Utility Globales de Componentes
+// ==============================================
+.gallery-section-header {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 40px;
+    // Empujar botones nav al extremo derecho
+    justify-content: flex-start;
+
+    .gallery-icon-wrapper {
+        width: 70px;
+        height: 70px;
+        border-radius: 20px;
+        background: rgba(226, 6, 19, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(226, 6, 19, 0.2);
+        flex-shrink: 0;
+        
+        ion-icon {
+            font-size: 32px;
+            color: $inacap-red;
+        }
+
+        &.noticias {
+            background: rgba(26, 115, 232, 0.1);
+            border-color: rgba(26, 115, 232, 0.2);
+            ion-icon { color: #1a73e8; }
+        }
+        &.estemes {
+            background: rgba(13, 148, 136, 0.1);
+            border-color: rgba(13, 148, 136, 0.2);
+            ion-icon { color: #0d9488; }
+        }
+        &.proximamente {
+            background: rgba(124, 58, 237, 0.1);
+            border-color: rgba(124, 58, 237, 0.2);
+            ion-icon { color: #7c3aed; }
+        }
+    }
+
+    .gallery-title-group {
+        display: flex;
+        flex-direction: column-reverse; /* Título abajo, label arriba */
+        flex: 1; // Consume el espacio disponible, empuja nav-btns al extremo
+        
+        .gallery-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: $text-primary;
+            margin: 0;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        .gallery-month-label {
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: $inacap-red;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .gallery-subtitle {
+            font-size: 1.2rem;
+            color: $text-secondary;
+            margin: 5px 0 0;
+            font-family: 'Manrope', system-ui, sans-serif;
+        }
+    }
+
+    // Botones de navegación del carrusel
+    .carousel-nav-btns {
+        display: flex;
+        gap: 12px;
+        flex-shrink: 0;
+        margin-left: auto;
+    }
+
+    .nav-btn {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        backdrop-filter: blur(10px);
+
+        ion-icon {
+            font-size: 26px;
+            color: rgba(255, 255, 255, 0.7);
+            transition: color 0.25s ease;
+        }
+
+        &:active {
+            transform: scale(0.9);
+        }
+
+        // Boton activo (next)
+        &.nav-btn--active {
+            background: $inacap-red;
+            border-color: $inacap-red;
+            box-shadow: 0 8px 24px rgba(226, 6, 19, 0.35);
+
+            ion-icon {
+                color: white;
+            }
+
+            &:hover {
+                background: color.adjust($inacap-red, $lightness: 5%);
+            }
+
+            &:active {
+                transform: scale(0.9);
+                box-shadow: 0 4px 12px rgba(226, 6, 19, 0.2);
+            }
+        }
+    }
+}
+
+.mb-extra {
+    margin-bottom: 100px;
+}
+
+// ==============================================
+// Animaciones Core
+// ==============================================
+@keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInReveal {
+    0% { opacity: 0; filter: blur(10px); transform: scale(0.95); }
+    100% { opacity: 1; filter: blur(0); transform: scale(1); }
+}

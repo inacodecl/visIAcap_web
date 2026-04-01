@@ -9,7 +9,6 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { logoGithub, chevronDownOutline, chevronUpOutline } from 'ionicons/icons';
-import { GeometricOverlayTopComponent } from '../home/components/geometric-overlay-top/geometric-overlay-top.component';
 import { HomeFooterComponent } from '../../../components/footers/home-footer/home-footer.component';
 
 @Component({
@@ -20,7 +19,7 @@ import { HomeFooterComponent } from '../../../components/footers/home-footer/hom
   imports: [
     IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
     IonButtons, IonBackButton, IonGrid, IonRow, IonCol, IonCardHeader, IonCardTitle, IonCardSubtitle,
-    IonButton, IonIcon, TranslateModule, GeometricOverlayTopComponent, HomeFooterComponent
+    IonButton, IonIcon, TranslateModule, HomeFooterComponent
   ]
 })
 export class DesarrolladoresPage implements OnInit, ViewWillEnter {

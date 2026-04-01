@@ -6,7 +6,6 @@ import { RouterModule, Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { arrowForwardOutline, arrowBackOutline, rocketOutline, folderOpenOutline } from 'ionicons/icons';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
-import { GeometricOverlayTopComponent } from '../../home/components/geometric-overlay-top/geometric-overlay-top.component';
 import { ProyectosService } from '../../../../core/services/proyectos.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../../core/services/language.service';
@@ -19,7 +18,7 @@ import { LanguageService } from '../../../../core/services/language.service';
   imports: [
     IonContent, CommonModule, FormsModule, RouterModule,
     IonIcon,
-    HomeFooterComponent, GeometricOverlayTopComponent,
+    HomeFooterComponent,
     TranslateModule
   ]
 })
