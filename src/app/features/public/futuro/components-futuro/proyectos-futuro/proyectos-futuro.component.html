@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <div class="projects-gallery" #proyectosCarousel>
+    <div class="projects-gallery" #proyectosCarousel (scroll)="onCarouselScroll()">
         <div class="gallery-card" 
              *ngFor="let proyecto of proyectos; let i = index" 
              [class.gallery-card--staggered]="i % 2 !== 0"
@@ -36,6 +36,14 @@
                     <ion-icon name="arrow-forward-outline"></ion-icon>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Indicadores de Posición (Puntos) -->
+    <div class="carousel-indicators">
+        <div class="indicator-dot" 
+             *ngFor="let dot of proyectos; let i = index"
+             [class.active]="i === activeSlideIndex">
         </div>
     </div>
 </section>

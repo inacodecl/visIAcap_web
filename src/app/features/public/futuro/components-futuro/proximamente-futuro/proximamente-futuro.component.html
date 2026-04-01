@@ -19,7 +19,7 @@
     </div>
 
     <!-- Carrusel Estilo Innovation Fair -->
-    <div class="upcoming-carousel" #proximamenteCarousel>
+    <div class="upcoming-carousel" #proximamenteCarousel (scroll)="onCarouselScroll()">
         <div class="stitch-upcoming-card" 
              *ngFor="let evento of proximamente; let i = index"
              [style.animation-delay]="(i * 100) + 'ms'">
@@ -62,6 +62,14 @@
                     {{ 'FUTURO.NOTIFY_ME' | translate }}
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- Indicadores de Posición (Puntos) -->
+    <div class="carousel-indicators">
+        <div class="indicator-dot" 
+             *ngFor="let dot of proximamente; let i = index"
+             [class.active]="i === activeSlideIndex">
         </div>
     </div>
 </section>
