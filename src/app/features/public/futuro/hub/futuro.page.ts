@@ -21,7 +21,6 @@ import { ProyectoFuturo, Noticia, EventoProximamente, EventoEsteMes } from '../f
 
 // Componentes modulares
 import { ProyectosFuturoComponent } from '../components-futuro/proyectos-futuro/proyectos-futuro.component';
-import { NoticiasFuturoComponent } from '../components-futuro/noticias-futuro/noticias-futuro.component';
 import { ProximamenteFuturoComponent } from '../components-futuro/proximamente-futuro/proximamente-futuro.component';
 
 @Component({
@@ -34,7 +33,6 @@ import { ProximamenteFuturoComponent } from '../components-futuro/proximamente-f
         HomeFooterComponent,
         TranslateModule,
         ProyectosFuturoComponent,
-        NoticiasFuturoComponent,
         ProximamenteFuturoComponent
     ]
 })
