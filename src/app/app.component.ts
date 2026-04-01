@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 
 import { ThemeService } from './core/services/theme.service';
+import { LanguageService } from './core/services/language.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,9 @@ import { ThemeService } from './core/services/theme.service';
   imports: [CommonModule, IonApp, IonRouterOutlet],
 })
 export class AppComponent { 
-  constructor(private themeService: ThemeService) {}
+  constructor(
+    private themeService: ThemeService,
+    private languageService: LanguageService
+  ) {}
 }
 
