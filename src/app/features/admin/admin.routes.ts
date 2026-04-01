@@ -25,5 +25,9 @@ export const routes: Routes = [
     {
         path: 'proyectos',
         loadComponent: () => import('./project-manager/project-manager.page').then(m => m.ProjectManagerPage)
+    },
+    {
+        path: 'futuro',
+        loadComponent: () => import('./futuro-manager/futuro-manager.page').then(m => m.FuturoManagerPage)
     }
 ];
