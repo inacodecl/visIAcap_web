@@ -76,7 +76,10 @@
         "TEAM": "Ekip Pwojè a",
         "GALLERY": "Galri",
         "GALLERY_EMPTY": "Pa gen imaj adisyonèl.",
-        "VISIT_WEBSITE": "Vizite Sit Wèb Ofisyèl"
+        "VISIT_WEBSITE": "Vizite Sit Wèb Ofisyèl",
+        "QR_TITLE": "Pataje pwojè sa a",
+        "QR_SUBTITLE": "Eskane kòd la pou louvri l nan aparèy ou",
+        "QR_CAPTION": "Eskane avèk kamera telefòn ou"
     },
     "FOOTER": {
         "BRAND": "INACAP Renca Smart",

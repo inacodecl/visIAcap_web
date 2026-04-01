@@ -76,7 +76,10 @@
         "TEAM": "Project Team",
         "GALLERY": "Gallery",
         "GALLERY_EMPTY": "No additional images.",
-        "VISIT_WEBSITE": "Visit Official Website"
+        "VISIT_WEBSITE": "Visit Official Website",
+        "QR_TITLE": "Share this project",
+        "QR_SUBTITLE": "Scan the code to open it on your device",
+        "QR_CAPTION": "Scan with your phone camera"
     },
     "FOOTER": {
         "BRAND": "INACAP Renca Smart",

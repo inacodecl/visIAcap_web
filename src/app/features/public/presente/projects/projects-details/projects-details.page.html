@@ -151,6 +151,32 @@
             }
 
             @if (proyecto()?.url_externa) {
+            <!-- QR Code Section -->
+            <div class="qr-section">
+                <div class="qr-card">
+                    <div class="qr-header">
+                        <div class="qr-icon-wrapper">
+                            <ion-icon name="qr-code-outline"></ion-icon>
+                        </div>
+                        <div class="qr-text">
+                            <span class="qr-title">{{ 'PROJECT_DETAIL.QR_TITLE' | translate }}</span>
+                            <span class="qr-subtitle">{{ 'PROJECT_DETAIL.QR_SUBTITLE' | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="qr-code-wrapper">
+                        <qrcode
+                            [qrdata]="proyecto()!.url_externa!"
+                            [width]="220"
+                            [margin]="1"
+                            [colorDark]="'#1a0a0e'"
+                            [colorLight]="'#ffffff'"
+                            [errorCorrectionLevel]="'M'">
+                        </qrcode>
+                    </div>
+                    <p class="qr-caption">{{ 'PROJECT_DETAIL.QR_CAPTION' | translate }}</p>
+                </div>
+            </div>
+
             <div class="action-container">
                 <app-external-link-button
                   [url]="proyecto()!.url_externa!"

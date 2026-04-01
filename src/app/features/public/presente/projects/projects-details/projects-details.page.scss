@@ -527,3 +527,107 @@ h1 {
         }
     }
 }
+
+// ========================================
+// QR CODE SECTION
+// ========================================
+.qr-section {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.qr-card {
+    width: 100%;
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(200, 16, 46, 0.35);
+    border-radius: 24px;
+    padding: 28px 24px 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    animation: slideUpFade 0.6s ease-out 0.5s both;
+}
+
+.qr-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+}
+
+.qr-icon-wrapper {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #c8102e 0%, #8b0000 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(200, 16, 46, 0.4);
+
+    ion-icon {
+        font-size: 22px;
+        color: #fff;
+    }
+}
+
+.qr-text {
+    display: flex;
+    flex-direction: column;
+
+    .qr-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.2;
+    }
+
+    .qr-subtitle {
+        font-size: 0.82rem;
+        color: #aaa;
+        font-weight: 400;
+    }
+}
+
+.qr-code-wrapper {
+    position: relative;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(200, 16, 46, 0.4), transparent 60%);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    qrcode {
+        display: block;
+        line-height: 0;
+        position: relative;
+        z-index: 2;
+    }
+}
+
+.qr-caption {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #888;
+    text-align: center;
+    letter-spacing: 0.3px;
+}
