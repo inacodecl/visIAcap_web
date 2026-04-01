@@ -7,11 +7,11 @@
     display: flex;
     gap: 40px;
     overflow-x: auto;
-    padding-bottom: 60px;
+    padding-bottom: 60px; // Espacio extra para el efecto stagger
     padding-right: 6vw;
     scroll-snap-type: x mandatory;
-    margin-right: -6vw;
-    align-items: flex-start;
+    margin-right: -6vw; // Bleed effect
+    align-items: flex-start; // Necesario para que el margin-top del stagger funcione
     &::-webkit-scrollbar { display: none; }
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -92,37 +92,7 @@
     }
 }
 
+// Tarjeta intercalada: se baja 80px para el efecto de alturas distintas
 .gallery-card--staggered {
     margin-top: 80px;
-}
-
-// ─── Indicadores (Puntos) ───
-.carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 2rem;
-
-    .indicator-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.2);
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        cursor: pointer;
-
-        &.active {
-            background: $inacap-red;
-            transform: scale(1.4);
-            box-shadow: 0 0 10px rgba(226, 6, 19, 0.5);
-            width: 28px; // Forma alargada para el activo
-            border-radius: 10px;
-        }
-    }
-}
-
-@media (max-width: 768px) {
-    .gallery-card {
-        min-width: 85vw;
-    }
 }

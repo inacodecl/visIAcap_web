@@ -20,7 +20,10 @@ import { Proyecto } from 'src/app/core/models/proyecto.model';
 import { ProyectoFuturo, Noticia, EventoProximamente, EventoEsteMes } from '../futuro.models';
 
 // Componentes modulares
+import { HeroFuturoComponent } from '../components-futuro/hero-futuro/hero-futuro.component';
 import { ProyectosFuturoComponent } from '../components-futuro/proyectos-futuro/proyectos-futuro.component';
+import { NoticiasFuturoComponent } from '../components-futuro/noticias-futuro/noticias-futuro.component';
+import { EsteMesFuturoComponent } from '../components-futuro/este-mes-futuro/este-mes-futuro.component';
 import { ProximamenteFuturoComponent } from '../components-futuro/proximamente-futuro/proximamente-futuro.component';
 
 @Component({
@@ -32,7 +35,10 @@ import { ProximamenteFuturoComponent } from '../components-futuro/proximamente-f
         IonContent, CommonModule, FormsModule, IonIcon,
         HomeFooterComponent,
         TranslateModule,
+        HeroFuturoComponent,
         ProyectosFuturoComponent,
+        NoticiasFuturoComponent,
+        EsteMesFuturoComponent,
         ProximamenteFuturoComponent
     ]
 })

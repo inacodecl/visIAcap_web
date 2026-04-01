@@ -21,8 +21,16 @@
     <main class="main-container">
 
         <!-- Componentes Modulares -->
+        <app-hero-futuro></app-hero-futuro>
         
         <app-proyectos-futuro [proyectos]="proyectos()"></app-proyectos-futuro>
+        
+        <app-noticias-futuro [noticias]="noticias()"></app-noticias-futuro>
+        
+        <app-este-mes-futuro 
+            [esteMes]="esteMes()" 
+            [currentMonthName]="nombreMesActual()">
+        </app-este-mes-futuro>
         
         <app-proximamente-futuro [proximamente]="proximamente()"></app-proximamente-futuro>
 
