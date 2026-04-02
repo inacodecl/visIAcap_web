@@ -62,7 +62,7 @@
                 <div #cardElement class="entrevista-card scroll-hidden" 
                      *ngFor="let entrevista of entrevistas(); let i = index"
                      [style.--i]="i"
-                     (click)="openVideo(entrevista.url_video)">
+                     (click)="openVideo(entrevista)">
 
                     <div class="entrevista-img" [style.backgroundImage]="'url(' + entrevista.url_imagen + ')'">
                         <div class="play-overlay">
@@ -98,20 +98,77 @@
     <!-- Footer Component -->
     <app-home-footer></app-home-footer>
 
-    <!-- Video Modal -->
-    <ion-modal [isOpen]="isVideoModalOpen()" (didDismiss)="closeVideo()" class="custom-video-modal">
+    <!-- Video Modal (Editorial Bottom Sheet) -->
+    <ion-modal [isOpen]="isVideoModalOpen()" (didDismiss)="closeVideo()" class="editorial-bottom-modal" [initialBreakpoint]="0.6" [breakpoints]="[0, 0.6]">
         <ng-template>
-            <div class="video-modal-content">
-                <button class="close-video-btn" (click)="closeVideo()">
-                    <ion-icon name="close-circle-outline"></ion-icon>
-                </button>
-                <div class="iframe-container" *ngIf="currentVideoUrl()">
-                    <iframe 
-                        [src]="currentVideoUrl()" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
+            <div class="editorial-modal-content" *ngIf="currentEntrevista() as entrevista">
+                
+                <div class="video-section">
+                    <div class="iframe-wrapper" *ngIf="currentVideoUrl()">
+                        <iframe 
+                            #youtubeIframe
+                            (load)="onIframeLoad()"
+                            [src]="currentVideoUrl()" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Controles de Reproducción -->
+                <div class="video-controls">
+                    <button class="ctrl-btn" (click)="seekRelative(-15)" title="Retroceder 15s">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 17l-5-5 5-5"/><path d="M18 17l-5-5 5-5"/>
+                        </svg>
+                        <span class="ctrl-label">15</span>
+                    </button>
+                    <button class="ctrl-btn" (click)="seekRelative(-5)" title="Retroceder 5s">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                        <span class="ctrl-label">5</span>
+                    </button>
+                    <button class="ctrl-btn ctrl-play" (click)="togglePlayPause()" [title]="isPlayerPlaying ? 'Pausar' : 'Reproducir'">
+                        <!-- Play -->
+                        <svg *ngIf="!isPlayerPlaying" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        <!-- Pause -->
+                        <svg *ngIf="isPlayerPlaying" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
+                        </svg>
+                    </button>
+                    <button class="ctrl-btn" (click)="seekRelative(5)" title="Adelantar 5s">
+                        <span class="ctrl-label">5</span>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <button class="ctrl-btn" (click)="seekRelative(15)" title="Adelantar 15s">
+                        <span class="ctrl-label">15</span>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 17l5-5-5-5"/><path d="M13 17l5-5-5-5"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Divisor Sutil -->
+                <div class="modal-divider"></div>
+
+                <div class="info-section">
+                    <div class="title-row">
+                        <h2 class="modal-title">{{ entrevista.titulo }}</h2>
+                        <span class="badge-autor">{{ entrevista.entrevistado }}</span>
+                    </div>
+                    <p class="modal-desc">{{ entrevista.descripcion }}</p>
+                </div>
+
+                <div class="modal-action-footer">
+                    <button class="close-vision-btn" (click)="closeVideo()">
+                        [ CERRAR ]
+                    </button>
                 </div>
             </div>
         </ng-template>

@@ -43,7 +43,7 @@ export class ProjectsDetailsPage implements OnInit {
     }
 
     goBack() {
-        this.router.navigate(['/presente/projects']);
+        this.router.navigate(['/presente']);
     }
 
     loadProyecto(id: number) {

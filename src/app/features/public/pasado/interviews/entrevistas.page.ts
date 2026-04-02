@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject, signal, ElementRef, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal, ElementRef, ViewChild, ViewChildren, QueryList, AfterViewInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -45,8 +45,14 @@ export class EntrevistasPage implements OnInit, AfterViewInit, OnDestroy {
 
     // Video Modal States
     isVideoModalOpen = signal<boolean>(false);
+    currentEntrevista = signal<Entrevista | null>(null);
     currentVideoUrl = signal<SafeResourceUrl | null>(null);
     private sanitizer = inject(DomSanitizer);
+
+    // YouTube Player Control
+    @ViewChild('youtubeIframe') youtubeIframe!: ElementRef<HTMLIFrameElement>;
+    isPlayerPlaying = true;
+    private playerCurrentTime = 0;
 
     // Animation Refs
     @ViewChildren('cardElement', { read: ElementRef }) cardElements!: QueryList<ElementRef>;
@@ -127,33 +133,91 @@ export class EntrevistasPage implements OnInit, AfterViewInit, OnDestroy {
         this.router.navigate(['/pasado']);
     }
 
-    openVideo(url: string) {
-        if (!url) return;
+    openVideo(entrevista: Entrevista) {
+        if (!entrevista || !entrevista.url_video) return;
 
         // Extract YouTube ID
-        const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/);
+        const match = entrevista.url_video.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/);
         const videoId = match && match[1];
 
         if (videoId) {
             const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&modestbranding=1&rel=0&fs=1&enablejsapi=1`;
             this.currentVideoUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl));
+            this.currentEntrevista.set(entrevista);
             this.isVideoModalOpen.set(true);
         } else {
             // Fallback for non-youtube links or error
-            window.open(url, '_blank');
+            window.open(entrevista.url_video, '_blank');
         }
     }
 
     closeVideo() {
         this.isVideoModalOpen.set(false);
-        // Pequeño delay para remover el iframe después de que termine la animación
+        this.isPlayerPlaying = true;
+        this.playerCurrentTime = 0;
         setTimeout(() => {
             this.currentVideoUrl.set(null);
+            this.currentEntrevista.set(null);
         }, 300);
     }
 
+    // --- YouTube Player Controls via postMessage ---
+
+    /** Se ejecuta cuando el iframe termina de cargar. Envía 'listening' para que YouTube empiece a enviar actualizaciones de tiempo. */
+    onIframeLoad() {
+        setTimeout(() => {
+            const iframe = this.youtubeIframe?.nativeElement;
+            if (iframe?.contentWindow) {
+                iframe.contentWindow.postMessage(JSON.stringify({
+                    event: 'listening',
+                    id: 'ytplayer'
+                }), '*');
+            }
+        }, 800);
+    }
+
+    @HostListener('window:message', ['$event'])
+    onYouTubeMessage(event: MessageEvent) {
+        // Aceptar mensajes de cualquier subdominio de youtube
+        if (!event.origin.includes('youtube.com')) return;
+        try {
+            const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+            if (data?.info?.currentTime !== undefined) {
+                this.playerCurrentTime = data.info.currentTime;
+            }
+            if (data?.info?.playerState !== undefined) {
+                // 1 = playing, 2 = paused
+                this.isPlayerPlaying = data.info.playerState === 1;
+            }
+        } catch { /* Ignorar mensajes no-JSON */ }
+    }
+
+    private sendYouTubeCommand(func: string, args: any[] = []) {
+        const iframe = this.youtubeIframe?.nativeElement;
+        if (iframe?.contentWindow) {
+            iframe.contentWindow.postMessage(JSON.stringify({
+                event: 'command',
+                func,
+                args
+            }), '*');
+        }
+    }
+
+    togglePlayPause() {
+        if (this.isPlayerPlaying) {
+            this.sendYouTubeCommand('pauseVideo');
+        } else {
+            this.sendYouTubeCommand('playVideo');
+        }
+        this.isPlayerPlaying = !this.isPlayerPlaying;
+    }
+
+    seekRelative(seconds: number) {
+        const newTime = Math.max(0, this.playerCurrentTime + seconds);
+        this.sendYouTubeCommand('seekTo', [newTime, true]);
+    }
+
     ionViewWillEnter() {
-        // Escenario para reiniciar animaciones si es necesario
         document.body.classList.add('page-entrevistas-active');
     }
 
