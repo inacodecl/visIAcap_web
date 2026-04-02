@@ -393,7 +393,7 @@ ion-content {
     }
 
     &.futuro {
-        --card-color: #00ffea;
+        --card-color: #94aa19;
     }
 
     &.skeleton {
@@ -499,6 +499,7 @@ ion-content {
 
     .dashboard-grid {
         padding: 15px;
+        margin-bottom: 10rem; // Para dejar un espacio al final de la pantalla
     }
 
     // Header escalado para Tótem
@@ -607,6 +608,7 @@ ion-content {
         padding: 30px 60px; 
         width: 100%;
         margin: 0 auto; // Centrada horizontalmente
+        margin-bottom: 0.5rem;
 
         &::before {
             width: 20px;

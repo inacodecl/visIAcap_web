@@ -6,7 +6,7 @@ import {
     IonSkeletonText, IonHeader, IonToolbar, IonButtons, IonButton
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { time, videocam, rocket, people, arrowForwardCircle, grid, logOut, chevronForwardOutline } from 'ionicons/icons';
+import { time, videocam, rocket, people, arrowForwardCircle, grid, logOut, chevronForwardOutline, rocketOutline, newspaper } from 'ionicons/icons';
 import { AuthService } from '../../../core/services/auth.service';
 import { TimelineService } from '../../../core/services/timeline.service';
 import { EntrevistaService } from '../../../core/services/entrevista.service';
@@ -46,7 +46,7 @@ export class DashboardPage implements OnInit {
     });
 
     constructor() {
-        addIcons({ grid, logOut, time, videocam, rocket, people, chevronForwardOutline, arrowForwardCircle });
+        addIcons({grid,logOut,time,videocam,rocket,people,chevronForwardOutline,newspaper,rocketOutline,arrowForwardCircle});
     }
 
     ngOnInit() {

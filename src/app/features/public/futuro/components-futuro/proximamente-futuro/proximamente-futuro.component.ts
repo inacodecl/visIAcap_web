@@ -16,9 +16,21 @@ import { EventoProximamente } from '../../futuro.models';
 export class ProximamenteFuturoComponent {
   @Input() proximamente: EventoProximamente[] = [];
   @ViewChild('proximamenteCarousel') proximamenteCarouselRef!: ElementRef<HTMLElement>;
+  activeSlideIndex = 0;
 
   constructor() {
     addIcons({ calendarNumberOutline, rocketOutline, arrowForwardOutline, arrowBackOutline, mapOutline });
+  }
+
+  onCarouselScroll() {
+    const el = this.proximamenteCarouselRef?.nativeElement;
+    if (!el) return;
+    
+    // Cálculo del índice basado en el ancho de la tarjeta (snap align start)
+    const index = Math.round(el.scrollLeft / (el.clientWidth * 0.85));
+    if (this.activeSlideIndex !== index) {
+      this.activeSlideIndex = index;
+    }
   }
 
   scrollProximamente(direction: 'prev' | 'next') {
