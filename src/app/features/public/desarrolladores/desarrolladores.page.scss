@@ -1,194 +1,386 @@
-ion-toolbar {
-  --background: var(--ion-background-color, #ffffff);
-  --border-width: 0;
+@import url('https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist.min.css');
+@import url('https://cdn.jsdelivr.net/npm/satoshi-fonts@1.0.2/fonts/satoshi.min.css');
+
+// Colors
+$c-bg: #020617;
+$c-surface-low: #151b2d;
+$c-surface-highest: #2e3447;
+$c-primary-container: #e20613;
+$c-on-primary-container: #fff3f2;
+$c-slate-50: #f8fafc;
+$c-slate-400: #94a3b8;
+$c-slate-800: #1e293b;
+$c-outline-variant: rgba(94, 63, 59, 0.2);
+
+:host {
+  font-family: 'Satoshi', sans-serif;
+  color: $c-slate-50;
+  --ion-background-color: #{$c-bg};
 }
 
-.dev-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 100%;
-  padding: 40px 20px 120px 20px; /* 120px de padding inferior para que el footer no tape la última tarjeta */
-}
-
-.header-section {
-  text-align: center;
-  margin-bottom: 50px;
-  position: relative;
-  z-index: 10; /* para no solaparse con los overlays */
-
-  .main-title {
-    font-size: 2.8rem;
-    font-weight: 900;
-    margin: 0;
-    /* Un gradiente elegante para el título basado en los colores rojizos de Inacap */
-    background: linear-gradient(90deg, #421ceb 0%, #ff5252 50%, #4810cc 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 0.5px;
-  }
-
-  .subtitle {
-    font-size: 1.2rem;
-    color: var(--ion-color-medium, #666);
-    margin-top: 10px;
-    font-weight: 500;
-  }
-}
-
-/* KEYFRAMES DE ENTRADA */
-@keyframes fadeInUpCard {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* HORIZONTAL CARD STYLE (REAL GLASSMORPHISM) */
-.dev-card-horizontal.glass-style {
-  display: flex;
-  flex-direction: column;
-  background: rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 16px;
-  border: 1px solid rgba(128, 128, 128, 0.15);
-  padding: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  margin-bottom: 24px;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-  cursor: pointer;
-  
-  /* Animación escalonada nativa */
-  animation: fadeInUpCard 0.6s ease-out both;
+.transparent-toolbar {
+  --background: rgba(2, 6, 23, 0.7); // Fondo vidrio más profundo
+  --ion-toolbar-background: rgba(2, 6, 23, 0.7);
+  backdrop-filter: blur(16px) saturate(160%); // Más desenfoque
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08); // Borde sutil
+  padding: 1.5rem 1rem; // Un poco más alto
 
   @media (min-width: 768px) {
-    flex-direction: row;
-    align-items: stretch;
+    padding: 2rem 2.5rem; // Más espacioso en escritorio
   }
+}
+
+.editorial-page {
+  --background: #{$c-bg};
+  position: relative;
+}
+
+.mesh-gradient-bg {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(at 0% 0%, #1e1b4b 0%, transparent 50%),
+    radial-gradient(at 100% 100%, #312e81 0%, transparent 50%),
+    radial-gradient(at 50% 50%, #1e3a8a 0%, transparent 50%);
+  filter: blur(80px);
+  opacity: 0.15;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.editorial-container {
+  position: relative;
+  z-index: 1;
+  padding: 10px 24px 96px 24px;
+  max-width: 1536px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.editorial-header {
+  margin-bottom: 5rem;
+}
+
+.subtitle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  .line-decorator {
+    height: 1px;
+    width: 5.2rem;
+    background-color: $c-primary-container;
+  }
+
+  .subtitle-text {
+    font-family: 'Geist Mono', monospace;
+    font-size: 1.2rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: $c-primary-container;
+    font-weight: 600;
+  }
+}
+
+.main-title {
+  font-family: 'Geist', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  line-height: 0.9;
+  color: $c-slate-50;
+  margin: 0;
+
+  @media (min-width: 768px) {
+    font-size: 6rem;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 5rem;
+  }
+
+  .gradient-text {
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image: linear-gradient(to right, $c-slate-50, $c-slate-400, $c-slate-800);
+  }
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.custom-back-btn {
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  margin-left: 0;
+  font-family: 'Geist Mono', monospace;
+  font-size: 1.2rem; // Más grande
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
   &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(211, 47, 47, 0.3); /* Soft Inacap Red Outline en Hover */
+    transform: translateX(-8px);
+    opacity: 0.85;
+  }
+
+  .back-text {
+    margin-left: 10px;
+    font-size: 1.3rem;
+    color: #ffffffb9 !important; // Blanco puro
+  }
+
+  .back-icon {
+    color: #ffffffb9 !important; // Blanco puro
   }
 }
 
-.dev-image {
-  flex-shrink: 0;
+// ============================================================
+// DEVELOPER CARDS
+// ============================================================
+.dev-card {
+  background-color: $c-surface-low;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 2rem;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  margin-bottom: 20px;
+  flex-direction: column;
+  border-radius: 4px;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    background-color 0.4s ease;
+  cursor: pointer;
 
-  @media (min-width: 768px) {
-    margin-bottom: 0;
-    margin-right: 24px;
-  }
-
-  .image-placeholder {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%; /* Convertimos la foto a un circulo premium */
-    background-color: var(--ion-color-light, #f4f5f8);
+  .card-image-wrapper {
     position: relative;
-    padding: 6px;
-    /* Borde gradiente circular usando background en el wrapper */
-    background: linear-gradient(135deg, #1b57b3, #fca5a5);
-    box-shadow: 0 10px 25px rgba(211, 47, 47, 0.15);
+    width: 100%;
+    margin-bottom: 2rem;
+    overflow: hidden;
 
     img {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 50%;
-      border: 4px solid var(--ion-background-color, #ffffff);
+      // Estado por defecto: blanco y negro
+      filter: grayscale(100%) contrast(1.1) brightness(0.6);
+      transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s ease;
+      transform: scale(1);
+    }
+
+    &.aspect-vertical {
+      aspect-ratio: 4/5;
+    }
+  }
+
+  // ━━ HOVER solo para dispositivos con mouse real ━━
+  // @media (hover: hover) evita que el :hover se "pegue" en pantallas táctiles
+  @media (hover: hover) {
+    &:hover:not(.active) {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.1);
+
+      .card-image-wrapper img {
+        filter: grayscale(100%) contrast(1.1) brightness(0.9);
+        transform: scale(1.02);
+      }
+    }
+  }
+
+  // ━━ ESTADO ACTIVO (seleccionado) — máxima especificidad ━━
+  // Funciona en desktop con click Y en táctil con tap
+  &.active {
+    transform: translateY(-8px);
+    border-color: rgba(226, 6, 19, 0.4);
+    background-color: rgba(226, 6, 19, 0.03);
+    box-shadow: 0 15px 35px rgba(226, 6, 19, 0.1);
+
+    // Imagen a FULL COLOR cuando está activa
+    .card-image-wrapper img {
+      filter: grayscale(0%) contrast(1) brightness(1) !important;
+      transform: scale(1.05);
+    }
+
+    // Conector visual hacia la caja inferior
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -3.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 60px;
+      background: linear-gradient(to bottom, #e20613, transparent);
+      z-index: 10;
+      opacity: 0;
+      animation: lineDrop 0.5s ease 0.2s forwards;
+    }
+  }
+
+  .card-content.slim-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    .dev-role {
+      font-family: 'Geist Mono', monospace;
+      font-size: 1.4rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: $c-primary-container;
+      margin-bottom: 0.5rem;
+    }
+
+    .dev-name {
+      font-family: 'Geist', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      margin: 0;
+      color: $c-slate-50;     
+
+
+      @media (min-width: 768px) {
+        font-size: 2.25rem;
+      }
     }
   }
 }
 
-.dev-info {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: left; /* Alineado a la izquierda según la imagen */
+// ============================================================
+// EXTENSION BOX (bio + badges)
+// ============================================================
+.dev-extension-container {
+  margin-top: 1.5rem;
+  width: 100%;
+  position: relative;
+  z-index: 5;
+}
 
-  .dev-info-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.dev-extension-box {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(226, 6, 19, 0.3);
+  border-top: 3px solid #e20613;
+  border-radius: 4px;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  margin-bottom: 5rem;
+  // La animación CSS se eliminó — ahora la controla Angular Animations (@extensionAnim)
 
-    .toggle-icon {
-      font-size: 1.5rem;
-      color: var(--ion-color-medium, #666);
-      transition: transform 0.3s ease;
-    }
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top left, rgba(226, 6, 19, 0.08), transparent 40%);
+    pointer-events: none;
   }
 
-  .dev-description-wrapper {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), margin-top 0.3s ease, opacity 0.3s ease;
+  .extension-inner {
+    padding: 3.5rem 2.5rem;
   }
 
-  .dev-name {
+  .extension-title {
+    font-family: 'Geist Mono', monospace;
+    font-size: 1.2rem;
+    letter-spacing: 0.3em;
+    color: $c-primary-container;
+    margin: 0 0 1.5rem 0;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .dev-bio {
+    font-family: 'Satoshi', sans-serif;
     font-size: 1.8rem;
-    font-weight: 700;
-    margin: 0 0 5px 0;
-    color: var(--ion-text-color, #111);
-  }
-
-  .dev-role {
-    font-size: 1rem;
-    color: var(--ion-color-medium, #666);
-    margin: 0;
+    color: $c-slate-50;
+    line-height: 1.8;
+    margin: 0 0 3rem 0;
+    max-width: 1000px;
+    opacity: 0.95;
     font-weight: 500;
   }
 
-  .dev-description {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--ion-text-color, #333);
-    margin: 0 0 20px 0;
-    opacity: 0.9;
+  .dev-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: 'Geist Mono', monospace;
+      font-size: 1.1rem;
+      background-color: rgba(226, 6, 19, 0.1);
+      padding: 0.6rem 1.2rem;
+      border: 1px solid rgba(226, 6, 19, 0.3);
+      text-transform: uppercase;
+      color: $c-slate-50;
+      border-radius: 4px;
+      letter-spacing: 0.1em;
+      transition: background-color 0.3s ease;
+
+      ion-icon {
+        font-size: 2.3rem;
+        color: $c-primary-container;
+      }
+
+      &:hover {
+        background-color: rgba(226, 6, 19, 0.25);
+      }
+    }
   }
 }
 
-.dev-card-horizontal.expanded {
-  .dev-description-wrapper {
-    max-height: 500px; /* Suficiente para el contenido */
-    margin-top: 15px;
+// ============================================================
+// ANIMATIONS
+// ============================================================
+
+// Stagger de entrada para las tarjetas
+.bento-stagger {
+  animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
     opacity: 1;
   }
 }
 
-.dev-socials {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+// Linea conectora de la tarjeta activa
+@keyframes lineDrop {
+  from {
+    height: 0;
+    opacity: 0;
+  }
 
-  .social-btn {
-    --background: #4b5563; /* Gris oscuro para LinkedIn/GitHub como en la imagen */
-    --background-activated: #374151;
-    --background-focused: #374151;
-    --background-hover: #374151;
-    --border-radius: 6px;
-    text-transform: none;
-    font-weight: 500;
-    letter-spacing: normal;
-    margin: 0;
-    
-    ion-icon {
-      font-size: 18px;
-    }
+  to {
+    height: 60px;
+    opacity: 1;
   }
 }

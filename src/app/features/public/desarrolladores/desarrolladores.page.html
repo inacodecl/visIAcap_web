@@ -1,106 +1,71 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar class="transparent-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home" text="Volver"></ion-back-button>
+      <ion-button fill="clear" color="light" routerLink="/home" class="custom-back-btn">
+        <ion-icon class="back-icon" name="arrow-back-outline" slot="start"></ion-icon>
+        <span class="back-text">VOLVER</span>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding dev-page-content">
+<ion-content [fullscreen]="true" class="editorial-page">
+  <!-- Mesh Gradient Background -->
+  <div class="mesh-gradient-bg"></div>
 
-  <div class="dev-container">
-    <div class="header-section">
-      <h1 class="main-title">Nuestro equipo de Desarrolladores</h1>
-      <h3 class="subtitle">Conoce al equipo detrás de este proyecto</h3>
+  <main class="editorial-container">
+    <header class="editorial-header bento-stagger" style="animation-delay: 0.1s;">
+      <div class="subtitle-wrapper">
+        <div class="line-decorator"></div>
+        <span class="subtitle-text">DEVs</span>
+      </div>
+      <h1 class="main-title">
+        LOS DESARROLLADORES<br/>
+        <span class="gradient-text">DE VISIACAP</span>
+      </h1>
+    </header>
+
+    <div class="bento-grid">
+      <!-- Developer Cards Loop -->
+      <section *ngFor="let dev of developers; let i = index" 
+               class="dev-card bg-low bento-stagger" 
+               [class.active]="i === selectedIndex"
+               (click)="selectCard(i)"
+               [style.animation-delay]="(0.2 + (i * 0.1)) + 's'">
+        
+        <div class="card-image-wrapper aspect-vertical">
+          <img [src]="dev.image" [alt]="dev.name">
+        </div>
+        
+        <div class="card-content slim-content">
+          <span class="dev-role">{{ dev.role }}</span>
+          <h2 class="dev-name">{{ dev.name }}</h2>
+        </div>
+      </section>
     </div>
 
-    <ion-grid>
-      <ion-row class="ion-justify-content-center">
-        
-        
-        <ion-col size="12" size-md="11" size-lg="10">
-          <div class="dev-card-horizontal glass-style" [class.expanded]="expandedCard === 'jarod'" (click)="toggleCard('jarod')">
-            <div class="dev-image">
-              <div class="image-placeholder">
-                <img src="/assets/img/dev-jarod.png" alt="Jarod Pinto">
-              </div>
-            </div>
-            <div class="dev-info">
-              <div class="dev-info-header">
-                <div>
-                  <h2 class="dev-name">Jarod Pinto</h2>
-                  <p class="dev-role">Desarrollador Full-Stack</p>
-                </div>
-                <ion-icon class="toggle-icon" [name]="expandedCard === 'jarod' ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
-              </div>
-              <div class="dev-description-wrapper">
-                <p class="dev-description">
-                  Soy Jarod Pinto  me gusta la creación de páginas web y aplicaciones móviles. Me gusta tener una visión completa de cada proyecto, por lo que disfruto mucho desarrollarme tanto en la parte visual  como en la lógica interna.
-                </p>
-                <div class="dev-socials">
-                </div>
-              </div>
+    <!-- Extravagant Extension Box (Bio & Badges) con Angular Animations -->
+    <div class="dev-extension-container">
+      <ng-container *ngFor="let dev of developers; let i = index">
+        <div *ngIf="i === visibleIndex" 
+             @extensionAnim 
+             class="dev-extension-box">
+          <div class="extension-inner">
+            <h3 class="extension-title">DESCRIPCIÓN</h3>
+            <p class="dev-bio">
+              {{ dev.bio }}
+            </p>
+            <div class="dev-badges">
+              <span *ngFor="let badge of dev.badges" class="badge">
+                <ion-icon [name]="badge.icon"></ion-icon>
+                {{ badge.name }}
+              </span>
             </div>
           </div>
-        </ion-col>
-
-
-        <ion-col size="12" size-md="11" size-lg="10">
-          <div class="dev-card-horizontal glass-style" [class.expanded]="expandedCard === 'nicolas'" (click)="toggleCard('nicolas')">
-            <div class="dev-image">
-                <div class="image-placeholder">
-                  <img src="/assets/img/dev-nicolas.png" alt="Nicolas Garcia">
-                </div>
-            </div>
-            <div class="dev-info">
-              <div class="dev-info-header">
-                <div>
-                  <h2 class="dev-name">Nicolas García</h2>
-                  <p class="dev-role">Desarrollador Backend</p>
-                </div>
-                <ion-icon class="toggle-icon" [name]="expandedCard === 'nicolas' ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
-              </div>
-              <div class="dev-description-wrapper">
-                <p class="dev-description">
-                  Holaaa, me apasiona el mundo de las páginas web y descubrir de forma ingeniosa cómo funcionan las cosas por detrás. Me gusta mucho desarrollarme en el Backend, asegurándome de que todo el sistema interno y los datos trabajen de manera rápida y sin problemas.
-                </p>
-                <div class="dev-socials">
-                </div>
-              </div>
-            </div>
-          </div>
-        </ion-col>
-
-      
-        <ion-col size="12" size-md="11" size-lg="10">
-          <div class="dev-card-horizontal glass-style" [class.expanded]="expandedCard === 'benjamin'" (click)="toggleCard('benjamin')">
-            <div class="dev-image">
-                <div class="image-placeholder">
-                  <img src="/assets/img/dev-benjamin.png" alt="Benjamin Gonzalez">
-                </div>
-            </div>
-            <div class="dev-info">
-              <div class="dev-info-header">
-                <div>
-                  <h2 class="dev-name">Benjamin Gonzalez</h2>
-                  <p class="dev-role">Desarrollador Frontend</p>
-                </div>
-                <ion-icon class="toggle-icon" [name]="expandedCard === 'benjamin' ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
-              </div>
-              <div class="dev-description-wrapper">
-                <p class="dev-description">
-                  Hola que tal, me apasiona crear páginas web y darle vida a las ideas en la pantalla. Disfruto mucho armando la estructura visual y desarrollándome directamente en el Frontend, siempre buscando que nuestros proyectos se vean geniales y sean fáciles de utilizar o navegar.
-                </p>
-                <div class="dev-socials">
-                </div>
-              </div>
-            </div>
-          </div>
-        </ion-col>
-
-      </ion-row>
-    </ion-grid>
-  </div>
+        </div>
+      </ng-container>
+    </div>
+  </main>
 
   <app-home-footer></app-home-footer>
 </ion-content>
