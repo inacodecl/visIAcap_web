@@ -1,130 +1,84 @@
-:host {
-    --page-margin: 20px;
-    --primary-color: #c8102e;
-    --text-dark: #ffffff;
-    --text-grey: #cccccc;
-    --bg-color: transparent;
-}
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+// ==============================================
+// Design System: "Glassmorphism Espacial"
+// ==============================================
+$bg-glass: rgba(15, 15, 20, 0.75); // Fondo del cristal semi-oscuro
+$card-glass: rgba(255, 255, 255, 0.08); // Tarjetas internas glaseadas
+$card-border: rgba(255, 255, 255, 0.15);
+$red-inacap: #e21f26;
+$text-light: #ffffff;
+$text-grey: #b0b0b0;
+$radius-main: 24px;
+$radius: 16px;
 
 .project-details-content {
-    --background: var(--bg-color);
-
-    &::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2070&auto=format&fit=crop');
-        background-size: cover;
-        background-position: center;
-        filter: brightness(0.65);
-    }
+    // Fondo de universo/espacio anterior
+    --background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop') no-repeat center center / cover;
+    font-family: 'Inter', sans-serif;
+    color: $text-light;
 }
 
-// ========================================
-// UNIFIED V2 HEADER (DESKTOP/TOTEM)
-// ========================================
+// ==============================================
+// Header Tótem (TopBar)
+// ==============================================
 .v2-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 15px 40px;
-    height: 180px;
-    position: relative;
-    z-index: 20;
-
-    .header-left {
-        display: flex;
-        align-items: center;
-        gap: 30px;
-    }
+    align-items: center;
+    padding: 15px 25px;
+    padding-top: max(20px, env(safe-area-inset-top));
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
+    pointer-events: none; // Permite scroll debajo del header si se toca un área vacía
 
     .back-btn {
-        width: 60px;
-        height: 60px;
+        pointer-events: auto; // Hace que SÓLO el botón detenga el click y accione
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255,255,255,0.1);
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-        
-        ion-icon {
-            color: #ffffff;
-            font-size: 28px;
-            transition: color 0.3s;
-        }
-
-        &:hover {
-            background: #c8102e;
-            transform: scale(1.05);
-            border-color: #c8102e;
-        }
+        transition: transform 0.1s ease;
         
         &:active {
-            transform: scale(0.95);
+            transform: scale(0.9);
+        }
+
+        ion-icon {
+            font-size: 22px;
+            color: $text-grey;
         }
     }
 
     .logo-container {
-        pointer-events: none;
+        pointer-events: auto;
         .logo-img {
-            height: clamp(50px, 8vw, 150px);
-            max-width: 350px;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
-        }
-    }
-
-    .header-separator {
-        flex: 1;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-        margin: 0 40px;
-    }
-
-    .sede-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        pointer-events: none;
-
-        .sede-line {
-            font-family: 'Exo 2', sans-serif;
-            font-size: 32px;
-            font-weight: 800;
-            color: white;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            line-height: 1;
-        }
-
-        .renca-line {
-            font-family: 'Exo 2', sans-serif;
-            font-size: 32px;
-            font-weight: 800;
-            color: #c8102e;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            line-height: 1;
+            width: 160px;
+            height: auto;
         }
     }
 }
 
+// ==============================================
+// Hero Image & Title
+// ==============================================
 .project-hero {
-    height: 42vh;
     width: 100%;
+    height: 45vh; 
+    min-height: 400px;
+    position: relative;
     background-size: cover;
     background-position: center;
-    position: relative;
-    overflow: hidden;
 
     &::after {
         content: '';
@@ -133,310 +87,185 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 80%, rgba(0, 0, 0, 0.9) 100%);
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.8) 100%);
+    }
+
+    .hero-content {
+        position: absolute;
+        bottom: 80px; 
+        left: 0;
+        width: 100%;
+        padding: 0 40px; // Alinear con la tarjeta
+        z-index: 10;
+        
+        .badge-red {
+            background: $red-inacap;
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 50px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(226, 31, 38, 0.4);
+            display: inline-block;
+        }
     }
 }
 
-.hero-content {
-    position: absolute;
-    bottom: 80px;
-    left: 0;
-    width: 100%;
-    z-index: 10;
-    padding: 0 20px;
-    display: flex;
-    justify-content: center;
-}
-
-.hero-text-container {
-    max-width: 900px;
-    width: 100%;
-    animation: slideUpFade 0.8s ease-out forwards;
-}
-
-.project-badge {
-    background: var(--primary-color);
-    color: white;
-    padding: 6px 16px;
-    border-radius: 50px;
-    font-size: 1.15rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    box-shadow: 0 4px 10px rgba(200, 16, 46, 0.4);
-    display: inline-block;
-    margin-bottom: 15px;
-}
-
-h1 {
-    color: white;
-    font-size: 2.8rem;
-    font-weight: 800;
-    line-height: 1.1;
-    margin: 0;
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-
-    @media (max-width: 768px) {
-        font-size: 2.2rem;
-    }
-}
-
-// Overlapping Content Card
+// ==============================================
+// Estructura de Tarjeta Flotante Glassmorphism
+// ==============================================
 .content-wrapper {
     position: relative;
     z-index: 20;
-    margin-top: -50px;
-    padding: 0 20px 40px;
-    display: flex;
-    justify-content: center;
+    margin-top: -60px; // Sube la tarjeta sobre el hero
+    padding: 0 20px 120px; 
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .content-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(15px);
+    background: $bg-glass; 
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: $radius-main;
+    padding: 35px 25px;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255,255,255,0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 30px;
-    padding: 30px;
-    width: 100%;
-    max-width: 900px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    animation: slideUpCard 0.8s ease-out 0.3s forwards;
-    min-height: 50vh;
 }
 
-// Meta Grid
-.meta-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 15px;
-    margin-bottom: 40px;
-}
-
-.meta-card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    zoom: 1.5;
-
-    &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        border-color: rgba(200, 16, 46, 0.4);
-
-        .meta-icon {
-            background: var(--primary-color);
-            color: white;
-        }
-    }
-}
-
-.meta-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #eee;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-}
-
-.meta-info {
+// --- Status Loading/Error ---
+.loading-container, .error-container {
     display: flex;
     flex-direction: column;
-
-    label {
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        color: #aaa;
-        letter-spacing: 0.5px;
-    }
-
-    span {
-        font-weight: 700;
-        color: #fff;
-        font-size: 1rem;
-    }
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    color: $text-light;
 }
 
-// Text Content
-.text-content {
-    margin-bottom: 40px;
-}
-
-.project-summary {
+// --- Titulos de seccion ---
+h3.section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    color: $text-light;
     font-size: 1.4rem;
-    color: #eee;
-    font-weight: 500;
-    line-height: 1.6;
-    margin-bottom: 25px;
-    border-left: 4px solid var(--primary-color);
-    padding-left: 20px;
-    font-style: italic;
-}
-
-.separator {
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
-    margin: 30px 0;
-    width: 100%;
-}
-
-.project-description {
-    h3 {
-        font-size: 1.9rem;
-        font-weight: 800;
-        color: var(--text-dark);
-        margin-bottom: 20px;
-        text-transform: uppercase;
-    }
-
-    .description-body {
-        color: #ccc;
-        font-size: 1.17rem;
-        line-height: 1.8;
-
-        ::ng-deep p {
-            margin-bottom: 15px;
-        }
-    }
-}
-
-// Action Button
-.action-container {
-    margin-top: 30px;
-}
-
-.action-button {
-    height: 55px;
-    --border-radius: 14px;
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin: 30px 0 20px;
     letter-spacing: 0.5px;
-    --box-shadow: 0 10px 25px rgba(200, 16, 46, 0.25);
-    transition: transform 0.2s ease;
+}
 
-    &:hover {
-        transform: translateY(-2px);
+.section-title-small {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $text-light;
+    margin-bottom: 15px;
+    position: relative;
+    padding-bottom: 5px;
+    
+    // Linea roja sutil debajo
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 30px;
+        height: 2px;
+        background: $red-inacap;
     }
 }
 
-.gradient-btn {
-    --background: linear-gradient(135deg, #c8102e 0%, #b71c1c 100%);
-}
-
-// Animations
-@keyframes slideUpFade {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideUpCard {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.loading-container,
-.error-container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-
-    p {
-        color: #aaa;
-        margin-top: 20px;
-    }
-}
-
-// --- New Detail Sections ---
-.section-container {
+// --- Grid de Datos Clave (3 en línea) ---
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
     margin-bottom: 40px;
-    animation: slideUpFade 0.6s ease-out forwards;
 
-    h3 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--text-dark);
-        margin-bottom: 20px;
-        position: relative;
-        display: inline-block;
-        padding-bottom: 8px;
+    // Se "sale" un poco hacia arriba solapándose al diseño per mockup
+    margin-top: -20px;
 
-        &::after {
-            content: '';
-            position: absolute;
-            bottom: 0px;
-            left: 0;
-            width: 40px;
-            height: 4px;
-            background: var(--primary-color);
-            border-radius: 2px;
+    .metric-item {
+        background: $card-glass;
+        border: 1px solid $card-border;
+        border-radius: $radius;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+
+        .icon-wrap {
+            margin-bottom: 8px;
+            ion-icon {
+                font-size: 24px;
+                color: $text-grey;
+            }
+        }
+
+        label {
+            color: $text-grey;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        span {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: $text-light;
+            line-height: 1.2;
         }
     }
 }
 
-// Team
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
+// --- Historia ---
+.history-section {
+    margin-bottom: 40px;
+
+    .history-text {
+        color: $text-grey;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        font-weight: 400;
+    }
 }
 
-.team-member {
+// --- Equipo ---
+.team-section {
+    margin-bottom: 40px;
+}
+
+.team-card {
+    background: $card-glass;
+    border: 1px solid $card-border;
+    border-radius: $radius;
+    padding: 15px 20px;
     display: flex;
     align-items: center;
     gap: 15px;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: max-content;
+    min-width: 250px;
 
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
-    }
-
-    .avatar-placeholder {
-        width: 50px;
-        height: 50px;
+    .avatar {
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
-        background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%);
-        color: #fff;
+        background: rgba(255,255,255,0.2);
         display: flex;
         align-items: center;
         justify-content: center;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 20px;
         font-weight: 800;
-        font-size: 1.4rem;
-        box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.1);
+        color: white;
     }
 
     .member-info {
@@ -444,190 +273,187 @@ h1 {
         flex-direction: column;
 
         .name {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
             font-weight: 700;
-            color: var(--text-dark);
-            font-size: 1rem;
+            color: $text-light;
+            margin-bottom: 2px;
         }
 
         .role {
-            font-size: 0.85rem;
-            color: var(--text-grey);
+            font-size: 0.75rem;
+            color: $text-grey;
             font-weight: 500;
         }
     }
 }
 
-// Gallery
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
-}
-
-.gallery-item {
-    border-radius: 16px;
-    overflow: hidden;
-    height: 220px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    position: relative;
-
-    img {
+// --- Sector Galería ---
+.gallery-section {
+    margin-bottom: 20px;
+    
+    .gallery-container {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.6s ease;
-    }
-
-    &:hover img {
-        transform: scale(1.08);
-    }
-}
-
-.gallery-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 60px 20px;
-    color: #999;
-    border: 2px dashed rgba(255, 255, 255, 0.2);
-
-    ion-icon {
-        font-size: 4rem;
-        margin-bottom: 15px;
-        opacity: 0.5;
-    }
-
-    p {
-        margin: 0;
-        font-size: 1rem;
-        font-weight: 500;
-    }
-}
-
-// Tags
-.tags-section {
-    .chips-container {
+        height: 150px;
+        border-radius: $radius;
+        border: 1px solid $card-border;
+        background: $card-glass;
         display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        color: $text-grey;
     }
+}
 
-    ion-chip {
-        margin: 0;
-        font-weight: 600;
+// --- Tags y Categorías ---
+.tags-chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 35px;
+    padding-top: 10px;
+
+    .chip-glass {
         background: rgba(255, 255, 255, 0.1);
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 50px;
+        padding: 8px 16px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: $text-light;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 
         ion-icon {
-            color: white;
+            font-size: 1.1rem;
+            color: $text-grey;
+        }
+
+        &.category {
+            background: rgba(0, 0, 0, 0.3); // un poco más oscuras para diferenciar
+            border-color: rgba(255, 255, 255, 0.1);
         }
     }
 }
 
-// ========================================
-// QR CODE SECTION
-// ========================================
+// --- QR Card (Compartir) ---
 .qr-section {
-    margin-bottom: 30px;
     display: flex;
     justify-content: center;
+    margin-bottom: 40px;
 }
 
 .qr-card {
+    background: $card-glass;
+    border: 1px solid $card-border;
+    border-radius: 20px;
+    padding: 25px;
     width: 100%;
-    max-width: 420px;
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(200, 16, 46, 0.35);
-    border-radius: 24px;
-    padding: 28px 24px 22px;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 18px;
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    animation: slideUpFade 0.6s ease-out 0.5s both;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+
+    .qr-header-info {
+        display: flex;
+        align-items: flex-start;
+        width: 100%;
+        gap: 15px;
+        margin-bottom: 25px;
+
+        .icon-box {
+            background: $red-inacap;
+            min-width: 45px;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(226, 31, 38, 0.3);
+
+            ion-icon {
+                color: white;
+                font-size: 22px;
+            }
+        }
+
+        .text-info {
+            display: flex;
+            flex-direction: column;
+
+            h4 {
+                font-family: 'Space Grotesk', sans-serif;
+                margin: 0 0 5px;
+                color: $text-light;
+                font-size: 1.15rem;
+                font-weight: 700;
+                line-height: 1.1;
+            }
+
+            p {
+                margin: 0;
+                color: $text-grey;
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
+        }
+    }
+
+    .qr-code-wrapper {
+        background: white; // El QR necesita fondo blanco por contraste
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        margin-bottom: 15px;
+    }
+
+    .qr-footer-text {
+        font-size: 0.8rem;
+        color: rgba(255,255,255,0.5);
+        margin: 0;
+    }
 }
 
-.qr-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+// ==============================================
+// CTA Bottom (Visitar Sitio Web Flotante)
+// ==============================================
+.totem-footer-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
-}
-
-.qr-icon-wrapper {
-    width: 46px;
-    height: 46px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #c8102e 0%, #8b0000 100%);
+    padding: 20px 20px 30px; 
+    z-index: 100;
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    box-shadow: 0 4px 14px rgba(200, 16, 46, 0.4);
+    pointer-events: none; 
 
-    ion-icon {
-        font-size: 22px;
-        color: #fff;
-    }
-}
+    // Difuminado solo en el fondo del boton si no hay espacio
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 20%, transparent 100%);
 
-.qr-text {
-    display: flex;
-    flex-direction: column;
-
-    .qr-title {
-        font-size: 1.05rem;
+    .btn-totem-red {
+        pointer-events: auto; 
+        width: 100%;
+        height: 60px;
+        background: $red-inacap;
+        color: white;
+        border-radius: 12px;
+        border: none;
+        display: flex;
+        justify-content: center; // Centrado per mockup
+        align-items: center;
+        font-family: 'Inter', sans-serif;
+        font-size: 1.2rem;
         font-weight: 700;
-        color: #fff;
-        line-height: 1.2;
+        box-shadow: 0 4px 15px rgba(226, 31, 38, 0.4);
+        cursor: pointer;
+
+        &:active {
+            transform: scale(0.97);
+        }
     }
-
-    .qr-subtitle {
-        font-size: 0.82rem;
-        color: #aaa;
-        font-weight: 400;
-    }
-}
-
-.qr-code-wrapper {
-    position: relative;
-    padding: 10px;
-    background: #ffffff;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-
-    &::before {
-        content: '';
-        position: absolute;
-        inset: -1px;
-        border-radius: 16px;
-        background: linear-gradient(135deg, rgba(200, 16, 46, 0.4), transparent 60%);
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    qrcode {
-        display: block;
-        line-height: 0;
-        position: relative;
-        z-index: 2;
-    }
-}
-
-.qr-caption {
-    margin: 0;
-    font-size: 0.8rem;
-    color: #888;
-    text-align: center;
-    letter-spacing: 0.3px;
 }

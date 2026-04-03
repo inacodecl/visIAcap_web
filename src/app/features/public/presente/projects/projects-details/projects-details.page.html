@@ -1,191 +1,167 @@
-<ion-content [fullscreen]="true" class="project-details-content">
-    <header class="v2-header">
-        <div class="header-left">
-            <button class="back-btn" (click)="goBack()" aria-label="Volver">
-                <ion-icon name="arrow-back-outline"></ion-icon>
-            </button>
-            <div class="logo-container">
-                <img src="assets/icon/logo-inacap-60-v2.png" alt="INACAP 60 Años" class="logo-img">
-            </div>
+<ion-header class="ion-no-border" style="position: absolute; top: 0; left: 0; width: 100%; z-index: 99999; background: transparent; pointer-events: none;">
+    <header class="v2-header" style="position: relative; pointer-events: none;">
+        <div class="back-btn" (click)="goBack()" aria-label="Volver" style="pointer-events: auto; z-index: 99999;">
+            <ion-icon name="arrow-back-outline" style="pointer-events: none;"></ion-icon>
         </div>
-        <div class="header-separator"></div>
-        <div class="sede-container">
-            <span class="sede-line">{{ 'PRESENTE.TITLE' | translate }}</span>
-            <span class="renca-line">{{ 'HOME.RENCA' | translate }}</span>
+        <div class="logo-container" style="pointer-events: auto;">
+            <img src="assets/icon/logo-inacap-60-v2.png" alt="INACAP 60 Años" class="logo-img">
         </div>
     </header>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="project-details-content">
 
     @if (isLoading()) {
     <div class="loading-container">
-        <ion-spinner name="crescent" color="primary"></ion-spinner>
+        <ion-spinner name="crescent" color="danger"></ion-spinner>
         <p>{{ 'PROJECT_DETAIL.LOADING' | translate }}</p>
     </div>
     } @else if (error() || !proyecto()) {
     <div class="error-container">
+        <ion-icon name="alert-circle-outline" style="font-size: 64px; margin-bottom: 20px; color: var(--ion-color-danger);"></ion-icon>
         <h2>{{ 'PROJECT_DETAIL.NOT_FOUND_TITLE' | translate }}</h2>
         <p>{{ 'PROJECT_DETAIL.NOT_FOUND_DESC' | translate }}</p>
-        <ion-button routerLink="/presente/projects" color="primary">{{ 'PROJECT_DETAIL.BACK_TO_PROJECTS' | translate }}</ion-button>
+        <ion-button routerLink="/presente/projects" color="danger" style="margin-top:20px;">Volver</ion-button>
     </div>
     } @else {
-    <div class="project-hero"
-        [style.backgroundImage]="'url(' + (proyecto()?.image_cover_url || 'assets/images/placeholder-project.jpg') + ')'">
-        <div class="hero-overlay"></div>
+        
+    <!-- HERO SECTION (IMAGEN AL FONDO) -->
+    <div class="project-hero" [style.backgroundImage]="'url(' + (proyecto()?.image_cover_url || 'assets/images/placeholder-project.jpg') + ')'">
         <div class="hero-content">
-            <div class="hero-text-container">
-                <span class="project-badge">{{ 'PROJECT_DETAIL.BADGE' | translate }}</span>
-                <h1>{{ proyecto()?.titulo }}</h1>
-            </div>
+            <div class="badge-red">PROYECTO PRESENTE</div>
         </div>
     </div>
 
+
+    <!-- CONTENEDOR FLOTANTE CRISTAL (EL ESPACIO) -->
     <div class="content-wrapper">
         <div class="content-card">
 
-            <!-- Metadata Cards Grid -->
-            <div class="meta-grid">
-                @if (proyecto()?.start_date) {
-                <div class="meta-card">
-                    <div class="meta-icon">
-                        <ion-icon name="calendar-number"></ion-icon>
+            <!-- Grid de Datos Clave (3 en línea estilo cristal) que sobresale hacia arriba -->
+            <div class="metrics-grid">
+                
+                <div class="metric-item">
+                    <div class="icon-wrap">
+                        <ion-icon name="calendar-outline"></ion-icon>
                     </div>
-                    <div class="meta-info">
-                        <label>{{ 'PROJECT_DETAIL.YEAR' | translate }}</label>
-                        <span>{{ proyecto()?.start_date | date:'yyyy' }}</span>
-                    </div>
+                    <label>AÑO</label>
+                    <span>{{ proyecto()?.start_date ? (proyecto()?.start_date | date:'yyyy') : '2026' }}</span>
                 </div>
-                }
 
-                @if (proyecto()?.location) {
-                <div class="meta-card">
-                    <div class="meta-icon">
-                        <ion-icon name="location"></ion-icon>
+                <div class="metric-item">
+                    <div class="icon-wrap">
+                        <ion-icon name="location-outline"></ion-icon>
                     </div>
-                    <div class="meta-info">
-                        <label>{{ 'PROJECT_DETAIL.LOCATION' | translate }}</label>
-                        <span>{{ proyecto()?.location }}</span>
-                    </div>
+                    <label>UBICACIÓN</label>
+                    <span>{{ proyecto()?.location || 'San miguel, Chile' }}</span>
                 </div>
-                }
 
-                <!-- Status Badge as Meta Card -->
-                <div class="meta-card">
-                    <div class="meta-icon status">
-                        <ion-icon name="analytics"></ion-icon>
+                <div class="metric-item">
+                    <div class="icon-wrap">
+                        <ion-icon name="pulse-outline"></ion-icon>
                     </div>
-                    <div class="meta-info">
-                        <label>{{ 'PROJECT_DETAIL.STATUS' | translate }}</label>
-                        <span>{{ 'PROJECT_DETAIL.STATUS_ACTIVE' | translate }}</span>
-                    </div>
+                    <label>ESTADO</label>
+                    <span>Activo</span>
                 </div>
+
             </div>
 
-            <div class="text-content">
-                @if (proyecto()?.resumen) {
-                <div class="project-summary">
-                    <p>{{ proyecto()?.resumen }}</p>
-                </div>
+            <!-- 1. Historia -->
+            <div class="history-section">
+                <h3 class="section-title">HISTORIA DEL PROYECTO</h3>
+                
+                @if (proyecto()?.descripcion) {
+                    <div class="history-text" [innerHTML]="proyecto()?.descripcion"></div>
+                } @else {
+                    <p class="history-text">{{ proyecto()?.resumen }}</p>
                 }
-
-                <div class="separator"></div>
-
-                <div class="project-description">
-                    <h3>{{ 'PROJECT_DETAIL.HISTORY' | translate }}</h3>
-                    <div [innerHTML]="proyecto()?.descripcion" class="description-body"></div>
-                </div>
             </div>
 
-            <!-- Team Section -->
+            <!-- 2. Equipo del Proyecto -->
             @if (proyecto()?.members?.length) {
-            <div class="section-container team-section">
-                <h3>{{ 'PROJECT_DETAIL.TEAM' | translate }}</h3>
-                <div class="team-grid">
+                <div class="team-section">
+                    <h3 class="section-title-small">Equipo del Proyecto</h3>
+                    
                     @for (member of proyecto()?.members; track member.nombre) {
-                    <div class="team-member">
-                        <div class="avatar-placeholder">{{ member.nombre.charAt(0) }}</div>
+                    <div class="team-card">
+                        <div class="avatar">
+                            {{ member.nombre.substring(0, 1) }}
+                        </div>
                         <div class="member-info">
                             <span class="name">{{ member.nombre }}</span>
-                            <span class="role">{{ member.rol }}</span>
+                            <!-- Siempre minúsculo según el diseño -->
+                            <span class="role">{{ member.rol || 'Desarrollador' }}</span>
                         </div>
                     </div>
                     }
                 </div>
-            </div>
             }
 
-            <!-- Gallery Section -->
-            <div class="section-container gallery-section">
-                <h3>{{ 'PROJECT_DETAIL.GALLERY' | translate }}</h3>
-                @if (proyecto()?.images?.length) {
-                <div class="gallery-grid">
-                    @for (img of proyecto()?.images; track img.url) {
-                    <div class="gallery-item">
-                        <img [src]="img.url" [alt]="img.alt_es || 'Imagen del proyecto'" loading="lazy">
-                    </div>
-                    }
+            <!-- 3. Galería Placeholder -->
+            <div class="gallery-section">
+                <h3 class="section-title-small">Galería</h3>
+                <div class="gallery-container">
+                    <ion-icon name="images-outline" style="font-size:30px; margin-right: 10px;"></ion-icon>
+                    <span>Sin imágenes adicionales</span>
                 </div>
-                } @else {
-                <div class="gallery-placeholder">
-                    <ion-icon name="images-outline"></ion-icon>
-                    <p>{{ 'PROJECT_DETAIL.GALLERY_EMPTY' | translate }}</p>
+            </div>
+
+            <!-- 4. Tags y Categorías -->
+            @if (proyecto()?.tags?.length || proyecto()?.categories?.length) {
+            <div class="tags-chips-container">
+                @for (cat of proyecto()?.categories; track cat.id) {
+                <div class="chip-glass category">
+                    <ion-icon name="folder-outline"></ion-icon> {{ cat.nombre }}
+                </div>
+                }
+                @for (tag of proyecto()?.tags; track tag.id) {
+                <div class="chip-glass">
+                    #{{ tag.nombre }}
                 </div>
                 }
             </div>
-
-            <!-- Tags Section -->
-            @if (proyecto()?.tags?.length || proyecto()?.categories?.length) {
-            <div class="section-container tags-section">
-                <div class="chips-container">
-                    @for (cat of proyecto()?.categories; track cat.id) {
-                    <ion-chip color="tertiary">
-                        <ion-icon name="folder-open" color="dark"></ion-icon>
-                        <ion-label>{{ cat.nombre }}</ion-label>
-                    </ion-chip>
-                    }
-                    @for (tag of proyecto()?.tags; track tag.id) {
-                    <ion-chip outline="true" color="medium">
-                        <ion-label>#{{ tag.nombre }}</ion-label>
-                    </ion-chip>
-                    }
-                </div>
-            </div>
             }
 
-            @if (proyecto()?.url_externa) {
-            <!-- QR Code Section -->
+            <!-- 5. QR de Compartir -->
+            @if (proyecto()?.url_externa || proyecto()?.id) {
             <div class="qr-section">
                 <div class="qr-card">
-                    <div class="qr-header">
-                        <div class="qr-icon-wrapper">
+                    <div class="qr-header-info">
+                        <div class="icon-box">
                             <ion-icon name="qr-code-outline"></ion-icon>
                         </div>
-                        <div class="qr-text">
-                            <span class="qr-title">{{ 'PROJECT_DETAIL.QR_TITLE' | translate }}</span>
-                            <span class="qr-subtitle">{{ 'PROJECT_DETAIL.QR_SUBTITLE' | translate }}</span>
+                        <div class="text-info">
+                            <h4>Compartir este proyecto</h4>
+                            <p>Escanea el código para abrirlo en tu dispositivo</p>
                         </div>
                     </div>
                     <div class="qr-code-wrapper">
                         <qrcode
-                            [qrdata]="proyecto()!.url_externa!"
-                            [width]="220"
-                            [margin]="1"
-                            [colorDark]="'#1a0a0e'"
+                            [qrdata]="proyecto()?.url_externa || 'https://inacap.cl/proyectos/' + proyecto()?.id"
+                            [width]="180"
+                            [margin]="0"
+                            [colorDark]="'#000000'"
                             [colorLight]="'#ffffff'"
                             [errorCorrectionLevel]="'M'">
                         </qrcode>
                     </div>
-                    <p class="qr-caption">{{ 'PROJECT_DETAIL.QR_CAPTION' | translate }}</p>
+                    <p class="qr-footer-text">Escanea con la cámara de tu celular</p>
                 </div>
             </div>
-
-            <div class="action-container">
-                <app-external-link-button
-                  [url]="proyecto()!.url_externa!"
-                  [label]="'PROJECT_DETAIL.VISIT_WEBSITE' | translate"
-                  icon="arrow-forward-circle">
-                </app-external-link-button>
-            </div>
             }
+
         </div>
     </div>
+
+
+    <!-- CTA FLOTANTE -->
+    @if (proyecto()?.url_externa) {
+        <div class="totem-footer-cta">
+            <button class="btn-totem-red" (click)="openUrl(proyecto()!.url_externa!)">
+                VISITAR SITIO WEB
+            </button>
+        </div>
+    }
+
     }
 </ion-content>

@@ -31,52 +31,102 @@
         <p class="hero-subtitle">{{ 'PRESENTE.HERO_SUBTITLE' | translate }}</p>
     </section>
 
-    <!-- Featured Project Hero Section -->
-    @if (featuredProject(); as featured) {
-    <div class="featured-section" [routerLink]="['/presente/projects', featured.id]">
-      <div class="featured-badge">{{ 'PRESENTE.FEATURED_BADGE' | translate }}</div>
-      <div class="featured-content">
-        <div class="featured-text">
-          <h2>{{ featured.titulo }}</h2>
-          <p>{{ featured.resumen }}</p>
-          <div class="read-more">{{ 'PRESENTE.VIEW_FULL' | translate }} <ion-icon name="arrow-forward-outline"></ion-icon></div>
-        </div>
-        <div class="featured-image"
-          [style.backgroundImage]="'url(' + (featured.image_cover_url || 'assets/images/placeholder-project.jpg') + ')'">
-        </div>
-      </div>
-    </div>
-    }
+    <!-- Featured Project Carousel (Grandes) -->
+    <div class="carousel-section">
+      <swiper-container slides-per-view="1" space-between="30" pagination="true" loop="true" speed="2500" autoplay="true" autoplay-delay="2000" autoplay-disable-on-interaction="false" class="featured-swiper">
+        
+        @for (featured of featuredProjects(); track featured.id) {
+        <swiper-slide>
+          <div class="featured-bento glass-panel" [routerLink]="['/presente/projects', featured.id]">
+            <div class="featured-bento-img-wrapper">
+              <div class="featured-bento-img"
+                [style.backgroundImage]="'url(' + (featured.image_cover_url || 'assets/images/placeholder-project.jpg') + ')'">
+              </div>
+            </div>
+            <div class="featured-bento-content">
+              <div class="bento-badge">{{ 'PRESENTE.FEATURED_BADGE' | translate }}</div>
+              <h2 class="bento-title">{{ featured.titulo }}</h2>
+              <p class="bento-desc">{{ featured.resumen }}</p>
+              
+              <div class="bento-actions">
+                <button class="bento-btn-primary">
+                  {{ 'PRESENTE.VIEW_FULL' | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+        }
 
-    <!-- Regular Projects Grid -->
+      </swiper-container>
+    </div>
+
+    <!-- Regular Projects Carousel (Pequeñas) -->
     <div class="projects-list-grid">
-      @if (regularProjects().length === 0 && !featuredProject()) {
+      @if (regularProjects().length === 0 && featuredProjects().length === 0) {
       <div class="empty-state">
         <ion-icon name="folder-open-outline"></ion-icon>
         <p>{{ 'PRESENTE.EMPTY' | translate }}</p>
       </div>
       } @else {
+      
+      <h2 class="sub-section-title">Más Proyectos</h2>
 
       <div class="projects-grid-container">
-        @for (proj of regularProjects(); track proj.id) {
-        <div class="project-card-custom" [routerLink]="['/presente/projects', proj.id]">
-          <div class="card-img"
-            [style.backgroundImage]="'url(' + (proj.image_cover_url || 'assets/images/placeholder-project.jpg') + ')'">
-          </div>
-          <div class="card-info">
-            <span class="card-year">{{ proj.start_date | date:'yyyy' }}</span>
-            <h3>{{ proj.titulo }}</h3>
-            <p class="card-desc">{{ proj.resumen }}</p>
-            <div class="card-action">
-              <span>{{ 'PRESENTE.READ_MORE' | translate }}</span>
-              <ion-icon name="arrow-forward-outline"></ion-icon>
+        <!-- Netflix-style swiper for other initiatives -->
+        <swiper-container slides-per-view="auto" space-between="20" free-mode="true" speed="2500" autoplay="true" autoplay-delay="2000" autoplay-disable-on-interaction="false" class="mini-projects-swiper">
+          @for (proj of regularProjects(); track proj.id) {
+          <swiper-slide class="mini-slide">
+            <div class="mini-bento glass-panel" [routerLink]="['/presente/projects', proj.id]">
+              
+              <div class="mini-bento-top">
+                <div class="mini-bento-img"
+                  [style.backgroundImage]="'url(' + (proj.image_cover_url || 'assets/images/placeholder-project.jpg') + ')'">
+                </div>
+                <div class="mini-bento-pill">
+                  {{ proj.start_date | date:'yyyy' }}
+                </div>
+              </div>
+              
+              <div class="mini-bento-bottom">
+                <h3 class="mini-title">{{ proj.titulo }}</h3>
+                <p class="mini-desc">{{ proj.resumen }}</p>
+                
+                <div class="mini-footer">
+                  <span class="mini-footer-text">Sede Renca</span>
+                  <ion-icon class="mini-footer-icon" name="arrow-forward-outline"></ion-icon>
+                </div>
+              </div>
+              
             </div>
-          </div>
-        </div>
-        }
+          </swiper-slide>
+          }
+        </swiper-container>
       </div>
 
       }
+      <h2 class="sub-section-title">Impacto Smart Campus</h2>
+      
+      <!-- Stats / Metrics Grid -->
+      <div class="stats-bento-grid">
+        <div class="stat-bento">
+          <span class="stat-number">60</span>
+          <span class="stat-label">Años de Historia</span>
+        </div>
+        <div class="stat-bento">
+          <span class="stat-number">100%</span>
+          <span class="stat-label">Desarrollo Propio</span>
+        </div>
+        <div class="stat-bento">
+          <span class="stat-number">+15</span>
+          <span class="stat-label">Proyectos Activos</span>
+        </div>
+        <div class="stat-bento">
+          <span class="stat-number">2026</span>
+          <span class="stat-label">Horizonte Renca</span>
+        </div>
+      </div>
+
     </div>
 
   </main>

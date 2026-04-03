@@ -1,7 +1,7 @@
-import { Component, OnInit, inject, computed } from '@angular/core';
+import { Component, OnInit, inject, computed, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/angular/standalone';
+import { IonContent, IonIcon } from '@ionic/angular/standalone';
 import { RouterModule, Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { arrowForwardOutline, arrowBackOutline, rocketOutline, folderOpenOutline } from 'ionicons/icons';
@@ -9,6 +9,9 @@ import { HomeFooterComponent } from '../../../../components/footers/home-footer/
 import { ProyectosService } from '../../../../core/services/proyectos.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../../core/services/language.service';
+import { register } from 'swiper/element/bundle';
+
+register();
 
 @Component({
   selector: 'app-projects',
@@ -20,7 +23,8 @@ import { LanguageService } from '../../../../core/services/language.service';
     IonIcon,
     HomeFooterComponent,
     TranslateModule
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ProjectsPage implements OnInit {
   private proyectosService = inject(ProyectosService);
@@ -28,11 +32,8 @@ export class ProjectsPage implements OnInit {
   private languageService = inject(LanguageService);
 
   // Computados para separar destacados de normales
-  featuredProject = computed(() => this.proyectosService.proyectos().find(p => p.featured));
-  regularProjects = computed(() => {
-    const featured = this.featuredProject();
-    return this.proyectosService.proyectos().filter(p => !featured || p.id !== featured.id);
-  });
+  featuredProjects = computed(() => this.proyectosService.proyectos().filter(p => p.featured));
+  regularProjects = computed(() => this.proyectosService.proyectos().filter(p => !p.featured));
 
   constructor() {
     addIcons({ arrowForwardOutline, arrowBackOutline, rocketOutline, folderOpenOutline });
