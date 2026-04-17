@@ -1,250 +1,672 @@
-// Variables locales (Idealmente mover a global)
-$inacap-red: #D01824;
-$inacap-dark: #222222;
-$inacap-grey: #f4f4f4;
+// ═══════════════════════════════════════════════════════════════
+// LOGIN ADMIN — Dark Immersive Command Center
+// Paleta sincronizada con Dashboard Admin (#0f0f14, #e21f26)
+// ═══════════════════════════════════════════════════════════════
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+// ─── Design Tokens ───────────────────────────────────────────
+$bg-primary: #08080c;
+$bg-secondary: #0f0f14;
+$surface-glass: rgba(255, 255, 255, 0.04);
+$surface-glass-hover: rgba(255, 255, 255, 0.07);
+$border-glass: rgba(255, 255, 255, 0.08);
+$border-glass-focus: rgba(226, 31, 38, 0.5);
+$accent-red: #e21f26;
+$accent-red-dark: #8b0000;
+$accent-glow: rgba(226, 31, 38, 0.35);
+$text-primary: #f0f0f5;
+$text-secondary: rgba(255, 255, 255, 0.55);
+$text-muted: rgba(255, 255, 255, 0.35);
+$error-red: #ff4d4d;
+$radius-lg: 20px;
+$radius-md: 12px;
+$radius-sm: 8px;
+$transition-smooth: cubic-bezier(0.25, 0.8, 0.25, 1);
 
 :host {
-    --ion-background-color: #f0f2f5;
+    display: block;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --ion-background-color: #{$bg-primary};
 }
 
-.login-bg {
-    --background: linear-gradient(135deg, #3d070a 0%, #a6131d 50%, #e71c29 100%);
-    background: linear-gradient(135deg, #5e0a0f 0%, #a6131d 50%, #D01824 100%);
-    animation: gradientBG 15s ease infinite;
-    background-size: 400% 400%;
+// ═══════════════════════════════════════════════════════════════
+// CAPA BASE — Fondo Inmersivo
+// ═══════════════════════════════════════════════════════════════
+.login-immersive {
+    --background: #{$bg-primary};
+    position: relative;
+    overflow: hidden;
 }
 
-@keyframes gradientBG {
+// ─── Partículas Ambientales ──────────────────────────────────
+.particles-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    background: radial-gradient(circle, rgba(226, 31, 38, 0.6) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: particleFloat linear infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes particleFloat {
     0% {
-        background-position: 0% 50%;
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 0;
     }
 
-    50% {
-        background-position: 100% 50%;
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
     }
 
     100% {
-        background-position: 0% 50%;
+        transform: translateY(-100vh) translateX(30px) scale(0.5);
+        opacity: 0;
     }
 }
 
-// ==============================================
-// Grid Layout (Master Architect)
-// ==============================================
-.full-height-grid {
+// ─── Resplandor Ambiental ────────────────────────────────────
+.ambient-glow {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 600px 400px at 20% 80%, rgba(226, 31, 38, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 500px 500px at 80% 20%, rgba(139, 0, 0, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 800px 300px at 50% 50%, rgba(15, 15, 20, 0.5) 0%, transparent 100%);
+    animation: ambientPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes ambientPulse {
+    0% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// STAGE — Contenedor Principal
+// ═══════════════════════════════════════════════════════════════
+.login-stage {
+    position: relative;
+    z-index: 1;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+// ─── Botón Volver ────────────────────────────────────────────
+.back-fab {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    z-index: 10;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: $surface-glass;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid $border-glass;
+    color: $text-secondary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s $transition-smooth;
+
+    ion-icon {
+        font-size: 1.25rem;
+    }
+
+    &:hover {
+        background: $surface-glass-hover;
+        color: $text-primary;
+        border-color: rgba(255, 255, 255, 0.15);
+        transform: translateX(-3px);
+    }
+
+    &:active {
+        transform: translateX(-3px) scale(0.95);
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// GLASS CARD — Tarjeta Central
+// ═══════════════════════════════════════════════════════════════
+.glass-card {
+    width: 100%;
+    max-width: 440px;
+    background: $surface-glass;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid $border-glass;
+    border-radius: $radius-lg;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+        0 24px 64px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+
+    // Entrada animada
+    animation: cardReveal 0.8s $transition-smooth both;
+    animation-delay: 0.2s;
+}
+
+@keyframes cardReveal {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.97);
+        filter: blur(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+// ─── Línea de Acento (Top) ───────────────────────────────────
+.accent-line {
+    height: 3px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            $accent-red-dark 20%,
+            $accent-red 50%,
+            $accent-red-dark 80%,
+            transparent 100%);
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: -3px 10% 0 10%;
+        background: $accent-red;
+        filter: blur(8px);
+        opacity: 0.5;
+        animation: lineGlow 3s ease-in-out infinite alternate;
+    }
+}
+
+@keyframes lineGlow {
+    0% {
+        opacity: 0.3;
+        filter: blur(6px);
+    }
+
+    100% {
+        opacity: 0.6;
+        filter: blur(10px);
+    }
+}
+
+// ─── Card Header ─────────────────────────────────────────────
+.card-header {
+    padding: 36px 36px 0;
+    animation: contentFade 0.6s ease both;
+    animation-delay: 0.5s;
+}
+
+.brand-lockup {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+.brand-icon-wrap {
+    width: 80px;
+    height: 80px;
+    border-radius: $radius-md;
+    background: rgba(226, 31, 38, 0.12);
+    border: 1px solid rgba(226, 31, 38, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 8px;
+    overflow: hidden;
+
+    .brand-logo {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.brand-text {
     display: flex;
     flex-direction: column;
 }
 
-.header-row {
-    flex: 0 0 auto;
-    padding: 20px;
+.brand-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: $text-primary;
+    margin: 0;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+
+    .accent {
+        color: $accent-red;
+        font-weight: 400;
+    }
 }
 
-.content-row {
-    flex: 1;
+.brand-subtitle {
+    font-size: 0.75rem;
+    color: $text-muted;
+    margin: 4px 0 0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
 }
 
-.footer-row {
-    flex: 0 0 auto;
-    padding-bottom: 2rem;
+// ─── Separador ───────────────────────────────────────────────
+.divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, $border-glass, transparent);
+    margin: 24px 36px;
+    animation: contentFade 0.6s ease both;
+    animation-delay: 0.6s;
 }
 
-// Botón Volver (Estándar Mobile/Desktop)
-.back-btn {
+// ═══════════════════════════════════════════════════════════════
+// FORMULARIO
+// ═══════════════════════════════════════════════════════════════
+.login-form {
+    padding: 0 36px 36px;
+}
+
+// ─── Grupo de Campo ──────────────────────────────────────────
+.field-group {
+    margin-bottom: 20px;
+    animation: contentFade 0.6s ease both;
+
+    &:nth-child(1) {
+        animation-delay: 0.7s;
+    }
+
+    &:nth-child(2) {
+        animation-delay: 0.8s;
+    }
+}
+
+.field-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 30px;
-    padding: 10px 20px;
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 500;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid $border-glass;
+    border-radius: $radius-md;
+    transition: all 0.3s $transition-smooth;
+
+    &:focus-within {
+        border-color: $border-glass-focus;
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 0 0 3px rgba(226, 31, 38, 0.1), 0 0 20px rgba(226, 31, 38, 0.05);
+    }
+
+    .has-error & {
+        border-color: $error-red;
+        box-shadow: 0 0 0 3px rgba(255, 77, 77, 0.1);
+    }
+}
+
+.field-icon {
+    position: absolute;
+    left: 16px;
+    font-size: 1.15rem;
+    color: $text-muted;
+    transition: color 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+
+    .field-wrapper:focus-within & {
+        color: $accent-red;
+    }
+
+    .has-error & {
+        color: $error-red;
+    }
+}
+
+.field-wrapper input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: $text-primary;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    padding: 18px 16px 18px 48px;
+    letter-spacing: 0.2px;
+
+    &::placeholder {
+        color: $text-secondary;
+        font-weight: 400;
+    }
+
+    // Autofill fix para Chrome (evitar fondo blanco)
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+        -webkit-text-fill-color: $text-primary;
+        -webkit-box-shadow: 0 0 0 1000px $bg-secondary inset;
+        transition: background-color 5000s ease-in-out 0s;
+        caret-color: $text-primary;
+    }
+}
+
+// ─── Toggle Password ─────────────────────────────────────────
+.toggle-password {
+    position: absolute;
+    right: 8px;
+    background: transparent;
+    border: none;
+    color: $text-muted;
+    padding: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
 
     ion-icon {
-        font-size: 1.4rem;
+        font-size: 1.15rem;
     }
 
     &:hover {
-        background: rgba(255, 255, 255, 0.25);
-        transform: translateX(-3px);
+        color: $text-secondary;
+        background: rgba(255, 255, 255, 0.05);
     }
 }
 
-// LOGIN CARD (Estándar Mobile/Desktop)
-.login-card {
+// ─── Error de Campo ──────────────────────────────────────────
+.field-error {
+    padding: 6px 0 0 16px;
+    font-size: 0.78rem;
+    color: $error-red;
+    font-weight: 500;
+    animation: shakeIn 0.4s ease;
+
+    span {
+        display: block;
+    }
+}
+
+@keyframes shakeIn {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-6px);
+    }
+
+    50% {
+        transform: translateX(4px);
+    }
+
+    75% {
+        transform: translateX(-2px);
+    }
+}
+
+// ─── Error Global ────────────────────────────────────────────
+.global-error {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 77, 77, 0.08);
+    border: 1px solid rgba(255, 77, 77, 0.2);
+    border-radius: $radius-sm;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    animation: shakeIn 0.4s ease, contentFade 0.3s ease;
+
+    ion-icon {
+        font-size: 1.25rem;
+        color: $error-red;
+        flex-shrink: 0;
+    }
+
+    span {
+        font-size: 0.85rem;
+        color: rgba(255, 120, 120, 0.9);
+        font-weight: 500;
+        line-height: 1.4;
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BOTÓN SUBMIT
+// ═══════════════════════════════════════════════════════════════
+.submit-btn {
     width: 100%;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    background: #ffffff !important; // FORZAR BLANCO SIEMPRE
-    --background: #ffffff !important;
-    overflow: visible;
-    margin: 0;
-    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.login-header {
-    text-align: center;
-    padding: 2rem 1rem 1rem;
-
-    .logo-text {
-        font-size: 2rem;
-        font-weight: 800;
-        color: $inacap-dark;
-        margin: 0;
-        letter-spacing: -0.5px;
-
-        .highlight {
-            color: $inacap-red;
-            font-weight: 300;
-        }
-    }
-
-    .subtitle {
-        color: #666666;
-        margin-top: 5px;
-        font-size: 1rem;
-    }
-}
-
-.custom-item {
-    --background: transparent;
-    --padding-start: 0;
-    margin-bottom: 15px;
-    --color: #222222;
-    --highlight-color-focused: #D01824;
-
-    ion-input {
-        --color: #222222;
-        --placeholder-color: #666666;
-        font-size: 1rem !important;
-    }
-
-    ion-label {
-        font-weight: 600;
-        color: #555555;
-        font-size: 1rem !important;
-    }
-}
-
-.actions {
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.inacap-btn {
-    --background: #{$inacap-red};
-    --border-radius: 8px;
+    height: 52px;
+    border: none;
+    border-radius: $radius-md;
+    background: linear-gradient(135deg, $accent-red-dark 0%, $accent-red 100%);
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
     font-weight: 600;
-    height: 48px;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
-    font-size: 1rem;
-}
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s $transition-smooth;
+    margin-top: 28px;
+    animation: contentFade 0.6s ease both;
+    animation-delay: 0.9s;
 
-.footer-copy {
-    text-align: center;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.85rem;
+    // Glow bajo el botón
+    box-shadow:
+        0 8px 24px rgba(226, 31, 38, 0.25),
+        0 0 0 0 rgba(226, 31, 38, 0);
 
-    p {
-        margin: 0;
-    }
-}
-
-// ==============================================
-// 📟 MEDIA QUERIES ESPECÍFICAS PARA TÓTEM
-// Detectamos pantallas muy altas (Vertical HD > 1500px)
-// Excluye Tablets como iPad Pro (1366px)
-// ==============================================
-@media (min-height: 1500px) and (orientation: portrait) {
-
-    .header-row {
-        padding: 40px;
-    }
-
-    .footer-row {
-        padding-bottom: 4rem;
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
 
-    .back-btn {
-        padding: 20px 40px;
-        border-radius: 50px;
-        font-size: 2.5rem;
-        gap: 15px;
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow:
+            0 12px 32px rgba(226, 31, 38, 0.35),
+            0 0 0 0 rgba(226, 31, 38, 0);
 
-        ion-icon {
-            font-size: 3rem;
+        &::before {
+            opacity: 1;
         }
     }
 
-    .login-card {
-        border-radius: 30px;
-        padding: 2rem;
+    &:active:not(:disabled) {
+        transform: translateY(0) scale(0.98);
     }
 
-    .login-header {
-        padding: 4rem 2rem 2rem;
-
-        .logo-text {
-            font-size: 5rem;
-        }
-
-        .subtitle {
-            font-size: 2.5rem;
-            margin-top: 15px;
-        }
+    &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
     }
 
-    .custom-item {
-        margin-bottom: 40px;
-
-        ion-input {
-            font-size: 2.5rem !important;
-            --padding-top: 20px;
-            --padding-bottom: 20px;
-        }
-
-        ion-label {
-            font-size: 2.2rem !important;
-        }
+    &.loading {
+        pointer-events: none;
     }
 
-    .actions {
-        margin-top: 3rem;
+    .btn-arrow {
+        font-size: 1.1rem;
+        transition: transform 0.3s ease;
     }
 
-    .inacap-btn {
-        height: 100px;
-        font-size: 2.5rem;
-        border-radius: 20px;
-    }
-
-    .footer-copy {
-        font-size: 2rem;
-    }
-
-    .error-text {
-        font-size: 2rem !important;
-        margin-top: 10px;
-        padding-left: 10px;
+    &:hover .btn-arrow {
+        transform: translateX(3px);
     }
 }
 
-@keyframes slideUp {
+// ─── Spinner del Botón ───────────────────────────────────────
+.btn-loader {
+    display: flex;
+    align-items: center;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// FOOTER DE SEGURIDAD
+// ═══════════════════════════════════════════════════════════════
+.security-footer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 32px;
+    color: $text-muted;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    animation: contentFade 0.6s ease both;
+    animation-delay: 1.1s;
+
+    ion-icon {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.25);
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ANIMACIÓN GLOBAL — Fade In Secuencial
+// ═══════════════════════════════════════════════════════════════
+@keyframes contentFade {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(12px);
     }
 
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RESPONSIVE — Mobile First
+// ═══════════════════════════════════════════════════════════════
+@media (max-width: 480px) {
+    .login-stage {
+        padding: 16px;
+        justify-content: flex-start;
+        padding-top: 80px;
+    }
+
+    .glass-card {
+        max-width: 100%;
+        border-radius: 16px;
+    }
+
+    .card-header {
+        padding: 28px 24px 0;
+    }
+
+    .divider {
+        margin: 20px 24px;
+    }
+
+    .login-form {
+        padding: 0 24px 28px;
+    }
+
+    .brand-title {
+        font-size: 1.15rem;
+    }
+
+    .brand-subtitle {
+        font-size: 0.7rem;
+    }
+
+    .back-fab {
+        top: 16px;
+        left: 16px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .security-footer {
+        margin-top: 24px;
+    }
+}
+
+// ─── Tablets y Desktop Mediano ───────────────────────────────
+@media (min-width: 768px) {
+    .glass-card {
+        max-width: 460px;
+    }
+
+    .card-header {
+        padding: 40px 40px 0;
+    }
+
+    .divider {
+        margin: 28px 40px;
+    }
+
+    .login-form {
+        padding: 0 40px 40px;
+    }
+}
+
+// ─── Desktop Grande ──────────────────────────────────────────
+@media (min-width: 1200px) {
+    .glass-card {
+        max-width: 480px;
+    }
+
+    .back-fab {
+        top: 32px;
+        left: 32px;
     }
 }

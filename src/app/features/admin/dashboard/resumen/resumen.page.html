@@ -1,0 +1,58 @@
+<ion-content class="ion-padding" style="--background: transparent;">
+    <div class="resumen-container">
+        <h2 class="section-title">Resumen de Métricas</h2>
+
+        <!-- Skeleton Loader -->
+        <div class="metrics-grid" *ngIf="isLoading()">
+            <div class="metric-card skeleton" *ngFor="let i of [1,2,3,4]">
+                <ion-skeleton-text animated style="width: 50px; height: 50px; border-radius: 12px; margin-bottom: 15px;"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 80%; height: 20px;"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 40%; height: 30px; margin-top: 10px;"></ion-skeleton-text>
+            </div>
+        </div>
+
+        <!-- Métricas Reales -->
+        <div class="metrics-grid" *ngIf="!isLoading()">
+            <ng-container *ngIf="!authService.isSuperAdmin">
+                <div class="metric-card theme-purple">
+                    <div class="icon-wrap"><ion-icon name="time"></ion-icon></div>
+                    <div class="metric-info">
+                        <h3>{{ stats().historias }}</h3>
+                        <span>Hitos Históricos</span>
+                    </div>
+                </div>
+
+                <div class="metric-card theme-red">
+                    <div class="icon-wrap"><ion-icon name="videocam"></ion-icon></div>
+                    <div class="metric-info">
+                        <h3>{{ stats().entrevistas }}</h3>
+                        <span>Entrevistas</span>
+                    </div>
+                </div>
+
+                <div class="metric-card theme-green">
+                    <div class="icon-wrap"><ion-icon name="rocket"></ion-icon></div>
+                    <div class="metric-info">
+                        <h3>{{ stats().proyectos }}</h3>
+                        <span>Proyectos</span>
+                    </div>
+                </div>
+            </ng-container>
+
+            <div class="metric-card theme-gold" *ngIf="authService.isSuperAdmin">
+                <div class="icon-wrap"><ion-icon name="people"></ion-icon></div>
+                <div class="metric-info">
+                    <h3>{{ stats().usuarios }}</h3>
+                    <span>Usuarios Activos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Espacio para expansiones -->
+        <div class="empty-state-box">
+            <ion-icon name="analytics-outline"></ion-icon>
+            <h4>Panel Listo para Operar</h4>
+            <p>Selecciona una opción del menú lateral para comenzar a gestionar el contenido de la aplicación.</p>
+        </div>
+    </div>
+</ion-content>

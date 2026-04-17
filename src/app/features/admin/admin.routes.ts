@@ -8,26 +8,62 @@ export const routes: Routes = [
     },
     {
         path: 'dashboard',
-        loadComponent: () => import('./dashboard/dashboard.page').then(m => m.DashboardPage)
+        loadComponent: () => import('./dashboard/dashboard.page').then(m => m.DashboardPage),
+        children: [
+            {
+                path: '',
+                redirectTo: 'resumen',
+                pathMatch: 'full'
+            },
+            {
+                path: 'resumen',
+                loadComponent: () => import('./dashboard/resumen/resumen.page').then(m => m.ResumenPage)
+            },
+            {
+                path: 'historias',
+                loadComponent: () => import('./history-manager/history-manager.page').then(m => m.HistoryManagerPage)
+            },
+            {
+                path: 'usuarios',
+                loadComponent: () => import('./user-manager/user-manager.page').then(m => m.UserManagerPage)
+            },
+            {
+                path: 'entrevistas',
+                loadComponent: () => import('./interview-manager/interview-manager.page').then(m => m.InterviewManagerPage)
+            },
+            {
+                path: 'proyectos',
+                loadComponent: () => import('./project-manager/project-manager.page').then(m => m.ProjectManagerPage)
+            },
+            {
+                path: 'futuro',
+                loadComponent: () => import('./futuro-manager/futuro-manager.page').then(m => m.FuturoManagerPage)
+            }
+        ]
     },
     {
         path: 'historias',
-        loadComponent: () => import('./history-manager/history-manager.page').then(m => m.HistoryManagerPage)
+        redirectTo: 'dashboard/historias',
+        pathMatch: 'full'
     },
     {
         path: 'usuarios',
-        loadComponent: () => import('./user-manager/user-manager.page').then(m => m.UserManagerPage)
+        redirectTo: 'dashboard/usuarios',
+        pathMatch: 'full'
     },
     {
         path: 'entrevistas',
-        loadComponent: () => import('./interview-manager/interview-manager.page').then(m => m.InterviewManagerPage)
+        redirectTo: 'dashboard/entrevistas',
+        pathMatch: 'full'
     },
     {
         path: 'proyectos',
-        loadComponent: () => import('./project-manager/project-manager.page').then(m => m.ProjectManagerPage)
+        redirectTo: 'dashboard/proyectos',
+        pathMatch: 'full'
     },
     {
         path: 'futuro',
-        loadComponent: () => import('./futuro-manager/futuro-manager.page').then(m => m.FuturoManagerPage)
+        redirectTo: 'dashboard/futuro',
+        pathMatch: 'full'
     }
 ];

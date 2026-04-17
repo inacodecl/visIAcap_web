@@ -1,77 +1,120 @@
-<ion-content [fullscreen]="true" class="login-bg">
-  <ion-grid fixed class="full-height-grid">
-    <!-- Header Row: Botón Volver -->
-    <ion-row class="header-row">
-      <ion-col size="12">
-        <button class="back-btn" (click)="goBack()" aria-label="Volver al inicio">
-          <ion-icon name="arrow-back-outline"></ion-icon>
-          <span>Volver</span>
-        </button>
-      </ion-col>
-    </ion-row>
+<ion-content [fullscreen]="true" class="login-immersive" [scrollY]="false">
 
-    <!-- Main Content Row: Tarjeta Centrada -->
-    <ion-row class="ion-justify-content-center ion-align-items-center content-row">
-      <ion-col size="12" size-sm="10" size-md="8" size-lg="8" size-xl="6">
-        <ion-card class="login-card">
-          <div class="login-header">
-            <!-- Logo Placeholder: Reemplazar con activo real -->
-            <h1 class="logo-text">INACAP <span class="highlight">Renca Smart</span></h1>
-            <p class="subtitle">Acceso Administrativo</p>
+  <!-- ═══════════════════════════════════════════
+       CAPA 1: Partículas Ambientales (Fondo)
+       ═══════════════════════════════════════════ -->
+  <div class="particles-canvas" aria-hidden="true">
+    <div class="particle" *ngFor="let p of particles" [ngStyle]="{
+      left: p.x + '%',
+      top: p.y + '%',
+      width: p.size + 'px',
+      height: p.size + 'px',
+      animationDuration: p.duration + 's',
+      animationDelay: p.delay + 's',
+      opacity: p.opacity
+    }"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       CAPA 2: Mesh Gradient Ambiental
+       ═══════════════════════════════════════════ -->
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════
+       CAPA 3: Contenido Principal
+       ═══════════════════════════════════════════ -->
+  <div class="login-stage">
+
+    <!-- Botón Volver (Flotante arriba izquierda) -->
+    <button class="back-fab" (click)="goBack()" aria-label="Volver al inicio">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+
+    <!-- Tarjeta Central Glassmorphism -->
+    <div class="glass-card">
+
+      <!-- Línea de Acento Superior -->
+      <div class="accent-line" aria-hidden="true"></div>
+
+      <!-- Header del Card -->
+      <div class="card-header">
+        <div class="brand-lockup">
+          <div class="brand-icon-wrap">
+            <img src="assets/icon/Inacap-Renca-Smart-Logo-v9.svg" alt="Logo Inacap Renca Smart" class="brand-logo" />
           </div>
-
-          <ion-card-content>
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
-              <div class="input-group">
-                <ion-item lines="full" class="custom-item">
-                  <ion-label position="floating">Correo Institucional</ion-label>
-                  <ion-input type="email" formControlName="email">
-                  </ion-input>
-                </ion-item>
-                <ion-text color="danger" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
-                  class="error-text">
-                  <small *ngIf="loginForm.get('email')?.errors?.['required']">El correo es obligatorio.</small>
-                  <small *ngIf="loginForm.get('email')?.errors?.['email']">Formato de correo inválido.</small>
-                </ion-text>
-              </div>
-
-              <div class="input-group">
-                <ion-item lines="full" class="custom-item">
-                  <ion-label position="floating">Contraseña</ion-label>
-                  <ion-input type="password" formControlName="password">
-                  </ion-input>
-                </ion-item>
-                <ion-text color="danger"
-                  *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-text">
-                  <small>La contraseña es obligatoria.</small>
-                </ion-text>
-              </div>
-
-              <div class="error-message-box" *ngIf="errorMessage">
-                <ion-text color="danger">{{ errorMessage }}</ion-text>
-              </div>
-
-              <div class="actions">
-                <ion-button expand="block" type="submit" [disabled]="loginForm.invalid || isLoading" class="inacap-btn">
-                  {{ isLoading ? 'Ingresando...' : 'Iniciar Sesión' }}
-                </ion-button>
-              </div>
-
-            </form>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-
-    <!-- Footer Row -->
-    <ion-row class="footer-row">
-      <ion-col size="12" class="ion-text-center">
-        <div class="footer-copy">
-          <p>© 2025 INACAP Sede Renca | 60° Aniversario</p>
+          <div class="brand-text">
+            <h1 class="brand-title">Inacap <span class="accent">Smart</span></h1>
+            <p class="brand-subtitle">Panel Administrativo</p>
+          </div>
         </div>
-      </ion-col>
-    </ion-row>
+      </div>
 
-  </ion-grid>
+      <!-- Separador sutil -->
+      <div class="divider" aria-hidden="true"></div>
+
+      <!-- Formulario -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+        <!-- Campo Email -->
+        <div class="field-group" [class.has-error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          [class.has-value]="loginForm.get('email')?.value">
+          <div class="field-wrapper">
+            <ion-icon name="mail-outline" class="field-icon"></ion-icon>
+            <input type="email" formControlName="email" id="login-email" placeholder="Correo Institucional"
+              autocomplete="email" />
+          </div>
+          <div class="field-error"
+            *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+            <span *ngIf="loginForm.get('email')?.errors?.['required']">El correo es obligatorio.</span>
+            <span *ngIf="loginForm.get('email')?.errors?.['email']">Formato de correo inválido.</span>
+          </div>
+        </div>
+
+        <!-- Campo Password -->
+        <div class="field-group"
+          [class.has-error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          [class.has-value]="loginForm.get('password')?.value">
+          <div class="field-wrapper">
+            <ion-icon name="lock-closed-outline" class="field-icon"></ion-icon>
+            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" id="login-password"
+              placeholder="Contraseña" autocomplete="current-password" />
+            <button type="button" class="toggle-password" (click)="togglePasswordVisibility()"
+              aria-label="Mostrar/Ocultar contraseña">
+              <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+            </button>
+          </div>
+          <div class="field-error"
+            *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            <span>La contraseña es obligatoria.</span>
+          </div>
+        </div>
+
+        <!-- Mensaje de Error Global -->
+        <div class="global-error" *ngIf="errorMessage">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          <span>{{ errorMessage }}</span>
+        </div>
+
+        <!-- Botón Submit -->
+        <button type="submit" class="submit-btn" [disabled]="loginForm.invalid || isLoading"
+          [class.loading]="isLoading">
+          <span class="btn-text">{{ isLoading ? 'Verificando...' : 'Iniciar Sesión' }}</span>
+          <div class="btn-loader" *ngIf="isLoading">
+            <div class="spinner"></div>
+          </div>
+          <ion-icon name="arrow-forward-outline" class="btn-arrow" *ngIf="!isLoading"></ion-icon>
+        </button>
+
+      </form>
+
+    </div>
+
+    <!-- Footer de Seguridad -->
+    <div class="security-footer">
+      <ion-icon name="lock-closed"></ion-icon>
+      <span>Conexión segura · SSL</span>
+    </div>
+
+  </div>
+
 </ion-content>
