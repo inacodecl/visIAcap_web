@@ -23,15 +23,19 @@ $text-dark: #333;
         z-index: 0;
 
         // Imagen de Fondo
-        background-image: url('https://www.eechile.cl/eficiencia-energetica/wp-content/uploads/inacap-valdivia-hd.jpg');
-        background-size: cover; // Cubrir todo el espacio
+        background-image: url('../../../../assets/img/sede-renca-v3.png');
+        background-color: #0b1126; // Color del cielo nocturno para expandir hacia arriba sin cortes
+        
+        // Img más pequeña y a la derecha (para móviles)
+        background-size: auto 85%; 
         background-repeat: no-repeat;
-        background-position: center;
+        background-position: right bottom;
 
         filter: brightness(0.85);
 
         @media (min-width: 992px) {
-            background-position: center top;
+            background-size: cover;
+            background-position: center center;
         }
     }
 }
@@ -162,4 +166,6 @@ $text-dark: #333;
 
     padding: 20px;
 }
-
+
+
+

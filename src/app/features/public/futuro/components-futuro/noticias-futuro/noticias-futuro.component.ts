@@ -11,7 +11,7 @@ import { Noticia } from '../../futuro.models';
   templateUrl: './noticias-futuro.component.html',
   styleUrls: ['./noticias-futuro.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonIcon, TranslateModule]
+  imports: [CommonModule, TranslateModule]
 })
 export class NoticiasFuturoComponent {
   @Input() noticias: Noticia[] = [];

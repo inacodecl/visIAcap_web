@@ -25,7 +25,7 @@ import { ProyectosFuturoComponent } from '../components-futuro/proyectos-futuro/
 import { NoticiasFuturoComponent } from '../components-futuro/noticias-futuro/noticias-futuro.component';
 import { EsteMesFuturoComponent } from '../components-futuro/este-mes-futuro/este-mes-futuro.component';
 import { ProximamenteFuturoComponent } from '../components-futuro/proximamente-futuro/proximamente-futuro.component';
-
+import { FanMenuComponent } from '../../home/components/fan-menu/fan-menu.component';
 @Component({
     selector: 'app-futuro',
     templateUrl: './futuro.page.html',
@@ -39,7 +39,8 @@ import { ProximamenteFuturoComponent } from '../components-futuro/proximamente-f
         ProyectosFuturoComponent,
         NoticiasFuturoComponent,
         EsteMesFuturoComponent,
-        ProximamenteFuturoComponent
+        ProximamenteFuturoComponent,
+        FanMenuComponent
     ]
 })
 export class FuturoPage implements OnInit {

@@ -1,4 +1,4 @@
-@import '../shared-futuro.scss';
+@use '../shared-futuro.scss';
 
 // ==============================================
 // Hero Section: Inline Image Typography
@@ -20,12 +20,12 @@
 
         .hero-mini-icon {
             font-size: 32px;
-            color: $inacap-red;
+            color: shared-futuro.$inacap-red;
             filter: drop-shadow(0 0 15px rgba(226, 6, 19, 0.4));
         }
 
         .hero-label-text {
-            color: $text-primary;
+            color: shared-futuro.$text-primary;
             letter-spacing: 0.4em;
             text-transform: uppercase;
             font-size: 0.875rem;
@@ -65,7 +65,7 @@
     .hero-description {
         font-size: 2rem;
         font-weight: 300;
-        color: $text-secondary;
+        color: shared-futuro.$text-secondary;
         font-family: 'Manrope', system-ui, sans-serif;
         margin-top: 48px;
         max-width: 900px;

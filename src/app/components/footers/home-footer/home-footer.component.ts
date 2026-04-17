@@ -14,7 +14,7 @@ import { ThemeService } from '../../../core/services/theme.service';
     templateUrl: './home-footer.component.html',
     styleUrls: ['./home-footer.component.scss'],
     standalone: true,
-    imports: [CommonModule, IonIcon, IonButton, TranslateModule]
+    imports: [CommonModule, IonIcon, TranslateModule]
 })
 export class HomeFooterComponent implements OnInit {
 

@@ -21,8 +21,8 @@ import { trigger, transition, style, animate } from '@angular/animations';
   styleUrls: ['./desarrolladores.page.scss'],
   standalone: true,
   imports: [
-    IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
-    IonButtons, IonBackButton, IonButton, IonIcon, TranslateModule, HomeFooterComponent,
+    IonContent, IonHeader, IonToolbar, CommonModule, FormsModule,
+    IonButtons, IonButton, IonIcon, TranslateModule, HomeFooterComponent,
     RouterModule
   ],
   animations: [

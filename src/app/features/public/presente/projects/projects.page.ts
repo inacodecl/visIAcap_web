@@ -10,7 +10,7 @@ import { ProyectosService } from '../../../../core/services/proyectos.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../../core/services/language.service';
 import { register } from 'swiper/element/bundle';
-
+import { FanMenuComponent } from '../../home/components/fan-menu/fan-menu.component';
 register();
 
 @Component({
@@ -22,7 +22,8 @@ register();
     IonContent, CommonModule, FormsModule, RouterModule,
     IonIcon,
     HomeFooterComponent,
-    TranslateModule
+    TranslateModule,
+    FanMenuComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

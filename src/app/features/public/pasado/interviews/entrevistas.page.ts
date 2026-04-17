@@ -17,7 +17,7 @@ import { arrowBackOutline, playCircleOutline, alertCircleOutline, videocamOutlin
 import { Subscription } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../../core/services/language.service';
-
+import { FanMenuComponent } from '../../home/components/fan-menu/fan-menu.component';
 @Component({
     selector: 'app-entrevistas',
     templateUrl: './entrevistas.page.html',
@@ -25,11 +25,11 @@ import { LanguageService } from '../../../../core/services/language.service';
     standalone: true,
     imports: [
         IonContent, CommonModule, FormsModule,
-        IonButton, IonIcon, IonGrid, IonRow, IonCol, IonCard,
-        IonCardHeader, IonCardTitle,
+        IonButton, IonIcon, 
         IonSkeletonText, IonModal,
         HomeFooterComponent,
-        TranslateModule
+        TranslateModule,
+        FanMenuComponent
     ]
 })
 export class EntrevistasPage implements OnInit, AfterViewInit, OnDestroy {

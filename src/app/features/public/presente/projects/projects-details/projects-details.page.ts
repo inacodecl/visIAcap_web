@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { IonContent, IonIcon, IonSpinner, IonChip, IonLabel, IonHeader } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { arrowBack, arrowBackOutline, globe, time, location, calendarNumber, analytics, imagesOutline, folderOpen, qrCodeOutline } from 'ionicons/icons';
+import { arrowBack, arrowBackOutline, globe, time, location, calendarNumber, analytics, imagesOutline, folderOpen, qrCodeOutline, alertCircleOutline, calendarOutline, locationOutline, pulseOutline, folderOutline } from 'ionicons/icons';
 import { ProyectosService } from '../../../../../core/services/proyectos.service';
 import { Proyecto } from '../../../../../core/models/proyecto.model';
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,13 +11,12 @@ import { LanguageService } from '../../../../../core/services/language.service';
 import { ExternalTabService } from '../../../../../core/services/external-tab.service';
 import { ExternalLinkButtonComponent } from '../../../../../components/buttons/external-link-button/external-link-button.component';
 import { QRCodeComponent } from 'angularx-qrcode';
-
 @Component({
     selector: 'app-projects-details',
     templateUrl: './projects-details.page.html',
     styleUrls: ['./projects-details.page.scss'],
     standalone: true,
-    imports: [CommonModule, IonHeader, IonContent, IonIcon, IonSpinner, RouterModule, IonChip, IonLabel, TranslateModule, ExternalLinkButtonComponent, QRCodeComponent]
+    imports: [CommonModule, IonHeader, IonContent, IonIcon, IonSpinner, RouterModule, TranslateModule, QRCodeComponent]
 })
 export class ProjectsDetailsPage implements OnInit {
     private route = inject(ActivatedRoute);
@@ -30,7 +29,7 @@ export class ProjectsDetailsPage implements OnInit {
     error = signal(false);
 
     constructor() {
-        addIcons({ arrowBack, arrowBackOutline, calendarNumber, location, analytics, imagesOutline, folderOpen, globe, time, qrCodeOutline });
+        addIcons({ arrowBackOutline, alertCircleOutline, calendarOutline, locationOutline, pulseOutline, imagesOutline, folderOutline, qrCodeOutline, arrowBack, calendarNumber, location, analytics, folderOpen, globe, time });
     }
 
     ngOnInit() {

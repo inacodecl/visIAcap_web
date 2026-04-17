@@ -15,7 +15,7 @@ import { HomeFooterComponent } from '../../../../components/footers/home-footer/
 import { BackgroundBrilloComponent } from '../../../../components/background/brillo/background-brillo.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../../core/services/language.service';
-
+import { FanMenuComponent } from '../../home/components/fan-menu/fan-menu.component';
 interface TimelineEvent extends Historia {
   expanded: boolean;
 }
@@ -31,7 +31,8 @@ interface TimelineEvent extends Historia {
     RouterModule,
     HomeFooterComponent,
     BackgroundBrilloComponent,
-    TranslateModule
+    TranslateModule,
+    FanMenuComponent
   ]
 })
 export class TimelinePage implements OnInit, AfterViewInit, OnDestroy {

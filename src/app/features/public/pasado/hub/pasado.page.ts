@@ -7,7 +7,7 @@ import { HomeFooterComponent } from '../../../../components/footers/home-footer/
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, timeOutline, chatbubblesOutline, arrowForwardOutline, playOutline } from 'ionicons/icons';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { FanMenuComponent } from '../../home/components/fan-menu/fan-menu.component';
 @Component({
     selector: 'app-pasado',
     templateUrl: './pasado.page.html',
@@ -23,7 +23,8 @@ import { TranslateModule } from '@ngx-translate/core';
         IonRow,
         IonCol,
         HomeFooterComponent,
-        TranslateModule
+        TranslateModule,
+        FanMenuComponent
     ]
 })
 export class PasadoPage implements OnInit {

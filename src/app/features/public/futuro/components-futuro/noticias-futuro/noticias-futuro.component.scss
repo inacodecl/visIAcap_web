@@ -1,4 +1,5 @@
-@import '../shared-futuro.scss';
+@use "sass:color";
+@use '../shared-futuro.scss';
 
 .stitch-section {
     padding: 0 6vw;
@@ -7,7 +8,7 @@
         margin-bottom: 4rem;
 
         .stitch-eyebrow {
-            color: $inacap-red;
+            color: shared-futuro.$inacap-red;
             font-size: 0.75rem;
             font-weight: 900;
             letter-spacing: 0.3em;
@@ -22,7 +23,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: -0.025em;
-            color: $text-primary;
+            color: shared-futuro.$text-primary;
             margin: 0;
         }
     }
@@ -56,7 +57,7 @@
                 transform: scale(1.05);
             }
             .news-title {
-                color: lighten($inacap-red, 15%);
+                color: color.adjust(shared-futuro.$inacap-red, $lightness: 15%);
             }
         }
 
@@ -65,7 +66,7 @@
 
             .news-meta {
                 font-size: 0.75rem;
-                color: $text-secondary;
+                color: shared-futuro.$text-secondary;
                 text-transform: uppercase;
                 letter-spacing: 0.1em;
                 margin-bottom: 1rem;
@@ -78,12 +79,12 @@
                 font-family: "Space Grotesk", sans-serif;
                 line-height: 1.25;
                 transition: color 0.3s ease;
-                color: $text-primary;
+                color: shared-futuro.$text-primary;
                 margin: 0 0 1rem 0;
             }
 
             .news-desc {
-                color: $text-secondary;
+                color: shared-futuro.$text-secondary;
                 font-size: 1.25rem;
                 line-height: 1.6;
                 margin: 0;

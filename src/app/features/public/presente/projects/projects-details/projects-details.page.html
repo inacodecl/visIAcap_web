@@ -68,7 +68,15 @@
 
             <!-- 1. Historia -->
             <div class="history-section">
-                <h3 class="section-title">HISTORIA DEL PROYECTO</h3>
+                <div class="history-header">
+                    <h3 class="section-title">HISTORIA DEL PROYECTO</h3>
+                    @if (proyecto()?.url_externa) {
+                        <button class="btn-totem-red-inline" (click)="openUrl(proyecto()!.url_externa!)">
+                            <span>VISITAR SITIO WEB</span>
+                            <ion-icon name="globe"></ion-icon>
+                        </button>
+                    }
+                </div>
                 
                 @if (proyecto()?.descripcion) {
                     <div class="history-text" [innerHTML]="proyecto()?.descripcion"></div>
@@ -154,14 +162,7 @@
     </div>
 
 
-    <!-- CTA FLOTANTE -->
-    @if (proyecto()?.url_externa) {
-        <div class="totem-footer-cta">
-            <button class="btn-totem-red" (click)="openUrl(proyecto()!.url_externa!)">
-                VISITAR SITIO WEB
-            </button>
-        </div>
-    }
+
 
     }
 </ion-content>
