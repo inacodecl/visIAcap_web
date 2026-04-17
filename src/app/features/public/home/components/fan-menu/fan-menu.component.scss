@@ -49,10 +49,6 @@
 .item-zenz { background-color: #10b981 !important; }
 .item-midae { background-color: #3b82f6 !important; }
 
-.menu-item:hover {
-    /* El escalado genérico que rompía el transform fue eliminado.
-       Los hovers se gestionan condicionalmente en la clase .active */
-}
 
 /* ETIQUETAS CON MEJOR SEPARACIÓN */
 .label {
