@@ -101,6 +101,16 @@ export class AuthService {
         return this.hasRole([UsuarioRol.Admin]);
     }
 
+    /**
+     * Actualiza los datos del usuario actual en el signal y localStorage.
+     * Se usa tras editar el perfil propio para reflejar cambios inmediatamente.
+     * @param updatedUser Datos completos del usuario actualizado
+     */
+    updateCurrentUser(updatedUser: Usuario): void {
+        this._currentUser.set(updatedUser);
+        localStorage.setItem('visiacap_user', JSON.stringify(updatedUser));
+    }
+
     // --- Métodos Internos ---
 
     private setSession(user: Usuario, token: string): void {

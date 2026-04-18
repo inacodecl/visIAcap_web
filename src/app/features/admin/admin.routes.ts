@@ -38,6 +38,14 @@ export const routes: Routes = [
             {
                 path: 'futuro',
                 loadComponent: () => import('./futuro-manager/futuro-manager.page').then(m => m.FuturoManagerPage)
+            },
+            {
+                path: 'mi-perfil',
+                loadComponent: () => import('./my-profile/my-profile.page').then(m => m.MyProfilePage)
+            },
+            {
+                path: 'mi-actividad',
+                loadComponent: () => import('./my-activity/my-activity.page').then(m => m.MyActivityPage)
             }
         ]
     },

@@ -1,0 +1,174 @@
+<ion-content class="ion-padding" style="--background: transparent;">
+    <div class="profile-container">
+
+        <!-- Loading State -->
+        @if (isLoading()) {
+            <div class="loading-wrap">
+                <ion-spinner name="crescent" color="danger"></ion-spinner>
+                <p>Cargando perfil...</p>
+            </div>
+        } @else {
+
+        <!-- Mensaje de éxito/error -->
+        @if (saveMessage()) {
+            <div class="save-toast" [class.error]="saveMessage()!.includes('Error') || saveMessage()!.includes('obligatorios')">
+                <ion-icon [name]="saveMessage()!.includes('Error') || saveMessage()!.includes('obligatorios') ? 'close-outline' : 'checkmark-outline'"></ion-icon>
+                <span>{{ saveMessage() }}</span>
+            </div>
+        }
+
+        <!-- Encabezado del Perfil -->
+        <div class="profile-hero">
+            <div class="avatar-section">
+                <div class="avatar-large">
+                    <span>{{ getInitials() }}</span>
+                </div>
+            </div>
+            <div class="hero-info">
+                <h1 class="profile-name">{{ profile()?.nombre }} {{ profile()?.apellido }}</h1>
+                <span class="profile-role">{{ getRolLabel() }}</span>
+                <span class="profile-since">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                    {{ getMemberSince() }}
+                </span>
+            </div>
+        </div>
+
+        <!-- Grid de Información -->
+        <div class="info-grid">
+
+            <!-- Tarjeta: Información Personal -->
+            <div class="info-card">
+                <div class="card-header-row">
+                    <div class="card-icon-wrap theme-blue">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </div>
+                    <h3>Información Personal</h3>
+
+                    @if (!isEditing()) {
+                        <button class="btn-edit" (click)="startEditing()">
+                            <ion-icon name="create-outline"></ion-icon>
+                            Editar
+                        </button>
+                    }
+                </div>
+
+                <!-- Modo Lectura -->
+                @if (!isEditing()) {
+                    <div class="fields-list">
+                        <div class="field-row">
+                            <label>Nombre completo</label>
+                            <span>{{ profile()?.nombre }} {{ profile()?.apellido }}</span>
+                        </div>
+                        <div class="field-row">
+                            <label>Correo institucional</label>
+                            <span>{{ profile()?.email }}</span>
+                        </div>
+                        <div class="field-row">
+                            <label>Teléfono</label>
+                            @if (profile()?.telefono) {
+                                <span>{{ profile()?.telefono }}</span>
+                            } @else {
+                                <span class="placeholder-text">No configurado</span>
+                            }
+                        </div>
+                        <div class="field-row">
+                            <label>Rol del sistema</label>
+                            <span>{{ getRolLabel() }}</span>
+                        </div>
+                        <div class="field-row">
+                            <label>Último acceso</label>
+                            <span>{{ getLastLogin() }}</span>
+                        </div>
+                    </div>
+                }
+
+                <!-- Modo Edición -->
+                @if (isEditing()) {
+                    <div class="edit-form">
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" [(ngModel)]="editForm.nombre" placeholder="Tu nombre" />
+                        </div>
+                        <div class="form-group">
+                            <label>Apellido</label>
+                            <input type="text" [(ngModel)]="editForm.apellido" placeholder="Tu apellido" />
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="tel" [(ngModel)]="editForm.telefono" placeholder="+56 9 1234 5678" />
+                        </div>
+                        <div class="form-group readonly">
+                            <label>Correo institucional</label>
+                            <input type="email" [value]="profile()?.email" disabled />
+                            <span class="readonly-hint">El correo no se puede modificar</span>
+                        </div>
+
+                        <div class="edit-actions">
+                            <button class="btn-cancel" (click)="cancelEditing()">
+                                <ion-icon name="close-outline"></ion-icon>
+                                Cancelar
+                            </button>
+                            <button class="btn-save" (click)="saveProfile()" [disabled]="isSaving()">
+                                @if (isSaving()) {
+                                    <ion-spinner name="dots" style="width: 20px; height: 20px;"></ion-spinner>
+                                } @else {
+                                    <ion-icon name="save-outline"></ion-icon>
+                                }
+                                Guardar Cambios
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Tarjeta: Seguridad -->
+            <div class="info-card">
+                <div class="card-header-row">
+                    <div class="card-icon-wrap theme-red">
+                        <ion-icon name="shield-checkmark-outline"></ion-icon>
+                    </div>
+                    <h3>Seguridad</h3>
+                </div>
+
+                <div class="fields-list">
+                    <div class="field-row">
+                        <label>Contraseña</label>
+                        <span>••••••••••</span>
+                    </div>
+                    <div class="field-row">
+                        <label>Estado de cuenta</label>
+                        @if (profile()?.is_active) {
+                            <span class="badge-active">Activa</span>
+                        } @else {
+                            <span class="badge-inactive">Desactivada</span>
+                        }
+                    </div>
+                </div>
+
+                <button class="btn-action-outline" disabled>
+                    <ion-icon name="key-outline"></ion-icon>
+                    Cambiar Contraseña
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Zona Peligrosa -->
+        <div class="danger-zone">
+            <div class="danger-header">
+                <ion-icon name="warning-outline"></ion-icon>
+                <h3>Zona de Riesgo</h3>
+            </div>
+            <p>Estas acciones son irreversibles y pueden afectar tu acceso a la plataforma.</p>
+            <div class="danger-actions">
+                <button class="btn-danger-outline" disabled>
+                    <ion-icon name="trash-outline"></ion-icon>
+                    Eliminar mi cuenta
+                </button>
+            </div>
+        </div>
+
+        }
+    </div>
+</ion-content>

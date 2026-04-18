@@ -8,6 +8,13 @@ export interface Usuario {
     nombre: string;
     apellido: string;
     email: string;
+
+    /** Teléfono del administrador (opcional, se rellena desde Mi Perfil) */
+    telefono?: string | null;
+
+    /** URL de la foto de perfil (opcional, se rellena desde Mi Perfil) */
+    avatar_url?: string | null;
+
     /**
      * Rol del usuario en el sistema.
      * Define los permisos de acceso (RBAC).

@@ -1,0 +1,116 @@
+<ion-content class="ion-padding" style="--background: transparent;">
+    <div class="activity-container">
+
+        <!-- Encabezado -->
+        <div class="activity-header">
+            <div class="header-left">
+                <h2 class="page-title">Mi Actividad</h2>
+                <p class="page-subtitle">Historial de acciones realizadas en la plataforma</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn-filter" disabled>
+                    <ion-icon name="filter-outline"></ion-icon>
+                    Filtrar
+                </button>
+                <button class="btn-export" disabled>
+                    <ion-icon name="download-outline"></ion-icon>
+                    Exportar
+                </button>
+            </div>
+        </div>
+
+        @if (isLoading) {
+            <!-- Skeleton Loader -->
+            <div class="loading-state">
+                <p>Cargando historial...</p>
+            </div>
+        } @else if (error) {
+            <div class="error-state">
+                <p>{{ error }}</p>
+                <button (click)="cargarActividad(1)">Reintentar</button>
+            </div>
+        } @else {
+
+            <!-- Métricas Rápidas (Reales) -->
+            <div class="stats-row">
+                <div class="stat-chip">
+                    <ion-icon name="pulse-outline"></ion-icon>
+                    <div class="stat-data">
+                        <span class="stat-value">{{ metricas.totalHoy }}</span>
+                        <span class="stat-label">Acciones hoy</span>
+                    </div>
+                </div>
+                <div class="stat-chip">
+                    <ion-icon name="create-outline"></ion-icon>
+                    <div class="stat-data">
+                        <span class="stat-value">{{ metricas.editar }}</span>
+                        <span class="stat-label">Ediciones (Hoy)</span>
+                    </div>
+                </div>
+                <div class="stat-chip">
+                    <ion-icon name="add-circle-outline"></ion-icon>
+                    <div class="stat-data">
+                        <span class="stat-value">{{ metricas.crear }}</span>
+                        <span class="stat-label">Creaciones (Hoy)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline de Actividad (Dinámico) -->
+            <div class="timeline-card">
+                
+                @if (actividadesAgrupadas.length === 0) {
+                    <div class="empty-state">
+                        <p>No tienes actividad reciente registrada.</p>
+                    </div>
+                }
+
+                @for (grupo of actividadesAgrupadas; track grupo.dateLabel) {
+                    <div class="timeline-section">
+                        <h4 class="date-label">{{ grupo.dateLabel }}</h4>
+
+                        @for (item of grupo.items; track item.id) {
+                            <div class="timeline-item">
+                                <!-- El color cambia dinámicamente según la acción -->
+                                <div class="timeline-dot" [ngClass]="getThemeClass(item.accion)"></div>
+                                <div class="timeline-line"></div>
+                                <div class="timeline-content">
+                                    <div class="action-row">
+                                        <!-- Badge dinámico con color via Class -->
+                                        <span class="action-badge {{ item.accion }}">{{ getAccionLabel(item.accion) }}</span>
+                                        <span class="action-time">{{ getRelativeTime(item.created_at) }}</span>
+                                    </div>
+                                    <!-- Descripción devuelta directamente por la BD -->
+                                    <p class="action-desc" [innerHTML]="item.descripcion"></p>
+                                    <span class="action-module">
+                                        <ion-icon [name]="getModuloIcon(item.modulo)"></ion-icon>
+                                        {{ getModuloLabel(item.modulo) }}
+                                    </span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <!-- Paginación Real -->
+            @if (totalPages > 1) {
+                <div class="pagination-bar">
+                    <span class="pagination-info">Mostrando página {{ currentPage }} de {{ totalPages }} ({{ totalRecords }} totales)</span>
+                    <div class="pagination-buttons">
+                        <button class="btn-page" (click)="prevPage()" [disabled]="currentPage === 1">
+                            <ion-icon name="chevron-back-outline"></ion-icon>
+                        </button>
+                        
+                        <span class="page-indicator">Pág. {{ currentPage }} / {{ totalPages }}</span>
+
+                        <button class="btn-page" (click)="nextPage()" [disabled]="currentPage === totalPages">
+                            <ion-icon name="chevron-forward-outline"></ion-icon>
+                        </button>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</ion-content>
