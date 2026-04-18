@@ -1,6 +1,6 @@
 
 <ion-content [fullscreen]="true" [scrollY]="true" class="admin-content">
-    <div class="glass-container">
+    <ion-grid fixed class="glass-container-grid">
 
         <!-- HEADER ROW: Título -->
         <app-admin-page-title title="Gestión del Futuro" icon="rocket-outline" themeColor="blue"
@@ -8,39 +8,40 @@
         </app-admin-page-title>
 
         <!-- ACTION CARDS -->
-        <ion-grid class="action-cards-grid ion-margin-bottom">
-            <ion-row>
-                <ion-col size="12">
-                    <app-admin-action-card [title]="'Crear ' + getActiveLabelSingular()" [description]="'Añadir nueva entrada a ' + activeSegment()"
-                        icon="add-circle-outline" themeColor="blue" (cardClick)="openCreateModal()">
-                    </app-admin-action-card>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+        <ion-row class="action-cards-grid ion-margin-bottom">
+            <ion-col size="12">
+                <app-admin-action-card [title]="'Crear ' + getActiveLabelSingular()" [description]="'Añadir nueva entrada a ' + activeSegment()"
+                    icon="add-circle-outline" themeColor="blue" (cardClick)="openCreateModal()">
+                </app-admin-action-card>
+            </ion-col>
+        </ion-row>
 
         <!-- TYPE FILTER (Local Segment) -->
-        <div class="filter-container">
-            <ion-segment [value]="activeSegment()" (ionChange)="segmentChanged($event)" class="neon-segment cyan">
-                <ion-segment-button value="noticias">
-                    <ion-label>NOTICIAS</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="este-mes">
-                    <ion-label>ESTE MES</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="proximamente">
-                    <ion-label>PRÓXIMAMENTE</ion-label>
-                </ion-segment-button>
-            </ion-segment>
-        </div>
+        <ion-row>
+            <ion-col size="12">
+                <div class="filter-container">
+                    <ion-segment [value]="activeSegment()" (ionChange)="segmentChanged($event)" class="neon-segment cyan">
+                        <ion-segment-button value="noticias">
+                            <ion-label>NOTICIAS</ion-label>
+                        </ion-segment-button>
+                        <ion-segment-button value="este-mes">
+                            <ion-label>ESTE MES</ion-label>
+                        </ion-segment-button>
+                        <ion-segment-button value="proximamente">
+                            <ion-label>PRÓXIMAMENTE</ion-label>
+                        </ion-segment-button>
+                    </ion-segment>
+                </div>
 
-        <div class="status-summary">
-            <p>Mostrando <span class="highlight">{{ filteredItems().length }}</span> items</p>
-        </div>
+                <div class="status-summary">
+                    <p>Mostrando <span class="highlight">{{ filteredItems().length }}</span> items</p>
+                </div>
+            </ion-col>
+        </ion-row>
 
         <!-- LIST GRID -->
-        <ion-grid>
-            <ion-row>
-                <ion-col size="12" size-md="6" size-xl="4" *ngFor="let item of filteredItems()">
+        <ion-row>
+            <ion-col size="12" size-md="6" size-xl="4" *ngFor="let item of filteredItems()">
                     <ion-card class="glass-card" [class.unpublished-item]="!item.is_published">
                         <div class="card-glow"></div>
                         <ion-card-header>
@@ -80,11 +81,10 @@
                     </ion-card>
                 </ion-col>
             </ion-row>
-        </ion-grid>
 
         <!-- Empty State -->
         <app-admin-empty-state *ngIf="filteredItems().length === 0" message="No hay elementos en esta sección.">
         </app-admin-empty-state>
 
-    </div>
+    </ion-grid>
 </ion-content>

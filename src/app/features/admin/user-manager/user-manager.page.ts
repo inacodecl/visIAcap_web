@@ -21,7 +21,7 @@ import { AuthService } from '../../../core/services/auth.service';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        IonContent, IonHeader, IonButtons, IonBackButton, IonButton,
+        IonContent, IonButton,
         IonIcon, IonGrid, IonRow, IonCol, IonCard, IonCardContent,
         IonItem, IonInput, IonSelect, IonSelectOption,
         IonModal, IonToggle, IonSpinner, IonSearchbar

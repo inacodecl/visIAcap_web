@@ -268,7 +268,7 @@ h3.section-title {
             }
 
             &:hover {
-                background: lighten($red-inacap, 5%);
+                background: color-mix(in srgb, $red-inacap, white 10%);
                 box-shadow: 0 8px 25px rgba(226, 31, 38, 0.6);
                 transform: translateY(-2px);
             }

@@ -32,7 +32,7 @@ import { AdminEmptyStateComponent } from '../components-admin/admin-empty-state/
         IonModal,
         IonSpinner,
         IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonBadge, IonPopover,
-        AdminHeaderComponent, AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent
+        AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent
     ]
 })
 export class InterviewManagerPage implements OnInit {

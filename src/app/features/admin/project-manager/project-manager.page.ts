@@ -29,7 +29,7 @@ import { AdminEmptyStateComponent } from '../components-admin/admin-empty-state/
         IonContent, IonGrid, IonRow, IonCol,
         IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBadge, IonButton, IonIcon,
         IonSegment, IonSegmentButton, IonLabel, IonPopover,
-        AdminHeaderComponent, AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent
+        AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent
     ]
 })
 export class ProjectManagerPage implements OnInit {
@@ -155,7 +155,7 @@ export class ProjectManagerPage implements OnInit {
         const modal = await this.modalCtrl.create({
             component: MetadataManagerModalComponent,
             componentProps: { type: 'tags' },
-            cssClass: 'glass-modal'
+            cssClass: 'corporate-modal'
         });
         await modal.present();
     }
@@ -164,7 +164,7 @@ export class ProjectManagerPage implements OnInit {
         const modal = await this.modalCtrl.create({
             component: MetadataManagerModalComponent,
             componentProps: { type: 'categorias' },
-            cssClass: 'glass-modal'
+            cssClass: 'corporate-modal'
         });
         await modal.present();
     }

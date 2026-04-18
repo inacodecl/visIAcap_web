@@ -1,9 +1,9 @@
-$glass-border: rgba(255, 255, 255, 0.08);
+$border-light: #e2e8f0;
 
 .quick-card {
-    background: rgba(30, 34, 45, 0.6);
-    border: 1px solid $glass-border;
-    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid $border-light;
+    border-radius: 12px;
     padding: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -11,11 +11,13 @@ $glass-border: rgba(255, 255, 255, 0.08);
     align-items: center;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 
     &:hover {
-        transform: translateY(-5px);
-        background: rgba(30, 34, 45, 0.9);
-        border-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-4px);
+        background: #f8fafc;
+        border-color: #cbd5e1;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
 
     &.main-action {
@@ -26,7 +28,7 @@ $glass-border: rgba(255, 255, 255, 0.08);
             right: -20px;
             bottom: -30px;
             font-size: 8rem;
-            color: rgba(255, 255, 255, 0.05);
+            color: rgba(0, 0, 0, 0.03);
             pointer-events: none;
         }
 
@@ -38,13 +40,13 @@ $glass-border: rgba(255, 255, 255, 0.08);
                 margin: 0;
                 font-size: 1.2rem;
                 font-weight: bold;
-                color: white;
+                color: #1e293b;
             }
 
             p {
                 margin: 5px 0 0;
                 font-size: 0.9rem;
-                color: #aaa;
+                color: #64748b;
             }
         }
 
@@ -54,55 +56,27 @@ $glass-border: rgba(255, 255, 255, 0.08);
 
         // Themes
         &.theme-red {
-            background: linear-gradient(135deg, rgba(208, 24, 36, 0.15) 0%, rgba(30, 34, 45, 0.6) 100%);
-            border: 1px solid rgba(208, 24, 36, 0.2);
-
-            .arrow-icon {
-                color: #ff2a2a;
-            }
-
-            &:hover {
-                box-shadow: 0 0 20px rgba(208, 24, 36, 0.2);
-            }
+            border-left: 4px solid #d01824;
+            .arrow-icon { color: #d01824; }
+            &:hover { box-shadow: 0 10px 15px -3px rgba(208, 24, 36, 0.1); }
         }
 
         &.theme-blue {
-            background: linear-gradient(135deg, rgba(0, 243, 255, 0.15) 0%, rgba(30, 34, 45, 0.6) 100%);
-            border: 1px solid rgba(0, 243, 255, 0.2);
-
-            .arrow-icon {
-                color: #00f3ff;
-            }
-
-            &:hover {
-                box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
-            }
+            border-left: 4px solid #0ea5e9;
+            .arrow-icon { color: #0ea5e9; }
+            &:hover { box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.1); }
         }
 
         &.theme-orange {
-            background: linear-gradient(135deg, rgba(255, 170, 0, 0.15) 0%, rgba(30, 34, 45, 0.6) 100%);
-            border: 1px solid rgba(255, 170, 0, 0.2);
-
-            .arrow-icon {
-                color: #ffaa00;
-            }
-
-            &:hover {
-                box-shadow: 0 0 20px rgba(255, 170, 0, 0.2);
-            }
+            border-left: 4px solid #f59e0b;
+            .arrow-icon { color: #f59e0b; }
+            &:hover { box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.1); }
         }
 
         &.theme-green {
-            background: linear-gradient(135deg, rgba(0, 255, 157, 0.15) 0%, rgba(30, 34, 45, 0.6) 100%);
-            border: 1px solid rgba(0, 255, 157, 0.2);
-
-            .arrow-icon {
-                color: #00ff9d;
-            }
-
-            &:hover {
-                box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
-            }
+            border-left: 4px solid #16a34a;
+            .arrow-icon { color: #16a34a; }
+            &:hover { box-shadow: 0 10px 15px -3px rgba(22, 163, 74, 0.1); }
         }
     }
 }

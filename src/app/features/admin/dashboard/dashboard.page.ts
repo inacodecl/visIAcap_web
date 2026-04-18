@@ -21,7 +21,7 @@ import { AuthService } from '../../../core/services/auth.service';
     imports: [
         CommonModule,
         RouterModule,
-        IonContent, IonIcon, IonRouterOutlet
+        IonIcon, IonRouterOutlet
     ]
 })
 export class DashboardPage implements OnInit {

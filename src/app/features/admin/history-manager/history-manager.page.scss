@@ -1,31 +1,40 @@
-// --- Variables Neon & Dark ---
-$bg-dark: #0f1115;
-$bg-card: #151921;
-$neon-red: #ff2a2a;
-$neon-blue: #00f3ff;
-$neon-green: #00ff9d;
-$glass-border: rgba(255, 255, 255, 0.08);
+// --- Variables Light Corporate ---
+$bg-card: #ffffff;
+$border-light: #e2e8f0;
+$text-dark: #1e293b;
+$text-gray: #64748b;
+$inacap-red: #d01824;
 
 :host {
     display: block;
     height: 100%;
 }
 
+.admin-content {
+    --background: #f1f5f9;
+}
 
+.status-summary {
+    text-align: center;
+    color: $text-gray;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+
+    .highlight {
+        color: $inacap-red;
+        font-weight: bold;
+    }
+}
 
 // =================================================================
-// TARJETA DE HITO (Estilo "User Manager" - Año sobresaliendo)
+// TARJETA DE HITO (Clean Light Mode)
 // =================================================================
 .hito-card {
-    background: rgba(30, 34, 45, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid $glass-border;
-    border-radius: 20px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-
+    background: $bg-card;
+    border: 1px solid $border-light;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
     margin-bottom: 30px;
-
     transition: all 0.3s ease;
     overflow: visible; // Permitir que el año sobresalga
     position: relative;
@@ -38,16 +47,16 @@ $glass-border: rgba(255, 255, 255, 0.08);
 
     &.hidden-item {
         opacity: 0.6;
-        filter: grayscale(0.8);
-        border: 1px dashed #555;
+        border: 1px dashed #cbd5e1;
+        background: #f8fafc;
     }
 
     &:hover {
-        transform: translateY(-5px);
-        border-color: rgba(255, 255, 255, 0.2);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        transform: translateY(-4px);
+        border-color: #cbd5e1;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         z-index: 10;
-
+        
         .card-glow {
             opacity: 1;
         }
@@ -58,24 +67,22 @@ $glass-border: rgba(255, 255, 255, 0.08);
         top: 0;
         left: 0;
         right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, $neon-red, $neon-blue);
+        height: 3px;
+        background: $inacap-red;
         opacity: 0;
         transition: opacity 0.3s;
-        border-radius: 20px 20px 0 0;
+        border-radius: 12px 12px 0 0;
     }
 
     // --- 1. Header Visual (Año Sobresaliendo) ---
-    // NOTA: overflow:visible SOLO aquí para que el año sobresalga,
-    // el resto de la tarjeta permanece con overflow:hidden
     .card-visual-header {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: -40px; // Mitad hacia afuera
+        margin-top: -30px; 
         position: relative;
         z-index: 2;
-        overflow: visible; // Solo este contenedor puede desbordar
+        overflow: visible;
 
         .year-wrapper {
             background: transparent;
@@ -83,15 +90,15 @@ $glass-border: rgba(255, 255, 255, 0.08);
         }
 
         .year-container {
-            background: rgba(30, 34, 45, 1);
-            border: 2px solid $neon-blue;
+            background: #ffffff;
+            border: 2px solid $border-light;
             border-radius: 12px;
             padding: 8px 20px;
-            color: $neon-blue;
+            color: $inacap-red;
             font-family: 'Courier New', monospace;
             font-size: 1.8rem;
             font-weight: 700;
-            box-shadow: 0 0 20px rgba($neon-blue, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             letter-spacing: 2px;
         }
 
@@ -101,8 +108,18 @@ $glass-border: rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             font-size: 0.75rem;
             letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+            box-shadow: none;
             z-index: 3;
+            
+            &[color="success"] {
+                --background: #dcfce7;
+                --color: #166534;
+            }
+            &[color="medium"] {
+                --background: #f1f5f9;
+                --color: #475569;
+            }
         }
     }
 
@@ -119,7 +136,7 @@ $glass-border: rgba(255, 255, 255, 0.08);
             margin-bottom: 8px;
 
             .hito-title {
-                color: white;
+                color: $text-dark;
                 font-size: 1.3rem;
                 font-weight: 700;
                 margin: 10px 0 8px;
@@ -134,7 +151,7 @@ $glass-border: rgba(255, 255, 255, 0.08);
             }
 
             .hito-description {
-                color: #aaa;
+                color: $text-gray;
                 font-size: 0.95rem;
                 line-height: 1.5;
                 margin: 0;
@@ -154,7 +171,7 @@ $glass-border: rgba(255, 255, 255, 0.08);
             justify-content: space-between;
             align-items: center;
             padding-top: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid #f1f5f9;
             margin-top: auto;
             flex-shrink: 0;
 
@@ -184,20 +201,22 @@ $glass-border: rgba(255, 255, 255, 0.08);
                     margin: 0;
 
                     &.edit-btn {
-                        --background: rgba(255, 196, 9, 0.15);
-                        color: #ffc409;
+                        --background: #f1f5f9;
+                        color: #64748b;
 
                         &:hover {
-                            --background: rgba(255, 196, 9, 0.3);
+                            --background: #e2e8f0;
+                            color: #0ea5e9;
                         }
                     }
 
                     &.delete-btn {
-                        --background: rgba(235, 68, 90, 0.15);
-                        color: #eb445a;
+                        --background: #fef2f2;
+                        color: #ef4444;
 
                         &:hover {
-                            --background: rgba(235, 68, 90, 0.3);
+                            --background: #fee2e2;
+                            color: #dc2626;
                         }
                     }
 
@@ -216,25 +235,26 @@ $glass-border: rgba(255, 255, 255, 0.08);
 
 // --- Modal ---
 ion-modal.glass-modal {
-    --background: #1a1d26;
-    --border-radius: 16px;
+    --background: #ffffff;
+    --border-radius: 12px;
     --width: 95%;
     --max-width: 1000px;
     --height: auto;
     --min-height: 400px;
     --max-height: 90vh;
-    --backdrop-opacity: 0.8;
+    --backdrop-opacity: 0.5;
 
     ion-toolbar {
-        --background: #1a1d26;
-        --color: white;
-        border-bottom: 1px solid #333;
+        --background: #ffffff;
+        --color: #1e293b;
+        border-bottom: 1px solid #e2e8f0;
         padding: 0 10px;
+        font-weight: 600;
     }
 
     .modal-body {
-        background: #1a1d26;
-        color: white;
+        background: #f8fafc;
+        color: #1e293b;
         overflow-y: auto;
         max-height: calc(90vh - 60px);
 
@@ -279,8 +299,8 @@ ion-modal.glass-modal {
 
             h3 {
                 font-size: 1rem;
-                color: #888;
-                border-bottom: 1px solid #333;
+                color: #64748b;
+                border-bottom: 1px solid #e2e8f0;
                 padding-bottom: 5px;
                 margin-bottom: 10px;
                 margin-top: 10px;
@@ -288,20 +308,20 @@ ion-modal.glass-modal {
         }
 
         .input-item {
-            --background: #14161c;
-            --color: white;
-            --border-color: #333;
-            --highlight-color-focused: #{$neon-blue};
+            --background: #ffffff;
+            --color: #1e293b;
+            --border-color: #cbd5e1;
+            --highlight-color-focused: #d01824;
             border-radius: 8px;
-            border: 1px solid #333;
+            border: 1px solid #cbd5e1;
 
             ion-label {
-                color: #aaa;
+                color: #475569;
                 font-weight: 500;
                 margin-bottom: 5px;
 
                 .required {
-                    color: $neon-red;
+                    color: #d01824;
                 }
             }
 
@@ -356,7 +376,7 @@ ion-modal.glass-modal {
 
                 ion-icon[slot="start"] {
                     margin-right: 10px;
-                    color: #666;
+                    color: #64748b;
                 }
 
                 .mini-select {
@@ -364,7 +384,7 @@ ion-modal.glass-modal {
                     font-size: 0.8rem;
                     --padding-start: 5px;
                     --padding-end: 5px;
-                    background: rgba(255, 255, 255, 0.05);
+                    background: #f1f5f9;
                     border-radius: 4px;
                     margin-right: 5px;
                 }
@@ -372,14 +392,14 @@ ion-modal.glass-modal {
         }
 
         .add-media-btn {
-            --color: #{$neon-green};
-            --border-color: rgba(0, 255, 157, 0.3);
+            --color: #166534;
+            --border-color: #bbf7d0;
             margin-top: 10px;
             height: 45px;
             font-size: 0.9rem;
 
             &:hover {
-                --background: rgba(0, 255, 157, 0.1);
+                --background: #dcfce7;
             }
         }
 
@@ -395,7 +415,7 @@ ion-modal.glass-modal {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #e2e8f0;
             margin-bottom: 10px;
             margin-top: 15px;
 
@@ -406,7 +426,7 @@ ion-modal.glass-modal {
             }
 
             ion-button {
-                --color: #{$neon-blue};
+                --color: #0ea5e9;
                 font-size: 0.8rem;
                 height: 30px;
             }
@@ -417,7 +437,7 @@ ion-modal.glass-modal {
             justify-content: flex-end;
             gap: 15px;
             padding-top: 20px;
-            border-top: 1px solid #333;
+            border-top: 1px solid #e2e8f0;
             margin-top: 20px;
 
             ion-button {
@@ -425,7 +445,7 @@ ion-modal.glass-modal {
             }
 
             .save-btn {
-                --background: #{$neon-red};
+                --background: #d01824;
                 --border-radius: 8px;
                 font-weight: bold;
                 letter-spacing: 0.5px;
@@ -469,7 +489,7 @@ ion-modal.glass-modal {
                 padding: 15px 35px;
                 border-width: 3px;
                 border-radius: 18px;
-                box-shadow: 0 0 35px rgba($neon-blue, 0.3);
+                box-shadow: 0 0 35px rgba(0, 0, 0, 0.1);
             }
 
             .status-badge {

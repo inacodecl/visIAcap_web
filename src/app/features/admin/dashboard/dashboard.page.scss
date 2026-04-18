@@ -6,7 +6,11 @@
 }
 
 .admin-dashboard-container {
-    --background: #f4f6f8; // Gris de fondo moderno SaaS
+    background: #f4f6f8; // Gris de fondo moderno SaaS
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .dashboard-layout {

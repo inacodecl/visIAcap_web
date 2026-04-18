@@ -88,6 +88,34 @@ ion-modal.glass-modal {
     }
 }
 
+ion-modal.corporate-modal {
+    --background: #f8fafc;
+    --border-radius: 16px;
+    --width: 90vw;
+    --max-width: 800px;
+    --height: 70vh;
+    --min-height: 500px;
+    --max-height: 90vh;
+    --backdrop-opacity: 0.6;
+    --box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+
+    &::part(content) {
+        border: 1px solid #e2e8f0;
+    }
+
+    ion-toolbar {
+        --background: #ffffff;
+        --color: #1e293b;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 0 10px;
+    }
+
+    ion-content {
+        --background: #f8fafc;
+        --color: #1e293b;
+    }
+}
+
 // ========================
 // POPOVERS GLOBALES 
 // ========================

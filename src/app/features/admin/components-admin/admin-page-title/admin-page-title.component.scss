@@ -1,10 +1,10 @@
-// Variables
-$bg-card: #151921;
-$neon-red: #ff2a2a;
-$neon-blue: #00f3ff;
-$neon-green: #00ff9d;
-$neon-orange: #ffaa00;
-$glass-border: rgba(255, 255, 255, 0.08);
+// Variables Light Corporate
+$text-dark: #1e293b;
+$border-light: #e2e8f0;
+$red: #d01824;
+$blue: #0ea5e9;
+$green: #16a34a;
+$orange: #f59e0b;
 
 .page-header-row {
     display: flex;
@@ -23,7 +23,7 @@ $glass-border: rgba(255, 255, 255, 0.08);
 }
 
 .page-title {
-    color: white;
+    color: $text-dark;
     font-size: 1.8rem;
     font-weight: 700;
     margin: 0;
@@ -32,23 +32,19 @@ $glass-border: rgba(255, 255, 255, 0.08);
     gap: 10px;
 
     .icon-red {
-        color: $neon-red;
-        text-shadow: 0 0 10px rgba($neon-red, 0.5);
+        color: $red;
     }
 
     .icon-blue {
-        color: $neon-blue;
-        text-shadow: 0 0 10px rgba($neon-blue, 0.5);
+        color: $blue;
     }
 
     .icon-orange {
-        color: $neon-orange;
-        text-shadow: 0 0 10px rgba($neon-orange, 0.5);
+        color: $orange;
     }
 
     .icon-green {
-        color: $neon-green;
-        text-shadow: 0 0 10px rgba($neon-green, 0.5);
+        color: $green;
     }
 }
 
@@ -58,28 +54,28 @@ $glass-border: rgba(255, 255, 255, 0.08);
     .neon-searchbar {
         width: 520px;
         height: 70px;
-        --background: #{$bg-card};
-        --color: white;
-        --placeholder-color: #777;
+        --background: #ffffff;
+        --color: #1e293b;
+        --placeholder-color: #64748b;
         --border-radius: 30px;
-        --box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-        border: 1px solid #{$glass-border};
+        --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        border: 1px solid $border-light;
         border-radius: 29px;
 
         &.searchbar-blue {
-            --icon-color: #{$neon-blue};
+            --icon-color: #{$blue};
         }
 
         &.searchbar-red {
-            --icon-color: #{$neon-red};
+            --icon-color: #{$red};
         }
 
         &.searchbar-orange {
-            --icon-color: #{$neon-orange};
+            --icon-color: #{$orange};
         }
 
         &.searchbar-green {
-            --icon-color: #{$neon-green};
+            --icon-color: #{$green};
         }
 
         @media (max-width: 768px) {

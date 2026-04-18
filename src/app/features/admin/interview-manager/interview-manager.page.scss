@@ -1,47 +1,50 @@
-// --- Variables Neon & Dark ---
-$bg-dark: #0f1115;
-$bg-card: #151921;
-$neon-red: #ff2a2a;
-$neon-blue: #00f3ff;
-$neon-green: #00ff9d;
-
-$glass-border: rgba(255, 255, 255, 0.08);
+// --- Light Corporate Variables ---
+$border-light: #e2e8f0;
+$text-dark: #1e293b;
+$text-gray: #64748b;
+$action-blue: #0ea5e9;
+$action-red: #d01824;
+$action-green: #16a34a;
 
 :host {
     display: block;
     height: 100%;
 }
 
+.admin-content {
+    --background: #f1f5f9;
+}
+
 
 
 .status-summary {
     text-align: center;
-    color: #666;
+    color: $text-gray;
     margin-bottom: 1rem;
     font-size: 1.2rem;
 
     .highlight {
-        color: $neon-blue;
+        color: $action-blue;
         font-weight: bold;
     }
 }
 
-// --- Glass Card ---
+// --- Card ---
 .glass-card {
-    background: rgba(30, 34, 45, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid $glass-border;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    background: #ffffff;
+    border: 1px solid $border-light;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
     transition: all 0.3s ease;
     overflow: hidden;
     position: relative;
+    padding-bottom: 10px;
 
     &.unpublished-item {
-        opacity: 0.5;
-        border: 1px dashed #444;
+        opacity: 0.7;
+        border: 1px dashed #cbd5e1;
+        background: #f8fafc;
 
         &:hover {
             opacity: 1;
@@ -49,9 +52,9 @@ $glass-border: rgba(255, 255, 255, 0.08);
     }
 
     &:hover {
-        transform: translateY(-5px);
-        border-color: rgba(255, 255, 255, 0.2);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        transform: translateY(-4px);
+        border-color: #cbd5e1;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 
         .card-glow {
             opacity: 1;
@@ -63,8 +66,8 @@ $glass-border: rgba(255, 255, 255, 0.08);
         top: 0;
         left: 0;
         right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, $neon-blue, $neon-green);
+        height: 3px;
+        background: linear-gradient(90deg, $action-blue, $action-green);
         opacity: 0;
         transition: opacity 0.3s;
     }
@@ -80,13 +83,13 @@ $glass-border: rgba(255, 255, 255, 0.08);
         }
 
         .slug-badge {
-            font-family: 'Courier New', monospace;
+            font-family: 'Courier New', Courier, monospace;
             font-size: 0.85rem;
-            color: $neon-blue;
-            border: 1px solid rgba(0, 243, 255, 0.3);
+            color: $action-blue;
+            border: 1px solid #bae6fd;
             padding: 2px 8px;
             border-radius: 4px;
-            background: rgba(0, 243, 255, 0.05);
+            background: #f0f9ff;
         }
 
         .status-badge {
@@ -97,7 +100,7 @@ $glass-border: rgba(255, 255, 255, 0.08);
         }
 
         ion-card-title {
-            color: white;
+            color: $text-dark;
             font-size: 1.3rem;
             font-weight: 600;
         }
@@ -105,15 +108,16 @@ $glass-border: rgba(255, 255, 255, 0.08);
 
     ion-card-content {
         .description {
-            color: #ccc;
-            font-size: 1rem;
+            color: $text-gray;
+            font-size: 0.95rem;
+            line-height: 1.5;
             font-weight: 500;
             margin-bottom: 5px;
         }
 
         .small-desc {
-            font-size: 0.9rem;
-            color: #888;
+            font-size: 0.85rem;
+            color: #94a3b8;
             font-weight: normal;
         }
 
@@ -122,12 +126,12 @@ $glass-border: rgba(255, 255, 255, 0.08);
             justify-content: space-between;
             align-items: center;
             margin-top: 15px;
-            padding-top: 5px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 12px;
+            border-top: 1px solid $border-light;
 
             .audit-trigger {
                 .info-btn {
-                    --color: #{$neon-blue};
+                    --color: $action-blue;
                     margin: 0;
                     --padding-start: 0;
                     --padding-end: 0;
@@ -143,22 +147,39 @@ $glass-border: rgba(255, 255, 255, 0.08);
 
                     &:hover ion-icon {
                         transform: scale(1.1);
-                        color: white;
+                        color: #0284c7;
                     }
                 }
             }
 
             .buttons {
-                .action-btn {
-                    --color: #888;
-                    --color-hover: white;
+                display: flex;
+                gap: 5px;
 
-                    &.edit-btn:hover {
-                        color: $neon-blue;
+                .action-btn {
+                    margin: 0;
+                    --padding-start: 8px;
+                    --padding-end: 8px;
+                    border-radius: 8px;
+
+                    &.edit-btn {
+                        --background: #f1f5f9;
+                        color: #64748b;
+
+                        &:hover {
+                            --background: #e2e8f0;
+                            color: #0ea5e9;
+                        }
                     }
 
-                    &.delete-btn:hover {
-                        color: $neon-red;
+                    &.delete-btn {
+                        --background: #fef2f2;
+                        color: #ef4444;
+
+                        &:hover {
+                            --background: #fee2e2;
+                            color: #dc2626;
+                        }
                     }
                 }
             }
@@ -273,19 +294,19 @@ $glass-border: rgba(255, 255, 255, 0.08);
 // MODAL DE ENTREVISTA (Rediseño Profesional)
 // ==========================================
 ::ng-deep ion-modal.interview-modal {
-    --background: rgba(18, 20, 30, 0.95);
-    --backdrop-opacity: 0.8;
-    --border-radius: 20px;
+    --background: #ffffff;
+    --backdrop-opacity: 0.5;
+    --border-radius: 12px;
     --width: 95%;
     --max-width: 600px;
-    --height: 85vh; // Altura fija considerable para evitar colapso
+    --height: 85vh; 
     --max-height: 90%;
-    --box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), 0 0 10px rgba($neon-blue, 0.1);
+    --box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 
     &::part(content) {
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        overflow: hidden; // Asegurar que el contenido interno respete el borde
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        overflow: hidden; 
     }
 }
 
@@ -293,37 +314,37 @@ $glass-border: rgba(255, 255, 255, 0.08);
     height: 100%; // Ocupar toda la altura definida en el modal
     display: flex;
     flex-direction: column;
-    background: radial-gradient(circle at 50% 0%, rgba($neon-blue, 0.05) 0%, transparent 50%);
+    background: #f8fafc;
 
     ion-header {
         flex-shrink: 0; // El header no se encoge
 
         ion-toolbar {
-            --background: transparent;
+            --background: #ffffff;
             padding-top: 10px;
+            border-bottom: 1px solid #e2e8f0;
 
             .modal-title {
                 text-align: center;
-                font-size: 1.2rem;
-                font-weight: 800;
-                letter-spacing: 1.5px;
+                font-size: 1.1rem;
+                font-weight: 700;
+                letter-spacing: 0.5px;
                 text-transform: uppercase;
+                color: $text-dark;
 
                 .gradient-text {
-                    background: linear-gradient(90deg, #fff, $neon-blue);
-                    -webkit-background-clip: text;
-                    background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    text-shadow: 0 0 20px rgba($neon-blue, 0.3);
+                    background: none;
+                    text-shadow: none;
+                    color: $text-dark;
                 }
             }
 
             .close-btn {
-                --color: #aaa;
-                font-size: 1.5rem;
+                --color: #64748b;
+                font-size: 1.3rem;
 
                 &:hover {
-                    --color: #fff;
+                    --color: #1e293b;
                 }
             }
         }
@@ -344,13 +365,13 @@ $glass-border: rgba(255, 255, 255, 0.08);
                 margin-bottom: 30px;
 
                 .section-label {
-                    color: $neon-blue;
-                    font-size: 0.8rem;
+                    color: $action-blue;
+                    font-size: 0.85rem;
                     text-transform: uppercase;
-                    letter-spacing: 2px;
-                    font-weight: 700;
+                    letter-spacing: 1px;
+                    font-weight: 600;
                     margin-bottom: 15px;
-                    border-bottom: 1px solid rgba($neon-blue, 0.2);
+                    border-bottom: 1px solid #cbd5e1;
                     padding-bottom: 5px;
                     display: inline-block;
                 }
@@ -361,24 +382,24 @@ $glass-border: rgba(255, 255, 255, 0.08);
                     label {
                         display: block;
                         font-size: 0.85rem;
-                        color: #ccc;
+                        color: #475569;
                         margin-bottom: 8px;
                         font-weight: 500;
                         padding-left: 5px;
                     }
 
                     .custom-input {
-                        --background: rgba(255, 255, 255, 0.03);
-                        --border-radius: 12px;
+                        --background: #ffffff;
+                        --border-radius: 8px;
                         --padding-start: 15px;
-                        --min-height: 55px;
-                        border: 1px solid rgba(255, 255, 255, 0.08);
-                        border-radius: 12px;
+                        --min-height: 50px;
+                        border: 1px solid #cbd5e1;
+                        border-radius: 8px;
                         transition: all 0.3s ease;
                         margin-bottom: 0;
 
                         ion-icon {
-                            color: #666;
+                            color: #94a3b8;
                             margin-right: 10px;
                             font-size: 1.2rem;
                             transition: color 0.3s ease;
@@ -387,8 +408,8 @@ $glass-border: rgba(255, 255, 255, 0.08);
                         ion-input,
                         ion-textarea {
                             --padding-start: 5px;
-                            --placeholder-color: #555;
-                            --color: #fff;
+                            --placeholder-color: #94a3b8;
+                            --color: #1e293b;
                             font-size: 1rem;
                         }
 
@@ -398,15 +419,13 @@ $glass-border: rgba(255, 255, 255, 0.08);
                             padding-top: 10px;
                         }
 
-                        // Focus State (simulated via focus-within if possible, 
-                        // or explicit class binding. Here using :focus-within for modern browsers)
                         &:focus-within {
-                            border-color: $neon-blue;
-                            background: rgba($neon-blue, 0.05);
-                            box-shadow: 0 0 15px rgba($neon-blue, 0.15) inset;
+                            border-color: #0ea5e9;
+                            background: #f0f9ff;
+                            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
 
                             ion-icon {
-                                color: $neon-blue !important;
+                                color: #0ea5e9 !important;
                             }
                         }
                     }
@@ -416,10 +435,10 @@ $glass-border: rgba(255, 255, 255, 0.08);
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    background: rgba(255, 255, 255, 0.03);
+                    background: #ffffff;
                     padding: 15px 20px;
-                    border-radius: 12px;
-                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 8px;
+                    border: 1px solid #cbd5e1;
                     margin-top: 10px;
 
                     .toggle-info {
@@ -427,13 +446,13 @@ $glass-border: rgba(255, 255, 255, 0.08);
                         flex-direction: column;
 
                         .label {
-                            color: #fff;
+                            color: #1e293b;
                             font-weight: 600;
                             font-size: 1rem;
                         }
 
                         .sub-label {
-                            color: #777;
+                            color: #64748b;
                             font-size: 0.8rem;
                             margin-top: 2px;
                         }
@@ -444,32 +463,30 @@ $glass-border: rgba(255, 255, 255, 0.08);
             .form-actions {
                 display: flex;
                 gap: 15px;
-                margin-top: 40px;
+                margin-top: 30px;
 
                 ion-button {
                     flex: 1;
-                    height: 50px;
+                    height: 48px;
                     margin: 0;
                     font-weight: 600;
                     letter-spacing: 0.5px;
                     --box-shadow: none;
+                    --border-radius: 8px;
 
                     &.cancel-btn {
-                        --background: transparent;
-                        --border-color: #444;
-                        --border-width: 1px;
-                        --border-style: solid;
-                        --color: #aaa;
+                        --background: #f1f5f9;
+                        --color: #64748b;
 
                         &:hover {
-                            --color: #fff;
-                            --border-color: #fff;
+                            --background: #e2e8f0;
+                            --color: #1e293b;
                         }
                     }
 
                     &.save-btn {
-                        --background: linear-gradient(135deg, $neon-blue, #00f3ff); // Cyan gradient
-                        --color: #000;
+                        --background: #d01824; 
+                        --color: #ffffff;
 
                         ion-icon {
                             font-size: 1.2rem;
@@ -477,9 +494,8 @@ $glass-border: rgba(255, 255, 255, 0.08);
                         }
 
                         &:hover {
-                            // --background: linear-gradient(135deg, lighten($neon-blue, 10%), lighten(#00f3ff, 10%));
-                            opacity: 0.9;
-                            box-shadow: 0 0 20px rgba($neon-blue, 0.4);
+                            --background: #b91c1c; 
+                            box-shadow: 0 4px 6px -1px rgba(208, 24, 36, 0.2);
                         }
                     }
                 }

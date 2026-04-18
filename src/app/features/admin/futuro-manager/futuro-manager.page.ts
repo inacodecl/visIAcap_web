@@ -38,7 +38,7 @@ import { FuturoItemModalComponent } from './futuro-item-modal/futuro-item-modal.
         IonContent, IonGrid, IonRow, IonCol,
         IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBadge, IonButton, IonIcon,
         IonSegment, IonSegmentButton, IonLabel,
-        AdminHeaderComponent, AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent
+        AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent
     ]
 })
 export class FuturoManagerPage implements OnInit {

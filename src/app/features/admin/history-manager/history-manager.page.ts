@@ -32,7 +32,7 @@ import { AdminEmptyStateComponent } from '../components-admin/admin-empty-state/
         IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
         IonBadge, IonModal,
         IonNote, IonSelect, IonSelectOption, IonSpinner,
-        AdminHeaderComponent, AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent
+        AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent
     ]
 })
 export class HistoryManagerPage implements OnInit {
