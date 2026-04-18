@@ -232,6 +232,109 @@
     width: 100%;
 }
 
+// =============================================
+// POPOVER MENU (Profile)
+// =============================================
+ion-popover.profile-popover {
+    --background: #ffffff;
+    --border-radius: 12px;
+    --box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    --min-width: 260px;
+    
+    &::part(content) {
+        border: 1px solid rgba(0,0,0,0.05);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .popover-profile-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 20px;
+        background: #f8fafc;
+
+        .avatar-large {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #5bb4ff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.4rem;
+            box-shadow: 0 4px 10px rgba(91, 180, 255, 0.3);
+            flex-shrink: 0;
+        }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+
+            .profile-name {
+                font-size: 1rem;
+                font-weight: 700;
+                color: #1e293b;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .profile-email {
+                font-size: 0.8rem;
+                color: #64748b;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin-top: 2px;
+            }
+        }
+    }
+
+    .popover-divider {
+        height: 1px;
+        background: #e2e8f0;
+        width: 100%;
+    }
+
+    .popover-list {
+        padding: 8px 0;
+        background: #ffffff;
+
+        ion-item {
+            --padding-start: 16px;
+            --inner-padding-end: 16px;
+            --min-height: 44px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #334155;
+            cursor: pointer;
+
+            ion-icon {
+                color: #64748b;
+                font-size: 1.2rem;
+                margin-right: 12px;
+            }
+
+            &:hover {
+                --background: #f1f5f9;
+            }
+
+            &.logout-item {
+                color: #ef4444;
+                ion-icon {
+                    color: #ef4444;
+                }
+                &:hover {
+                    --background: #fef2f2;
+                }
+            }
+        }
+    }
+}
 
 // =============================================
 // METRICS GRID (Dashboard Cards)
