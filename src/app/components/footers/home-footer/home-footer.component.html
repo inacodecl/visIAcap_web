@@ -1,7 +1,6 @@
 <footer class="v2-footer">
-    <button class="footer-btn accessibility-btn" aria-label="Desarrolladores" (click)="goToDevelopers()">
-        <ion-icon name="accessibility-outline"></ion-icon>
-    </button>
+    <!-- Spacer para el <app-fan-menu> que flotará animadamente justo aquí -->
+    <div style="width: 70px; height: 70px; min-width: 70px;"></div>
 
     
     <div class="footer-brand" (click)="onSecretClick()">
@@ -10,7 +9,7 @@
     </div>
 
     
-    <button class="footer-btn info-btn" aria-label="Información" (click)="openOptions()">
+    <button class="footer-btn info-btn" aria-label="Información" (click)="openOptions($event)">
         <ion-icon name="information-circle-outline"></ion-icon>
     </button>
 </footer>

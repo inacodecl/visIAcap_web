@@ -1,0 +1,168 @@
+.theme-popover-container {
+  padding: 24px;
+  position: relative;
+}
+
+.btn-close-top {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: 0;
+  --padding-start: 6px;
+  --padding-end: 6px;
+  --border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  z-index: 10;
+}
+
+.popover-title {
+  margin: 0 0 20px 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: inherit;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* Adaptación de Uiverse.io by R1SH4BH81 */ 
+.theme-selector {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.radio-group {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.theme-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.radio-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.theme-box {
+  width: 120px;
+  height: 95px;
+  border-radius: 12px;
+  border: 1px solid var(--ion-color-step-150, rgba(255,255,255,0.1));
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Representaciones de Temas */
+.light-theme {
+  background: linear-gradient(135deg, #ffffff 60%, #e0e0e0 40%);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 5px; right: 5px;
+    width: 20px; height: 10px;
+    background: #c8102e;
+    border-radius: 2px;
+  }
+}
+
+.dark-theme {
+  background: linear-gradient(135deg, #12141a 60%, #1a1d26 40%);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 5px; right: 5px;
+    width: 20px; height: 10px;
+    background: #c8102e;
+    border-radius: 2px;
+  }
+}
+
+/* Efectos de Seleccionado (Rojo INACAP en lugar del morado original) */
+.radio-input:checked + .theme-box {
+  border-color: var(--ion-color-primary, #c8102e);
+  outline: 2px solid var(--ion-color-primary, #c8102e);
+  outline-offset: 3px;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(200, 16, 46, 0.25);
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-size: 13px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  color: var(--ion-color-medium, #888888);
+  transition: color 0.3s ease;
+}
+
+.label-text {
+  color: inherit; /* Hereda del padre */
+}
+
+/* Cambia color del texto/iconos a Rojo cuando está sleccionado */
+.radio-input:checked ~ .option-label {
+  color: var(--ion-color-primary, #c8102e);
+}
+
+.theme-option input:checked ~ .option-label .check-icon {
+  display: inline-block;
+}
+
+.theme-option input:not(:checked) ~ .option-label .check-icon {
+  display: none;
+}
+
+.theme-option input:checked ~ .option-label .minus-icon {
+  display: none;
+}
+
+.theme-option input:not(:checked) ~ .option-label .minus-icon {
+  display: inline-block;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  color: currentColor; 
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px solid var(--ion-color-step-150, rgba(255, 255, 255, 0.1));
+
+  ion-button {
+    margin: 0;
+    --border-radius: 50%;
+    width: 52px;
+    height: 52px;
+
+    &.btn-confirm {
+      --box-shadow: 0 4px 12px rgba(45, 211, 111, 0.3); // success shadow
+    }
+  }
+}
+

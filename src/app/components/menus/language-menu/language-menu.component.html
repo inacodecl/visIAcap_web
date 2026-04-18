@@ -1,0 +1,19 @@
+<div class="input-menu">
+  
+  @for (lang of languages; track lang.code) {
+    <button class="value" [class.active-lang]="lang.code === getCurrentLang()" (click)="selectLanguage(lang.code)">
+      <span class="flag">{{ lang.icon }}</span>
+      {{ lang.label }}
+    </button>
+  }
+
+  <div class="divider"></div>
+
+  <!-- Cancelar -->
+  <button class="value cancel" (click)="cancel()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+      <path d="M18.3 5.71a.996.996 0 00-1.41 0L12 10.59 7.11 5.7A.996.996 0 105.7 7.11L10.59 12 5.7 16.89a.996.996 0 101.41 1.41L12 13.41l4.89 4.89a.996.996 0 101.41-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/>
+    </svg>
+    {{ 'COMMON.CANCEL' | translate }}
+  </button>
+</div>

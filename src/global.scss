@@ -152,6 +152,11 @@ ion-popover.neon-popover {
                 font-weight: 600;
             }
 
+            .audit-value {
+                font-size: 0.95rem;
+                line-height: 1.4;
+            }
+
             .audit-email {
                 display: block;
                 font-size: 1rem;
@@ -171,4 +176,27 @@ ion-popover.neon-popover {
         }
     }
 }
-
+
+html.ion-palette-dark ion-popover.system-menu-popover {
+    --popover-text-color: #ffffff;
+    --popover-bg-color: rgba(18, 20, 30, 0.95);
+}
+
+html:not(.ion-palette-dark) ion-popover.system-menu-popover {
+    --popover-text-color: #1e293b;
+    --popover-bg-color: #ffffff;
+}
+
+ion-popover.system-menu-popover {
+    --background: var(--popover-bg-color);
+    --color: var(--popover-text-color);
+    --backdrop-opacity: 0.35;
+    --border-radius: 16px;
+    --box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+    --width: auto;
+
+    &::part(content) {
+        border: 1px solid var(--ion-color-step-150, rgba(0, 0, 0, 0.1));
+        padding: 0;
+    }
+}

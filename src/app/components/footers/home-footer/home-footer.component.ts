@@ -2,7 +2,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { IonIcon, IonButton } from '@ionic/angular/standalone';
-import { ActionSheetController } from '@ionic/angular/standalone';
+import { ActionSheetController, PopoverController } from '@ionic/angular/standalone';
+import { ThemeSelectorComponent } from '../../theme-selector/theme-selector.component';
+import { SystemMenuComponent } from '../../menus/system-menu/system-menu.component';
+import { LanguageMenuComponent } from '../../menus/language-menu/language-menu.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { accessibilityOutline, informationCircleOutline, logInOutline, languageOutline, closeOutline, colorPaletteOutline, codeWorkingOutline } from 'ionicons/icons';
@@ -20,6 +23,7 @@ export class HomeFooterComponent implements OnInit {
 
     private router = inject(Router);
     private actionSheetCtrl = inject(ActionSheetController);
+    private popoverCtrl = inject(PopoverController);
     private languageService = inject(LanguageService);
     private translateService = inject(TranslateService);
     private themeService = inject(ThemeService);
@@ -53,60 +57,52 @@ export class HomeFooterComponent implements OnInit {
         }
     }
 
-    async openOptions() {
-        const actionSheet = await this.actionSheetCtrl.create({
-            header: this.translateService.instant('FOOTER.OPTIONS_HEADER'),
-            buttons: [
-                {
-                    text: this.translateService.instant('FOOTER.THEME_TOGGLE'),
-                    icon: 'color-palette-outline',
-                    handler: () => {
-                        this.themeService.toggleTheme();
-                    }
-                },
-                {
-                    text: this.translateService.instant('FOOTER.LANGUAGE'),
-                    icon: 'language-outline',
-                    handler: () => {
-                        setTimeout(() => this.openLanguageSelector(), 300);
-                    }
-                },
-                {
-                    text: this.translateService.instant('COMMON.CANCEL'),
-                    icon: 'close-outline',
-                    role: 'cancel'
-                }
-            ]
+    async openOptions(event?: Event) {
+        const popover = await this.popoverCtrl.create({
+            component: SystemMenuComponent,
+            event: event,
+            backdropDismiss: false,
+            cssClass: 'system-menu-popover',
+            translucent: true,
+            animated: true,
+            alignment: 'start', // Align relative to the click
+            side: 'top',
+        });
+        
+        popover.onDidDismiss().then((data) => {
+            if (!data.data) return;
+            const action = data.data;
+            if (action === 'theme') {
+                setTimeout(() => this.openThemeSelector(), 250);
+            } else if (action === 'language') {
+                setTimeout(() => this.openLanguageSelector(), 250);
+            } else if (action === 'developers') {
+                this.goToDevelopers();
+            }
         });
 
-        await actionSheet.present();
+        await popover.present();
     }
 
     async openLanguageSelector() {
-        const languages = this.languageService.getAvailableLanguages();
-        const currentLang = this.languageService.getCurrentLang();
-
-        const buttons = languages.map(lang => ({
-            text: `${lang.icon} ${lang.label}`,
-            cssClass: lang.code === currentLang ? 'action-sheet-selected' : '',
-            handler: () => {
-                this.languageService.changeLanguage(lang.code);
-                window.location.reload();
-            }
-        }));
-
-        buttons.push({
-            text: this.translateService.instant('COMMON.CANCEL'),
-            cssClass: 'action-sheet-cancel',
-            handler: () => {}
+        const popover = await this.popoverCtrl.create({
+            component: LanguageMenuComponent,
+            backdropDismiss: false,
+            cssClass: 'system-menu-popover',
+            translucent: true,
+            animated: true
         });
-
-        const actionSheet = await this.actionSheetCtrl.create({
-            header: this.translateService.instant('FOOTER.LANGUAGE'),
-            buttons
-        });
-
-        await actionSheet.present();
+        await popover.present();
     }
 
+    async openThemeSelector() {
+        const popover = await this.popoverCtrl.create({
+            component: ThemeSelectorComponent,
+            backdropDismiss: false,
+            cssClass: 'system-menu-popover',
+            translucent: true,
+            animated: true
+        });
+        await popover.present();
+    }
 }

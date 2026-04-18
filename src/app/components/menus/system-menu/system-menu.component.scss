@@ -1,0 +1,96 @@
+/* From Uiverse.io by reglobby - Adapted para INACAP */ 
+.input-menu {
+  display: flex;
+  flex-direction: column;
+  width: 320px; /* Agrandado para mejor legibilidad */
+  /* background-color: var(--ion-background-color, #0D1117); -- Popover handles background */
+  justify-content: center;
+  border-radius: 14px;
+  padding: 20px; /* Agrandado para mayor espacio */
+}
+
+.value {
+  background-color: transparent;
+  border: none;
+  padding: 18px 20px; /* Ajuste para espacio más holgado */
+  color: inherit;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 18px; /* Agrandado para mejor visibilidad */
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.value:not(:active):hover,
+.value:focus {
+  background-color: var(--ion-color-step-100, rgba(255, 255, 255, 0.05));
+}
+
+.value:focus,
+.value:active {
+  background-color: var(--ion-color-step-150, rgba(255, 255, 255, 0.1));
+  outline: none;
+}
+
+/* Indicador lateral (La barrita roja en lieu del azul #2F81F7) */
+.value::before {
+  content: "";
+  position: absolute;
+  top: 15%;
+  left: 0;
+  width: 4px;
+  height: 70%;
+  background-color: var(--ion-color-primary, #c8102e);
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: scaleY(0.5);
+}
+
+.value:hover::before,
+.value:focus::before,
+.value:active::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.value svg {
+  width: 18px;
+  height: 18px;
+  transition: fill 0.2s ease, color 0.2s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover general */
+.value:hover,
+.value:focus {
+  color: var(--ion-color-primary, #c8102e);
+}
+.value:hover svg {
+  transform: scale(1.1);
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--ion-color-step-150, rgba(120, 120, 120, 0.2));
+  margin: 10px 4px;
+}
+
+/* Boton de Cancelar (Gris / Rojo) */
+.value.cancel {
+  color: var(--ion-color-medium, #888);
+}
+.value.cancel:hover,
+.value.cancel:focus {
+  color: var(--ion-color-danger, #ff4961);
+  background-color: rgba(255, 73, 97, 0.1);
+}
+.value.cancel:hover::before {
+  background-color: var(--ion-color-danger, #ff4961);
+}

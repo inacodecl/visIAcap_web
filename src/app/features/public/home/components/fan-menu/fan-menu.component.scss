@@ -1,15 +1,14 @@
-// Componente FAB en Abanico
 :host {
     position: fixed;
-    bottom: clamp(130px, 15vh, 160px);
-    right: clamp(15px, 3vw, 40px);
-    z-index: 9999;
+    bottom: 25px; /* Altura perfecta con respecto al footer */
+    left: 50px; /* Alineado justo encima del hueco de accessibility */
+    z-index: 1001;
 }
 
 .fan-menu-container {
     position: relative;
-    width: 100px; 
-    height: 100px;
+    width: 75px; 
+    height: 75px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,8 +28,8 @@
 
 .menu-item {
     position: absolute;
-    width: 100px; 
-    height: 100px;
+    width: 65px; 
+    height: 65px;
     border: none;
     border-radius: 50%;
     color: white;
@@ -50,14 +49,14 @@
 .item-midae { background-color: #3b82f6 !important; }
 
 
-/* ETIQUETAS CON MEJOR SEPARACIÓN */
+/* ETIQUETAS A LA DERECHA PARA STACK VERTICAL */
 .label {
     position: absolute;
-    bottom: -32px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 13px;
-    font-weight: 900;
+    top: 50%;
+    left: calc(100% + 15px);
+    transform: translateY(-50%);
+    font-size: 14px;
+    font-weight: 800;
     color: #ffffff; 
     letter-spacing: 0.5px;
     opacity: 0;
@@ -74,14 +73,14 @@
     opacity: 1;
 }
 
-/* LÓGICA DE ABANICO EXPANDIDA (RADIO 3 BOTONES) */
+/* LÓGICA VERTICAL TIPO HAMBURGUESA (UNO ARRIBA DEL OTRO) */
 .fan-menu-container.active .item-inago { 
     opacity: 1; 
-    transform: translate(-190px, 0px) scale(1); /* Izquierda 180° */
+    transform: translate(0px, -300px) scale(1); /* El más alto  */
     transition-delay: 0.0s;
 }
 .fan-menu-container.active .item-inago:hover {
-    transform: translate(-190px, 0px) scale(1.08); /* Escala suave sin romper el translate */
+    transform: translate(0px, -300px) scale(1.08); /* Escala suave */
     filter: brightness(1.15);
     box-shadow: 0 0 25px rgba(245, 158, 11, 0.6); /* Glow naranja */
     z-index: 20;
@@ -89,11 +88,11 @@
 
 .fan-menu-container.active .item-zenz { 
     opacity: 1; 
-    transform: translate(-134px, -134px) scale(1); /* Diagonal 135° */
+    transform: translate(0px, -200px) scale(1); /* El del medio */
     transition-delay: 0.1s;
 }
 .fan-menu-container.active .item-zenz:hover {
-    transform: translate(-134px, -134px) scale(1.08);
+    transform: translate(0px, -200px) scale(1.08);
     filter: brightness(1.15);
     box-shadow: 0 0 25px rgba(16, 185, 129, 0.6); /* Glow verde */
     z-index: 20;
@@ -101,11 +100,11 @@
 
 .fan-menu-container.active .item-midae { 
     opacity: 1; 
-    transform: translate(0px, -190px) scale(1); /* Arriba 90° */
+    transform: translate(0px, -100px) scale(1); /* El más bajo */
     transition-delay: 0.2s;
 }
 .fan-menu-container.active .item-midae:hover {
-    transform: translate(0px, -190px) scale(1.08);
+    transform: translate(0px, -100px) scale(1.08);
     filter: brightness(1.15);
     box-shadow: 0 0 25px rgba(59, 130, 246, 0.6); /* Glow azul */
     z-index: 20;
@@ -113,8 +112,8 @@
 
 /* BOTÓN PRINCIPAL */
 .main-trigger {
-    width: 100px;
-    height: 100px; 
+    width: 75px; /* Agrandado un poquito más que el info-btn (70px) para destacarse */
+    height: 75px; 
     border-radius: 50%;
     border: none;
     background-color: #e21f26; /* Rojo INACAP */
@@ -138,6 +137,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
+    img, svg {
+        width: 35px !important;
+        height: 35px !important;
+    }
 }
 
 .icon-wrapper.is-open {
