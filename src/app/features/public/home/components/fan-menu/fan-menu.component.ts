@@ -19,7 +19,7 @@ export class FanMenuComponent {
 
   openApp(appName: string) {
     this.activeApp.set(appName);
-    this.isOpen.set(false);
+    // REMOVED: this.isOpen.set(false); para que el abanico no colapse hasta presionar la X
     
     setTimeout(() => {
       this.activeApp.set(null);

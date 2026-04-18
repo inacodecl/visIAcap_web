@@ -1,0 +1,102 @@
+/* Heredado estructuralmente de System Menu para mantener consistencia UI */
+.input-menu {
+  display: flex;
+  flex-direction: column;
+  width: 250px; 
+  justify-content: center;
+  border-radius: 14px;
+  padding: 16px; 
+}
+
+.value {
+  background-color: transparent;
+  border: none;
+  padding: 16px 20px; 
+  color: inherit;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 16px; 
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.value:not(:active):hover,
+.value:focus {
+  background-color: var(--ion-color-step-100, rgba(255, 255, 255, 0.05));
+}
+
+.value:focus,
+.value:active {
+  background-color: var(--ion-color-step-150, rgba(255, 255, 255, 0.1));
+  outline: none;
+}
+
+.value::before {
+  content: "";
+  position: absolute;
+  top: 15%;
+  left: 0;
+  width: 4px;
+  height: 70%;
+  background-color: var(--ion-color-primary, #c8102e);
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: scaleY(0.5);
+}
+
+.value:hover::before,
+.value:focus::before,
+.value:active::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* Efecto cuando ya está seleccionado el idioma activo */
+.value.active-lang {
+  background-color: rgba(200, 16, 46, 0.1); /* Rojo sutil Inacap */
+  color: var(--ion-color-primary, #c8102e);
+}
+.value.active-lang::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.flag {
+  font-size: 20px;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.value:hover,
+.value:focus {
+  color: var(--ion-color-primary, #c8102e);
+}
+.value:hover .flag {
+  transform: scale(1.2);
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--ion-color-step-150, rgba(120, 120, 120, 0.2));
+  margin: 12px 4px;
+}
+
+/* Boton de Cancelar (Gris / Rojo) */
+.value.cancel {
+  color: var(--ion-color-medium, #888);
+}
+.value.cancel:hover,
+.value.cancel:focus {
+  color: var(--ion-color-danger, #ff4961);
+  background-color: rgba(255, 73, 97, 0.1);
+}
+.value.cancel:hover::before {
+  background-color: var(--ion-color-danger, #ff4961);
+}
