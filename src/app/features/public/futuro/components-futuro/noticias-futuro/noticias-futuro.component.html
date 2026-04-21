@@ -1,31 +1,31 @@
 <section class="stitch-section mb-extra">
     <div class="stitch-header">
-        <span class="stitch-eyebrow">{{ 'FUTURO.NEWS_SUBTITLE' | translate }}</span>
-        <h3 class="stitch-title">{{ 'FUTURO.NEWS_TITLE' | translate }}</h3>
+        <div class="header-content">
+            <span class="stitch-eyebrow">{{ 'FUTURO.NEWS_SUBTITLE' | translate }}</span>
+            <h3 class="stitch-title">{{ 'FUTURO.NEWS_TITLE' | translate }}</h3>
+        </div>
+        <div class="carousel-nav-btns">
+            <button class="nav-btn" (click)="scrollNews('prev')" aria-label="Anterior">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+            </button>
+            <button class="nav-btn nav-btn--active" (click)="scrollNews('next')" aria-label="Siguiente">
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+            </button>
+        </div>
     </div>
 
-    <div class="stitch-news-grid">
-        <!-- Noticia 1 (Izquierda, más grande) -->
-        <div class="news-item item-main group" *ngIf="noticias[0]">
-            <div class="img-wrapper ratio-video">
-                <img [src]="noticias[0].imagen" [alt]="noticias[0].titulo">
-            </div>
-            <div class="news-content">
-                <span class="news-meta">{{ noticias[0].fecha }}</span>
-                <h4 class="news-title">{{ noticias[0].titulo }}</h4>
-                <p class="news-desc">{{ noticias[0].resumen }}</p>
-            </div>
-        </div>
-
-        <!-- Noticia 2 (Derecha, formato cuadrado, empujada hacia abajo) -->
-        <div class="news-item item-side group" *ngIf="noticias[1]">
-            <div class="img-wrapper ratio-square">
-                <img [src]="noticias[1].imagen" [alt]="noticias[1].titulo">
-            </div>
-            <div class="news-content">
-                <span class="news-meta">{{ noticias[1].fecha }}</span>
-                <h4 class="news-title">{{ noticias[1].titulo }}</h4>
-                <p class="news-desc">{{ noticias[1].resumen }}</p>
+    <div class="carousel-container">
+        <div class="carousel-viewport" #carousel>
+            <div class="news-item group" *ngFor="let noticia of noticias; let i = index" 
+                 [ngClass]="i % 2 === 0 ? 'item-main' : 'item-side'">
+                <div class="img-wrapper" [ngClass]="i % 2 === 0 ? 'ratio-video' : 'ratio-square'">
+                    <img [src]="noticia.imagen" [alt]="noticia.titulo">
+                </div>
+                <div class="news-content">
+                    <span class="news-meta">{{ noticia.fecha }}</span>
+                    <h4 class="news-title">{{ noticia.titulo }}</h4>
+                    <p class="news-desc">{{ noticia.resumen }}</p>
+                </div>
             </div>
         </div>
     </div>
