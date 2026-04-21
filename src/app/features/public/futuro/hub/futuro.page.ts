@@ -24,7 +24,6 @@ import { HeroFuturoComponent } from '../components-futuro/hero-futuro/hero-futur
 import { ProyectosFuturoComponent } from '../components-futuro/proyectos-futuro/proyectos-futuro.component';
 import { NoticiasFuturoComponent } from '../components-futuro/noticias-futuro/noticias-futuro.component';
 import { EsteMesFuturoComponent } from '../components-futuro/este-mes-futuro/este-mes-futuro.component';
-import { ProximamenteFuturoComponent } from '../components-futuro/proximamente-futuro/proximamente-futuro.component';
 import { FanMenuComponent } from '../../home/components/fan-menu/fan-menu.component';
 @Component({
     selector: 'app-futuro',
@@ -39,7 +38,6 @@ import { FanMenuComponent } from '../../home/components/fan-menu/fan-menu.compon
         ProyectosFuturoComponent,
         NoticiasFuturoComponent,
         EsteMesFuturoComponent,
-        ProximamenteFuturoComponent,
         FanMenuComponent
     ]
 })
