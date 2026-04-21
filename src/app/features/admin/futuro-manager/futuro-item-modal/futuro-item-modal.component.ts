@@ -14,7 +14,6 @@ import {
 // Servicios
 import { NoticiasFuturoService } from '../../../../core/services/noticias-futuro.service';
 import { EsteMesService } from '../../../../core/services/este-mes.service';
-import { ProximamenteService } from '../../../../core/services/proximamente.service';
 
 @Component({
     selector: 'app-futuro-item-modal',
@@ -31,9 +30,8 @@ export class FuturoItemModalComponent implements OnInit {
     private modalCtrl = inject(ModalController);
     private noticiasService = inject(NoticiasFuturoService);
     private esteMesService = inject(EsteMesService);
-    private proximamenteService = inject(ProximamenteService);
 
-    @Input() type!: 'noticias' | 'este-mes' | 'proximamente';
+    @Input() type!: 'noticias' | 'este-mes';
     @Input() item?: any;
 
     isEdit = false;
@@ -73,17 +71,13 @@ export class FuturoItemModalComponent implements OnInit {
                 this.formData.dia = new Date().getDate().toString().padStart(2, '0');
                 this.formData.mes = new Date().toLocaleString('es-ES', { month: 'short' }).toUpperCase().replace('.', '');
                 this.formData.tipo = 'Evento';
-            } else if (this.type === 'proximamente') {
-                this.formData.descripcion = '';
-                this.formData.icono = 'bulb-outline';
             }
         }
     }
 
     getLabelSingular(): string {
         if (this.type === 'noticias') return 'Noticia';
-        if (this.type === 'este-mes') return 'Evento del Mes';
-        return 'Próximo Evento';
+        return 'Evento del Mes';
     }
 
     save() {
@@ -92,12 +86,10 @@ export class FuturoItemModalComponent implements OnInit {
         let obs: any; // Use any to handle different Observable return types
         if (this.isEdit) {
             if (this.type === 'noticias') obs = this.noticiasService.update(this.formData.id, this.formData);
-            else if (this.type === 'este-mes') obs = this.esteMesService.update(this.formData.id, this.formData);
-            else obs = this.proximamenteService.update(this.formData.id, this.formData);
+            else obs = this.esteMesService.update(this.formData.id, this.formData);
         } else {
             if (this.type === 'noticias') obs = this.noticiasService.create(this.formData);
-            else if (this.type === 'este-mes') obs = this.esteMesService.create(this.formData);
-            else obs = this.proximamenteService.create(this.formData);
+            else obs = this.esteMesService.create(this.formData);
         }
 
         obs.subscribe({

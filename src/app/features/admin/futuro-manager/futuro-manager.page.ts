@@ -15,10 +15,9 @@ import {
 // Servicios del Futuro
 import { NoticiasFuturoService } from '../../../core/services/noticias-futuro.service';
 import { EsteMesService } from '../../../core/services/este-mes.service';
-import { ProximamenteService } from '../../../core/services/proximamente.service';
 
 // Tipos
-import { Noticia, EventoEsteMes, EventoProximamente } from '../../public/futuro/futuro.models';
+import { Noticia, EventoEsteMes } from '../../public/futuro/futuro.models';
 
 // Componentes Admin
 import { AdminHeaderComponent } from '../components-admin/admin-header/admin-header.component';
@@ -44,19 +43,17 @@ import { FuturoItemModalComponent } from './futuro-item-modal/futuro-item-modal.
 export class FuturoManagerPage implements OnInit {
     private noticiasService = inject(NoticiasFuturoService);
     private esteMesService = inject(EsteMesService);
-    private proximamenteService = inject(ProximamenteService);
     private modalCtrl = inject(ModalController);
     private alertCtrl = inject(AlertController);
     private toastCtrl = inject(ToastController);
 
     // Signals
     searchTerm = signal('');
-    activeSegment = signal<'noticias' | 'este-mes' | 'proximamente'>('noticias');
+    activeSegment = signal<'noticias' | 'este-mes'>('noticias');
 
     // Data signals from services
     noticias = this.noticiasService.noticias;
     esteMes = this.esteMesService.eventos;
-    proximamente = this.proximamenteService.eventos;
 
     // Computed Filter
     filteredItems = computed(() => {
@@ -66,7 +63,6 @@ export class FuturoManagerPage implements OnInit {
 
         if (segment === 'noticias') items = this.noticias();
         else if (segment === 'este-mes') items = this.esteMes();
-        else if (segment === 'proximamente') items = this.proximamente();
 
         if (!term) return items;
 
@@ -91,14 +87,12 @@ export class FuturoManagerPage implements OnInit {
     loadAllData() {
         this.noticiasService.getAllAdmin('es').subscribe();
         this.esteMesService.getAllAdmin('es').subscribe();
-        this.proximamenteService.getAllAdmin('es').subscribe();
     }
 
     loadCurrentSegment() {
         const seg = this.activeSegment();
         if (seg === 'noticias') this.noticiasService.getAllAdmin('es').subscribe();
         else if (seg === 'este-mes') this.esteMesService.getAllAdmin('es').subscribe();
-        else if (seg === 'proximamente') this.proximamenteService.getAllAdmin('es').subscribe();
     }
 
     segmentChanged(event: any) {
@@ -109,15 +103,13 @@ export class FuturoManagerPage implements OnInit {
     getActiveLabelSingular(): string {
         const seg = this.activeSegment();
         if (seg === 'noticias') return 'Noticia';
-        if (seg === 'este-mes') return 'Evento (Mes)';
-        return 'Próximo Evento';
+        return 'Evento (Mes)';
     }
 
     getEventMetadata(item: any): string {
         const seg = this.activeSegment();
         if (seg === 'noticias') return item.fecha || 'Sin fecha';
-        if (seg === 'este-mes') return `${item.dia} ${item.mes}`;
-        return item.fechaTexto || 'Próximamente';
+        return `${item.dia} ${item.mes}`;
     }
 
     // --- CRUD HANDLERS ---
@@ -172,8 +164,7 @@ export class FuturoManagerPage implements OnInit {
                         const seg = this.activeSegment();
                         let obs;
                         if (seg === 'noticias') obs = this.noticiasService.delete(item.id);
-                        else if (seg === 'este-mes') obs = this.esteMesService.delete(item.id);
-                        else obs = this.proximamenteService.delete(item.id);
+                        else obs = this.esteMesService.delete(item.id);
 
                         obs.subscribe({
                             next: () => {

@@ -13,11 +13,10 @@ import { forkJoin } from 'rxjs';
 import { ProyectosService } from 'src/app/core/services/proyectos.service';
 import { NoticiasFuturoService } from 'src/app/core/services/noticias-futuro.service';
 import { EsteMesService } from 'src/app/core/services/este-mes.service';
-import { ProximamenteService } from 'src/app/core/services/proximamente.service';
 import { Proyecto } from 'src/app/core/models/proyecto.model';
 
 // Modelos migrados
-import { ProyectoFuturo, Noticia, EventoProximamente, EventoEsteMes } from '../futuro.models';
+import { ProyectoFuturo, Noticia, EventoEsteMes } from '../futuro.models';
 
 // Componentes modulares
 import { HeroFuturoComponent } from '../components-futuro/hero-futuro/hero-futuro.component';
@@ -46,7 +45,6 @@ export class FuturoPage implements OnInit {
     private proyectosService = inject(ProyectosService);
     private noticiasService = inject(NoticiasFuturoService);
     private esteMesService = inject(EsteMesService);
-    private proximamenteService = inject(ProximamenteService);
 
     // Estado de carga
     loading = signal<boolean>(true);
@@ -61,7 +59,6 @@ export class FuturoPage implements OnInit {
     // ========================================
     proyectos = signal<ProyectoFuturo[]>([]);
     noticias = signal<Noticia[]>([]);
-    proximamente = signal<EventoProximamente[]>([]);
     esteMes = signal<EventoEsteMes[]>([]);
 
     // Lógica para 'Ver más' eventos
@@ -84,14 +81,12 @@ export class FuturoPage implements OnInit {
         forkJoin({
             proyectos: this.proyectosService.getProyectos('es', 'futuro'),
             noticias: this.noticiasService.getAll('es'),
-            esteMes: this.esteMesService.getAll('es'),
-            proximamente: this.proximamenteService.getAll('es')
+            esteMes: this.esteMesService.getAll('es')
         }).subscribe({
             next: (res) => {
                 this.proyectos.set(this.mapProyectos(res.proyectos));
                 this.noticias.set(res.noticias);
                 this.esteMes.set(res.esteMes);
-                this.proximamente.set(res.proximamente);
                 this.loading.set(false);
             },
             error: (err) => {

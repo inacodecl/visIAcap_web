@@ -16,15 +16,6 @@ export interface Noticia {
     etiqueta: string;
 }
 
-export interface EventoProximamente {
-    id: number;
-    titulo: string;
-    descripcion: string;
-    fechaTexto: string;
-    icono: string;
-    ubicacion: string;
-    imagen: string;
-}
 
 export interface EventoEsteMes {
     id: number;

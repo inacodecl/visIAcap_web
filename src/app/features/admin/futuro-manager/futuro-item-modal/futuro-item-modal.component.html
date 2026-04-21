@@ -85,44 +85,6 @@
             </div>
         </ng-container>
 
-        <!-- ESPECÍFICO: Próximamente -->
-        <ng-container *ngIf="type === 'proximamente'">
-            <div class="input-group">
-                <label>Descripción</label>
-                <div class="input-wrapper">
-                    <ion-icon name="document-text-outline"></ion-icon>
-                    <textarea [(ngModel)]="formData.descripcion" name="descripcion_p" rows="3" placeholder="Detalles del evento..."></textarea>
-                </div>
-            </div>
-            <div class="input-group">
-                <label>Texto de Fecha</label>
-                <div class="input-wrapper">
-                    <ion-icon name="time-outline"></ion-icon>
-                    <input type="text" [(ngModel)]="formData.fecha_texto" name="fechaTexto" placeholder="Ej: 10-12 Abril, 2026">
-                </div>
-            </div>
-            <div class="input-group">
-                <label>Ubicación</label>
-                <div class="input-wrapper">
-                    <ion-icon name="location-outline"></ion-icon>
-                    <input type="text" [(ngModel)]="formData.ubicacion" name="ubi" placeholder="Ej: Auditorio Central">
-                </div>
-            </div>
-            <div class="input-group">
-                <label>URL Imagen</label>
-                <div class="input-wrapper">
-                    <ion-icon name="image-outline"></ion-icon>
-                    <input type="text" [(ngModel)]="formData.imagen_url" name="img_p" placeholder="URL de la imagen...">
-                </div>
-            </div>
-            <div class="input-group">
-                <label>Icono (Ionicons Name)</label>
-                <div class="input-wrapper">
-                    <ion-icon name="bulb-outline"></ion-icon>
-                    <input type="text" [(ngModel)]="formData.icono" name="icon_p" placeholder="Ej: flask-outline">
-                </div>
-            </div>
-        </ng-container>
 
         <!-- COMÚN: Publicado y Orden -->
         <div class="row-inputs v-center">
