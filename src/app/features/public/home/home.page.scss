@@ -11,6 +11,9 @@ $text-dark: #333;
 // ==============================================
 .home-v2-content {
     --background: transparent;
+    --home-bg-image: url('../../../../assets/img/sede-renca.png');
+    --home-bg-color: #f5f5f5; // Color base para modo claro (evita expansión oscura en modo light)
+    
     position: relative;
 
     &::before {
@@ -22,9 +25,9 @@ $text-dark: #333;
         height: 100vh; // Asegurar alto completo del viewport
         z-index: 0;
 
-        // Imagen de Fondo
-        background-image: url('../../../../assets/img/sede-renca.png');
-        background-color: #0b1126; // Color del cielo nocturno para expandir hacia arriba sin cortes
+        // Imagen de Fondo Adaptativa
+        background-image: var(--home-bg-image);
+        background-color: var(--home-bg-color);
         
         // Img más pequeña y a la derecha (para móviles)
         background-size: auto 85%; 
@@ -32,12 +35,19 @@ $text-dark: #333;
         background-position: right bottom;
 
         filter: brightness(0.85);
+        transition: background-image 0.5s ease-in-out, background-color 0.5s ease-in-out;
 
         @media (min-width: 992px) {
             background-size: cover;
             background-position: center center;
         }
     }
+}
+
+// Override para Modo Oscuro (detecta la clase en el root)
+:host-context(html.ion-palette-dark) .home-v2-content {
+    --home-bg-image: url('../../../../assets/img/sede-renca-v3.png');
+    --home-bg-color: #0b1126; // Color del cielo nocturno para modo oscuro
 }
 
 // ==============================================
