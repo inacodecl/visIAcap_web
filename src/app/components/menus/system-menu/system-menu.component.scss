@@ -94,3 +94,28 @@
 .value.cancel:hover::before {
   background-color: var(--ion-color-danger, #ff4961);
 }
+
+/* ==============================================
+   RESPONSIVE: Móvil
+   ============================================== */
+@media (max-width: 575px) {
+  .input-menu {
+    width: 200px; /* Reducido drásticamente (antes 320px) */
+    padding: 10px;
+  }
+
+  .value {
+    padding: 10px 12px;
+    font-size: 14px; /* Antes 18px */
+    gap: 10px;
+  }
+
+  .value svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .divider {
+    margin: 6px 2px;
+  }
+}

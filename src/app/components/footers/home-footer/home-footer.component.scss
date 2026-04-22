@@ -73,3 +73,33 @@
     letter-spacing: 2px;
     font-style: italic;
 }
+
+// ==============================================
+// RESPONSIVE: Solo Móvil (max 575px)
+// ==============================================
+@media (max-width: 575px) {
+    .v2-footer {
+        padding: 8px 16px;
+        height: auto;
+    }
+
+    .footer-btn {
+        width: 45px;
+        height: 45px;
+
+        ion-icon {
+            font-size: 22px;
+        }
+    }
+
+    .brand-text {
+        font-size: 0.95rem;
+        letter-spacing: 1.5px;
+    }
+
+    .brand-year {
+        font-size: 0.7rem;
+        letter-spacing: 0.5px;
+        margin-top: 2px;
+    }
+}

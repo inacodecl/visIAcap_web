@@ -166,3 +166,48 @@
   }
 }
 
+
+/* ==============================================
+   RESPONSIVE: Móvil
+   ============================================== */
+@media (max-width: 575px) {
+  .theme-popover-container {
+    padding: 16px;
+  }
+
+  .popover-title {
+    margin-bottom: 15px;
+    font-size: 1rem;
+  }
+
+  .radio-group {
+    gap: 12px;
+  }
+
+  .theme-box {
+    width: 90px; /* Reducido de 120px */
+    height: 70px; /* Reducido de 95px */
+  }
+
+  .option-label {
+    margin-top: 8px;
+    font-size: 11px;
+  }
+
+  .action-buttons {
+    margin-top: 15px;
+    padding-top: 10px;
+
+    ion-button {
+      width: 44px;
+      height: 44px;
+    }
+  }
+
+  .btn-close-top {
+    width: 28px;
+    height: 28px;
+    top: 5px;
+    right: 5px;
+  }
+}

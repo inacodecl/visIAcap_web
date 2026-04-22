@@ -176,6 +176,49 @@ $text-dark: #333;
 
     padding: 20px;
 }
+// ==============================================
+// RESPONSIVE: Solo Móvil (max 575px)
+// Sin afectar tablet, desktop ni tótem
+// ==============================================
+@media (max-width: 575px) {
 
+    // Ajuste del fondo para que cubra el área del header y permita el efecto glass
+    .home-v2-content::before {
+        background-size: cover; 
+        background-position: center top; 
+    }
 
+    .v2-header {
+        // Header totalmente transparente con glass fuerte para móviles
+        height: clamp(80px, 15vh, 110px);
+        padding: 10px 16px;
+        padding-top: max(15px, env(safe-area-inset-top));
+        
+        // Eliminamos cualquier rastro de fondo sólido y aplicamos glass
+        background: transparent !important; 
+        backdrop-filter: blur(15px) brightness(1.1);
+        -webkit-backdrop-filter: blur(15px) brightness(1.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
+        .logo-img {
+            height: clamp(50px, 90%, 80px) !important;
+        }
+
+        .header-separator {
+            margin: 0 12px;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .sede-container span {
+            font-size: clamp(0.9rem, 4.8vw, 1.2rem);
+            letter-spacing: 0.5px;
+            color: var(--ion-text-color, #ffffff) !important;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+    }
+
+    .cards-container {
+        gap: clamp(10px, 2.5vh, 20px);
+        padding: 10px;
+    }
+}

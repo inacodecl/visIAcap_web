@@ -225,3 +225,50 @@
 .animate-slide-in {
     animation: slideIn 0.4s ease-out forwards;
 }
+
+// ==============================================
+// RESPONSIVE: Solo Móvil (max 575px)
+// ==============================================
+@media (max-width: 575px) {
+    :host {
+        bottom: 15px;
+        left: 15px;
+    }
+
+    .fan-menu-container, .menu-item {
+        width: 55px;
+        height: 55px;
+    }
+
+    .main-trigger {
+        width: 50px;
+        height: 50px;
+    }
+
+    .w-12 {
+        width: 38px;
+        height: 38px;
+    }
+
+    .icon-wrapper, .x-icon {
+        img, svg {
+            width: 28px !important;
+            height: 28px !important;
+        }
+    }
+
+    .label {
+        left: calc(100% + 8px);
+        font-size: 11px;
+        padding: 1px 6px;
+    }
+
+    /* Ajuste de distancias en el stack vertical para móvil reducido */
+    .fan-menu-container.active .item-inago { transform: translate(0px, -210px) scale(1); }
+    .fan-menu-container.active .item-zenz { transform: translate(0px, -140px) scale(1); }
+    .fan-menu-container.active .item-midae { transform: translate(0px, -70px) scale(1); }
+
+    .fan-menu-container.active .item-inago:hover { transform: translate(0px, -210px) scale(1.05); }
+    .fan-menu-container.active .item-zenz:hover { transform: translate(0px, -140px) scale(1.05); }
+    .fan-menu-container.active .item-midae:hover { transform: translate(0px, -70px) scale(1.05); }
+}
