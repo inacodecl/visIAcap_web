@@ -46,12 +46,18 @@
             align-items: center;
             gap: 12px;
 
-            .brand-icon {
-                font-size: 1.5rem;
-                color: #e21f26; // INACAP red highlight
-                background: rgba(226, 31, 38, 0.15);
-                padding: 8px;
-                border-radius: 8px;
+            .brand-logo {
+                width: 45px;
+                height: 45px;
+                object-fit: contain;
+                background: rgba(255, 255, 255, 0.05);
+                padding: 5px;
+                border-radius: 10px;
+                transition: transform 0.3s ease;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
             }
 
             .brand-text {
@@ -252,7 +258,7 @@ ion-popover.profile-popover {
         align-items: center;
         gap: 15px;
         padding: 20px;
-        background: #f8fafc;
+        background: #ffffff; // Fondo blanco total
 
         .avatar-large {
             width: 48px;
@@ -265,7 +271,7 @@ ion-popover.profile-popover {
             justify-content: center;
             font-weight: 700;
             font-size: 1.4rem;
-            box-shadow: 0 4px 10px rgba(91, 180, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(91, 180, 255, 0.4);
             flex-shrink: 0;
         }
 
@@ -296,7 +302,7 @@ ion-popover.profile-popover {
 
     .popover-divider {
         height: 1px;
-        background: #e2e8f0;
+        background: #f1f5f9;
         width: 100%;
     }
 
@@ -305,31 +311,48 @@ ion-popover.profile-popover {
         background: #ffffff;
 
         ion-item {
+            --background: #ffffff;
+            --color: #334155;
             --padding-start: 16px;
             --inner-padding-end: 16px;
-            --min-height: 44px;
+            --min-height: 48px;
             font-size: 0.95rem;
             font-weight: 500;
-            color: #334155;
             cursor: pointer;
+            transition: all 0.2s ease-in-out;
 
             ion-icon {
                 color: #64748b;
                 font-size: 1.2rem;
                 margin-right: 12px;
+                transition: transform 0.2s ease;
             }
 
             &:hover {
+                --background: #f8fafc;
+                
+                ion-icon {
+                    transform: translateX(2px) scale(1.1);
+                    color: #5bb4ff;
+                }
+            }
+
+            &:active {
+                transform: scale(0.96);
                 --background: #f1f5f9;
+                transition: all 0.1s ease;
             }
 
             &.logout-item {
-                color: #ef4444;
+                --color: #ef4444;
                 ion-icon {
                     color: #ef4444;
                 }
                 &:hover {
-                    --background: #fef2f2;
+                    --background: #fff1f2;
+                    ion-icon {
+                        color: #dc2626;
+                    }
                 }
             }
         }

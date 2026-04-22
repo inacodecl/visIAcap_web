@@ -160,6 +160,12 @@
                             </ion-item>
 
                             <ion-item class="form-item-neon full-width" lines="none">
+                                <ion-icon name="call" slot="start" class="input-icon"></ion-icon>
+                                <ion-input label="Teléfono (Opcional)" labelPlacement="floating" type="tel"
+                                    formControlName="telefono"></ion-input>
+                            </ion-item>
+
+                            <ion-item class="form-item-neon full-width" lines="none">
                                 <ion-icon name="lock-closed" slot="start" class="input-icon"></ion-icon>
                                 <ion-input label="Contraseña {{ isEditMode ? '(Opcional)' : '' }}"
                                     labelPlacement="floating" type="password" formControlName="password"></ion-input>

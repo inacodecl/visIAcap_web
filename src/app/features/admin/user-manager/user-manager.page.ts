@@ -8,7 +8,7 @@ import {
     IonModal, IonToggle, IonSpinner, IonSearchbar
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { add, create, trash, close, person, people, personAdd, arrowForward, mail, lockClosed, shield, rocket } from 'ionicons/icons';
+import { add, create, trash, close, person, people, personAdd, arrowForward, mail, lockClosed, shield, rocket, call } from 'ionicons/icons';
 import { UserService } from '../../../core/services/user.service';
 import { Usuario } from '../../../core/models/usuario.model';
 import { AuthService } from '../../../core/services/auth.service';
@@ -58,12 +58,13 @@ export class UserManagerPage implements OnInit {
         nombre: ['', [Validators.required]],
         apellido: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
+        telefono: [''],
         password: [''], // Password opcional en edición
         rol: ['', [Validators.required]] // Rol obligatorio, sin default
     });
 
     constructor() {
-        addIcons({ people, personAdd, arrowForward, person, trash, close, mail, lockClosed, shield, rocket, add, create });
+        addIcons({ people, personAdd, arrowForward, person, trash, close, mail, lockClosed, shield, rocket, add, create, call });
     }
 
     ngOnInit() {
@@ -106,6 +107,7 @@ export class UserManagerPage implements OnInit {
             nombre: user.nombre,
             apellido: user.apellido,
             email: user.email,
+            telefono: user.telefono || '',
             rol: user.rol,
             password: '' // Limpiar campo password
         });
