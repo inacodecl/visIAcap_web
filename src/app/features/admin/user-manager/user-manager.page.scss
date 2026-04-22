@@ -349,16 +349,43 @@ $glass-border: rgba(255, 255, 255, 0.08);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: auto; // Push to bottom
+            margin-top: auto;
             padding-top: 15px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
+            gap: 4px;
 
             .status-toggle {
                 display: flex;
                 align-items: center;
-                gap: 8px;
+                gap: 10px; // Aumentado para evitar solapamiento
                 color: #888;
-                font-size: 0.85rem;
+                font-size: 0.75rem;
+                flex-shrink: 0; // Evitar que se encoja el contenedor del texto
+                min-width: 0;
+
+                ion-toggle {
+                    margin: 0;
+                    margin-inline-end: 4px; // Espacio extra de seguridad
+                    // Tamaño responsivo del toggle
+                    --handle-width: 14px;
+                    --handle-height: 14px;
+                    height: 20px;
+                    width: 36px;
+
+                    @media (min-width: 992px) {
+                        --handle-width: 16px;
+                        --handle-height: 16px;
+                        height: 22px;
+                        width: 42px;
+                        margin-inline-end: 6px;
+                    }
+                }
+
+                span {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
 
                 &.active {
                     color: $neon-green;
@@ -367,21 +394,50 @@ $glass-border: rgba(255, 255, 255, 0.08);
 
             .buttons {
                 display: flex;
-                gap: 10px;
+                gap: 6px;
+                flex-shrink: 0;
 
                 ion-button {
                     --color: #888;
                     --color-hover: white;
-                    --padding-start: 10px;
-                    --padding-end: 10px;
-
-                    // Botones más grandes y tocables por defecto
-                    height: 44px;
-                    width: 44px;
-                    font-size: 1.4rem;
-
+                    --padding-start: 0;
+                    --padding-end: 0;
+                    margin: 0;
                     background: rgba(255, 255, 255, 0.05);
                     border-radius: 50%;
+                    --border-radius: 50%;
+                    transition: all 0.3s ease;
+
+                    // 📱 MÓVIL (Por defecto)
+                    height: 38px;
+                    width: 38px;
+                    font-size: 1.2rem;
+
+                    // 📟 TABLET (576px a 991px) - Más compacto para evitar desbordes
+                    @media (min-width: 576px) and (max-width: 991px) {
+                        height: 30px;
+                        width: 30px;
+                        font-size: 0.9rem;
+                    }
+
+                    // 💻 DESKTOP (992px a 1399px)
+                    @media (min-width: 992px) and (max-width: 1399px) {
+                        height: 38px;
+                        width: 38px;
+                        font-size: 1.2rem;
+                    }
+
+                    // 🖥️ TOTEM / LARGE SCREEN (1400px+)
+                    @media (min-width: 1400px) {
+                        height: 44px;
+                        width: 44px;
+                        font-size: 1.4rem;
+                    }
+
+                    &:hover {
+                        transform: translateY(-2px);
+                        background: rgba(255, 255, 255, 0.1);
+                    }
                 }
             }
         }

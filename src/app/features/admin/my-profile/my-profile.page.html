@@ -131,40 +131,79 @@
                     <h3>Seguridad</h3>
                 </div>
 
-                <div class="fields-list">
-                    <div class="field-row">
-                        <label>Contraseña</label>
-                        <span>••••••••••</span>
+                @if (!isChangingPassword()) {
+                    <div class="fields-list">
+                        <div class="field-row">
+                            <label>Contraseña</label>
+                            <span>••••••••••</span>
+                        </div>
+                        <div class="field-row">
+                            <label>Estado de cuenta</label>
+                            @if (profile()?.is_active) {
+                                <span class="badge-active">Activa</span>
+                            } @else {
+                                <span class="badge-inactive">Desactivada</span>
+                            }
+                        </div>
                     </div>
-                    <div class="field-row">
-                        <label>Estado de cuenta</label>
-                        @if (profile()?.is_active) {
-                            <span class="badge-active">Activa</span>
-                        } @else {
-                            <span class="badge-inactive">Desactivada</span>
-                        }
-                    </div>
-                </div>
 
-                <button class="btn-action-outline" disabled>
-                    <ion-icon name="key-outline"></ion-icon>
-                    Cambiar Contraseña
-                </button>
+                    <button class="btn-action-outline" (click)="startChangingPassword()">
+                        <ion-icon name="key-outline"></ion-icon>
+                        Cambiar mi contraseña
+                    </button>
+                } @else {
+                    <div class="edit-form">
+                        <div class="form-group">
+                            <label>Contraseña Actual</label>
+                            <input type="password" [(ngModel)]="passwordForm.currentPassword" placeholder="Tu clave actual" />
+                        </div>
+                        <div class="form-group">
+                            <label>Nueva Contraseña</label>
+                            <input type="password" [(ngModel)]="passwordForm.newPassword" placeholder="Al menos 6 caracteres" />
+                        </div>
+                        <div class="form-group">
+                            <label>Confirmar Nueva Contraseña</label>
+                            <input type="password" [(ngModel)]="passwordForm.confirmPassword" placeholder="Repite la clave nueva" />
+                        </div>
+
+                        <div class="edit-actions">
+                            <button class="btn-cancel" (click)="cancelChangingPassword()">
+                                Cancelar
+                            </button>
+                            <button class="btn-save" (click)="changePassword()" [disabled]="isSavingPassword()">
+                                @if (isSavingPassword()) {
+                                    <ion-spinner name="dots" style="width: 20px; height: 20px;"></ion-spinner>
+                                } @else {
+                                    <ion-icon name="lock-closed-outline"></ion-icon>
+                                }
+                                Actualizar Clave
+                            </button>
+                        </div>
+                    </div>
+                }
             </div>
 
         </div>
 
-        <!-- Zona Peligrosa -->
-        <div class="danger-zone">
-            <div class="danger-header">
-                <ion-icon name="warning-outline"></ion-icon>
-                <h3>Zona de Riesgo</h3>
+        <!-- Reportar Problema (Reemplaza Zona Peligrosa) -->
+        <div class="support-zone">
+            <div class="support-header">
+                <div class="support-icon">
+                    <ion-icon name="bug-outline"></ion-icon>
+                </div>
+                <div class="support-text">
+                    <h3>Reportar un problema</h3>
+                    <p>¿Encontraste un error o necesitas ayuda técnica? Notifícalo a nuestro equipo de desarrollo.</p>
+                </div>
             </div>
-            <p>Estas acciones son irreversibles y pueden afectar tu acceso a la plataforma.</p>
-            <div class="danger-actions">
-                <button class="btn-danger-outline" disabled>
-                    <ion-icon name="trash-outline"></ion-icon>
-                    Eliminar mi cuenta
+            <div class="support-actions">
+                <button class="btn-support" (click)="reportProblem()">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    Enviar Reporte
+                </button>
+                <button class="btn-support outline" (click)="reportProblem()">
+                    <ion-icon name="help-circle-outline"></ion-icon>
+                    Centro de Ayuda
                 </button>
             </div>
         </div>

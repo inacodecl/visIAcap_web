@@ -15,7 +15,11 @@ import {
   trashOutline,
   checkmarkOutline,
   closeOutline,
-  saveOutline
+  saveOutline,
+  bugOutline,
+  mailOutline,
+  helpCircleOutline,
+  lockClosedOutline
 } from 'ionicons/icons';
 import { AuthService } from '../../../core/services/auth.service';
 import { Usuario } from '../../../core/models/usuario.model';
@@ -52,11 +56,21 @@ export class MyProfilePage implements OnInit {
     telefono: ''
   };
 
+  // Formulario de contraseña
+  isChangingPassword = signal(false);
+  isSavingPassword = signal(false);
+  passwordForm = {
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  };
+
   constructor() {
     addIcons({
       personOutline, cameraOutline, calendarOutline, createOutline,
       shieldCheckmarkOutline, keyOutline, warningOutline, trashOutline,
-      checkmarkOutline, closeOutline, saveOutline
+      checkmarkOutline, closeOutline, saveOutline,
+      bugOutline, mailOutline, helpCircleOutline, lockClosedOutline
     });
   }
 
@@ -198,5 +212,79 @@ export class MyProfilePage implements OnInit {
         this.saveMessage.set('Error al guardar los cambios');
       }
     });
+  }
+
+  /**
+   * Activa el modo cambio de contraseña
+   */
+  startChangingPassword(): void {
+    this.passwordForm = {
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: ''
+    };
+    this.isChangingPassword.set(true);
+    this.saveMessage.set(null);
+  }
+
+  /**
+   * Cancela el cambio de contraseña
+   */
+  cancelChangingPassword(): void {
+    this.isChangingPassword.set(false);
+    this.saveMessage.set(null);
+  }
+
+  /**
+   * Ejecuta el cambio de contraseña via POST /api/usuarios/change-password
+   */
+  changePassword(): void {
+    if (this.isSavingPassword()) return;
+
+    const { currentPassword, newPassword, confirmPassword } = this.passwordForm;
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      this.saveMessage.set('Todos los campos son obligatorios');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      this.saveMessage.set('Las nuevas contraseñas no coinciden');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      this.saveMessage.set('La nueva contraseña debe tener al menos 6 caracteres');
+      return;
+    }
+
+    this.isSavingPassword.set(true);
+    this.saveMessage.set(null);
+
+    this.http.post<{ message: string }>(`${environment.apiUrl}/usuarios/change-password`, {
+      currentPassword,
+      newPassword
+    }).subscribe({
+      next: (res) => {
+        this.isSavingPassword.set(false);
+        this.isChangingPassword.set(false);
+        this.saveMessage.set('Contraseña actualizada correctamente');
+        setTimeout(() => this.saveMessage.set(null), 3000);
+      },
+      error: (err) => {
+        console.error('Error cambiando contraseña:', err);
+        this.isSavingPassword.set(false);
+        const msg = err.error?.message || 'Error al cambiar la contraseña';
+        this.saveMessage.set(msg);
+      }
+    });
+  }
+
+  /**
+   * Simulación de reporte de problema
+   */
+  reportProblem(): void {
+    this.saveMessage.set('Funcionalidad de reporte disponible próximamente');
+    setTimeout(() => this.saveMessage.set(null), 3000);
   }
 }
