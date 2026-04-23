@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, 
+import {
+  IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton,
   ViewWillEnter, ViewWillLeave, IonButton, IonIcon
 } from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
+import { ViewChild, ElementRef } from '@angular/core';
 import { addIcons } from 'ionicons';
-import { 
-  arrowBackOutline, logoNodejs, logoReact, logoPython, logoDocker, 
-  logoAngular, logoIonic, serverOutline, colorPaletteOutline 
+import {
+  arrowBackOutline, logoNodejs, logoReact, logoPython, logoDocker,
+  logoAngular, logoIonic, serverOutline, colorPaletteOutline,
+  peopleOutline, documentTextOutline, statsChartOutline, globeOutline
 } from 'ionicons/icons';
 import { HomeFooterComponent } from '../../../components/footers/home-footer/home-footer.component';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -28,24 +30,24 @@ import { trigger, transition, style, animate } from '@angular/animations';
   animations: [
     trigger('extensionAnim', [
       transition(':enter', [
-        style({ 
-          opacity: 0, 
+        style({
+          opacity: 0,
           transform: 'scale(0.85) translateY(15px)',
           transformOrigin: 'top center'
         }),
-        animate('400ms 100ms cubic-bezier(0.16, 1, 0.3, 1)', style({ 
-          opacity: 1, 
+        animate('400ms 100ms cubic-bezier(0.16, 1, 0.3, 1)', style({
+          opacity: 1,
           transform: 'scale(1) translateY(0)'
         }))
       ]),
       transition(':leave', [
-        style({ 
-          opacity: 1, 
+        style({
+          opacity: 1,
           transform: 'scale(1) translateY(0)',
           transformOrigin: 'top center'
         }),
-        animate('250ms cubic-bezier(0.4, 0, 1, 1)', style({ 
-          opacity: 0, 
+        animate('250ms cubic-bezier(0.4, 0, 1, 1)', style({
+          opacity: 0,
           transform: 'scale(0.85) translateY(10px)'
         }))
       ])
@@ -53,6 +55,8 @@ import { trigger, transition, style, animate } from '@angular/animations';
   ]
 })
 export class DesarrolladoresPage implements OnInit, ViewWillEnter, ViewWillLeave {
+
+  @ViewChild('carouselContainer') carouselContainer!: ElementRef;
 
   // ──────────────────────────────────────────────────────────
   // CONFIGURACIÓN DE TIEMPOS (en milisegundos)
@@ -63,7 +67,7 @@ export class DesarrolladoresPage implements OnInit, ViewWillEnter, ViewWillLeave
   // ──────────────────────────────────────────────────────────
 
   selectedIndex: number = 0;
-  visibleIndex: number | null = 0; 
+  visibleIndex: number | null = 0;
   private rotationTimeout: any;
   private visibilityTimeout: any;
 
@@ -103,13 +107,50 @@ export class DesarrolladoresPage implements OnInit, ViewWillEnter, ViewWillLeave
         { name: 'Ionic', icon: 'logo-ionic' },
         { name: 'UI/UX', icon: 'color-palette-outline' }
       ]
+    },
+    {
+      id: 'lisbeth',
+      name: 'Lisbeth Valenzuela',
+      role: 'GESTIÓN DE CONTENIDO',
+      image: '/assets/img/lisbeth.jpg',
+      bio: 'Soy Lisbeth Valenzuela, egresada de tecnico en administracion, estudiando la ingeniería de esta misma; gracias a mi carrera logré aprender sobre la gestión de tiempos y organizaciones. Estoy feliz de formar mi profesión en inacap donde se aprende haciendo.',
+      badges: [
+        { name: 'Análisis', icon: 'stats-chart-outline' },
+        { name: 'Gestión', icon: 'people-outline' },
+        { name: 'Contenido', icon: 'document-text-outline' }
+      ]
+    },
+    {
+      id: 'cesar',
+      name: 'Cesar Morales',
+      role: 'CEO',
+      image: '/assets/img/cesar.jpg',
+      bio: 'Encargado de la recolección de hitos históricos y noticias actuales. Mi labor es mantener el panel de administración actualizado para que la experiencia visual de los usuarios sea siempre enriquecedora.',
+      badges: [
+        { name: 'Datos', icon: 'server-outline' },
+        { name: 'Research', icon: 'globe-outline' },
+        { name: 'Panel', icon: 'stats-chart-outline' }
+      ]
+    },
+    {
+      id: 'victoria',
+      name: 'Victoria Rojas',
+      role: 'RECOLECCIÓN INFO',
+      image: '/assets/img/victoria.jpg',
+      bio: 'Integrante del área de Administración enfocada en el levantamiento de información de terreno. Me encargo de coordinar con las sedes los datos necesarios para alimentar el timeline y las secciones de futuro.',
+      badges: [
+        { name: 'Campo', icon: 'people-outline' },
+        { name: 'Logística', icon: 'document-text-outline' },
+        { name: 'Organización', icon: 'stats-chart-outline' }
+      ]
     }
   ];
 
   constructor() {
-    addIcons({ 
-      arrowBackOutline, logoNodejs, logoReact, logoPython, 
-      logoDocker, logoAngular, logoIonic, serverOutline, colorPaletteOutline 
+    addIcons({
+      arrowBackOutline, logoNodejs, logoReact, logoPython,
+      logoDocker, logoAngular, logoIonic, serverOutline, colorPaletteOutline,
+      peopleOutline, documentTextOutline, statsChartOutline, globeOutline
     });
   }
 
@@ -142,7 +183,19 @@ export class DesarrolladoresPage implements OnInit, ViewWillEnter, ViewWillLeave
     this.visibleIndex = null;
     this.visibilityTimeout = setTimeout(() => {
       this.visibleIndex = newIndex;
+      this.scrollToActive(newIndex);
     }, this.TIEMPO_ANIM_SALIDA);
+  }
+
+  private scrollToActive(index: number) {
+    if (!this.carouselContainer) return;
+    const container = this.carouselContainer.nativeElement;
+    const cards = container.querySelectorAll('.dev-card');
+    if (cards[index]) {
+      const card = cards[index] as HTMLElement;
+      const scrollPos = card.offsetLeft - (container.offsetWidth / 2) + (card.offsetWidth / 2);
+      container.scrollTo({ left: scrollPos, behavior: 'smooth' });
+    }
   }
 
   startRotation(delay: number) {
@@ -165,6 +218,7 @@ export class DesarrolladoresPage implements OnInit, ViewWillEnter, ViewWillLeave
     if (this.selectedIndex === index) return;
     this.selectedIndex = index;
     this.swapExtensionBox(index);
+    this.scrollToActive(index);
     this.startRotation(this.TIEMPO_GRACIA_MANUAL);
   }
 

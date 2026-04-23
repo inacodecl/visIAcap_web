@@ -175,6 +175,13 @@ $text-dark: #333;
     gap: clamp(20px, 5vh, 80px);
 
     padding: 20px;
+
+    // Solo para Desktop: Botones en horizontal
+    @media (min-width: 2000px) {
+        flex-direction: row;
+        justify-content: center;
+        gap: clamp(40px, 8vw, 150px); // Espacio generoso para animaciones
+    }
 }
 // ==============================================
 // RESPONSIVE: Solo Móvil (max 575px)
