@@ -250,47 +250,67 @@ $dark-bg: #0B0B0E;
 
 /* -- ESTADO EXPANDIDO -- */
 .card.expanded {
-    max-width: 860px; /* Expansión Horizontal Plena */
-    cursor: default;  /* Remueve señal de link */
+    background-color: #0B0B0E; /* Fondo sólido para el efecto de fade de la imagen */
+    max-width: 900px; /* Expansión Horizontal */
+    height: 85vh;     /* Altura dinámica en desktop */
+    max-height: 1000px;
+    cursor: default;
+    display: flex;
+    flex-direction: column; /* Diseño vertical: Hero arriba, Texto abajo */
+    z-index: 1000;
 }
 
-/* Capa 1: Fotografía inyectada */
-.card-bg {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+/* Capa de Héroe (Imagen o Swiper) */
+.card-hero {
+    position: absolute; /* Actúa como fondo en reposo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.card.expanded .card-hero {
+    position: relative; /* En detalle se vuelve un bloque superior */
+    height: 450px; 
+    flex-shrink: 0;
+
+    /* EFECTO DIFUMINADO DEFINITIVO: Máscara de transparencia */
+    -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+.hero-bg, .slide-img {
+    width: 100%;
+    height: 100%;
     background-size: cover;
     background-position: center;
-    opacity: 0.55;
-    z-index: -2;
-    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 0.8s ease;
+}
+
+.hero-swiper {
+    width: 100%;
+    height: 100%;
     
-    /* Máscara de Difuminado */
-    -webkit-mask-image: linear-gradient(to right, black 65%, transparent 100%);
-    mask-image: linear-gradient(to right, black 65%, transparent 100%);
-    -webkit-mask-size: 200% 100%;
-    mask-size: 200% 100%;
-    -webkit-mask-position: left top;
-    mask-position: left top;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
+    --swiper-theme-color: #{$red-neon};
+    --swiper-navigation-size: 25px;
+    --swiper-pagination-bullet-inactive-color: rgba(255, 255, 255, 0.5);
+    --swiper-pagination-bullet-inactive-opacity: 1;
+    --swiper-pagination-bullet-size: 10px;
+    --swiper-pagination-bottom: 20px;
 }
 
-.card.expanded .card-bg {
-    width: 50%; /* Se repliega a la mitad izquierda */
-    opacity: 0.9; 
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-}
-
-/* Capa 2: Gradiente Comprimido */
+/* Capa 2: Gradiente Comprimido (Solo en reposo para legibilidad) */
 .card-overlay {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: linear-gradient(to bottom, transparent 0%, rgba(#0B0B0E, 0.95) 100%);
-    z-index: -1;
+    background: linear-gradient(to bottom, transparent 20%, rgba(#0B0B0E, 0.9) 100%);
+    z-index: 2;
     transition: opacity 0.6s ease;
+    pointer-events: none;
 }
 
 .card.expanded .card-overlay {
@@ -300,48 +320,46 @@ $dark-bg: #0B0B0E;
 /* Capa 3: Contenidos de Texto e Interacción */
 .card-content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     width: 100%;
     height: 100%;
-    padding: 40px 30px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    background: transparent; /* Transparente en reposo */
 }
 
 .card.expanded .card-content {
-    width: 50%; /* Se mueve a la mitad derecha */
-    margin-left: 50%;
-    padding: 50px 40px;
+    height: auto;
+    flex: 1;
+    padding: 40px 50px;
+    overflow: hidden; /* Volvemos a hidden para limpieza */
+    background: rgba(#0B0B0E, 0.8); /* Fondo oscuro solo en detalle */
+    backdrop-filter: blur(10px);
 }
 
-/* Animación y reposicionamiento del texto vertical */
+/* Animación y reposicionamiento del texto */
 .content-inner {
     margin-top: auto; 
     transition: all 0.6s ease;
-    max-height: 100%;
+    width: 100%;
 }
 
 .card.expanded .content-inner {
-    margin-top: auto;
-    margin-bottom: auto; /* Centrar verticalmente */
-    overflow-y: auto; /* Activar scroll interno cuando el texto lo demande */
-    padding-right: 15px; /* Espacio dedicado al scroll */
-}
-
-/* Diseño Glassmorphism para el Scrollbar */
-.content-inner::-webkit-scrollbar {
-    width: 6px;
-}
-.content-inner::-webkit-scrollbar-track {
-    background: transparent;
-}
-.content-inner::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-}
-.content-inner::-webkit-scrollbar-thumb:hover {
-    background: rgba($red-neon, 0.6);
+    margin-top: 0;
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 20px;
+    
+    // Scrollbar styling
+    &::-webkit-scrollbar { width: 6px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb:hover { background: rgba($red-neon, 0.4); }
 }
 
 /* Botón 'X' */
@@ -349,12 +367,11 @@ $dark-bg: #0B0B0E;
     position: absolute;
     top: 25px;
     right: 25px;
-    width: 36px;
-    height: 36px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.5);
     color: white;
-    font-size: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -363,9 +380,15 @@ $dark-bg: #0B0B0E;
     pointer-events: none;
     transition: all 0.3s ease;
     border: 1px solid rgba(255,255,255,0.2);
-    z-index: 10;
+    z-index: 20;
+    backdrop-filter: blur(5px);
 
-    &:hover { background: rgba($red-neon, 0.8); }
+    ion-icon { font-size: 24px; }
+    &:hover { 
+        background: $red-neon;
+        transform: rotate(90deg);
+        border-color: $red-neon;
+    }
 }
 
 .card.expanded .close-btn {
@@ -376,56 +399,70 @@ $dark-bg: #0B0B0E;
 /* Textos Generales */
 .badge {
     display: inline-block;
-    background-color: rgba($red-inacap, 0.85); 
+    background-color: rgba($red-inacap, 0.9); 
     color: white;
-    padding: 6px 14px;
-    border-radius: 20px;
+    padding: 6px 16px;
+    border-radius: 4px; /* Un look más moderno/cuadrado para badges de años */
     font-size: 14px;
     font-weight: 700;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     letter-spacing: 1px;
-    transition: transform 0.6s;
 }
 
 .card h2 {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 800;
-    margin-bottom: 15px;
-    line-height: 1.1;
+    margin-bottom: 12px;
+    line-height: 1.2;
     color: white;
     margin-top: 0;
+
+    /* Truncado del Título en reposo (2 líneas máximo) */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card.expanded h2 {
+    -webkit-line-clamp: unset; /* Mostrar título completo al expandir */
+    display: block;
 }
 
 .card p.main-desc {
     color: rgba(white, 0.8);
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: 15px;
+    line-height: 1.4;
     margin: 0;
-    transition: all 0.3s ease;
+    
+    /* Truncado a 3 líneas para la descripción en reposo */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .card.expanded p.main-desc {
-    opacity: 0;
-    max-height: 0;
-    margin: 0;
-    pointer-events: none;
+    display: none; /* Ocultar el resumen corto cuando está expandido */
 }
 
-/* Bloque Extra Details que se desliza */
+/* Bloque Extra Details */
 .extra-details {
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    color: #A0A0A5;
-    font-size: 15px;
-    line-height: 1.6;
+    transition: all 0.6s ease;
+    color: #E0E0E5;
+    font-size: 18px;
+    line-height: 1.8;
 }
 
 .card.expanded .extra-details {
-    max-height: 1500px; /* Permitir un amplio margen para hitos detallados */
+    max-height: none;
     opacity: 1;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 // Mobile Media Queries
@@ -436,23 +473,19 @@ $dark-bg: #0B0B0E;
 
     .hero-section h1 { font-size: 28px; }
 
-    /* En movil forzamos que aunque se expanda el ancho lo acapare todo hacia abajo */
     .card.expanded {
-        height: auto;
-        min-height: 600px; /* Expandir verticalmente si se requiere leyendo en mobile */
+        height: 90vh;
+        width: 95vw;
     }
 
-    .card.expanded .card-bg {
-        width: 100%;
-        height: 40%;
-        opacity: 0.6;
-        -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
-        mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+    .card.expanded .card-hero {
+        height: 250px;
     }
 
     .card.expanded .card-content {
-        width: 100%;
-        margin-left: 0;
-        margin-top: 30%; // espacio en blanco arriba
+        padding: 25px;
     }
+
+    .card h2 { font-size: 24px; }
+    .extra-details { font-size: 16px; }
 }

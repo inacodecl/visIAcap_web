@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChildren, QueryList, ElementRef, inject, ChangeDetectorRef, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChildren, QueryList, ElementRef, inject, ChangeDetectorRef, HostListener, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
@@ -8,7 +8,7 @@ import {
 import { TimelineService } from '../../../../core/services/timeline.service';
 import { Historia } from '../../../../core/models/historia.model';
 import { addIcons } from 'ionicons';
-import { chevronDown, arrowBack, arrowBackOutline, locationOutline, calendarOutline, settingsSharp, add, remove, alertCircle } from 'ionicons/icons';
+import { chevronDown, arrowBack, arrowBackOutline, locationOutline, calendarOutline, settingsSharp, add, remove, alertCircle, closeOutline } from 'ionicons/icons';
 import { AuthService } from '../../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
@@ -16,6 +16,10 @@ import { BackgroundBrilloComponent } from '../../../../components/background/bri
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../../core/services/language.service';
 import { FanMenuComponent } from '../../home/components/fan-menu/fan-menu.component';
+import { register } from 'swiper/element/bundle';
+
+register();
+
 interface TimelineEvent extends Historia {
   expanded: boolean;
 }
@@ -33,7 +37,8 @@ interface TimelineEvent extends Historia {
     BackgroundBrilloComponent,
     TranslateModule,
     FanMenuComponent
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TimelinePage implements OnInit, AfterViewInit, OnDestroy {
 
@@ -71,7 +76,7 @@ export class TimelinePage implements OnInit, AfterViewInit, OnDestroy {
   private cardObserver!: IntersectionObserver;
 
   constructor() {
-    addIcons({ add, remove, alertCircle, chevronDown, arrowBack, arrowBackOutline, locationOutline, calendarOutline, settingsSharp });
+    addIcons({ add, remove, alertCircle, chevronDown, arrowBack, arrowBackOutline, locationOutline, calendarOutline, settingsSharp, closeOutline });
   }
 
   ngOnInit() {

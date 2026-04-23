@@ -411,3 +411,125 @@ $c-outline-variant: rgba(94, 63, 59, 0.2);
     opacity: 1;
   }
 }
+
+// ==============================================
+// RESPONSIVE: Solo Móvil (max 575px)
+// ==============================================
+@media (max-width: 575px) {
+  .transparent-toolbar {
+    padding: 0.5rem;
+  }
+  
+  .editorial-container {
+    padding: 10px 16px 80px 16px;
+  }
+
+  .editorial-header {
+    margin-bottom: 1.5rem; // Mucho menos espacio desperdiciado arriba
+  }
+
+  .main-title {
+    // Reducir fuertemente el tamaño mínimo para que quepan palabras largas como DESARROLLADORES
+    font-size: clamp(1.4rem, 8vw, 2.5rem);
+    line-height: 1.1;
+  }
+
+  .subtitle-wrapper {
+    margin-bottom: 0.5rem;
+    .subtitle-text {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+    }
+    .line-decorator {
+      width: 2.5rem;
+    }
+  }
+
+  .custom-back-btn {
+    font-size: 1rem;
+    .back-text {
+      font-size: 1rem;
+    }
+  }
+
+  .carousel-container {
+    // Ocultar la barra de scroll nativa para dar un look más "App"
+    scrollbar-width: none; // Firefox
+    -ms-overflow-style: none; // IE/Edge
+    &::-webkit-scrollbar {
+      display: none; // Chrome/Safari
+    }
+  }
+
+  .dev-card {
+    // Aumentar ancho para aprovechar la pantalla
+    flex: 0 0 85vw; 
+    padding: 1rem;
+    
+    // CAMBIO RADICAL: Poner foto a la izquierda y texto a la derecha
+    flex-direction: row; 
+    align-items: center;
+    gap: 1rem;
+    
+    .card-image-wrapper {
+      margin-bottom: 0; // Quitar margen abajo
+      width: 90px;      // Forzar un tamaño de foto super miniatura
+      height: 90px;
+      min-width: 90px;
+      border-radius: 10px; // Bordes redondeados sutiles
+
+      &.aspect-vertical {
+        aspect-ratio: 1 / 1; // Forzar cuadrado
+      }
+    }
+
+    .card-content.slim-content {
+      align-items: flex-start;
+      
+      .dev-name {
+        font-size: 1.1rem; // Texto del nombre más pequeño
+        margin-top: 5px;
+      }
+      .dev-role {
+        font-size: 0.75rem; // Rol más compacto
+      }
+    }
+
+    // Acortar la línea conectora agresivamente
+    &.active::after {
+      height: 25px;
+      bottom: -15px;
+    }
+  }
+
+  .dev-extension-box {
+    margin-bottom: 2rem;
+    
+    .extension-inner {
+      padding: 1.5rem 1.2rem;
+    }
+    
+    .extension-title {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .dev-bio {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 2rem;
+    }
+    
+    .dev-badges {
+      gap: 1rem;
+      .badge {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
+        
+        ion-icon {
+          font-size: 1.3rem;
+        }
+      }
+    }
+  }
+}

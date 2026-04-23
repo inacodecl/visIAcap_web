@@ -55,22 +55,39 @@
           <!-- Tarjeta Expandible Inmersiva -->
           <div class="card" #milestoneCard [class.expanded]="m.expanded" (click)="expandMilestone(m, milestoneCard)">
               
-              <!-- Capa 1: Fotografía inyectada dinámicamente con máscara SVG -->
-              <div class="card-bg" [style.backgroundImage]="'url(' + (m.media_url || 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600&auto=format&fit=crop') + ')'"></div>
+              <!-- Hero Section (Imagen o Carrusel) -->
+              <div class="card-hero">
+                  <!-- Mostrar carrusel si hay múltiples imágenes y está expandido -->
+                  <swiper-container *ngIf="m.expanded && m.media && m.media.length > 1; else singleImage" 
+                                   pagination="true" navigation="true" class="hero-swiper">
+                      <swiper-slide *ngFor="let item of m.media">
+                          <div class="slide-img" [style.backgroundImage]="'url(' + item.url + ')'"></div>
+                      </swiper-slide>
+                  </swiper-container>
+                  
+                  <ng-template #singleImage>
+                      <div class="hero-bg" [style.backgroundImage]="'url(' + (m.media_url || 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600&auto=format&fit=crop') + ')'"></div>
+                  </ng-template>
+              </div>
               
               <!-- Capa 2: Gradiente de oscuridad que desaparece al expandir -->
               <div class="card-overlay"></div>
               
               <!-- Botón Fijo para Cerrar -->
-              <div class="close-btn" (click)="closeMilestone(m, $event)">&times;</div>
+              <div class="close-btn" (click)="closeMilestone(m, $event)">
+                  <ion-icon name="close-outline"></ion-icon>
+              </div>
               
               <!-- Capa 3: Contenido de Texto e Interacción -->
               <div class="card-content">
                   <div class="content-inner">
-                      <span class="badge" *ngIf="m.fecha">{{ m.fecha | date:'y' }}</span>
-                      <span class="badge" *ngIf="!m.fecha">{{ m.anio }}</span>
-                      <h2>{{ m.titulo }}</h2>
-                      <p class="main-desc">{{ (m.descripcion?.substring(0, 100) + '...') || m.descripcion }}</p>
+                      <div class="header-info">
+                        <span class="badge" *ngIf="m.fecha">{{ m.fecha | date:'y' }}</span>
+                        <span class="badge" *ngIf="!m.fecha">{{ m.anio }}</span>
+                        <h2>{{ m.titulo }}</h2>
+                      </div>
+                      
+                      <p class="main-desc">{{ m.descripcion }}</p>
                       
                       <!-- Contenido extra que aparece al expandir la tarjeta -->
                       <div class="extra-details">

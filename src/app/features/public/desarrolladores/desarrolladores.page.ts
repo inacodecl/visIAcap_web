@@ -111,7 +111,7 @@ export class DesarrolladoresPage implements OnInit, ViewWillEnter, ViewWillLeave
     {
       id: 'lisbeth',
       name: 'Lisbeth Valenzuela',
-      role: 'GESTIÓN DE CONTENIDO',
+      role: 'CEO',
       image: '/assets/img/lisbeth.jpg',
       bio: 'Soy Lisbeth Valenzuela, egresada de tecnico en administracion, estudiando la ingeniería de esta misma; gracias a mi carrera logré aprender sobre la gestión de tiempos y organizaciones. Estoy feliz de formar mi profesión en inacap donde se aprende haciendo.',
       badges: [
@@ -122,22 +122,22 @@ export class DesarrolladoresPage implements OnInit, ViewWillEnter, ViewWillLeave
     },
     {
       id: 'cesar',
-      name: 'Cesar Morales',
+      name: 'Cesar Vilches',
       role: 'CEO',
       image: '/assets/img/cesar.jpg',
-      bio: 'Encargado de la recolección de hitos históricos y noticias actuales. Mi labor es mantener el panel de administración actualizado para que la experiencia visual de los usuarios sea siempre enriquecedora.',
+      bio: 'Soy César Vilches, titulado en Administración de Empresas. Me enfoco en estrategia, innovación y desarrollo de proyectos, participando en la coordinación de equipos y la integración de distintas ideas. Me gusta aportar con una mirada analítica y orientada a resultados, me caracterizo por ser resiliente y estar en constante mejora.',
       badges: [
-        { name: 'Datos', icon: 'server-outline' },
-        { name: 'Research', icon: 'globe-outline' },
-        { name: 'Panel', icon: 'stats-chart-outline' }
+        { name: 'Análisis', icon: 'stats-chart-outline' },
+        { name: 'Gestión', icon: 'people-outline' },
+        { name: 'Contenido', icon: 'document-text-outline' }
       ]
     },
     {
       id: 'victoria',
       name: 'Victoria Rojas',
-      role: 'RECOLECCIÓN INFO',
+      role: 'CEO',
       image: '/assets/img/victoria.jpg',
-      bio: 'Integrante del área de Administración enfocada en el levantamiento de información de terreno. Me encargo de coordinar con las sedes los datos necesarios para alimentar el timeline y las secciones de futuro.',
+      bio: 'Mi nombre es Victoria Rojas, soy titulada como Técnico de Nivel Superior en Administración de Empresas y actualmente estudiante de Ingeniería en Administración de Empresas. Me apasiona esta área, ya que permite desarrollarse y aportar en distintos ámbitos, tanto personales como organizacionales.',
       badges: [
         { name: 'Campo', icon: 'people-outline' },
         { name: 'Logística', icon: 'document-text-outline' },
