@@ -50,7 +50,7 @@ $panel-dark: #1E293B;
         transition: all 0.3s ease;
         backdrop-filter: blur(5px);
         -webkit-backdrop-filter: blur(5px);
-        
+
         ion-icon {
             color: #ffffff;
             font-size: 28px;
@@ -62,7 +62,7 @@ $panel-dark: #1E293B;
             transform: scale(1.05);
             border-color: #c8102e;
         }
-        
+
         &:active {
             transform: scale(0.95);
         }
@@ -70,11 +70,12 @@ $panel-dark: #1E293B;
 
     .logo-container {
         pointer-events: none;
+
         .logo-img {
             height: clamp(50px, 8vw, 150px);
             max-width: 350px;
             object-fit: contain;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
         }
     }
 
@@ -97,7 +98,7 @@ $panel-dark: #1E293B;
             font-weight: 800;
             color: white;
             letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             line-height: 1;
         }
 
@@ -107,7 +108,7 @@ $panel-dark: #1E293B;
             font-weight: 800;
             color: #c8102e;
             letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             line-height: 1;
         }
     }
@@ -122,6 +123,7 @@ $panel-dark: #1E293B;
     padding: 20px 40px 100px 40px;
     flex-wrap: nowrap; // Forzar side-by-side
 }
+
 .portal-col {
     display: flex;
     height: 100%; // Forzar altura total de la columna sin limites
@@ -415,18 +417,96 @@ $panel-dark: #1E293B;
     }
 }
 
-.module-label {
-    margin-top: auto;
-    position: absolute;
-    bottom: 20px;
+// ==============================================
+// RESPONSIVE: Solo Móvil (max 575px)
+// ==============================================
+@media (max-width: 575px) {
+    .main-grid {
+        height: 100%;
+        overflow: hidden; // Evitar scroll total en el hub
+    }
 
-    padding: 6px 16px;
-    border-radius: 50px;
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    font-size: 0.8rem;
-    font-family: monospace;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    .v2-header {
+        height: 70px; // Aún más compacto
+        padding: 5px 15px;
+
+        .header-left {
+            gap: 12px;
+        }
+
+        .back-btn {
+            width: 36px;
+            height: 36px;
+
+            ion-icon {
+                font-size: 16px;
+            }
+        }
+
+        .logo-container .logo-img {
+            height: 45px;
+        }
+
+        .header-separator {
+            display: none;
+        }
+
+        .sede-container {
+
+            .sede-line,
+            .renca-line {
+                font-size: 13px;
+                letter-spacing: 0.5px;
+                padding-right: 10px;
+            }
+        }
+    }
+
+    .content-row {
+        flex-direction: column;
+        padding: 5px 10px 95px 10px;
+        flex: 1;
+        gap: 6px;
+        overflow: hidden;
+    }
+
+    .portal-col {
+        flex: 1 !important; // Fuerza a Ionic a repartir el espacio en partes iguales
+        padding: 0;
+        min-height: 0 !important; // Aplasta cualquier altura mínima heredada
+    }
+
+    .portal-card {
+        border-width: 2px;
+        border-radius: 1.2rem;
+        min-height: 0 !important; // Anula obligatoriamente los 300px globales de la línea 110
+        height: 100% !important; // Obliga a llenar solo el espacio flexible permitido
+
+        .glass-panel {
+            padding: 12px;
+            width: 65% !important;
+            max-width: none !important;
+            border-radius: 15px;
+
+            .portal-icon {
+                font-size: 2rem;
+                margin-bottom: 4px;
+            }
+
+            h2 {
+                font-size: 1.1rem;
+                margin-bottom: 4px;
+            }
+
+            .portal-description {
+                display: none; // Ocultar descripción en móvil para ganar espacio
+            }
+
+            .portal-btn {
+                height: 34px;
+                font-size: 0.8rem;
+                margin-top: 4px;
+            }
+        }
+    }
 }

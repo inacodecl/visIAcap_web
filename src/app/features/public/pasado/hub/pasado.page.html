@@ -31,7 +31,7 @@
             <div class="glow-effect"></div>
 
             <!-- Portal 1: Línea de Tiempo -->
-            <ion-col size="6" class="portal-col">
+            <ion-col size-xs="12" size-md="6" class="portal-col">
                 <div class="portal-card timeline-portal" (click)="goToTimeline()">
                     <!-- Background Effects -->
                     <div class="portal-bg">
@@ -54,13 +54,12 @@
                                 <ion-icon name="arrow-forward-outline"></ion-icon>
                             </ion-button>
                         </div>
-                        <div class="module-label">{{ 'PASADO.TIMELINE_MODULE' | translate }}</div>
                     </div>
                 </div>
             </ion-col>
 
             <!-- Portal 2: Entrevistas -->
-            <ion-col size="6" class="portal-col">
+            <ion-col size-xs="12" size-md="6" class="portal-col">
                 <div class="portal-card interviews-portal" (click)="goToInterviews()">
                     <!-- Background Effects -->
                     <div class="portal-bg">
@@ -83,7 +82,6 @@
                                 <ion-icon name="play-outline"></ion-icon>
                             </ion-button>
                         </div>
-                        <div class="module-label">{{ 'PASADO.INTERVIEWS_MODULE' | translate }}</div>
                     </div>
                 </div>
             </ion-col>

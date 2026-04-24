@@ -46,7 +46,7 @@ $text-dark: #333;
 
 // Override para Modo Oscuro (detecta la clase en el root)
 :host-context(html.ion-palette-dark) .home-v2-content {
-    --home-bg-image: url('../../../../assets/img/sede-renca-v3.png');
+    --home-bg-image: url('../../../../assets/img/sede-renca-noche.png');
     --home-bg-color: #0b1126; // Color del cielo nocturno para modo oscuro
 }
 
@@ -177,7 +177,7 @@ $text-dark: #333;
     padding: 20px;
 
     // Solo para Desktop: Botones en horizontal
-    @media (min-width: 2000px) {
+    @media (min-width: 1085px) {
         flex-direction: row;
         justify-content: center;
         gap: clamp(40px, 8vw, 150px); // Espacio generoso para animaciones
