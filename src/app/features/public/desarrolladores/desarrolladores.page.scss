@@ -459,6 +459,7 @@ $c-outline-variant: rgba(94, 63, 59, 0.2);
     &::-webkit-scrollbar {
       display: none; // Chrome/Safari
     }
+    padding-bottom: 50px; // Espacio extra para que la flecha no se corte por el overflow
   }
 
   .dev-card {
@@ -495,11 +496,38 @@ $c-outline-variant: rgba(94, 63, 59, 0.2);
       }
     }
 
-    // Acortar la línea conectora agresivamente
+    // Hacer que la línea conectora baje más y sea sólida
     &.active::after {
-      height: 25px;
-      bottom: -15px;
+      height: 35px;
+      bottom: -35px;
+      background: #e20613;
+      animation: lineDropMobile 0.5s ease 0.2s forwards;
     }
+
+    // Agregar la punta de la flecha
+    &.active::before {
+      content: '';
+      position: absolute;
+      bottom: -43px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 8px solid #e20613;
+      z-index: 10;
+      opacity: 0;
+      animation: fadeInArrow 0.4s ease 0.5s forwards;
+    }
+  }
+
+  @keyframes lineDropMobile {
+    from { height: 0; opacity: 0; }
+    to { height: 35px; opacity: 1; }
+  }
+
+  @keyframes fadeInArrow {
+    from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
   }
 
   .dev-extension-box {

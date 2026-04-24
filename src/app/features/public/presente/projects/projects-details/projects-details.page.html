@@ -1,4 +1,5 @@
-<ion-header class="ion-no-border" style="position: absolute; top: 0; left: 0; width: 100%; z-index: 99999; background: transparent; pointer-events: none;">
+<ion-header class="ion-no-border"
+    style="position: absolute; top: 0; left: 0; width: 100%; z-index: 99999; background: transparent; pointer-events: none;">
     <header class="v2-header" style="position: relative; pointer-events: none;">
         <div class="back-btn" (click)="goBack()" aria-label="Volver" style="pointer-events: auto; z-index: 99999;">
             <ion-icon name="arrow-back-outline" style="pointer-events: none;"></ion-icon>
@@ -18,7 +19,8 @@
     </div>
     } @else if (error() || !proyecto()) {
     <div class="error-container">
-        <ion-icon name="alert-circle-outline" style="font-size: 64px; margin-bottom: 20px; color: var(--ion-color-danger);"></ion-icon>
+        <ion-icon name="alert-circle-outline"
+            style="font-size: 64px; margin-bottom: 20px; color: var(--ion-color-danger);"></ion-icon>
         <h2>{{ 'PROJECT_DETAIL.NOT_FOUND_TITLE' | translate }}</h2>
         <p>{{ 'PROJECT_DETAIL.NOT_FOUND_DESC' | translate }}</p>
         <ion-button routerLink="/presente/projects" color="danger" style="margin-top:20px;">Volver</ion-button>
@@ -31,11 +33,8 @@
         <!-- HERO: Foto contenida como tarjeta -->
         <div class="hero-card">
             <div class="badge-red">PROYECTO PRESENTE</div>
-            <img
-                [src]="proyecto()?.image_cover_url || 'assets/images/placeholder-project.jpg'"
-                alt="{{ proyecto()?.nombre }}"
-                class="hero-img"
-            >
+            <img [src]="proyecto()?.image_cover_url || 'assets/images/placeholder-project.jpg'"
+                alt="{{ proyecto()?.titulo }}" class="hero-img">
         </div>
 
         <!-- CONTENIDO PRINCIPAL -->
@@ -43,7 +42,7 @@
 
             <!-- Grid de Datos Clave (3 en línea estilo cristal) -->
             <div class="metrics-grid">
-                
+
                 <div class="metric-item">
                     <div class="icon-wrap">
                         <ion-icon name="calendar-outline"></ion-icon>
@@ -75,38 +74,38 @@
                 <div class="history-header">
                     <h3 class="section-title">HISTORIA DEL PROYECTO</h3>
                     @if (proyecto()?.url_externa) {
-                        <button class="btn-totem-red-inline" (click)="openUrl(proyecto()!.url_externa!)">
-                            <span>VISITAR SITIO WEB</span>
-                            <ion-icon name="globe"></ion-icon>
-                        </button>
+                    <button class="btn-totem-red-inline" (click)="openUrl(proyecto()!.url_externa!)">
+                        <span>VISITAR SITIO WEB</span>
+                        <ion-icon name="globe"></ion-icon>
+                    </button>
                     }
                 </div>
-                
+
                 @if (proyecto()?.descripcion) {
-                    <div class="history-text" [innerHTML]="proyecto()?.descripcion"></div>
+                <div class="history-text" [innerHTML]="proyecto()?.descripcion"></div>
                 } @else {
-                    <p class="history-text">{{ proyecto()?.resumen }}</p>
+                <p class="history-text">{{ proyecto()?.resumen }}</p>
                 }
             </div>
 
             <!-- 2. Equipo del Proyecto -->
             @if (proyecto()?.members?.length) {
-                <div class="team-section">
-                    <h3 class="section-title-small">Equipo del Proyecto</h3>
-                    
-                    @for (member of proyecto()?.members; track member.nombre) {
-                    <div class="team-card">
-                        <div class="avatar">
-                            {{ member.nombre.substring(0, 1) }}
-                        </div>
-                        <div class="member-info">
-                            <span class="name">{{ member.nombre }}</span>
-                            <!-- Siempre minúsculo según el diseño -->
-                            <span class="role">{{ member.rol || 'Desarrollador' }}</span>
-                        </div>
+            <div class="team-section">
+                <h3 class="section-title-small">Equipo del Proyecto</h3>
+
+                @for (member of proyecto()?.members; track member.nombre) {
+                <div class="team-card">
+                    <div class="avatar">
+                        {{ member.nombre.substring(0, 1) }}
                     </div>
-                    }
+                    <div class="member-info">
+                        <span class="name">{{ member.nombre }}</span>
+                        <!-- Siempre minúsculo según el diseño -->
+                        <span class="role">{{ member.rol || 'Desarrollador' }}</span>
+                    </div>
                 </div>
+                }
+            </div>
             }
 
             <!-- 3. Galería Placeholder -->
@@ -148,12 +147,8 @@
                         </div>
                     </div>
                     <div class="qr-code-wrapper">
-                        <qrcode
-                            [qrdata]="proyecto()?.url_externa || 'https://inacap.cl/proyectos/' + proyecto()?.id"
-                            [width]="180"
-                            [margin]="0"
-                            [colorDark]="'#000000'"
-                            [colorLight]="'#ffffff'"
+                        <qrcode [qrdata]="proyecto()?.url_externa || 'https://inacap.cl/proyectos/' + proyecto()?.id"
+                            [width]="180" [margin]="0" [colorDark]="'#000000'" [colorLight]="'#ffffff'"
                             [errorCorrectionLevel]="'M'">
                         </qrcode>
                     </div>
