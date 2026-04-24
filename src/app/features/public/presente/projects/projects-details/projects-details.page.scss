@@ -3,8 +3,8 @@
 // ==============================================
 // Design System: "Glassmorphism Espacial"
 // ==============================================
-$bg-glass: rgba(15, 15, 20, 0.75); // Fondo del cristal semi-oscuro
-$card-glass: rgba(255, 255, 255, 0.08); // Tarjetas internas glaseadas
+$bg-glass: rgba(15, 15, 20, 0.85);
+$card-glass: rgba(255, 255, 255, 0.08);
 $card-border: rgba(255, 255, 255, 0.15);
 $red-inacap: #e21f26;
 $text-light: #ffffff;
@@ -12,8 +12,10 @@ $text-grey: #b0b0b0;
 $radius-main: 24px;
 $radius: 16px;
 
+// ==============================================
+// Fondo de Página
+// ==============================================
 .project-details-content {
-    // Fondo de universo/espacio anterior
     --background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop') no-repeat center center / cover;
     font-family: 'Inter', sans-serif;
     color: $text-light;
@@ -26,37 +28,41 @@ $radius: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 25px;
-    padding-top: max(20px, env(safe-area-inset-top));
+    padding: 25px 5%;
+    padding-top: max(30px, env(safe-area-inset-top));
     width: 100%;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 9999;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
-    pointer-events: none; // Permite scroll debajo del header si se toca un área vacía
+    background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
+    pointer-events: none;
 
     .back-btn {
-        pointer-events: auto; // Hace que SÓLO el botón detenga el click y accione
-        width: 44px;
-        height: 44px;
+        pointer-events: auto;
+        width: 48px;
+        height: 48px;
         border-radius: 50%;
         background: rgba(0, 0, 0, 0.5);
         backdrop-filter: blur(5px);
-        border: 1px solid rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.15);
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: transform 0.1s ease;
-        
+        transition: transform 0.2s ease, background 0.2s ease;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
         &:active {
             transform: scale(0.9);
         }
 
         ion-icon {
-            font-size: 22px;
-            color: $text-grey;
+            font-size: 24px;
+            color: $text-light;
         }
     }
 
@@ -65,75 +71,75 @@ $radius: 16px;
         .logo-img {
             width: 160px;
             height: auto;
+            filter: drop-shadow(0 2px 10px rgba(255,255,255,0.25));
         }
     }
 }
 
 // ==============================================
-// Hero Image & Title
+// Wrapper General (envuelve todo el contenido)
 // ==============================================
-.project-hero {
+.page-wrapper {
+    padding-top: 100px; // Espacio para el header flotante
+    padding-bottom: 80px;
+    max-width: 860px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+// ==============================================
+// Hero Card: La foto como tarjeta limpia
+// ==============================================
+.hero-card {
+    position: relative;
     width: 100%;
-    height: 45vh; 
-    min-height: 400px;
-    position: relative;
-    background-size: cover;
-    background-position: center;
+    border-radius: $radius-main;
+    overflow: hidden;
+    margin-bottom: 24px;
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255,255,255,0.1);
 
-    &::after {
-        content: '';
+    // Badge rojo arriba a la izquierda
+    .badge-red {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.8) 100%);
+        top: 16px;
+        left: 16px;
+        z-index: 5;
+        background: $red-inacap;
+        color: white;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 5px 14px;
+        border-radius: 50px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        box-shadow: 0 4px 15px rgba(226, 31, 38, 0.5);
     }
 
-    .hero-content {
-        position: absolute;
-        bottom: 80px; 
-        left: 0;
+    // La imagen: se achica sola, nunca se estira
+    .hero-img {
+        display: block;
         width: 100%;
-        padding: 0 40px; // Alinear con la tarjeta
-        z-index: 10;
-        
-        .badge-red {
-            background: $red-inacap;
-            color: white;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 700;
-            padding: 6px 16px;
-            border-radius: 50px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(226, 31, 38, 0.4);
-            display: inline-block;
-        }
+        max-height: 360px;
+        object-fit: cover; // Recorta elegantemente, sin pixelar
+        object-position: center;
+        border-radius: $radius-main;
     }
 }
 
 // ==============================================
-// Estructura de Tarjeta Flotante Glassmorphism
+// Content Card (glassmorphism)
 // ==============================================
-.content-wrapper {
-    position: relative;
-    z-index: 20;
-    margin-top: -60px; // Sube la tarjeta sobre el hero
-    padding: 0 20px 120px; 
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .content-card {
-    background: $bg-glass; 
+    background: $bg-glass;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: $radius-main;
-    padding: 35px 25px;
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255,255,255,0.2);
+    padding: 35px 30px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255,255,255,0.1);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -165,8 +171,7 @@ h3.section-title {
     margin-bottom: 15px;
     position: relative;
     padding-bottom: 5px;
-    
-    // Linea roja sutil debajo
+
     &::after {
         content: '';
         position: absolute;
@@ -183,10 +188,7 @@ h3.section-title {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
-    margin-bottom: 40px;
-
-    // Se "sale" un poco hacia arriba solapándose al diseño per mockup
-    margin-top: -20px;
+    margin-bottom: 30px;
 
     .metric-item {
         background: $card-glass;
@@ -268,7 +270,6 @@ h3.section-title {
             }
 
             &:hover {
-                background: color-mix(in srgb, $red-inacap, white 10%);
                 box-shadow: 0 8px 25px rgba(226, 31, 38, 0.6);
                 transform: translateY(-2px);
             }
@@ -286,14 +287,11 @@ h3.section-title {
 // --- Equipo ---
 .team-section {
     margin-bottom: 40px;
-
-    // Las tarjetas se apilan horizontalmente con wrap
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
     align-items: flex-start;
 
-    // El título ocupa todo el ancho para no quedar inline con las cards
     .section-title-small {
         width: 100%;
     }
@@ -347,7 +345,7 @@ h3.section-title {
 // --- Sector Galería ---
 .gallery-section {
     margin-bottom: 20px;
-    
+
     .gallery-container {
         width: 100%;
         height: 150px;
@@ -388,13 +386,13 @@ h3.section-title {
         }
 
         &.category {
-            background: rgba(0, 0, 0, 0.3); // un poco más oscuras para diferenciar
+            background: rgba(0, 0, 0, 0.3);
             border-color: rgba(255, 255, 255, 0.1);
         }
     }
 }
 
-// --- QR Card (Compartir) ---
+// --- QR Card ---
 .qr-section {
     display: flex;
     justify-content: center;
@@ -460,7 +458,7 @@ h3.section-title {
     }
 
     .qr-code-wrapper {
-        background: white; // El QR necesita fondo blanco por contraste
+        background: white;
         padding: 10px;
         border-radius: 12px;
         box-shadow: 0 8px 24px rgba(0,0,0,0.5);
@@ -474,3 +472,129 @@ h3.section-title {
     }
 }
 
+// ==============================================
+// RESPONSIVE DESKTOP (min 992px)
+// ==============================================
+@media (min-width: 992px) {
+    .page-wrapper {
+        padding-top: 130px;
+    }
+
+    .hero-card {
+        .hero-img {
+            max-height: 450px; // Imagen un poco más alta en desktop
+        }
+    }
+
+    .content-card {
+        padding: 50px 60px; // Más espacio en pantalla grande
+    }
+}
+
+// ==============================================
+// RESPONSIVE MÓVIL (max 575px)
+// ==============================================
+@media (max-width: 575px) {
+    // 0. Header
+    .v2-header {
+        padding: 10px 16px;
+
+        .back-btn {
+            width: 38px;
+            height: 38px;
+
+            ion-icon {
+                font-size: 18px;
+            }
+        }
+
+        .logo-container .logo-img {
+            width: 110px;
+        }
+    }
+
+    // 1. Wrapper
+    .page-wrapper {
+        padding-top: 80px;
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-bottom: 100px;
+    }
+
+    // 2. Hero Card
+    .hero-card {
+        .hero-img {
+            max-height: 220px;
+        }
+    }
+
+    // 3. Content Card
+    .content-card {
+        padding: 25px 16px;
+    }
+
+    // 4. Métricas
+    .metrics-grid {
+        gap: 8px;
+
+        .metric-item {
+            padding: 12px 5px;
+
+            .icon-wrap ion-icon { font-size: 18px; }
+            label { font-size: 0.55rem; font-weight: 500; }
+            span { font-size: 0.85rem; font-weight: 500; }
+        }
+    }
+
+    h3.section-title {
+        font-size: 1.15rem;
+        font-weight: 600;
+    }
+
+    .section-title-small {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    // 5. Historia
+    .history-section .history-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+
+        .btn-totem-red-inline {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1rem;
+        }
+    }
+
+    .history-section .history-text {
+        font-size: 0.9rem;
+        font-weight: 300;
+    }
+
+    // 6. Equipo
+    .team-card {
+        width: 100%;
+        min-width: 100%;
+
+        .member-info {
+            .name { font-size: 1rem; font-weight: 500; }
+            .role { font-size: 0.75rem; font-weight: 400; }
+        }
+    }
+
+    // 7. QR
+    .qr-card {
+        padding: 20px 15px;
+
+        .qr-header-info {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+
+            .icon-box { margin-bottom: 5px; }
+        }
+    }
+}

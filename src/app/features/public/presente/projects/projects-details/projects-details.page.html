@@ -24,20 +24,24 @@
         <ion-button routerLink="/presente/projects" color="danger" style="margin-top:20px;">Volver</ion-button>
     </div>
     } @else {
-        
-    <!-- HERO SECTION (IMAGEN AL FONDO) -->
-    <div class="project-hero" [style.backgroundImage]="'url(' + (proyecto()?.image_cover_url || 'assets/images/placeholder-project.jpg') + ')'">
-        <div class="hero-content">
+
+    <!-- PAGE WRAPPER -->
+    <div class="page-wrapper">
+
+        <!-- HERO: Foto contenida como tarjeta -->
+        <div class="hero-card">
             <div class="badge-red">PROYECTO PRESENTE</div>
+            <img
+                [src]="proyecto()?.image_cover_url || 'assets/images/placeholder-project.jpg'"
+                alt="{{ proyecto()?.nombre }}"
+                class="hero-img"
+            >
         </div>
-    </div>
 
-
-    <!-- CONTENEDOR FLOTANTE CRISTAL (EL ESPACIO) -->
-    <div class="content-wrapper">
+        <!-- CONTENIDO PRINCIPAL -->
         <div class="content-card">
 
-            <!-- Grid de Datos Clave (3 en línea estilo cristal) que sobresale hacia arriba -->
+            <!-- Grid de Datos Clave (3 en línea estilo cristal) -->
             <div class="metrics-grid">
                 
                 <div class="metric-item">
@@ -161,8 +165,6 @@
         </div>
     </div>
 
-
-
-
     }
+
 </ion-content>

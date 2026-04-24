@@ -20,7 +20,7 @@ $text-grey: #666;
     --card-border: rgba(0, 0, 0, 0.08);
     --badge-bg: rgba(255, 255, 255, 0.9);
     --swiper-dot-active: #000000;
-    
+
     --background: var(--bg-color);
     position: relative;
     overflow: hidden;
@@ -35,7 +35,7 @@ $text-grey: #666;
         left: -50vw;
         z-index: -1;
         pointer-events: none;
-        
+
         background-image: radial-gradient(var(--dot-color) 2px, transparent 2px);
         background-size: 35px 35px;
 
@@ -45,7 +45,9 @@ $text-grey: #666;
 }
 
 /* MODO OSCURO (Forzado por Ionic Switcher) */
-:host-context(body.dark), :host-context(.dark), :host-context(.ion-palette-dark) {
+:host-context(body.dark),
+:host-context(.dark),
+:host-context(.ion-palette-dark) {
     .projects-content {
         --bg-color: #12141d;
         --dot-color: rgba(255, 255, 255, 0.15);
@@ -59,8 +61,13 @@ $text-grey: #666;
 }
 
 @keyframes moveGrid {
-    0% { transform: translateY(0) translateX(0); }
-    100% { transform: translateY(35px) translateX(35px); }
+    0% {
+        transform: translateY(0) translateX(0);
+    }
+
+    100% {
+        transform: translateY(35px) translateX(35px);
+    }
 }
 
 // ==============================================
@@ -183,7 +190,7 @@ $text-grey: #666;
 .carousel-section {
     width: 100%;
     margin-bottom: 40px;
-    
+
     .featured-swiper {
         width: 100%;
         padding-bottom: 40px; // Mas espacio para los dots abajo
@@ -249,6 +256,7 @@ $text-grey: #666;
         line-height: 1.5;
     }
 }
+
 // ==============================================
 // Featured Section (Bento Grid)
 // ==============================================
@@ -279,7 +287,7 @@ $text-grey: #666;
     &:hover {
         transform: translateY(-4px);
         box-shadow: 0 15px 40px rgba(200, 16, 46, 0.15);
-        
+
         .featured-bento-img {
             transform: scale(1.05);
         }
@@ -388,6 +396,7 @@ $text-grey: #666;
     &:active {
         transform: scale(0.95);
     }
+
     &:hover {
         box-shadow: 0 6px 20px rgba(200, 16, 46, 0.5);
     }
@@ -453,9 +462,9 @@ $text-grey: #666;
     width: 100%;
     height: 100%;
     padding-bottom: 20px;
-    
+
     .mini-slide {
-        width: 320px; 
+        width: 320px;
         height: auto;
     }
 }
@@ -594,7 +603,8 @@ $text-grey: #666;
         font-family: 'Space Grotesk', sans-serif;
         font-size: 2.8rem;
         font-weight: 800;
-        color: #c8102e; /* Rojo Inacap fuerte siempre */
+        color: #c8102e;
+        /* Rojo Inacap fuerte siempre */
         margin-bottom: 5px;
         line-height: 1;
     }
@@ -619,7 +629,7 @@ $text-grey: #666;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 
     ion-icon {
         font-size: 60px;
@@ -639,6 +649,7 @@ $text-grey: #666;
         opacity: 0;
         transform: translateX(20px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -650,6 +661,7 @@ $text-grey: #666;
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -661,6 +673,7 @@ $text-grey: #666;
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
