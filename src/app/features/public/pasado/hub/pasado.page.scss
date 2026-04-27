@@ -494,8 +494,11 @@ $panel-dark: #1E293B;
             }
 
             h2 {
-                font-size: 1.1rem;
+                font-size: 1rem;
                 margin-bottom: 4px;
+                white-space: nowrap; // Evita que palabras largas se partan en dos
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .portal-description {
@@ -508,5 +511,10 @@ $panel-dark: #1E293B;
                 margin-top: 4px;
             }
         }
+    }
+
+    // Ocultar el salto de línea forzado en el título de la tarjeta Entrevistas
+    .interviews-portal h2 br {
+        display: none !important;
     }
 }
