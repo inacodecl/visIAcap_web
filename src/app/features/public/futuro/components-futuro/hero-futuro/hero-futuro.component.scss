@@ -73,3 +73,35 @@
         letter-spacing: -0.01em;
     }
 }
+
+// ==============================================
+// RESPONSIVE: Solo Móvil (max 575px)
+// ==============================================
+@media (max-width: 575px) {
+    .hero-section {
+        padding: 40px 0 0px;
+
+        .hero-context-label {
+            margin-bottom: 15px;
+
+            .hero-mini-icon {
+                font-size: 24px;
+            }
+
+            .hero-label-text {
+                font-size: 0.75rem;
+                letter-spacing: 0.2em;
+            }
+        }
+
+        .hero-title-masked {
+            font-size: 14vw; // Reducido de 22vw a 14vw para que quepa "FUTURO" en una línea
+            line-height: 0.9;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            margin-top: 25px;
+        }
+    }
+}

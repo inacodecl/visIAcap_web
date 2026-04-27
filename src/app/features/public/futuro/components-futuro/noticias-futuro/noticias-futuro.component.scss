@@ -2,10 +2,11 @@
 @use '../shared-futuro.scss';
 
 .stitch-section {
+    margin-top: 60px; // Bajar un poquitito más el texto
     padding: 0 6vw;
 
     .stitch-header {
-        margin-bottom: 4rem;
+        margin-bottom: 3rem;
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
@@ -35,41 +36,6 @@
             margin: 0;
             line-height: 1;
         }
-
-        .carousel-nav-btns {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 0.5rem;
-
-            .nav-btn {
-                width: 60px;
-                height: 60px;
-                border-radius: 12px;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                background: rgba(255, 255, 255, 0.05);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                color: rgba(255, 255, 255, 0.6);
-
-                ion-icon {
-                    font-size: 1.5rem;
-                }
-
-                &--active {
-                    background: shared-futuro.$inacap-red;
-                    border-color: shared-futuro.$inacap-red;
-                    color: white;
-                    box-shadow: 0 10px 20px rgba(226, 6, 19, 0.3);
-                }
-
-                &:active {
-                    transform: scale(0.95);
-                }
-            }
-        }
     }
 
     .carousel-container {
@@ -79,37 +45,39 @@
         overflow: hidden;
     }
 
-    .carousel-viewport {
-        display: flex;
-        gap: 4rem;
-        overflow-x: auto;
-        padding-bottom: 3rem;
-        scroll-behavior: smooth;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+    .noticias-swiper {
+        width: 100%;
+        padding-bottom: 2rem;
+    }
 
-        &::-webkit-scrollbar {
-            display: none;
-        }
+    .news-slide {
+        width: 380px; // Ancho por defecto en desktop
+        height: auto;
     }
 
     .news-item {
         cursor: pointer;
-        flex: 0 0 calc(100vw - 12vw);
-        @media (min-width: 768px) {
-            flex: 0 0 45vw;
+        display: flex;
+        height: 100%;
+        gap: 1.5rem;
+
+        &.layout-normal {
+            flex-direction: column;
         }
-        @media (min-width: 1200px) {
-            flex: 0 0 35vw;
+
+        &.layout-reverse {
+            flex-direction: column-reverse;
+            justify-content: flex-end; // Asegura que el contenido se pegue arriba si la tarjeta es muy alta
         }
 
         .img-wrapper {
             border-radius: 1.5rem;
             overflow: hidden;
-            margin-bottom: 2.5rem;
             position: relative;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             border: 1px solid rgba(255,255,255,0.05);
+            height: 250px;
+            flex-shrink: 0;
 
             img {
                 width: 100%;
@@ -141,6 +109,9 @@
 
         .news-content {
             padding: 0 0.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
 
             .news-meta {
                 font-size: 0.85rem;
@@ -148,7 +119,7 @@
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.15em;
-                margin-bottom: 1.2rem;
+                margin-bottom: 1rem;
                 display: flex;
                 align-items: center;
                 gap: 10px;
@@ -162,37 +133,79 @@
             }
 
             .news-title {
-                font-size: clamp(1.5rem, 3vw, 2.75rem);
+                font-size: clamp(1.2rem, 2.5vw, 1.8rem);
                 font-weight: 800;
                 font-family: "Space Grotesk", sans-serif;
-                line-height: 1.1;
+                line-height: 1.2;
                 letter-spacing: -0.02em;
                 transition: color 0.4s ease;
                 color: shared-futuro.$text-primary;
-                margin: 0 0 1.5rem 0;
+                margin: 0 0 1rem 0;
             }
 
             .news-desc {
                 color: shared-futuro.$text-secondary;
-                font-size: clamp(1rem, 1.5vw, 1.25rem);
-                line-height: 1.6;
+                font-size: 0.95rem;
+                line-height: 1.5;
                 margin: 0;
                 display: -webkit-box;
-                -webkit-line-clamp: 3;
+                -webkit-line-clamp: 4;
+                line-clamp: 4;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
             }
         }
+    }
+}
 
-        &.item-main {
-            .ratio-video { aspect-ratio: 16 / 9; }
+// ==============================================
+// RESPONSIVE: Solo Móvil (max 575px)
+// ==============================================
+@media (max-width: 575px) {
+    .stitch-section {
+        margin-top: 40px;
+        
+        .stitch-header {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
         }
 
-        &.item-side {
-            @media (min-width: 768px) {
-                margin-top: 8rem;
+        .news-slide {
+            width: 85vw; // Ocupa el 85% de la pantalla igual que proyectos
+        }
+
+        .noticias-swiper {
+            gap: 20px;
+            padding-bottom: 1.5rem;
+        }
+
+        .news-item {
+            gap: 1rem;
+
+            .img-wrapper {
+                height: 200px;
+                border-radius: 1rem;
             }
-            .ratio-square { aspect-ratio: 4 / 5; }
+
+            .news-content {
+                .news-meta {
+                    font-size: 0.75rem;
+                    margin-bottom: 0.8rem;
+                }
+                
+                .news-title {
+                    font-size: 1.4rem;
+                    margin-bottom: 0.8rem;
+                }
+
+                .news-desc {
+                    font-size: 0.9rem;
+                    -webkit-line-clamp: 3;
+                    line-clamp: 3;
+                }
+            }
         }
     }
 }

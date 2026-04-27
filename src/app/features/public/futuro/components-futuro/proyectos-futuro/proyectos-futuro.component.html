@@ -7,43 +7,31 @@
             <h2 class="gallery-title">{{ 'FUTURO.PROJECTS_TITLE' | translate }}</h2>
             <p class="gallery-subtitle">{{ 'FUTURO.PROJECTS_SUBTITLE' | translate }}</p>
         </div>
-        <div class="carousel-nav-btns">
-            <button class="nav-btn" (click)="scrollProyectos('prev')" aria-label="Anterior">
-                <ion-icon name="arrow-back-outline"></ion-icon>
-            </button>
-            <button class="nav-btn nav-btn--active" (click)="scrollProyectos('next')" aria-label="Siguiente">
-                <ion-icon name="arrow-forward-outline"></ion-icon>
-            </button>
-        </div>
     </div>
 
-    <div class="projects-gallery" #proyectosCarousel (scroll)="onCarouselScroll()">
-        <div class="gallery-card" 
-             *ngFor="let proyecto of proyectos; let i = index" 
-             [class.gallery-card--staggered]="i % 2 !== 0"
-             [style.animation-delay]="(i * 100) + 'ms'">
-            <div class="gallery-card-img" [style.backgroundImage]="'url(' + proyecto.imagen + ')'">
-                <span class="gallery-badge">
-                    <ion-icon [name]="proyecto.icono"></ion-icon>
-                    {{ proyecto.categoria }}
-                </span>
-            </div>
-            <div class="gallery-card-content">
-                <h3>{{ proyecto.titulo }}</h3>
-                <p>{{ proyecto.descripcion }}</p>
-                <div class="gallery-action">
-                    <span>{{ 'FUTURO.VIEW_PROJECT' | translate }}</span>
-                    <ion-icon name="arrow-forward-outline"></ion-icon>
+    <div class="projects-grid-container" style="margin-top: 30px;">
+        <swiper-container slides-per-view="auto" space-between="20" free-mode="true" speed="2500" autoplay="true" autoplay-delay="2000" autoplay-disable-on-interaction="false" class="mini-projects-swiper">
+            <swiper-slide class="mini-slide" *ngFor="let proyecto of proyectos">
+                <div class="mini-bento glass-panel">
+                    <div class="mini-bento-top">
+                        <div class="mini-bento-img" [style.backgroundImage]="'url(' + proyecto.imagen + ')'"></div>
+                        <div class="mini-bento-pill">
+                            <ion-icon [name]="proyecto.icono" style="margin-right: 4px; vertical-align: text-bottom;"></ion-icon>
+                            {{ proyecto.categoria }}
+                        </div>
+                    </div>
+                    
+                    <div class="mini-bento-bottom">
+                        <h3 class="mini-title">{{ proyecto.titulo }}</h3>
+                        <p class="mini-desc">{{ proyecto.descripcion }}</p>
+                        
+                        <div class="mini-footer">
+                            <span class="mini-footer-text">{{ 'FUTURO.VIEW_PROJECT' | translate }}</span>
+                            <ion-icon class="mini-footer-icon" name="arrow-forward-outline"></ion-icon>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Indicadores de Posición (Puntos) -->
-    <div class="carousel-indicators">
-        <div class="indicator-dot" 
-             *ngFor="let dot of proyectos; let i = index"
-             [class.active]="i === activeSlideIndex">
-        </div>
+            </swiper-slide>
+        </swiper-container>
     </div>
 </section>

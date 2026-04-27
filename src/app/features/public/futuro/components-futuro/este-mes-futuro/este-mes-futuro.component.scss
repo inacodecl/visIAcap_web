@@ -270,3 +270,64 @@
         }
     }
 }
+
+// ==============================================
+// RESPONSIVE: Solo Móvil (max 575px)
+// ==============================================
+@media (max-width: 575px) {
+    .stitch-section {
+        margin-bottom: 4rem; // Reducir margen inferior gigante
+
+        .section-header-row {
+            margin-bottom: 2rem;
+            
+            .stitch-title {
+                font-size: 2rem; // Título más pequeño
+            }
+        }
+    }
+
+    .calendar-events {
+        .event-item {
+            gap: 1rem; // Menos espacio entre fecha y detalle
+            padding: 1.5rem 0;
+
+            .event-date {
+                min-width: 40px;
+                
+                .day {
+                    font-size: 1.5rem;
+                }
+            }
+
+            .event-details {
+                .title {
+                    font-size: 1.2rem;
+                }
+                
+                .desc {
+                    font-size: 0.8rem;
+                }
+            }
+
+            .add-btn {
+                width: 36px;
+                height: 36px;
+                
+                ion-icon {
+                    font-size: 16px;
+                }
+            }
+        }
+        
+        .toggle-container {
+            margin-top: 1rem;
+            
+            .toggle-btn {
+                width: 100%; // Botón ancho completo en móvil
+                justify-content: center;
+                padding: 0.75rem;
+            }
+        }
+    }
+}

@@ -152,3 +152,49 @@ $glass-fill: rgba(30, 41, 59, 0.4);
     0% { opacity: 0; filter: blur(10px); transform: scale(0.95); }
     100% { opacity: 1; filter: blur(0); transform: scale(1); }
 }
+
+// ==============================================
+// RESPONSIVE: Solo Móvil (max 575px)
+// ==============================================
+@media (max-width: 575px) {
+    .gallery-section-header {
+        flex-direction: row; // Mantener en fila para que el icono quede a la izquierda
+        align-items: center; // Centrar verticalmente icono y título
+        gap: 12px;
+        margin-bottom: 25px;
+
+        .gallery-icon-wrapper {
+            width: 36px; // Mismo porte aproximado que el título
+            height: 36px;
+            border-radius: 8px;
+            
+            ion-icon {
+                font-size: 1.2rem; // Tamaño de fuente similar al título
+            }
+        }
+
+        .gallery-title-group {
+            flex-direction: column; // Para asegurar que subtítulo vaya abajo del título si lo hay
+            
+            .gallery-title {
+                font-size: 1.2rem; // Ajustado para que calce perfecto
+                letter-spacing: 0;
+                line-height: 1.2;
+            }
+
+            .gallery-month-label {
+                font-size: 0.65rem;
+                margin-bottom: 2px;
+            }
+
+            .gallery-subtitle {
+                font-size: 0.85rem;
+                margin-top: 2px;
+            }
+        }
+
+        .carousel-nav-btns {
+            display: none; // Ocultar por completo las flechas en móvil
+        }
+    }
+}

@@ -160,3 +160,64 @@ $glass-fill: rgba(30, 41, 59, 0.4);
     flex-direction: column;
     gap: 6vh; // Large gaps between sections for expansive feeling
 }
+
+// ==============================================
+// RESPONSIVE: Solo Móvil (max 575px)
+// Sin afectar tablet, desktop ni tótem
+// ==============================================
+@media (max-width: 575px) {
+    .v2-header {
+        height: auto;
+        padding: 15px 4vw;
+        padding-top: max(15px, env(safe-area-inset-top));
+        flex-direction: row; // Mantener en fila para que quede a la derecha
+        align-items: center; // Centrado verticalmente
+        gap: 10px;
+
+        .header-left {
+            width: auto; // No ocupar el 100%
+            justify-content: flex-start;
+            gap: 10px;
+            padding-left: 55px; // Espacio para el botón de volver que ahora es fixed
+        }
+
+        .back-btn {
+            position: fixed;
+            top: max(15px, env(safe-area-inset-top));
+            left: 4vw;
+            z-index: 9999;
+            width: 40px; // Un poco más pequeño para ahorrar espacio
+            height: 40px;
+            min-width: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); // Sombra para que se distinga al scrollear
+
+            ion-icon {
+                font-size: 20px;
+            }
+        }
+
+        .logo-container .logo-img {
+            width: auto;
+            height: 35px; // Achicar para dar espacio al texto
+            max-width: 120px;
+        }
+
+        .header-separator {
+            display: none; // Ocultar el separador en móvil para ganar espacio
+        }
+
+        .sede-container {
+            margin-left: auto; // Empujar a la derecha
+            text-align: right; // Alinear texto a la derecha
+            .sede-line, .renca-line {
+                font-size: 0.85rem; // Tamaño más pequeño para que quepa bien
+                letter-spacing: 0px;
+            }
+        }
+    }
+
+    .main-container {
+        padding: 0 4vw 60px;
+        gap: 4vh;
+    }
+}
