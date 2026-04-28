@@ -6,7 +6,21 @@
     },
     "HOME": {
         "SEDE": "KANPIS",
-        "RENCA": "RENCA"
+        "RENCA": "RENCA",
+        "BUTTONS": {
+            "PASADO": {
+                "TITLE": "PASE",
+                "SUBTITLE": "ORIJIN"
+            },
+            "PRESENTE": {
+                "TITLE": "PREZAN",
+                "SUBTITLE": "AKTYALITE"
+            },
+            "FUTURO": {
+                "TITLE": "AVNI",
+                "SUBTITLE": "PWOJEKSYON"
+            }
+        }
     },
     "HEADER": {
         "BACK": "Retounen"

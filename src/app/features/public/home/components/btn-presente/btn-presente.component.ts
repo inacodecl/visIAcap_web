@@ -1,11 +1,13 @@
 import { Component, ElementRef, ViewChild, Renderer2, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-btn-presente',
   templateUrl: './btn-presente.component.html',
   styleUrls: ['./btn-presente.component.scss'],
-  standalone: true
+  standalone: true,
+  imports: [TranslateModule]
 })
 export class BtnPresenteComponent {
   @ViewChild('rippleContainer') rippleContainer!: ElementRef;

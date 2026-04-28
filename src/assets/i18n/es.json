@@ -6,7 +6,21 @@
     },
     "HOME": {
         "SEDE": "SEDE",
-        "RENCA": "RENCA"
+        "RENCA": "RENCA",
+        "BUTTONS": {
+            "PASADO": {
+                "TITLE": "PASADO",
+                "SUBTITLE": "ORIGEN"
+            },
+            "PRESENTE": {
+                "TITLE": "PRESENTE",
+                "SUBTITLE": "ACTUALIDAD"
+            },
+            "FUTURO": {
+                "TITLE": "FUTURO",
+                "SUBTITLE": "PROYECCIÓN"
+            }
+        }
     },
     "HEADER": {
         "BACK": "Volver"

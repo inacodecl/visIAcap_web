@@ -6,7 +6,21 @@
     },
     "HOME": {
         "SEDE": "CAMPUS",
-        "RENCA": "RENCA"
+        "RENCA": "RENCA",
+        "BUTTONS": {
+            "PASADO": {
+                "TITLE": "PAST",
+                "SUBTITLE": "ORIGIN"
+            },
+            "PRESENTE": {
+                "TITLE": "PRESENT",
+                "SUBTITLE": "CURRENT"
+            },
+            "FUTURO": {
+                "TITLE": "FUTURE",
+                "SUBTITLE": "PROJECTION"
+            }
+        }
     },
     "HEADER": {
         "BACK": "Back"

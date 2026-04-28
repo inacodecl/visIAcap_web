@@ -1,11 +1,13 @@
 import { Component, ElementRef, ViewChild, Renderer2, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-btn-pasado',
   templateUrl: './btn-pasado.component.html',
   styleUrls: ['./btn-pasado.component.scss'],
-  standalone: true
+  standalone: true,
+  imports: [TranslateModule]
 })
 export class BtnPasadoComponent {
   @ViewChild('rippleContainer') rippleContainer!: ElementRef;
