@@ -97,7 +97,7 @@
     <app-home-footer></app-home-footer>
 
     <!-- Video Modal (Editorial Bottom Sheet) -->
-    <ion-modal [isOpen]="isVideoModalOpen()" (didDismiss)="closeVideo()" class="editorial-bottom-modal" [initialBreakpoint]="0.6" [breakpoints]="[0, 0.6]">
+    <ion-modal [isOpen]="isVideoModalOpen()" (didDismiss)="closeVideo()" class="editorial-bottom-modal" [initialBreakpoint]="modalInitialBreakpoint()" [breakpoints]="modalBreakpoints()">
         <ng-template>
             <div class="editorial-modal-content" *ngIf="currentEntrevista() as entrevista">
                 

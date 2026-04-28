@@ -653,7 +653,7 @@ ion-modal.editorial-bottom-modal {
     }
 
     .main-container {
-        padding: 10px 20px 40px;
+        padding: 10px 20px 120px;
     }
 
     .hero-section {
@@ -687,5 +687,64 @@ ion-modal.editorial-bottom-modal {
         width: 100%;
         max-width: 380px; 
         min-height: 400px;
+    }
+
+    // Modal Mobile Adjustments
+    .editorial-modal-content {
+        .video-controls {
+            gap: 0.8rem;
+            padding: 10px;
+            
+            .ctrl-btn {
+                padding: 8px 10px;
+                svg {
+                    width: 1.3rem;
+                    height: 1.3rem;
+                }
+                .ctrl-label {
+                    font-size: 1.1rem;
+                }
+                &.ctrl-play {
+                    padding: 10px 14px;
+                    svg {
+                        width: 22px;
+                        height: 22px;
+                    }
+                }
+            }
+        }
+
+        .info-section {
+            padding: 15px 20px;
+
+            .title-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .modal-title {
+                font-size: 1.6rem;
+            }
+
+            .badge-autor {
+                font-size: 0.75rem;
+            }
+
+            .modal-desc {
+                font-size: 1rem;
+                margin-top: 0.8rem;
+            }
+        }
+        
+        .modal-action-footer {
+            padding: 10px 20px;
+            
+            .close-vision-btn {
+                padding: 12px 24px;
+                margin-top: 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
     }
 }

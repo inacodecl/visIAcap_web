@@ -47,6 +47,8 @@ export class EntrevistasPage implements OnInit, AfterViewInit, OnDestroy {
     isVideoModalOpen = signal<boolean>(false);
     currentEntrevista = signal<Entrevista | null>(null);
     currentVideoUrl = signal<SafeResourceUrl | null>(null);
+    modalBreakpoints = signal<number[]>([0, 0.6]);
+    modalInitialBreakpoint = signal<number>(0.6);
     private sanitizer = inject(DomSanitizer);
 
     // YouTube Player Control
@@ -60,6 +62,22 @@ export class EntrevistasPage implements OnInit, AfterViewInit, OnDestroy {
 
     constructor() {
         addIcons({ arrowBackOutline, videocamOutline, alertCircleOutline, playCircleOutline, arrowForwardOutline, filmOutline, closeCircleOutline, play });
+        this.updateModalBreakpoints();
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+        this.updateModalBreakpoints();
+    }
+
+    private updateModalBreakpoints() {
+        if (window.innerWidth <= 768) {
+            this.modalBreakpoints.set([0, 0.85]);
+            this.modalInitialBreakpoint.set(0.85);
+        } else {
+            this.modalBreakpoints.set([0, 0.6]);
+            this.modalInitialBreakpoint.set(0.6);
+        }
     }
 
     ngOnInit() {
