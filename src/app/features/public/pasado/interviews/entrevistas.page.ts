@@ -13,7 +13,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { EntrevistaService } from '../../../../core/services/entrevista.service';
 import { Entrevista } from '../../../../core/models/entrevista.model';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
-import { arrowBackOutline, playCircleOutline, alertCircleOutline, videocamOutline, filmOutline, closeCircleOutline, arrowForwardOutline } from 'ionicons/icons';
+import { arrowBackOutline, playCircleOutline, alertCircleOutline, videocamOutline, filmOutline, closeCircleOutline, arrowForwardOutline, play } from 'ionicons/icons';
 import { Subscription } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../../core/services/language.service';
@@ -59,7 +59,7 @@ export class EntrevistasPage implements OnInit, AfterViewInit, OnDestroy {
     private observer: IntersectionObserver | null = null;
 
     constructor() {
-        addIcons({ arrowBackOutline, videocamOutline, alertCircleOutline, playCircleOutline, arrowForwardOutline, filmOutline, closeCircleOutline });
+        addIcons({ arrowBackOutline, videocamOutline, alertCircleOutline, playCircleOutline, arrowForwardOutline, filmOutline, closeCircleOutline, play });
     }
 
     ngOnInit() {

@@ -62,23 +62,21 @@
                 <div #cardElement class="entrevista-card scroll-hidden" 
                      *ngFor="let entrevista of entrevistas(); let i = index"
                      [style.--i]="i"
+                     [style.backgroundImage]="'url(' + entrevista.url_imagen + ')'"
                      (click)="openVideo(entrevista)">
-
-                    <div class="entrevista-img" [style.backgroundImage]="'url(' + entrevista.url_imagen + ')'">
-                        <div class="play-overlay">
+                     
+                    <div class="card-overlay">
+                        <div class="play-center">
                             <div class="play-circle">
-                                <ion-icon name="play-circle-outline"></ion-icon>
+                                <ion-icon name="play"></ion-icon>
                             </div>
+                            <span class="play-text">{{ 'ENTREVISTAS.WATCH_VIDEO' | translate }}</span>
                         </div>
-                    </div>
-                    
-                    <div class="entrevista-info">
-                        <span class="entrevista-sub">{{ entrevista.entrevistado }}</span>
-                        <h3>{{ entrevista.titulo }}</h3>
-                        <p>{{ entrevista.descripcion }}</p>
-                        <div class="entrevista-action">
-                            <span>{{ 'ENTREVISTAS.WATCH_VIDEO' | translate }}</span>
-                            <ion-icon name="arrow-forward-outline"></ion-icon>
+                        
+                        <div class="entrevista-info">
+                            <span class="entrevista-sub">{{ entrevista.entrevistado }}</span>
+                            <h3>{{ entrevista.titulo }}</h3>
+                            <p>{{ entrevista.descripcion }}</p>
                         </div>
                     </div>
 
