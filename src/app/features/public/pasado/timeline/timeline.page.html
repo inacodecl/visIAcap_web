@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="onScroll($event)" class="timeline-content">
 
   <!-- V2 Unificado Header -->
-  <header class="v2-header">
+  <header class="v2-header" [style.--header-progress]="progressHeader">
       <div class="header-left">
           <button class="back-btn" (click)="goBack()" aria-label="Volver">
               <ion-icon name="arrow-back-outline"></ion-icon>

@@ -68,7 +68,9 @@ export class TimelinePage implements OnInit, AfterViewInit, OnDestroy {
 
   readonly MAX_HEIGHT = 350;
   readonly MIN_HEIGHT = 150;
-  readonly SCROLL_RANGE = 400;
+  readonly SCROLL_RANGE = 200; // Rango más corto para celular
+  
+  progressHeader: number = 0; // Propiedad añadida para CSS
 
   // Lógica de Curva Dinámica
   private pathLength = 0;
@@ -239,6 +241,8 @@ export class TimelinePage implements OnInit, AfterViewInit, OnDestroy {
     // Header
     let progressHeader = scrollTop / this.SCROLL_RANGE;
     progressHeader = Math.max(0, Math.min(1, progressHeader));
+    this.progressHeader = progressHeader; // Guarda el valor para el binding CSS
+    
     this.headerHeight = this.MAX_HEIGHT + (this.MIN_HEIGHT - this.MAX_HEIGHT) * progressHeader;
     this.logoWidth = 600 + (350 - 600) * progressHeader;
     this.textScale = 1 + (0.7 - 1) * progressHeader;
