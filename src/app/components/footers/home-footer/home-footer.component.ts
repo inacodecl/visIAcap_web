@@ -61,7 +61,7 @@ export class HomeFooterComponent implements OnInit {
         const popover = await this.popoverCtrl.create({
             component: SystemMenuComponent,
             event: event,
-            backdropDismiss: false,
+            backdropDismiss: true,
             cssClass: 'system-menu-popover',
             translucent: true,
             animated: true,
@@ -87,7 +87,7 @@ export class HomeFooterComponent implements OnInit {
     async openLanguageSelector() {
         const popover = await this.popoverCtrl.create({
             component: LanguageMenuComponent,
-            backdropDismiss: false,
+            backdropDismiss: true,
             cssClass: 'system-menu-popover',
             translucent: true,
             animated: true
@@ -98,7 +98,7 @@ export class HomeFooterComponent implements OnInit {
     async openThemeSelector() {
         const popover = await this.popoverCtrl.create({
             component: ThemeSelectorComponent,
-            backdropDismiss: false,
+            backdropDismiss: true,
             cssClass: 'system-menu-popover',
             translucent: true,
             animated: true

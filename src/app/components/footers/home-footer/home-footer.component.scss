@@ -12,6 +12,12 @@
     z-index: 1000;
 }
 
+.footer-spacer {
+    width: 70px;
+    height: 70px;
+    min-width: 70px;
+}
+
 // --- Botones del Footer ---
 .footer-btn {
     display: flex;
@@ -81,6 +87,12 @@
     .v2-footer {
         padding: 8px 16px;
         height: auto;
+    }
+
+    .footer-spacer {
+        width: 45px;
+        height: 45px;
+        min-width: 45px;
     }
 
     .footer-btn {
