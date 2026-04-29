@@ -1,0 +1,26 @@
+<div class="upload-container" 
+     [class.dragging]="isDragging()" 
+     [class.uploading]="isUploading()"
+     (dragover)="onDragOver($event)" 
+     (dragleave)="onDragLeave($event)" 
+     (drop)="onDrop($event)"
+     (click)="fileInput.click()">
+  
+  <input type="file" #fileInput hidden accept="image/png, image/jpeg, image/webp" (change)="onFileSelected($event)">
+
+  <div class="upload-content" *ngIf="!isUploading()">
+    <div class="icon-circle">
+      <ion-icon name="cloud-upload"></ion-icon>
+    </div>
+    <h3>Arrastra tu imagen aquí</h3>
+    <p>O haz clic para explorar tus archivos</p>
+    <span class="upload-hint">PNG, JPG o WEBP (Max. 5MB)</span>
+  </div>
+
+  <div class="upload-progress" *ngIf="isUploading()">
+    <ion-spinner name="crescent" color="danger"></ion-spinner>
+    <h3>Subiendo y optimizando...</h3>
+    <ion-progress-bar color="danger" [value]="uploadProgress() / 100"></ion-progress-bar>
+    <p>{{ uploadProgress() }}% Completado</p>
+  </div>
+</div>

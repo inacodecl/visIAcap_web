@@ -458,6 +458,37 @@ $action-green: #16a34a;
                         }
                     }
                 }
+
+                .media-preview-container {
+                    position: relative;
+                    margin-top: 10px;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    border: 1px solid #cbd5e1;
+                    background: #f8fafc;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 150px;
+
+                    .preview-img {
+                        width: 100%;
+                        height: auto;
+                        max-height: 250px;
+                        object-fit: contain;
+                    }
+
+                    .remove-btn {
+                        position: absolute;
+                        top: 5px;
+                        right: 5px;
+                        --padding-start: 5px;
+                        --padding-end: 5px;
+                        background: rgba(255, 255, 255, 0.8);
+                        border-radius: 50%;
+                        backdrop-filter: blur(4px);
+                    }
+                }
             }
 
             .form-actions {

@@ -162,12 +162,23 @@
                                 </ion-item>
                             </div>
 
+                            <!-- COVER IMAGE UPLOAD -->
                             <div class="input-group">
-                                <label>URL Imagen (Thumbnail)</label>
-                                <ion-item lines="none" class="custom-input">
-                                    <ion-icon name="image-outline" slot="start" color="secondary"></ion-icon>
-                                    <ion-input formControlName="url_imagen" placeholder="https://..."></ion-input>
-                                </ion-item>
+                                <label>Imagen de Portada (Thumbnail)</label>
+                                
+                                <app-admin-image-upload 
+                                    *ngIf="!interviewForm.get('url_imagen')?.value"
+                                    uploadFolder="entrevistas"
+                                    (imageUploaded)="onImageUploaded($event)">
+                                </app-admin-image-upload>
+
+                                <!-- Previsualización de la imagen cargada -->
+                                <div class="media-preview-container" *ngIf="interviewForm.get('url_imagen')?.value">
+                                    <img [src]="interviewForm.get('url_imagen')?.value" alt="Portada de entrevista" class="preview-img" />
+                                    <ion-button fill="clear" color="danger" class="remove-btn" (click)="removeImage()">
+                                        <ion-icon name="trash" slot="icon-only"></ion-icon>
+                                    </ion-button>
+                                </div>
                             </div>
 
                             <div class="toggle-group">

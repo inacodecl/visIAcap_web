@@ -17,6 +17,8 @@ import { AdminHeaderComponent } from '../components-admin/admin-header/admin-hea
 import { AdminPageTitleComponent } from '../components-admin/admin-page-title/admin-page-title.component';
 import { AdminActionCardComponent } from '../components-admin/admin-action-card/admin-action-card.component';
 import { AdminEmptyStateComponent } from '../components-admin/admin-empty-state/admin-empty-state.component';
+import { AdminImageUploadComponent } from '../components-admin/admin-image-upload/admin-image-upload.component';
+import { UploadService } from '../../../core/services/upload.service';
 
 @Component({
     selector: 'app-interview-manager',
@@ -32,16 +34,21 @@ import { AdminEmptyStateComponent } from '../components-admin/admin-empty-state/
         IonModal,
         IonSpinner,
         IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonBadge, IonPopover,
-        AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent
+        AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent,
+        AdminImageUploadComponent
     ]
 })
 export class InterviewManagerPage implements OnInit {
     private entrevistaService = inject(EntrevistaService);
     private fb = inject(FormBuilder);
+    private uploadService = inject(UploadService);
 
     // Signals
     entrevistas = this.entrevistaService.entrevistas;
     searchTerm = signal('');
+
+    // Orphaned image cleanup
+    newlyUploadedImages: string[] = [];
 
     // Filtered
     filteredEntrevistas = computed(() => {
@@ -90,9 +97,29 @@ export class InterviewManagerPage implements OnInit {
         });
     }
 
+    onImageUploaded(url: string) {
+        this.newlyUploadedImages.push(url);
+        this.interviewForm.patchValue({ url_imagen: url });
+        this.interviewForm.get('url_imagen')?.markAsDirty();
+    }
+
+    removeImage() {
+        const currentUrl = this.interviewForm.get('url_imagen')?.value;
+        this.interviewForm.patchValue({ url_imagen: '' });
+        
+        if (currentUrl && this.newlyUploadedImages.includes(currentUrl)) {
+            this.uploadService.deleteImage(currentUrl, 'entrevistas').subscribe({
+                next: () => console.log('Imagen huérfana eliminada:', currentUrl),
+                error: (err) => console.error('Error al limpiar imagen huérfana:', err)
+            });
+            this.newlyUploadedImages = this.newlyUploadedImages.filter(u => u !== currentUrl);
+        }
+    }
+
     openCreateModal() {
         this.isEditing = false;
         this.currentEditingId = null;
+        this.newlyUploadedImages = [];
         this.interviewForm.reset({ visible: true });
         this.isModalOpen = true;
     }
@@ -100,6 +127,7 @@ export class InterviewManagerPage implements OnInit {
     openEditModal(entrevista: Entrevista) {
         this.isEditing = true;
         this.currentEditingId = entrevista.id;
+        this.newlyUploadedImages = [];
         this.interviewForm.patchValue({
             titulo: entrevista.titulo,
             entrevistado: entrevista.entrevistado,
@@ -113,6 +141,15 @@ export class InterviewManagerPage implements OnInit {
 
     closeModal() {
         this.isModalOpen = false;
+        if (this.newlyUploadedImages.length > 0) {
+            this.newlyUploadedImages.forEach(url => {
+                this.uploadService.deleteImage(url, 'entrevistas').subscribe({
+                    next: () => console.log('Limpieza: Imagen huérfana eliminada:', url),
+                    error: (err) => console.error('Limpieza: Error al eliminar:', err)
+                });
+            });
+            this.newlyUploadedImages = [];
+        }
     }
 
     saveEntrevista() {
@@ -128,6 +165,7 @@ export class InterviewManagerPage implements OnInit {
             this.entrevistaService.updateEntrevista(this.currentEditingId, formValue).subscribe({
                 next: () => {
                     this.isLoading = false;
+                    this.newlyUploadedImages = [];
                     this.closeModal();
                     this.showToast('Entrevista actualizada');
                 },
@@ -141,6 +179,7 @@ export class InterviewManagerPage implements OnInit {
             this.entrevistaService.createEntrevista(formValue).subscribe({
                 next: () => {
                     this.isLoading = false;
+                    this.newlyUploadedImages = [];
                     this.closeModal();
                     this.showToast('Entrevista creada');
                 },

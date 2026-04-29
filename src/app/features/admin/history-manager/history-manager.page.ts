@@ -18,6 +18,8 @@ import { AdminHeaderComponent } from '../components-admin/admin-header/admin-hea
 import { AdminPageTitleComponent } from '../components-admin/admin-page-title/admin-page-title.component';
 import { AdminActionCardComponent } from '../components-admin/admin-action-card/admin-action-card.component';
 import { AdminEmptyStateComponent } from '../components-admin/admin-empty-state/admin-empty-state.component';
+import { UploadService } from '../../../core/services/upload.service';
+import { AdminImageUploadComponent } from '../components-admin/admin-image-upload/admin-image-upload.component';
 
 @Component({
     selector: 'app-history-manager',
@@ -32,15 +34,20 @@ import { AdminEmptyStateComponent } from '../components-admin/admin-empty-state/
         IonItem, IonLabel, IonInput, IonTextarea, IonToggle,
         IonBadge, IonModal,
         IonNote, IonSelect, IonSelectOption, IonSpinner,
-        AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent
+        AdminPageTitleComponent, AdminActionCardComponent, AdminEmptyStateComponent,
+        AdminImageUploadComponent
     ]
 })
 export class HistoryManagerPage implements OnInit {
     private timelineService = inject(TimelineService);
     private metadataService = inject(MetadataService);
+    private uploadService = inject(UploadService);
     private fb = inject(FormBuilder);
     private modalCtrl = inject(ModalController);
     private toastCtrl = inject(ToastController);
+
+    // Track recently uploaded images to delete if form is cancelled
+    newlyUploadedImages: string[] = [];
 
     // Signals
     historias = this.timelineService.historias;
@@ -113,16 +120,35 @@ export class HistoryManagerPage implements OnInit {
     // --- FORM ARRAYS ---
     get mediaArray() { return this.historyForm.get('media') as FormArray; }
 
-    addMediaItem() {
+    addMediaItem(url: string) {
+        if (this.mediaArray.length >= 3) {
+            this.showToast('Límite de 3 imágenes alcanzado', 'warning');
+            return;
+        }
+        
+        // Track the URL so we can delete it if the form is cancelled
+        this.newlyUploadedImages.push(url);
+        
         this.mediaArray.push(this.fb.group({
-            url: ['', Validators.required],
-            tipo: ['image'], // Default image
+            url: [url, Validators.required],
+            tipo: ['image'], // Now strictly image
             alt: ['']
         }));
     }
 
     removeMediaItem(index: number) {
+        const item = this.mediaArray.at(index).value;
         this.mediaArray.removeAt(index);
+        
+        // Si la imagen fue recién subida en esta sesión y el usuario la quita, la eliminamos del servidor
+        if (item && item.url && this.newlyUploadedImages.includes(item.url)) {
+            this.uploadService.deleteImage(item.url, 'hitos').subscribe({
+                next: () => console.log('Imagen huérfana eliminada:', item.url),
+                error: (err) => console.error('Error al limpiar imagen huérfana:', err)
+            });
+            // Quitar de la lista de newlyUploadedImages
+            this.newlyUploadedImages = this.newlyUploadedImages.filter(u => u !== item.url);
+        }
     }
 
     // --- MODALS ---
@@ -142,6 +168,7 @@ export class HistoryManagerPage implements OnInit {
         this.isEditing = false;
         this.currentEditingId = null;
         this.mediaArray.clear();
+        this.newlyUploadedImages = []; // Reset cleanup tracker
 
         const today = new Date().toISOString().split('T')[0];
         this.historyForm.reset({
@@ -152,7 +179,6 @@ export class HistoryManagerPage implements OnInit {
             location: ''
         });
 
-        this.addMediaItem(); // Añadir un item por defecto
         this.isModalOpen = true;
     }
 
@@ -160,6 +186,7 @@ export class HistoryManagerPage implements OnInit {
         this.isEditing = true;
         this.currentEditingId = historia.id;
         this.mediaArray.clear();
+        this.newlyUploadedImages = []; // Reset cleanup tracker
 
         let fechaFormatted = '';
         if (historia.fecha) {
@@ -206,11 +233,6 @@ export class HistoryManagerPage implements OnInit {
             audio_url: historia.audio_url || ''
         });
 
-        // Si no hay media, agregar uno vacío por si quiere agregar
-        if (this.mediaArray.length === 0) {
-            this.addMediaItem();
-        }
-
         // Marcar formulario como prístino tras cargar datos para trackear cambios correctamente
         this.historyForm.markAsPristine();
         this.isModalOpen = true;
@@ -218,6 +240,17 @@ export class HistoryManagerPage implements OnInit {
 
     closeModal() {
         this.isModalOpen = false;
+        
+        // Si hay imágenes subidas recientemente y se cerró el modal (ej. botón Cancelar), las eliminamos
+        if (this.newlyUploadedImages.length > 0) {
+            this.newlyUploadedImages.forEach(url => {
+                this.uploadService.deleteImage(url, 'hitos').subscribe({
+                    next: () => console.log('Limpieza: Imagen huérfana eliminada:', url),
+                    error: (err) => console.error('Limpieza: Error al eliminar:', err)
+                });
+            });
+            this.newlyUploadedImages = [];
+        }
     }
 
     // --- CRUD ---
@@ -265,6 +298,8 @@ export class HistoryManagerPage implements OnInit {
         request$.subscribe({
             next: () => {
                 this.isLoading = false;
+                // Si guardamos con éxito, las imágenes ya no son huérfanas, limpiamos el tracker antes de cerrar
+                this.newlyUploadedImages = [];
                 this.closeModal();
                 this.showToast(this.isEditing ? 'Hito actualizado' : 'Hito creado');
             },

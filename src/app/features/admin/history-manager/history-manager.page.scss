@@ -603,3 +603,59 @@ ion-modal.glass-modal {
         }
     }
 }
+.media-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+
+    .media-preview-card {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        aspect-ratio: 1;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+        .img-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+            }
+
+            &:hover img {
+                transform: scale(1.05);
+            }
+
+            .remove-btn {
+                position: absolute;
+                top: 4px;
+                right: 4px;
+                margin: 0;
+                --padding-start: 4px;
+                --padding-end: 4px;
+                background: rgba(0, 0, 0, 0.5);
+                border-radius: 50%;
+                width: 32px;
+                height: 32px;
+            }
+        }
+    }
+}
+
+.section-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    h3 {
+        margin: 0;
+    }
+}
+
