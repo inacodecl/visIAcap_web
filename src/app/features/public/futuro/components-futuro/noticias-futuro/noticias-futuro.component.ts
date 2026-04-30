@@ -14,7 +14,7 @@ register();
   templateUrl: './noticias-futuro.component.html',
   styleUrls: ['./noticias-futuro.component.scss'],
   standalone: true,
-  imports: [CommonModule, TranslateModule, IonIcon],
+  imports: [CommonModule, TranslateModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NoticiasFuturoComponent {

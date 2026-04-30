@@ -249,3 +249,82 @@ $neon-red: #ff2a2a;
         flex: 1;
     }
 }
+
+// --- Componentes de Subida de Imagen ---
+.upload-wrapper {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+}
+.upload-wrapper-small {
+    margin-top: 5px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+.media-preview-container {
+    position: relative;
+    margin-top: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #333;
+    background: #14161c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 150px;
+    padding: 10px;
+
+    .image-preview {
+        width: 100%;
+        height: auto;
+        max-height: 250px;
+        object-fit: contain;
+    }
+
+    .remove-btn {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        margin: 0;
+        opacity: 0.9;
+        
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+.media-preview-container-small {
+    position: relative;
+    margin-top: 5px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #333;
+    background: #14161c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 120px;
+    padding: 5px;
+
+    .image-preview {
+        width: 100%;
+        height: auto;
+        max-height: 110px;
+        object-fit: contain;
+    }
+}
+.custom-image-field {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 15px;
+    
+    .custom-label {
+        color: #aaa;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+}

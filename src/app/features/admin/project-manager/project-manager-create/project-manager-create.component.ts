@@ -14,7 +14,9 @@ import {
 import { Proyecto, ProyectoTag, ProyectoCategoria } from '../../../../core/models/proyecto.model';
 import { ProyectosService } from '../../../../core/services/proyectos.service';
 import { MetadataService } from '../../../../core/services/metadata.service';
-import { forkJoin } from 'rxjs';
+import { UploadService } from '../../../../core/services/upload.service';
+import { forkJoin, firstValueFrom } from 'rxjs';
+import { AdminImageUploadComponent } from '../../components-admin/admin-image-upload/admin-image-upload.component';
 
 @Component({
     selector: 'app-project-manager-create',
@@ -25,7 +27,8 @@ import { forkJoin } from 'rxjs';
         CommonModule, ReactiveFormsModule,
         IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonProgressBar,
         IonContent, IonItem, IonLabel, IonInput, IonNote, IonTextarea, IonToggle,
-        IonGrid, IonRow, IonCol, IonSelect, IonSelectOption
+        IonGrid, IonRow, IonCol, IonSelect, IonSelectOption,
+        AdminImageUploadComponent
     ]
 })
 export class ProjectManagerCreateComponent implements OnInit {
@@ -45,6 +48,9 @@ export class ProjectManagerCreateComponent implements OnInit {
     // Data Signals
     tagsList = signal<ProyectoTag[]>([]);
     categoriesList = signal<ProyectoCategoria[]>([]);
+
+    newlyUploadedImages: string[] = [];
+    private uploadService = inject(UploadService);
 
     projectForm: FormGroup = this.fb.group({
         slug: ['', [Validators.required, Validators.pattern(/^[a-z0-9-]+$/)]],
@@ -189,11 +195,51 @@ export class ProjectManagerCreateComponent implements OnInit {
     removeMember(i: number) { this.membersArray.removeAt(i); }
 
     addImage() {
+        if (this.imagesArray.length >= 4) {
+            this.presentToast('Límite de 4 imágenes alcanzado para la galería', 'danger');
+            return;
+        }
         this.imagesArray.push(this.fb.group({
             url: ['', Validators.required], tipo: ['image'], alt_es: [''], order_index: [this.imagesArray.length]
         }));
     }
-    removeImage(i: number) { this.imagesArray.removeAt(i); }
+
+    removeImage(i: number) { 
+        const currentUrl = this.imagesArray.at(i).get('url')?.value;
+        if (currentUrl && this.newlyUploadedImages.includes(currentUrl)) {
+            this.uploadService.deleteImage(currentUrl, 'proyectos').subscribe({
+                next: () => {
+                    this.newlyUploadedImages = this.newlyUploadedImages.filter(u => u !== currentUrl);
+                },
+                error: (err) => console.error('Error limpiando imagen de galería cancelada:', err)
+            });
+        }
+        this.imagesArray.removeAt(i); 
+    }
+
+    onCoverUploaded(url: string) {
+        this.projectForm.patchValue({ image_cover_url: url });
+        this.newlyUploadedImages.push(url);
+    }
+
+    removeCoverImage() {
+        const currentUrl = this.projectForm.get('image_cover_url')?.value;
+        this.projectForm.patchValue({ image_cover_url: '' });
+
+        if (currentUrl && this.newlyUploadedImages.includes(currentUrl)) {
+            this.uploadService.deleteImage(currentUrl, 'proyectos').subscribe({
+                next: () => {
+                    this.newlyUploadedImages = this.newlyUploadedImages.filter(u => u !== currentUrl);
+                },
+                error: (err) => console.error('Error limpiando portada cancelada:', err)
+            });
+        }
+    }
+
+    onGalleryImageUploaded(url: string, index: number) {
+        this.imagesArray.at(index).patchValue({ url: url });
+        this.newlyUploadedImages.push(url);
+    }
 
     // --- Wizard Navigation ---
     nextStep() { if (this.currentStep() < this.totalSteps) this.currentStep.update(v => v + 1); }
@@ -201,7 +247,20 @@ export class ProjectManagerCreateComponent implements OnInit {
     goToStep(s: number) { this.currentStep.set(s); }
     get progress() { return this.currentStep() / this.totalSteps; }
 
-    close(role = 'cancel') {
+    async close(role = 'cancel') {
+        // Si el usuario cancela, limpiar las imágenes subidas en esta sesión que quedaron huérfanas
+        if (role === 'cancel' && this.newlyUploadedImages.length > 0) {
+            console.log('Limpiando imágenes huérfanas antes de cerrar modal...', this.newlyUploadedImages);
+            const deleteRequests = this.newlyUploadedImages.map(url => 
+                firstValueFrom(this.uploadService.deleteImage(url, 'proyectos'))
+            );
+            try {
+                await Promise.all(deleteRequests);
+                console.log('Limpieza completada.');
+            } catch (err) {
+                console.error('Error durante la limpieza de imágenes huérfanas:', err);
+            }
+        }
         this.modalCtrl.dismiss(null, role);
     }
 
@@ -220,6 +279,7 @@ export class ProjectManagerCreateComponent implements OnInit {
 
         request$.subscribe({
             next: () => {
+                this.newlyUploadedImages = []; // Limpiar para que no se borren en close() si se ejecuta por algún motivo
                 this.isLoading = false;
                 this.presentToast('Proyecto guardado exitosamente', 'success');
                 this.modalCtrl.dismiss(true, 'confirm');

@@ -79,7 +79,7 @@ export class ProjectManagerPage implements OnInit {
     async openCreateModal() {
         const modal = await this.modalCtrl.create({
             component: ProjectManagerCreateComponent,
-            cssClass: 'glass-modal'
+            cssClass: 'glass-modal project-modal-large'
         });
 
         await modal.present();
@@ -105,7 +105,7 @@ export class ProjectManagerPage implements OnInit {
                 const modal = await this.modalCtrl.create({
                     component: ProjectManagerCreateComponent,
                     componentProps: { proyecto: fullProject },
-                    cssClass: 'glass-modal'
+                    cssClass: 'glass-modal project-modal-large'
                 });
 
                 modal.onDidDismiss().then((result) => {

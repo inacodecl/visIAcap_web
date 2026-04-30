@@ -99,10 +99,18 @@
                         <ion-input type="url" formControlName="url_externa" placeholder="https://..."></ion-input>
                     </ion-item>
 
-                    <ion-item class="input-item full-width" lines="none">
-                        <ion-label position="stacked">URL Portada (Cover)</ion-label>
-                        <ion-input type="url" formControlName="image_cover_url" placeholder="https://..."></ion-input>
-                    </ion-item>
+                    <div class="input-item full-width custom-image-field">
+                        <ion-label position="stacked" class="custom-label">URL Portada (Cover)</ion-label>
+                        <div *ngIf="!projectForm.get('image_cover_url')?.value" class="upload-wrapper">
+                            <app-admin-image-upload uploadFolder="proyectos" (imageUploaded)="onCoverUploaded($event)"></app-admin-image-upload>
+                        </div>
+                        <div *ngIf="projectForm.get('image_cover_url')?.value" class="media-preview-container">
+                            <img [src]="projectForm.get('image_cover_url')?.value" class="image-preview" />
+                            <ion-button color="danger" size="small" class="remove-btn" (click)="removeCoverImage()">
+                                <ion-icon name="trash" slot="start"></ion-icon> Cambiar Portada
+                            </ion-button>
+                        </div>
+                    </div>
 
                     <div class="settings-grid full-width">
                         <ion-item lines="none" class="input-item toggle-box">
@@ -176,14 +184,15 @@
                             class="array-item">
                             <ion-grid>
                                 <ion-row>
-                                    <ion-col size="7">
-                                        <ion-item class="input-item-small" lines="none">
-                                            <ion-input placeholder="URL Imagen" formControlName="url"></ion-input>
-                                        </ion-item>
-                                    </ion-col>
-                                    <ion-col size="4">
-                                        <ion-item class="input-item-small" lines="none">
-                                            <ion-input placeholder="Alt Text" formControlName="alt_es"></ion-input>
+                                    <ion-col size="11">
+                                        <div *ngIf="!imagesArray.at(i).get('url')?.value" class="upload-wrapper-small">
+                                            <app-admin-image-upload uploadFolder="proyectos" (imageUploaded)="onGalleryImageUploaded($event, i)"></app-admin-image-upload>
+                                        </div>
+                                        <div *ngIf="imagesArray.at(i).get('url')?.value" class="media-preview-container-small">
+                                            <img [src]="imagesArray.at(i).get('url')?.value" class="image-preview" />
+                                        </div>
+                                        <ion-item *ngIf="imagesArray.at(i).get('url')?.value" class="input-item-small" lines="none" style="margin-top: 8px;">
+                                            <ion-input placeholder="Alt Text (Descripción opcional)" formControlName="alt_es"></ion-input>
                                         </ion-item>
                                     </ion-col>
                                     <ion-col size="1" class="col-center">

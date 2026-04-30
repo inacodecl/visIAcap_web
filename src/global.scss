@@ -88,6 +88,16 @@ ion-modal.glass-modal {
     }
 }
 
+// --- Ampliar modal de Proyectos en Escritorio ---
+@media (min-width: 1024px) {
+    ion-modal.project-modal-large {
+        --height: 75vh;
+        --min-height: 600px;
+        --width: 85vw;
+        --max-width: 1400px;
+    }
+}
+
 ion-modal.corporate-modal {
     --background: #f8fafc;
     --border-radius: 16px;
