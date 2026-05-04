@@ -32,7 +32,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: -0.025em;
-            color: shared-futuro.$text-primary;
+            color: var(--text-main);
             margin: 0;
             line-height: 1;
         }
@@ -133,19 +133,20 @@
             }
 
             .news-title {
-                font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-                font-weight: 800;
+                font-size: 1.25rem;
+                font-weight: 700;
                 font-family: "Space Grotesk", sans-serif;
                 line-height: 1.2;
                 letter-spacing: -0.02em;
                 transition: color 0.4s ease;
-                color: shared-futuro.$text-primary;
-                margin: 0 0 1rem 0;
+                color: var(--text-main);
+                margin: 0 0 12px 0;
             }
 
             .news-desc {
-                color: shared-futuro.$text-secondary;
-                font-size: 0.95rem;
+                font-family: 'Manrope', sans-serif;
+                color: var(--text-muted);
+                font-size: 0.85rem;
                 line-height: 1.5;
                 margin: 0;
                 display: -webkit-box;
@@ -196,12 +197,10 @@
                 }
                 
                 .news-title {
-                    font-size: 1.4rem;
                     margin-bottom: 0.8rem;
                 }
 
                 .news-desc {
-                    font-size: 0.9rem;
                     -webkit-line-clamp: 3;
                     line-clamp: 3;
                 }

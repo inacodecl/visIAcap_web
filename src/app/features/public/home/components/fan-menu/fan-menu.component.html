@@ -35,7 +35,12 @@
   <!-- Botón Central Principal (Inacap Rojo) -->
   <button class="main-trigger shadow-2xl" (click)="toggleMenu()">
     <div class="icon-wrapper" [class.is-open]="isOpen()">
-      <img src="assets/icon/inacap-seeklogo 1.svg" style="width: 55px; height: 55px; object-fit: contain; filter: brightness(0) invert(1);" alt="INACAP" />
+      <svg viewBox="0 0 24 24" class="fill-white" style="width: 35px; height: 35px;">
+        <rect x="3" y="3" width="7" height="7" rx="1.5" />
+        <rect x="3" y="14" width="7" height="7" rx="1.5" />
+        <rect x="14" y="14" width="7" height="7" rx="1.5" />
+        <rect x="14" y="3" width="7" height="7" rx="1.5" transform="rotate(45 17.5 6.5)" />
+      </svg>
     </div>
     
     <div class="x-icon" [class.is-open]="isOpen()">

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, computed, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, inject, computed, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonIcon } from '@ionic/angular/standalone';
@@ -7,10 +7,13 @@ import { addIcons } from 'ionicons';
 import { arrowForwardOutline, arrowBackOutline, rocketOutline, folderOpenOutline } from 'ionicons/icons';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
 import { ProyectosService } from '../../../../core/services/proyectos.service';
+import { NoticiasFuturoService } from '../../../../core/services/noticias-futuro.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../../core/services/language.service';
 import { register } from 'swiper/element/bundle';
 import { FanMenuComponent } from '../../home/components/fan-menu/fan-menu.component';
+import { NoticiasFuturoComponent } from '../../futuro/components-futuro/noticias-futuro/noticias-futuro.component';
+import { Noticia } from '../../futuro/futuro.models';
 register();
 
 @Component({
@@ -23,18 +26,22 @@ register();
     IonIcon,
     HomeFooterComponent,
     TranslateModule,
-    FanMenuComponent
+    FanMenuComponent,
+    NoticiasFuturoComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ProjectsPage implements OnInit {
   private proyectosService = inject(ProyectosService);
+  private noticiasService = inject(NoticiasFuturoService);
   private router = inject(Router);
   private languageService = inject(LanguageService);
 
   // Computados para separar destacados de normales
   featuredProjects = computed(() => this.proyectosService.proyectos().filter(p => p.featured));
   regularProjects = computed(() => this.proyectosService.proyectos().filter(p => !p.featured));
+
+  noticias = signal<Noticia[]>([]);
 
   // Estadísticas Dinámicas Reales
   totalProjects = computed(() => this.proyectosService.proyectos().length);
@@ -77,6 +84,10 @@ export class ProjectsPage implements OnInit {
 
   ngOnInit() {
     this.proyectosService.getProyectos(this.languageService.getCurrentLang()).subscribe();
+    this.noticiasService.getAll(this.languageService.getCurrentLang()).subscribe({
+      next: (res) => this.noticias.set(res),
+      error: (err) => console.error('Error al cargar noticias', err)
+    });
   }
 
   goBack() {

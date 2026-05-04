@@ -41,6 +41,8 @@
 html,
 body {
     height: 100%;
+    /* Permite scroll pero bloquea zoom con dedos y gestos dobles */
+    touch-action: pan-x pan-y;
 }
 
 /* solución para pantalla negra/contenido colapsado */

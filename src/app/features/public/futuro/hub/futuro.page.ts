@@ -11,17 +11,15 @@ import { forkJoin } from 'rxjs';
 
 // Servicios
 import { ProyectosService } from 'src/app/core/services/proyectos.service';
-import { NoticiasFuturoService } from 'src/app/core/services/noticias-futuro.service';
 import { EsteMesService } from 'src/app/core/services/este-mes.service';
 import { Proyecto } from 'src/app/core/models/proyecto.model';
 
 // Modelos migrados
-import { ProyectoFuturo, Noticia, EventoEsteMes } from '../futuro.models';
+import { ProyectoFuturo, EventoEsteMes } from '../futuro.models';
 
 // Componentes modulares
 import { HeroFuturoComponent } from '../components-futuro/hero-futuro/hero-futuro.component';
 import { ProyectosFuturoComponent } from '../components-futuro/proyectos-futuro/proyectos-futuro.component';
-import { NoticiasFuturoComponent } from '../components-futuro/noticias-futuro/noticias-futuro.component';
 import { EsteMesFuturoComponent } from '../components-futuro/este-mes-futuro/este-mes-futuro.component';
 import { FanMenuComponent } from '../../home/components/fan-menu/fan-menu.component';
 @Component({
@@ -35,7 +33,6 @@ import { FanMenuComponent } from '../../home/components/fan-menu/fan-menu.compon
         TranslateModule,
         HeroFuturoComponent,
         ProyectosFuturoComponent,
-        NoticiasFuturoComponent,
         EsteMesFuturoComponent,
         FanMenuComponent
     ]
@@ -43,7 +40,6 @@ import { FanMenuComponent } from '../../home/components/fan-menu/fan-menu.compon
 export class FuturoPage implements OnInit {
     private router = inject(Router);
     private proyectosService = inject(ProyectosService);
-    private noticiasService = inject(NoticiasFuturoService);
     private esteMesService = inject(EsteMesService);
 
     // Estado de carga
@@ -58,7 +54,6 @@ export class FuturoPage implements OnInit {
     // Datos de los bloques (Signals)
     // ========================================
     proyectos = signal<ProyectoFuturo[]>([]);
-    noticias = signal<Noticia[]>([]);
     esteMes = signal<EventoEsteMes[]>([]);
 
     // Lógica para 'Ver más' eventos
@@ -80,12 +75,10 @@ export class FuturoPage implements OnInit {
 
         forkJoin({
             proyectos: this.proyectosService.getProyectos('es', 'futuro'),
-            noticias: this.noticiasService.getAll('es'),
             esteMes: this.esteMesService.getAll('es')
         }).subscribe({
             next: (res) => {
                 this.proyectos.set(this.mapProyectos(res.proyectos));
-                this.noticias.set(res.noticias);
                 this.esteMes.set(res.esteMes);
                 this.loading.set(false);
             },

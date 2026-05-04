@@ -20,6 +20,8 @@ $text-grey: #666;
     --card-border: rgba(0, 0, 0, 0.08);
     --badge-bg: rgba(255, 255, 255, 0.9);
     --swiper-dot-active: #000000;
+    --header-bg-rgb: 255, 255, 255;
+    --header-border-rgb: 0, 0, 0;
 
     --background: var(--bg-color);
     position: relative;
@@ -57,6 +59,8 @@ $text-grey: #666;
         --card-border: rgba(255, 255, 255, 0.1);
         --badge-bg: rgba(30, 34, 45, 0.9);
         --swiper-dot-active: #ffffff;
+        --header-bg-rgb: 14, 18, 25;
+        --header-border-rgb: 255, 255, 255;
     }
 }
 
@@ -85,10 +89,10 @@ $text-grey: #666;
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(13, 14, 18, calc(0.05 + 0.95 * var(--header-progress, 0))); // Se oscurece gradualmente
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, calc(0.1 + 0.1 * var(--header-progress, 0)));
+    background: rgba(var(--header-bg-rgb), calc(0.1 + 0.75 * var(--header-progress, 0))); // Glassmorphism que se adapta al modo
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(var(--header-border-rgb), calc(0.05 + 0.1 * var(--header-progress, 0)));
     box-shadow: 0 4px 20px rgba(0, 0, 0, calc(0.5 * var(--header-progress, 0))); // Sombra que aparece al hacer scroll
 
     .header-left {
@@ -101,8 +105,8 @@ $text-grey: #666;
         width: calc(60px - (15px * var(--header-progress, 0)));
         height: calc(60px - (15px * var(--header-progress, 0)));
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -113,7 +117,7 @@ $text-grey: #666;
 
         ion-icon {
             font-size: calc(28px - (4px * var(--header-progress, 0)));
-            color: #ffffff;
+            color: var(--text-main);
             transition: color 0.3s;
         }
 
@@ -143,7 +147,7 @@ $text-grey: #666;
     .header-separator {
         flex: 1;
         height: 2px;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        background: linear-gradient(90deg, transparent, var(--card-border), transparent);
         margin: 0 40px;
         opacity: calc(1 - var(--header-progress, 0));
     }
@@ -160,9 +164,8 @@ $text-grey: #666;
             font-family: 'Exo 2', sans-serif;
             font-size: 32px;
             font-weight: 800;
-            color: white;
+            color: var(--text-main);
             letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             line-height: 1;
         }
 
@@ -172,7 +175,6 @@ $text-grey: #666;
             font-weight: 800;
             color: #c8102e;
             letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             line-height: 1;
         }
     }
@@ -354,8 +356,8 @@ $text-grey: #666;
 
 .bento-badge {
     align-self: flex-start;
-    background: rgba(0, 99, 172, 0.2); // primary container approx
-    color: #c8deff; // on-tertiary-container approx
+    background: var(--badge-bg);
+    color: #c8102e;
     padding: 6px 16px;
     border-radius: 50px;
     font-size: 0.75rem;
@@ -363,7 +365,7 @@ $text-grey: #666;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     margin-bottom: 20px;
-    border: 1px solid rgba(0, 99, 172, 0.4);
+    border: 1px solid rgba(200, 16, 46, 0.3);
 }
 
 .bento-title {
@@ -699,10 +701,10 @@ $text-grey: #666;
     .v2-header {
         height: calc(80px - (30px * var(--header-progress, 0)));
         padding: calc(10px - (5px * var(--header-progress, 0))) 15px;
-        background: rgba(13, 14, 18, calc(0.05 + 0.95 * var(--header-progress, 0)));
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(255, 255, 255, calc(0.1 + 0.1 * var(--header-progress, 0)));
+        background: rgba(var(--header-bg-rgb), calc(0.1 + 0.75 * var(--header-progress, 0)));
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-bottom: 1px solid rgba(var(--header-border-rgb), calc(0.05 + 0.1 * var(--header-progress, 0)));
         box-shadow: 0 4px 20px rgba(0, 0, 0, calc(0.5 * var(--header-progress, 0)));
         position: sticky;
         top: 0;
