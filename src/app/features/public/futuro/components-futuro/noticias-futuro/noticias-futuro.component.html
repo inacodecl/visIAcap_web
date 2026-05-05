@@ -9,7 +9,7 @@
     <div class="carousel-container">
         <swiper-container slides-per-view="auto" space-between="20" free-mode="true" speed="2500" autoplay="true" autoplay-delay="3000" autoplay-disable-on-interaction="false" class="noticias-swiper">
             <swiper-slide class="news-slide" *ngFor="let noticia of noticias; let i = index">
-                <div class="news-item" [ngClass]="i % 2 === 0 ? 'layout-normal' : 'layout-reverse'">
+                <div class="news-item" [ngClass]="i % 2 === 0 ? 'layout-normal' : 'layout-reverse'" (click)="openModal(noticia)">
                     <div class="img-wrapper">
                         <img [src]="noticia.imagen" [alt]="noticia.titulo">
                     </div>
@@ -23,3 +23,42 @@
         </swiper-container>
     </div>
 </section>
+
+<!-- Bottom Sheet Modal para Detalle de Noticia -->
+<ion-modal [isOpen]="isModalOpen" [initialBreakpoint]="1" [breakpoints]="[0, 1]" (didDismiss)="closeModal()" class="auto-height-sheet">
+    <ng-template>
+        <div class="news-modal-content custom-scroll" *ngIf="selectedNoticia">
+            <!-- Hero Section del Modal -->
+            <div class="modal-hero">
+                <img [src]="selectedNoticia.imagen" [alt]="selectedNoticia.titulo" class="hero-image">
+                <div class="hero-gradient"></div>
+                
+                <div class="close-btn glass-btn" (click)="closeModal()">
+                    <ion-icon name="close-outline"></ion-icon>
+                </div>
+            </div>
+
+            <!-- Cuerpo de la Noticia -->
+            <div class="modal-body pb-safe">
+                <h2 class="modal-title">{{ selectedNoticia.titulo }}</h2>
+                <div class="modal-separator"></div>
+                
+                <div class="modal-text">
+                    <p>{{ selectedNoticia.resumen }}</p>
+                </div>
+
+                <!-- Métricas Inferiores -->
+                <div class="modal-metrics">
+                    <div class="metric-capsule" *ngIf="displayDate">
+                        <ion-icon name="calendar-outline"></ion-icon>
+                        <span>{{ displayDate }}</span>
+                    </div>
+                    <div class="metric-capsule highlight" *ngIf="selectedNoticia.etiqueta">
+                        <ion-icon name="pricetag-outline"></ion-icon>
+                        <span>{{ selectedNoticia.etiqueta }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</ion-modal>

@@ -14,6 +14,8 @@ export interface Noticia {
     fecha: string;
     imagen: string;
     etiqueta: string;
+    mes?: string;
+    created_at?: string;
 }
 
 
