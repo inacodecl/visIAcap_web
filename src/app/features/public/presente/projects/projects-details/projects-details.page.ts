@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { IonContent, IonIcon, IonSpinner, IonChip, IonLabel, IonHeader } from '@ionic/angular/standalone';
+import { IonContent, IonIcon, IonSpinner, IonChip, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { arrowBack, arrowBackOutline, globe, time, location, calendarNumber, analytics, imagesOutline, folderOpen, qrCodeOutline, alertCircleOutline, calendarOutline, locationOutline, pulseOutline, folderOutline } from 'ionicons/icons';
 import { ProyectosService } from '../../../../../core/services/proyectos.service';
@@ -19,7 +19,7 @@ import { FanMenuComponent } from '../../../home/components/fan-menu/fan-menu.com
     templateUrl: './projects-details.page.html',
     styleUrls: ['./projects-details.page.scss'],
     standalone: true,
-    imports: [CommonModule, IonHeader, IonContent, IonIcon, IonSpinner, RouterModule, TranslateModule, QRCodeComponent, HomeFooterComponent, FanMenuComponent]
+    imports: [CommonModule, IonContent, IonIcon, IonSpinner, RouterModule, TranslateModule, QRCodeComponent, HomeFooterComponent, FanMenuComponent]
 })
 export class ProjectsDetailsPage implements OnInit {
     private route = inject(ActivatedRoute);
