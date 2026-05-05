@@ -12,6 +12,7 @@ export interface LanguageOption {
     code: string;
     label: string;
     icon: string;
+    flagUrl: string;
 }
 
 @Injectable({
@@ -25,9 +26,9 @@ export class LanguageService {
     private readonly DEFAULT_LANG = 'es';
 
     private readonly languages: LanguageOption[] = [
-        { code: 'es', label: 'Español', icon: '🇨🇱' },
-        { code: 'en', label: 'English', icon: '🇺🇸' },
-        { code: 'ht', label: 'Kreyòl', icon: '🇭🇹' }
+        { code: 'es', label: 'Español', icon: 'CL', flagUrl: 'https://flagcdn.com/w40/cl.png' },
+        { code: 'en', label: 'English', icon: 'US', flagUrl: 'https://flagcdn.com/w40/us.png' },
+        { code: 'ht', label: 'Kreyòl', icon: 'HT', flagUrl: 'https://flagcdn.com/w40/ht.png' }
     ];
 
     constructor() {

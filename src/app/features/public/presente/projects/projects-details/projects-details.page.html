@@ -1,16 +1,22 @@
-<ion-header class="ion-no-border"
-    style="position: absolute; top: 0; left: 0; width: 100%; z-index: 99999; background: transparent; pointer-events: none;">
-    <header class="v2-header" style="position: relative; pointer-events: none;">
-        <div class="back-btn" (click)="goBack()" aria-label="Volver" style="pointer-events: auto; z-index: 99999;">
-            <ion-icon name="arrow-back-outline" style="pointer-events: none;"></ion-icon>
+<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="onScroll($event)" class="project-details-content">
+    
+    <!-- V2 Unificado Header -->
+    <header class="v2-header" [style.--header-progress]="progressHeader">
+        <div class="header-left">
+            <button class="back-btn" (click)="goBack()" aria-label="Volver">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+            </button>
+            <div class="logo-container">
+                <img src="assets/icon/logo-inacap-60-v2.png" alt="INACAP 60 Años" class="logo-img">
+            </div>
         </div>
-        <div class="logo-container" style="pointer-events: auto;">
-            <img src="assets/icon/logo-inacap-60-v2.png" alt="INACAP 60 Años" class="logo-img">
+        <div class="header-separator"></div>
+        <div class="sede-container">
+            <span class="sede-line">PRESENTE</span>
+            <span class="renca-line">RENCA</span>
         </div>
     </header>
-</ion-header>
 
-<ion-content [fullscreen]="true" class="project-details-content">
 
     @if (isLoading()) {
     <div class="loading-container">
@@ -161,5 +167,11 @@
     </div>
 
     }
+
+    <!-- Footer del Tótem con System Menu y Cambio de Tema -->
+    <app-home-footer></app-home-footer>
+
+    <!-- Menú Fan Abanico Custom -->
+    <app-fan-menu></app-fan-menu>
 
 </ion-content>

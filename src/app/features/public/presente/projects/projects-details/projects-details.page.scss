@@ -2,13 +2,88 @@
 
 // ==============================================
 // Design System: "Glassmorphism Espacial"
+// Tema Automático Claro/Oscuro
 // ==============================================
-$bg-glass: rgba(15, 15, 20, 0.85);
-$card-glass: rgba(255, 255, 255, 0.08);
-$card-border: rgba(255, 255, 255, 0.15);
+
+:host {
+    // ==============================================
+    // Light Theme (Por defecto)
+    // ==============================================
+    --bg-glass: rgba(255, 255, 255, 0.90); // Cristal blanco un poco más opaco para legibilidad
+    --card-glass: rgba(0, 0, 0, 0.04);
+    --card-border: rgba(0, 0, 0, 0.08);
+    --card-border-outer: rgba(0, 0, 0, 0.15);
+    
+    --text-main: #111111;
+    --text-grey: #555555;
+    
+    --hero-bg: rgba(255, 255, 255, 0.6);
+    --hero-border: rgba(0, 0, 0, 0.1);
+    
+    --back-btn-bg: rgba(255, 255, 255, 0.8);
+    --back-btn-border: rgba(0, 0, 0, 0.1);
+    --back-btn-icon: #111111;
+    --back-btn-hover: rgba(255, 255, 255, 1);
+    
+    --avatar-bg: rgba(0, 0, 0, 0.1);
+    --avatar-color: #111111;
+    
+    --chip-bg: rgba(0, 0, 0, 0.05);
+    --chip-border: rgba(0, 0, 0, 0.1);
+    --chip-cat-bg: rgba(0, 0, 0, 0.08);
+    --chip-cat-border: rgba(0, 0, 0, 0.15);
+    
+    --qr-footer: rgba(0, 0, 0, 0.5);
+    --box-shadow-main: 0 10px 40px rgba(0, 0, 0, 0.15);
+
+    // Header V2
+    --header-bg-rgb: 255, 255, 255;
+    --header-border-rgb: 0, 0, 0;
+    --header-back-btn-bg: rgba(0, 0, 0, 0.05);
+    --header-back-btn-border: rgba(0, 0, 0, 0.1);
+    --header-back-btn-icon: #111111;
+}
+
+:host-context(html.ion-palette-dark) {
+    // ==============================================
+    // Dark Theme
+    // ==============================================
+    --bg-glass: rgba(15, 15, 20, 0.85);
+    --card-glass: rgba(255, 255, 255, 0.08);
+    --card-border: rgba(255, 255, 255, 0.15);
+    --card-border-outer: rgba(255, 255, 255, 0.1);
+    
+    --text-main: #ffffff;
+    --text-grey: #b0b0b0;
+    
+    --hero-bg: rgba(0, 0, 0, 0.4);
+    --hero-border: rgba(255, 255, 255, 0.1);
+    
+    --back-btn-bg: rgba(0, 0, 0, 0.5);
+    --back-btn-border: rgba(255, 255, 255, 0.15);
+    --back-btn-icon: #ffffff;
+    --back-btn-hover: rgba(255, 255, 255, 0.1);
+    
+    --avatar-bg: rgba(255, 255, 255, 0.2);
+    --avatar-color: #ffffff;
+    
+    --chip-bg: rgba(255, 255, 255, 0.1);
+    --chip-border: rgba(255, 255, 255, 0.15);
+    --chip-cat-bg: rgba(0, 0, 0, 0.3);
+    --chip-cat-border: rgba(255, 255, 255, 0.1);
+    
+    --qr-footer: rgba(255, 255, 255, 0.5);
+    --box-shadow-main: 0 8px 40px rgba(0, 0, 0, 0.4);
+
+    // Header V2
+    --header-bg-rgb: 14, 18, 25;
+    --header-border-rgb: 255, 255, 255;
+    --header-back-btn-bg: rgba(30, 41, 59, 0.4);
+    --header-back-btn-border: rgba(255, 255, 255, 0.1);
+    --header-back-btn-icon: #dce1fb;
+}
+
 $red-inacap: #e21f26;
-$text-light: #ffffff;
-$text-grey: #b0b0b0;
 $radius-main: 24px;
 $radius: 16px;
 
@@ -18,60 +93,115 @@ $radius: 16px;
 .project-details-content {
     --background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop') no-repeat center center / cover;
     font-family: 'Inter', sans-serif;
-    color: $text-light;
+    color: var(--text-main);
 }
 
 // ==============================================
-// Header Tótem (TopBar)
+// Header V2 Unificado (igual que Pasado/Presente)
 // ==============================================
 .v2-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 25px 5%;
-    padding-top: max(30px, env(safe-area-inset-top));
+    justify-content: space-between;
     width: 100%;
-    position: absolute;
-    top: 0;
     left: 0;
-    z-index: 9999;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
-    pointer-events: none;
+    box-sizing: border-box;
+    padding: calc(15px - (5px * var(--header-progress, 0))) 40px;
+    height: calc(180px - (90px * var(--header-progress, 0)));
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    
+    // Glassmorphism que se adapta al modo
+    background: rgba(var(--header-bg-rgb), calc(0.1 + 0.75 * var(--header-progress, 0))); 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(var(--header-border-rgb), calc(0.05 + 0.1 * var(--header-progress, 0)));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, calc(0.5 * var(--header-progress, 0)));
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: calc(30px - (15px * var(--header-progress, 0)));
+    }
 
     .back-btn {
-        pointer-events: auto;
-        width: 48px;
-        height: 48px;
+        width: calc(60px - (15px * var(--header-progress, 0)));
+        height: calc(60px - (15px * var(--header-progress, 0)));
         border-radius: 50%;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(255,255,255,0.15);
+        background: var(--header-back-btn-bg);
+        border: 1px solid var(--header-back-btn-border);
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: transform 0.2s ease, background 0.2s ease;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+
+        ion-icon {
+            font-size: calc(28px - (4px * var(--header-progress, 0)));
+            color: var(--header-back-btn-icon);
+            transition: color 0.3s;
+        }
 
         &:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: #c8102e;
+            border-color: #c8102e;
+            ion-icon { color: white; }
         }
 
         &:active {
-            transform: scale(0.9);
-        }
-
-        ion-icon {
-            font-size: 24px;
-            color: $text-light;
+            transform: scale(0.95);
         }
     }
 
     .logo-container {
-        pointer-events: auto;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
         .logo-img {
-            width: 160px;
-            height: auto;
-            filter: drop-shadow(0 2px 10px rgba(255,255,255,0.25));
+            height: clamp(50px, 8vw, 150px);
+            transform: scale(calc(1 - 0.35 * var(--header-progress, 0)));
+            transform-origin: left center;
+            max-width: 350px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.1));
+        }
+    }
+
+    .header-separator {
+        flex: 1;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(var(--header-border-rgb), 0.2), transparent);
+        margin: 0 40px;
+        opacity: calc(1 - var(--header-progress, 0));
+    }
+
+    .sede-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        pointer-events: none;
+        transform: scale(calc(1 - 0.3 * var(--header-progress, 0)));
+        transform-origin: right center;
+
+        .sede-line {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+
+        .renca-line {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: #c8102e;
+            letter-spacing: 2px;
+            line-height: 1;
         }
     }
 }
@@ -80,7 +210,6 @@ $radius: 16px;
 // Wrapper General (envuelve todo el contenido)
 // ==============================================
 .page-wrapper {
-    padding-top: 100px; // Espacio para el header flotante
     padding-bottom: 80px;
     max-width: 860px;
     margin: 0 auto;
@@ -97,11 +226,10 @@ $radius: 16px;
     border-radius: $radius-main;
     overflow: hidden;
     margin-bottom: 24px;
-    background: rgba(0, 0, 0, 0.4);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--hero-bg);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--hero-border);
 
-    // Badge rojo arriba a la izquierda
     .badge-red {
         position: absolute;
         top: 16px;
@@ -119,12 +247,11 @@ $radius: 16px;
         box-shadow: 0 4px 15px rgba(226, 31, 38, 0.5);
     }
 
-    // La imagen: se achica sola, nunca se estira
     .hero-img {
         display: block;
         width: 100%;
         max-height: 360px;
-        object-fit: cover; // Recorta elegantemente, sin pixelar
+        object-fit: cover;
         object-position: center;
         border-radius: $radius-main;
     }
@@ -134,13 +261,13 @@ $radius: 16px;
 // Content Card (glassmorphism)
 // ==============================================
 .content-card {
-    background: $bg-glass;
+    background: var(--bg-glass);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: $radius-main;
     padding: 35px 30px;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255,255,255,0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--box-shadow-main), inset 0 1px 1px rgba(255,255,255,0.1);
+    border: 1px solid var(--card-border-outer);
 }
 
 // --- Status Loading/Error ---
@@ -150,13 +277,13 @@ $radius: 16px;
     align-items: center;
     justify-content: center;
     height: 60vh;
-    color: $text-light;
+    color: var(--text-main);
 }
 
 // --- Titulos de seccion ---
 h3.section-title {
     font-family: 'Space Grotesk', sans-serif;
-    color: $text-light;
+    color: var(--text-main);
     font-size: 1.4rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -167,7 +294,7 @@ h3.section-title {
 .section-title-small {
     font-size: 1.1rem;
     font-weight: 700;
-    color: $text-light;
+    color: var(--text-main);
     margin-bottom: 15px;
     position: relative;
     padding-bottom: 5px;
@@ -191,8 +318,8 @@ h3.section-title {
     margin-bottom: 30px;
 
     .metric-item {
-        background: $card-glass;
-        border: 1px solid $card-border;
+        background: var(--card-glass);
+        border: 1px solid var(--card-border);
         border-radius: $radius;
         padding: 15px;
         display: flex;
@@ -205,12 +332,12 @@ h3.section-title {
             margin-bottom: 8px;
             ion-icon {
                 font-size: 24px;
-                color: $text-grey;
+                color: var(--text-grey);
             }
         }
 
         label {
-            color: $text-grey;
+            color: var(--text-grey);
             font-size: 0.65rem;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -222,7 +349,7 @@ h3.section-title {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 1.1rem;
             font-weight: 700;
-            color: $text-light;
+            color: var(--text-main);
             line-height: 1.2;
         }
     }
@@ -277,7 +404,7 @@ h3.section-title {
     }
 
     .history-text {
-        color: $text-grey;
+        color: var(--text-grey);
         font-size: 1.05rem;
         line-height: 1.6;
         font-weight: 400;
@@ -298,8 +425,8 @@ h3.section-title {
 }
 
 .team-card {
-    background: $card-glass;
-    border: 1px solid $card-border;
+    background: var(--card-glass);
+    border: 1px solid var(--card-border);
     border-radius: $radius;
     padding: 15px 20px;
     display: flex;
@@ -312,14 +439,14 @@ h3.section-title {
         width: 45px;
         height: 45px;
         border-radius: 50%;
-        background: rgba(255,255,255,0.2);
+        background: var(--avatar-bg);
         display: flex;
         align-items: center;
         justify-content: center;
         font-family: 'Space Grotesk', sans-serif;
         font-size: 20px;
         font-weight: 800;
-        color: white;
+        color: var(--avatar-color);
     }
 
     .member-info {
@@ -330,13 +457,13 @@ h3.section-title {
             font-family: 'Inter', sans-serif;
             font-size: 1.1rem;
             font-weight: 700;
-            color: $text-light;
+            color: var(--text-main);
             margin-bottom: 2px;
         }
 
         .role {
             font-size: 0.75rem;
-            color: $text-grey;
+            color: var(--text-grey);
             font-weight: 500;
         }
     }
@@ -350,12 +477,12 @@ h3.section-title {
         width: 100%;
         height: 150px;
         border-radius: $radius;
-        border: 1px solid $card-border;
-        background: $card-glass;
+        border: 1px solid var(--card-border);
+        background: var(--card-glass);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: $text-grey;
+        color: var(--text-grey);
     }
 }
 
@@ -368,8 +495,8 @@ h3.section-title {
     padding-top: 10px;
 
     .chip-glass {
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: var(--chip-bg);
+        border: 1px solid var(--chip-border);
         border-radius: 50px;
         padding: 8px 16px;
         display: flex;
@@ -377,17 +504,17 @@ h3.section-title {
         gap: 6px;
         font-size: 0.85rem;
         font-weight: 500;
-        color: $text-light;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        color: var(--text-main);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 
         ion-icon {
             font-size: 1.1rem;
-            color: $text-grey;
+            color: var(--text-grey);
         }
 
         &.category {
-            background: rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.1);
+            background: var(--chip-cat-bg);
+            border-color: var(--chip-cat-border);
         }
     }
 }
@@ -400,8 +527,8 @@ h3.section-title {
 }
 
 .qr-card {
-    background: $card-glass;
-    border: 1px solid $card-border;
+    background: var(--card-glass);
+    border: 1px solid var(--card-border);
     border-radius: 20px;
     padding: 25px;
     width: 100%;
@@ -409,7 +536,7 @@ h3.section-title {
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 
     .qr-header-info {
         display: flex;
@@ -442,7 +569,7 @@ h3.section-title {
             h4 {
                 font-family: 'Space Grotesk', sans-serif;
                 margin: 0 0 5px;
-                color: $text-light;
+                color: var(--text-main);
                 font-size: 1.15rem;
                 font-weight: 700;
                 line-height: 1.1;
@@ -450,7 +577,7 @@ h3.section-title {
 
             p {
                 margin: 0;
-                color: $text-grey;
+                color: var(--text-grey);
                 font-size: 0.8rem;
                 line-height: 1.4;
             }
@@ -461,13 +588,13 @@ h3.section-title {
         background: white;
         padding: 10px;
         border-radius: 12px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
         margin-bottom: 15px;
     }
 
     .qr-footer-text {
         font-size: 0.8rem;
-        color: rgba(255,255,255,0.5);
+        color: var(--qr-footer);
         margin: 0;
     }
 }
@@ -595,6 +722,69 @@ h3.section-title {
             text-align: center;
 
             .icon-box { margin-bottom: 5px; }
+        }
+    }
+
+// ==============================================
+// RESPONSIVE: Solo Móvil (max 575px)
+// ==============================================
+@media (max-width: 575px) {
+    .v2-header {
+        height: calc(80px - (30px * var(--header-progress, 0))); // Achicar progresivamente el header
+        padding: calc(10px - (5px * var(--header-progress, 0))) 15px;
+        background: rgba(var(--header-bg-rgb), calc(0.1 + 0.75 * var(--header-progress, 0)));
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-bottom: 1px solid rgba(var(--header-border-rgb), calc(0.05 + 0.1 * var(--header-progress, 0)));
+        box-shadow: 0 4px 20px rgba(0, 0, 0, calc(0.5 * var(--header-progress, 0)));
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        
+        .header-left {
+            gap: calc(12px - (4px * var(--header-progress, 0))); // Reducir el gap
+            padding-left: 0;
+        }
+
+        .back-btn {
+            position: relative;
+            width: calc(40px - (10px * var(--header-progress, 0)));
+            height: calc(40px - (10px * var(--header-progress, 0)));
+            min-width: 0;
+            background: transparent; // Quitar la esfera semitransparente
+            border: none;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            box-shadow: none;
+            
+            ion-icon { 
+                font-size: calc(26px - (6px * var(--header-progress, 0))); 
+            }
+            
+            &:hover {
+                background: transparent;
+                transform: scale(1.1);
+            }
+        }
+
+        .logo-container .logo-img {
+            height: calc(45px - (15px * var(--header-progress, 0))); // Encoger logo progresivamente
+            width: auto;
+            transform: none; // Anula el scale de desktop
+        }
+
+        .header-separator {
+            display: none; // Ocultar para que no empuje el texto hacia afuera
+        }
+
+        .sede-container {
+            transform: none; // Anula el scale de desktop porque se maneja por font-size aquí
+            margin-left: auto; 
+            text-align: right; 
+            .sede-line, .renca-line {
+                font-size: calc(14px - (4px * var(--header-progress, 0))); // Encoger los textos también
+                letter-spacing: 0.5px;
+            }
         }
     }
 }

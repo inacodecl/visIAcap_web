@@ -6,6 +6,46 @@ $red-inacap: #CC0000;
 $red-neon: #FF3333;
 $dark-bg: #0B0B0E;
 
+// ==============================================
+// Tema Automático Claro/Oscuro
+// ==============================================
+
+:host {
+    // Light Theme (Por defecto)
+    --header-bg: rgba(255, 255, 255, 0.6);
+    --header-border: rgba(0, 0, 0, 0.1);
+    
+    --header-back-btn-bg: rgba(0, 0, 0, 0.05);
+    --header-back-btn-border: rgba(0, 0, 0, 0.1);
+    --header-back-btn-icon: #333333;
+    
+    --header-sede-text: #111111;
+    --header-sede-shadow: none;
+
+    --hero-title: #111111;
+    --hero-subtitle: #555555;
+    
+    --empty-state-text: #333333;
+}
+
+:host-context(html.ion-palette-dark) {
+    // Dark Theme
+    --header-bg: rgba(255, 255, 255, 0.05);
+    --header-border: rgba(255, 255, 255, 0.1);
+    
+    --header-back-btn-bg: rgba(255, 255, 255, 0.1);
+    --header-back-btn-border: rgba(255, 255, 255, 0.2);
+    --header-back-btn-icon: #ffffff;
+    
+    --header-sede-text: #ffffff;
+    --header-sede-shadow: 0 2px 4px rgba(0,0,0,0.5);
+
+    --hero-title: #ffffff;
+    --hero-subtitle: #A0A0A5;
+    
+    --empty-state-text: #F8F9FA;
+}
+
 // ========================================
 // UNIFIED V2 HEADER (DESKTOP/TOTEM)
 // ========================================
@@ -21,10 +61,10 @@ $dark-bg: #0B0B0E;
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.05); // Efecto glass semitransparente
+    background: var(--header-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--header-border);
 
     .header-left {
         display: flex;
@@ -36,8 +76,8 @@ $dark-bg: #0B0B0E;
         width: calc(60px - (15px * var(--header-progress, 0)));
         height: calc(60px - (15px * var(--header-progress, 0)));
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: var(--header-back-btn-bg);
+        border: 1px solid var(--header-back-btn-border);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -47,7 +87,7 @@ $dark-bg: #0B0B0E;
         -webkit-backdrop-filter: blur(5px);
         
         ion-icon {
-            color: #ffffff;
+            color: var(--header-back-btn-icon);
             font-size: calc(28px - (4px * var(--header-progress, 0)));
             transition: color 0.3s;
         }
@@ -95,9 +135,9 @@ $dark-bg: #0B0B0E;
             font-family: 'Exo 2', sans-serif;
             font-size: 32px;
             font-weight: 800;
-            color: white;
+            color: var(--header-sede-text);
             letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            text-shadow: var(--header-sede-shadow);
             line-height: 1;
         }
 
@@ -133,7 +173,7 @@ $dark-bg: #0B0B0E;
 .empty-state {
     text-align: center;
     padding: 3rem;
-    color: #F8F9FA;
+    color: var(--empty-state-text);
 
     ion-spinner { transform: scale(1.5); margin-bottom: 1rem; }
     ion-icon { font-size: 3rem; margin-bottom: 1rem; }
@@ -149,17 +189,17 @@ $dark-bg: #0B0B0E;
     text-align: center;
     position: relative;
     z-index: 2;
-    color: white;
 
     h1 {
         font-size: 40px;
         font-weight: 800;
         margin-bottom: 25px;
         letter-spacing: -0.5px;
+        color: var(--hero-title);
     }
 
     p {
-        color: #A0A0A5; 
+        color: var(--hero-subtitle); 
         max-width: 600px;
         margin: 0 auto;
         font-size: 26px;

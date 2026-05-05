@@ -11,12 +11,15 @@ import { LanguageService } from '../../../../../core/services/language.service';
 import { ExternalTabService } from '../../../../../core/services/external-tab.service';
 import { ExternalLinkButtonComponent } from '../../../../../components/buttons/external-link-button/external-link-button.component';
 import { QRCodeComponent } from 'angularx-qrcode';
+import { HomeFooterComponent } from '../../../../../components/footers/home-footer/home-footer.component';
+import { FanMenuComponent } from '../../../home/components/fan-menu/fan-menu.component';
+
 @Component({
     selector: 'app-projects-details',
     templateUrl: './projects-details.page.html',
     styleUrls: ['./projects-details.page.scss'],
     standalone: true,
-    imports: [CommonModule, IonHeader, IonContent, IonIcon, IonSpinner, RouterModule, TranslateModule, QRCodeComponent]
+    imports: [CommonModule, IonHeader, IonContent, IonIcon, IonSpinner, RouterModule, TranslateModule, QRCodeComponent, HomeFooterComponent, FanMenuComponent]
 })
 export class ProjectsDetailsPage implements OnInit {
     private route = inject(ActivatedRoute);
@@ -67,5 +70,17 @@ export class ProjectsDetailsPage implements OnInit {
 
     openUrl(url: string) {
         this.externalTabService.openTab(url);
+    }
+
+    // ========================================
+    // Animación Header V2 (Scroll)
+    // ========================================
+    progressHeader: number = 0;
+    private readonly SCROLL_RANGE = 200;
+
+    onScroll(event: any) {
+        const scrollTop = event.detail.scrollTop;
+        let progress = scrollTop / this.SCROLL_RANGE;
+        this.progressHeader = Math.max(0, Math.min(1, progress));
     }
 }

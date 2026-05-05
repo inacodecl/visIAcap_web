@@ -3,14 +3,15 @@
 // ==============================================
 // Variables de Diseño - Tótem Digital Gallery V3
 // ==============================================
-$inacap-red: #E20613;
-$carbon-depth: #020617;
-$surface: #0c1324;
-$surface-dim: #0c1324;
-$surface-light: #2e3447;
-$text-primary: #dce1fb;
-$text-secondary: rgba(220, 225, 251, 0.7);
-$glass-fill: rgba(30, 41, 59, 0.4);
+$inacap-red: #c8102e; /* Update to match standard INACAP Red */
+$carbon-depth: var(--bg-color, #020617);
+$surface: var(--surface, #0c1324);
+$surface-dim: var(--surface-dim, #0c1324);
+$surface-light: var(--surface-light, #2e3447);
+$text-primary: var(--text-main, #dce1fb);
+$text-secondary: var(--text-muted, rgba(220, 225, 251, 0.7));
+$glass-fill: var(--card-bg, rgba(30, 41, 59, 0.4));
+$border-color: var(--card-border, rgba(255, 255, 255, 0.1));
 
 // ==============================================
 // Utility Globales de Componentes

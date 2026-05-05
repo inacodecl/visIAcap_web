@@ -2,8 +2,13 @@
   
   @for (lang of languages; track lang.code) {
     <button class="value" [class.active-lang]="lang.code === getCurrentLang()" (click)="selectLanguage(lang.code)">
-      <span class="flag">{{ lang.icon }}</span>
-      {{ lang.label }}
+      <div class="lang-info">
+        <span class="flag">
+            {{ lang.icon }}
+            <img [src]="lang.flagUrl" alt="flag" class="flag-img" />
+        </span>
+        <span class="lang-label">{{ lang.label }}</span>
+      </div>
     </button>
   }
 

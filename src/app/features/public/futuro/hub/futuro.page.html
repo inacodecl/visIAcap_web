@@ -1,7 +1,7 @@
-<ion-content [fullscreen]="true" class="futuro-v2-content">
+<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="onScroll($event)" class="futuro-v2-content">
     
     <!-- MANTENIDO: Header con Logo INACAP y "Futuro Renca" -->
-    <header class="v2-header">
+    <header class="v2-header" [style.--header-progress]="progressHeader">
         <div class="header-left">
             <button class="back-btn" (click)="volverHome()" aria-label="Volver">
                 <ion-icon name="arrow-back-outline"></ion-icon>

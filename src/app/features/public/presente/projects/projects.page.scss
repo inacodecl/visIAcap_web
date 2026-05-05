@@ -186,7 +186,7 @@ $text-grey: #666;
 .main-container {
     position: relative;
     z-index: 5;
-    padding: 30px 50px 150px;
+    padding: 30px 50px 220px; /* Aumentado padding-bottom de 150 a 220px para asegurar que no tape el footer */
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -586,7 +586,7 @@ $text-grey: #666;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    margin-top: 40px;
+    margin-top: 10px; /* Reducido para que suba y no quede tan abajo */
     width: 100%;
 
     @media (min-width: 768px) {
@@ -752,7 +752,7 @@ $text-grey: #666;
     }
 
     .main-container {
-        padding: 20px 20px 100px;
+        padding: 20px 20px 180px; /* Aumentado padding-bottom móvil para el footer */
     }
 
     .hero-section {
@@ -799,5 +799,68 @@ $text-grey: #666;
         padding: 3px 8px;
         top: 10px;
         left: 10px;
+}
+
+// ==============================================
+// RESPONSIVE: Solo Móvil (max 575px)
+// ==============================================
+@media (max-width: 575px) {
+    .v2-header {
+        height: calc(80px - (30px * var(--header-progress, 0))); // Achicar progresivamente el header
+        padding: calc(10px - (5px * var(--header-progress, 0))) 15px;
+        background: rgba(var(--header-bg-rgb), calc(0.1 + 0.75 * var(--header-progress, 0)));
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-bottom: 1px solid rgba(var(--header-border-rgb), calc(0.05 + 0.1 * var(--header-progress, 0)));
+        box-shadow: 0 4px 20px rgba(0, 0, 0, calc(0.5 * var(--header-progress, 0)));
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        
+        .header-left {
+            gap: calc(12px - (4px * var(--header-progress, 0))); // Reducir el gap
+            padding-left: 0;
+        }
+
+        .back-btn {
+            position: relative;
+            width: calc(40px - (10px * var(--header-progress, 0)));
+            height: calc(40px - (10px * var(--header-progress, 0)));
+            min-width: 0;
+            background: transparent; // Quitar la esfera semitransparente
+            border: none;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            box-shadow: none;
+            
+            ion-icon { 
+                font-size: calc(26px - (6px * var(--header-progress, 0))); 
+            }
+            
+            &:hover {
+                background: transparent;
+                transform: scale(1.1);
+            }
+        }
+
+        .logo-container .logo-img {
+            height: calc(45px - (15px * var(--header-progress, 0))); // Encoger logo progresivamente
+            width: auto;
+            transform: none; // Anula el scale de desktop
+        }
+
+        .header-separator {
+            display: none; // Ocultar para que no empuje el texto hacia afuera
+        }
+
+        .sede-container {
+            transform: none; // Anula el scale de desktop porque se maneja por font-size aquí
+            margin-left: auto; 
+            text-align: right; 
+            .sede-line, .renca-line {
+                font-size: calc(14px - (4px * var(--header-progress, 0))); // Encoger los textos también
+                letter-spacing: 0.5px;
+            }
+        }
     }
 }

@@ -1,15 +1,54 @@
+// ==============================================
+// Tema Automático Claro/Oscuro
+// ==============================================
+
+:host {
+    // Light Theme (Por defecto)
+    --footer-bg: rgba(255, 255, 255, 0.9);
+    --footer-border: rgba(0, 0, 0, 0.1);
+    
+    --btn-bg: rgba(0, 0, 0, 0.05);
+    --btn-border: rgba(0, 0, 0, 0.1);
+    --btn-icon: #e21f26; // Rojo Inacap en lugar de cyan para que resalte
+    --btn-hover-bg: rgba(0, 0, 0, 0.1);
+    --btn-hover-shadow: rgba(0, 0, 0, 0.2);
+    --btn-icon-shadow: rgba(226, 31, 38, 0.4);
+    
+    --brand-text: #111111;
+    --brand-year: #555555;
+    --text-shadow: none;
+}
+
+:host-context(html.ion-palette-dark) {
+    // Dark Theme
+    --footer-bg: rgba(18, 20, 30, 0.85);
+    --footer-border: rgba(255, 255, 255, 0.05);
+    
+    --btn-bg: rgba(255, 255, 255, 0.05);
+    --btn-border: rgba(255, 255, 255, 0.1);
+    --btn-icon: #00f3ff;
+    --btn-hover-bg: rgba(255, 255, 255, 0.15);
+    --btn-hover-shadow: rgba(0, 0, 0, 0.5);
+    --btn-icon-shadow: rgba(0, 243, 255, 0.8);
+    
+    --brand-text: #ffffff;
+    --brand-year: #8fa0c1;
+    --text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
 .v2-footer {
     position: fixed;
     bottom: 0; left: 0; right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px 50px; /* Incrementado para más altura (antes 15px 40px) */
-    background: rgba(18, 20, 30, 0.85); /* Oscuro translúcido */
+    padding: 25px 50px;
+    background: var(--footer-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(255, 255, 255, 0.05); /* Borde sutil */
+    border-top: 1px solid var(--footer-border);
     z-index: 1000;
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .footer-spacer {
@@ -23,33 +62,32 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 70px; /* Antes 60 */
-    height: 70px; /* Antes 60 */
-    border-radius: 50%; /* Circulares en base al botón Volver V2 */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.05);
-    color: #ffffff;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 1px solid var(--btn-border);
+    background: var(--btn-bg);
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 
     ion-icon {
-        font-size: 34px; /* Antes 28px */
-        color: #00f3ff; /* Cyan neo V2 */
+        font-size: 34px;
+        color: var(--btn-icon);
         transition: all 0.3s ease;
         pointer-events: none;
     }
 
     &:hover,
     &:active {
-        background: rgba(255, 255, 255, 0.15);
+        background: var(--btn-hover-bg);
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 6px 20px var(--btn-hover-shadow);
 
         ion-icon {
-            text-shadow: 0 0 12px rgba(0, 243, 255, 0.8);
+            text-shadow: 0 0 12px var(--btn-icon-shadow);
         }
     }
 }
@@ -63,21 +101,23 @@
 }
 
 .brand-text {
-    font-size: 1.6rem; /* Antes 1.4rem */
+    font-size: 1.6rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--brand-text);
     text-transform: uppercase;
-    letter-spacing: 5px; /* Antes 4px */
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    letter-spacing: 5px;
+    text-shadow: var(--text-shadow);
+    transition: color 0.3s ease;
 }
 
 .brand-year {
-    font-size: 1.2rem; /* Antes 1.1rem */
+    font-size: 1.2rem;
     font-weight: 400;
-    color: #8fa0c1; /* Gris azulado del Hub Futuro V2 */
+    color: var(--brand-year);
     margin-top: 4px;
     letter-spacing: 2px;
     font-style: italic;
+    transition: color 0.3s ease;
 }
 
 // ==============================================

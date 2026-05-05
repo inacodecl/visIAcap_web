@@ -115,4 +115,16 @@ export class FuturoPage implements OnInit {
     volverHome() {
         this.navigateWithDelay('/home');
     }
+
+    // ========================================
+    // Animación Header V2 (Scroll)
+    // ========================================
+    progressHeader: number = 0;
+    private readonly SCROLL_RANGE = 200;
+
+    onScroll(event: any) {
+        const scrollTop = event.detail.scrollTop;
+        let progress = scrollTop / this.SCROLL_RANGE;
+        this.progressHeader = Math.max(0, Math.min(1, progress));
+    }
 }

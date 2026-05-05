@@ -69,9 +69,25 @@
   transform: scaleY(1);
 }
 
+.lang-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .flag {
-  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 800;
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flag-img {
+  width: 24px;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 .value:hover,
@@ -79,7 +95,7 @@
   color: var(--ion-color-primary, #c8102e);
 }
 .value:hover .flag {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .divider {
