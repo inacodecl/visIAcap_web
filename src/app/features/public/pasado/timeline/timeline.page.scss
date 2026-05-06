@@ -478,16 +478,18 @@ $dark-bg: #0B0B0E;
     color: white;
     margin-top: 0;
 
-    /* Truncado del Título en reposo (2 líneas máximo) */
+    /* Truncado del Título en reposo (3 líneas máximo) */
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3; /* Versión estándar */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .card.expanded h2 {
-    -webkit-line-clamp: unset; /* Mostrar título completo al expandir */
+    -webkit-line-clamp: unset;
+    line-clamp: unset; /* Versión estándar */
     display: block;
 }
 
@@ -500,6 +502,7 @@ $dark-bg: #0B0B0E;
     /* Truncado a 3 líneas para la descripción en reposo */
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3; /* Versión estándar */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
