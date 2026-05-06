@@ -9,7 +9,8 @@ import {
     time, videocam, rocket, people, grid, gridOutline,
     menuOutline, closeOutline, timeOutline, videocamOutline, 
     rocketOutline, newspaperOutline, peopleOutline, 
-    logOutOutline, analyticsOutline, personOutline, listOutline
+    logOutOutline, analyticsOutline, personOutline, listOutline,
+    imagesOutline
 } from 'ionicons/icons';
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -36,7 +37,8 @@ export class DashboardPage implements OnInit {
             grid, time, videocam, rocket, people, gridOutline,
             menuOutline, closeOutline, timeOutline, videocamOutline, 
             rocketOutline, newspaperOutline, peopleOutline, 
-            logOutOutline, analyticsOutline, personOutline, listOutline
+            logOutOutline, analyticsOutline, personOutline, listOutline,
+            imagesOutline
         });
     }
 

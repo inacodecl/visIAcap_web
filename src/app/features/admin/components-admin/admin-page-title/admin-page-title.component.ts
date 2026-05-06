@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonIcon, IonSearchbar } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { rocket, videocam, time } from 'ionicons/icons';
+import { rocket, videocam, time, images } from 'ionicons/icons';
 
 @Component({
     selector: 'app-admin-page-title',
@@ -14,13 +14,14 @@ import { rocket, videocam, time } from 'ionicons/icons';
 export class AdminPageTitleComponent {
     @Input() title: string = '';
     @Input() icon: string = '';
-    @Input() themeColor: 'red' | 'blue' | 'orange' | 'green' = 'blue';
+    @Input() themeColor: 'red' | 'blue' | 'orange' | 'green' | 'primary' = 'blue';
     @Input() searchPlaceholder: string = 'Buscar...';
+    @Input() showSearch: boolean = true;
 
     @Output() searchChange = new EventEmitter<string>();
 
     constructor() {
-        addIcons({ rocket, videocam, time });
+        addIcons({ rocket, videocam, time, images });
     }
 
     onSearchInput(event: any) {

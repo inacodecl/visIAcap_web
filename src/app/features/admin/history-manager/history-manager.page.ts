@@ -78,6 +78,7 @@ export class HistoryManagerPage implements OnInit {
         titulo: ['', [Validators.required, Validators.maxLength(150)]],
         descripcion: ['', [Validators.required]],
         visible: [true],
+        addToGaleria: [false],
         media_url: [''], // Portada Legacy/Cover
         order_index: [0], // Evitar error de nulo en DB
         location: [''],
@@ -173,6 +174,7 @@ export class HistoryManagerPage implements OnInit {
         const today = new Date().toISOString().split('T')[0];
         this.historyForm.reset({
             visible: true,
+            addToGaleria: false,
             fecha: today,
             media: [],
             tags: [],
@@ -227,6 +229,7 @@ export class HistoryManagerPage implements OnInit {
             titulo: historia.titulo,
             descripcion: historia.descripcion,
             visible: historia.visible,
+            addToGaleria: false, // Defaulting to false on edit as it usually is a one-off insertion. But if you want to remember previous state, we would need it from DB. Assuming false for now or ignoring it on edit. Let's send true if they toggle it on.
             media_url: historia.media_url,
             tags: tagIds,
             location: historia.location || '',
@@ -271,8 +274,8 @@ export class HistoryManagerPage implements OnInit {
         } else {
             Object.keys(this.historyForm.controls).forEach(key => {
                 const control = this.historyForm.get(key);
-                // Si el control fue modificado por el usuario, o si es media/tags (las relaciones siempre las enviamos en PUT/PATCH por seguridad)
-                if (control?.dirty || key === 'media' || key === 'tags' || key === 'fecha') {
+                // Si el control fue modificado por el usuario, o si es media/tags/addToGaleria
+                if (control?.dirty || key === 'media' || key === 'tags' || key === 'fecha' || key === 'addToGaleria') {
                     payload[key] = control?.value;
                 }
             });

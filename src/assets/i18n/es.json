@@ -96,6 +96,9 @@
         "QR_SUBTITLE": "Escanea el código para abrirlo en tu dispositivo",
         "QR_CAPTION": "Escanea con la cámara de tu celular"
     },
+    "GALERIA": {
+        "TITLE": "GALERÍA"
+    },
     "FOOTER": {
         "BRAND": "INACAP Renca Smart",
         "ANNIVERSARY": "60° Aniversario",

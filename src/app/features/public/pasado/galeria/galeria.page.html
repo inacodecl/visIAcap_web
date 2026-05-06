@@ -1,0 +1,63 @@
+<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="onScroll($event)" class="galeria-content">
+  
+  <!-- V2 Unificado Header -->
+  <header class="v2-header" [style.--header-progress]="progressHeader">
+      <div class="header-left">
+          <button class="back-btn" (click)="goBack()" aria-label="Volver">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+          </button>
+          <div class="logo-container">
+              <img src="assets/icon/logo-inacap-60-v2.png" alt="INACAP 60 Años" class="logo-img">
+          </div>
+      </div>
+      <div class="header-separator"></div>
+      <div class="sede-container">
+          <span class="sede-line">{{ 'GALERIA.TITLE' | translate }}</span>
+          <span class="renca-line">{{ 'HOME.RENCA' | translate }}</span>
+      </div>
+  </header>
+
+  <!-- Background con Efecto de Estrellas/Partículas -->
+  <app-background-brillo></app-background-brillo>
+
+  <!-- Spinner -->
+  <div class="loading-container" *ngIf="isLoading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando galería...</p>
+  </div>
+
+  <!-- Masonry Grid -->
+  <div class="masonry-grid" *ngIf="!isLoading && imagenes.length > 0">
+    <div class="masonry-item" *ngFor="let img of imagenes" (click)="openImage(img)">
+      <img [src]="getImageUrl(img.url)" [alt]="img.anio" loading="lazy" />
+      <div class="image-overlay">
+        <span class="image-year">{{ img.anio }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estado vacío -->
+  <div class="empty-state" *ngIf="!isLoading && imagenes.length === 0">
+    <ion-icon name="images-outline"></ion-icon>
+    <h3>Aún no hay imágenes</h3>
+    <p>La galería histórica se irá llenando pronto.</p>
+  </div>
+
+  <!-- Visor de imagen a pantalla completa -->
+  <div class="image-viewer-overlay" *ngIf="isModalOpen && selectedImage" (click)="closeImage()">
+    <button class="viewer-close-btn" (click)="closeImage()" aria-label="Cerrar">
+      <ion-icon name="close"></ion-icon>
+    </button>
+    <img 
+      [src]="getImageUrl(selectedImage.url)" 
+      class="viewer-image" 
+      (click)="$event.stopPropagation()"
+      alt="Imagen galería {{ selectedImage.anio }}" 
+    />
+    <span class="viewer-year" (click)="$event.stopPropagation()">{{ selectedImage.anio }}</span>
+  </div>
+
+  <app-home-footer></app-home-footer>
+  <app-fan-menu></app-fan-menu>
+
+</ion-content>

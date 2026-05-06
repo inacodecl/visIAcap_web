@@ -3,19 +3,19 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
   IonContent, IonHeader, IonIcon, IonButton,
-  IonSpinner
+  IonSpinner, IonFab, IonFabButton
 } from '@ionic/angular/standalone';
 import { TimelineService } from '../../../../core/services/timeline.service';
 import { Historia } from '../../../../core/models/historia.model';
 import { addIcons } from 'ionicons';
-import { chevronDown, arrowBack, arrowBackOutline, locationOutline, calendarOutline, settingsSharp, add, remove, alertCircle, closeOutline } from 'ionicons/icons';
+import { chevronDown, arrowBack, arrowBackOutline, locationOutline, calendarOutline, settingsSharp, add, remove, alertCircle, closeOutline, imagesOutline } from 'ionicons/icons';
 import { AuthService } from '../../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { HomeFooterComponent } from '../../../../components/footers/home-footer/home-footer.component';
 import { BackgroundBrilloComponent } from '../../../../components/background/brillo/background-brillo.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../../core/services/language.service';
-import { FanMenuComponent } from '../../home/components/fan-menu/fan-menu.component';
+import { ButtonImageComponent } from '../../../../components/buttons/button-image/button-image.component';
 import { register } from 'swiper/element/bundle';
 
 register();
@@ -31,12 +31,12 @@ interface TimelineEvent extends Historia {
   standalone: true,
   imports: [
     CommonModule,
-    IonContent, IonButton, IonIcon, IonSpinner,
+    IonContent, IonButton, IonIcon, IonSpinner, IonFab, IonFabButton,
     RouterModule,
     HomeFooterComponent,
     BackgroundBrilloComponent,
     TranslateModule,
-    FanMenuComponent
+    ButtonImageComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
@@ -78,11 +78,15 @@ export class TimelinePage implements OnInit, AfterViewInit, OnDestroy {
   private cardObserver!: IntersectionObserver;
 
   constructor() {
-    addIcons({ add, remove, alertCircle, chevronDown, arrowBack, arrowBackOutline, locationOutline, calendarOutline, settingsSharp, closeOutline });
+    addIcons({ add, remove, alertCircle, chevronDown, arrowBack, arrowBackOutline, locationOutline, calendarOutline, settingsSharp, closeOutline, imagesOutline });
   }
 
   ngOnInit() {
     this.loadData();
+  }
+
+  goToGaleria(): void {
+    this.router.navigate(['/pasado/galeria']);
   }
 
   ngAfterViewInit() {

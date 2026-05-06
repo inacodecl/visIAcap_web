@@ -46,6 +46,10 @@ export const routes: Routes = [
             {
                 path: 'mi-actividad',
                 loadComponent: () => import('./my-activity/my-activity.page').then(m => m.MyActivityPage)
+            },
+            {
+                path: 'galeria',
+                loadComponent: () => import('./gallery-manager/gallery-manager.page').then(m => m.GalleryManagerPage)
             }
         ]
     },
@@ -72,6 +76,11 @@ export const routes: Routes = [
     {
         path: 'futuro',
         redirectTo: 'dashboard/futuro',
+        pathMatch: 'full'
+    },
+    {
+        path: 'galeria',
+        redirectTo: 'dashboard/galeria',
         pathMatch: 'full'
     }
 ];

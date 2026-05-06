@@ -23,6 +23,10 @@ export const routes: Routes = [
             {
                 path: 'interviews',
                 loadComponent: () => import('./pasado/interviews/entrevistas.page').then(m => m.EntrevistasPage)
+            },
+            {
+                path: 'galeria',
+                loadComponent: () => import('./pasado/galeria/galeria.page').then(m => m.GaleriaPage)
             }
         ]
     },
@@ -42,9 +46,9 @@ export const routes: Routes = [
     {
         path: 'futuro',
         loadComponent: () => import('./futuro/hub/futuro.page').then(m => m.FuturoPage)
-    },  {
-    path: 'desarrolladores',
-    loadComponent: () => import('./desarrolladores/desarrolladores.page').then( m => m.DesarrolladoresPage)
-  }
-
+    },
+    {
+        path: 'desarrolladores',
+        loadComponent: () => import('./desarrolladores/desarrolladores.page').then( m => m.DesarrolladoresPage)
+    }
 ];

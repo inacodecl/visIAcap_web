@@ -1,7 +1,7 @@
 import { Component, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { IonIcon, IonModal, IonContent, IonButton } from '@ionic/angular/standalone';
+import { IonIcon, IonModal } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { newspaperOutline, arrowForwardOutline, arrowBackOutline, closeOutline, calendarOutline, pricetagOutline } from 'ionicons/icons';
 import { Noticia } from '../../futuro.models';
@@ -14,7 +14,7 @@ register();
   templateUrl: './noticias-futuro.component.html',
   styleUrls: ['./noticias-futuro.component.scss'],
   standalone: true,
-  imports: [CommonModule, TranslateModule, IonIcon, IonModal, IonContent, IonButton],
+  imports: [CommonModule, TranslateModule, IonIcon, IonModal],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NoticiasFuturoComponent {

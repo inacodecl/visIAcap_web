@@ -108,5 +108,9 @@
 
   <app-home-footer></app-home-footer>
 
-  <app-fan-menu></app-fan-menu>
+  <!-- Botón Galería (reemplaza al fan-menu solo en timeline) -->
+  <div class="galeria-footer-btn" (click)="goToGaleria()">
+    <app-button-image (clicked)="goToGaleria()"></app-button-image>
+  </div>
+
 </ion-content>

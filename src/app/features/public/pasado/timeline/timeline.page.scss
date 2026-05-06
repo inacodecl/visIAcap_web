@@ -612,3 +612,28 @@ $dark-bg: #0B0B0E;
     .card h2 { font-size: 24px; }
     .extra-details { font-size: 16px; }
 }
+
+// Botón de Galería posicionado sobre el footer-spacer (donde estaba el fan-menu)
+.galeria-footer-btn {
+    position: fixed;
+    bottom: 23px;
+    left: 50px;
+    z-index: 1001; // Sobre el footer (z-index: 1000)
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 575px) {
+    .galeria-footer-btn {
+        bottom: -5px;
+        left: 7px;
+
+        // Escalar todo proporcionalmente (64px * 0.65 ≈ 42px)
+        app-button-image {
+            transform: scale(0.65);
+            transform-origin: center center;
+        }
+    }
+}

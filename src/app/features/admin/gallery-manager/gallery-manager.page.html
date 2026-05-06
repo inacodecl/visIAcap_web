@@ -1,0 +1,111 @@
+<ion-content class="admin-content">
+  <ion-grid fixed class="glass-container-grid">
+    <!-- HEADER ROW: Título -->
+    <app-admin-page-title 
+      title="Galería Pública" 
+      icon="images" 
+      themeColor="primary"
+      [showSearch]="false">
+    </app-admin-page-title>
+
+  <div class="main-container">
+
+    <!-- Upload Section -->
+    <div class="upload-section">
+      <ion-card class="admin-card">
+        <ion-card-header>
+          <ion-card-title>Añadir nueva imagen a la Galería</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="upload-layout">
+            <!-- Columna Izquierda: Año y Uploader -->
+            <div class="left-column">
+              <ion-item class="year-input-item" lines="none" mode="md">
+                <ion-icon name="calendar-outline" slot="start" color="medium"></ion-icon>
+                <ion-input 
+                  type="number" 
+                  [(ngModel)]="newAnio" 
+                  placeholder="Ej: 1966"
+                  label="Año de la fotografía"
+                  labelPlacement="floating"
+                  [disabled]="isUploading">
+                </ion-input>
+              </ion-item>
+
+              <app-admin-image-upload 
+                [uploadFolder]="'galeria'"
+                (imageUploaded)="onImageUploaded($event)">
+              </app-admin-image-upload>
+            </div>
+
+            <!-- Columna Derecha: Previsualización y Botones -->
+            <div class="right-column">
+              <div class="preview-container" *ngIf="pendingImageUrl">
+                <div class="preview-box">
+                  <img [src]="getImageUrl(pendingImageUrl)" alt="Vista previa de imagen">
+                  <div class="preview-badge">Vista previa</div>
+                </div>
+                
+                <div class="action-buttons">
+                  <ion-button color="medium" fill="outline" (click)="cancelPendingImage()" [disabled]="isUploading">
+                    Cancelar
+                  </ion-button>
+                  <ion-button color="primary" (click)="savePendingImage()" [disabled]="!newAnio || isUploading">
+                    <ion-icon name="save-outline" slot="start"></ion-icon>
+                    Subir a Galería
+                  </ion-button>
+                </div>
+              </div>
+
+              <div class="empty-preview" *ngIf="!pendingImageUrl">
+                <ion-icon name="image-outline"></ion-icon>
+                <p>Sube una foto para ver la previsualización</p>
+              </div>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Gallery Grid -->
+    <div class="gallery-management-section">
+      <h2 class="section-title">Imágenes en Galería</h2>
+      
+      <div class="loading-state" *ngIf="isLoading">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p>Cargando imágenes...</p>
+      </div>
+
+      <div class="empty-state" *ngIf="!isLoading && imagenes.length === 0">
+        <ion-icon name="images-outline"></ion-icon>
+        <p>No hay imágenes en la galería. ¡Sube la primera!</p>
+      </div>
+
+      <div class="admin-gallery-grid" *ngIf="!isLoading && imagenes.length > 0">
+        <ion-card class="gallery-card" *ngFor="let img of imagenes" [class.is-hidden]="img.visible === 0">
+          <div class="img-wrapper">
+            <img [src]="getImageUrl(img.url)" [alt]="img.anio" loading="lazy" />
+            <div class="status-badge" [class.active]="img.visible === 1" [class.inactive]="img.visible === 0">
+              {{ img.visible === 1 ? 'Visible' : 'Oculta' }}
+            </div>
+          </div>
+          <ion-card-content class="card-footer">
+            <div class="year-display">
+              <ion-icon name="calendar-outline"></ion-icon>
+              <span>{{ img.anio }}</span>
+            </div>
+            <div class="actions">
+              <ion-button fill="clear" color="medium" (click)="toggleVisibility(img)" [title]="img.visible === 1 ? 'Ocultar' : 'Mostrar'">
+                <ion-icon [name]="img.visible === 1 ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" color="danger" (click)="deleteImage(img.id)" title="Eliminar">
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+  </div>
+  </ion-grid>
+</ion-content>
