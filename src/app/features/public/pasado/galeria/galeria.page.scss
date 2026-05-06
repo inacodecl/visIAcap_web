@@ -229,6 +229,17 @@ ion-content.galeria-content {
       column-count: 4;
     }
 
+    /* Ajuste específico para TOTEM (Portrait de gran formato) */
+    @media (min-width: 992px) and (orientation: portrait) and (min-height: 1400px) {
+      column-count: 3;
+      column-gap: 1.5rem;
+      padding: 1.5rem;
+      
+      .masonry-item {
+        margin-bottom: 1.5rem;
+      }
+    }
+
     .masonry-item {
       break-inside: avoid;
       margin-bottom: 1rem;

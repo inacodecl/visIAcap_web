@@ -46,8 +46,8 @@
 /* COLORES CORPORATIVOS */
 .item-inacode { background-color: #CC0000 !important; }
 .item-inago { background-color: #f59e0b !important; }
-.item-zenz { background-color: #10b981 !important; }
-.item-midae { background-color: #3b82f6 !important; }
+.item-zenz { background-color: #000000 !important; }
+.item-midae { background-color: #e21f26 !important; }
 
 
 /* ETIQUETAS A LA DERECHA PARA STACK VERTICAL */
@@ -107,7 +107,7 @@
 .fan-menu-container.active .item-zenz:hover {
     transform: translate(0px, -220px) scale(1.08);
     filter: brightness(1.15);
-    box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
     z-index: 20;
 }
 
@@ -119,7 +119,7 @@
 .fan-menu-container.active .item-midae:hover {
     transform: translate(0px, -110px) scale(1.08);
     filter: brightness(1.15);
-    box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+    box-shadow: 0 0 25px rgba(226, 31, 38, 0.6);
     z-index: 20;
 }
 
