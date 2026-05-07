@@ -2,26 +2,28 @@
     <div class="ripple-container" #rippleContainer></div>
     
     <div class="icon-container">
-        <!-- SVG Reloj de Arena Line-Art -->
-        <svg viewBox="0 0 28 28">
-            <g class="hourglass-rotate" transform-origin="14 14">
-                <!-- Bases -->
-                <path d="M 5 3 h 18" />
-                <path d="M 5 25 h 18" />
+
+        <!-- SVG Reloj de Arena Line-Art (Palitos) -->
+        <svg viewBox="0 0 28 28" class="loader">
+            <g class="hourglass-rotate">
+                <!-- Bases (Gris) -->
+                <path d="M 5 3 h 18" stroke="#888888" stroke-width="1.5" stroke-linecap="round" fill="none" />
+                <path d="M 5 25 h 18" stroke="#888888" stroke-width="1.5" stroke-linecap="round" fill="none" />
                 
-                <!-- Cristal -->
-                <path d="M 7 3 V 6 C 7 10 11 12 13 14 C 11 16 7 18 7 22 V 25" />
-                <path d="M 21 3 V 6 C 21 10 17 12 15 14 C 17 16 21 18 21 22 V 25" />
+                <!-- Cristal (Gris) -->
+                <path d="M 7 3 V 6 C 7 10 11 12 13 14 C 11 16 7 18 7 22 V 25" stroke="#888888" stroke-width="1.5" fill="none" stroke-linejoin="round" />
+                <path d="M 21 3 V 6 C 21 10 17 12 15 14 C 17 16 21 18 21 22 V 25" stroke="#888888" stroke-width="1.5" fill="none" stroke-linejoin="round" />
                 
-                <!-- Detalles internos de arena -->
-                <!-- Montaña de arena abajo -->
-                <path class="sand-fill" d="M 10.5 21 L 14 16 L 17.5 21 V 23 H 10.5 Z" />
+                <!-- Detalles internos de arena (Mostaza Brillante) -->
                 
-                <!-- Arena cayendo -->
-                <path class="sand-drop" d="M 14 14 V 16" />
+                <!-- Montaña de arena abajo (al girar quedará arriba y se vaciará) -->
+                <path class="sand-fill" d="M 10.5 21 L 14 16 L 17.5 21 V 23 H 10.5 Z" fill="#F4C242" />
                 
-                <!-- Arena remanente arriba -->
-                <path class="sand-top" d="M 8.5 7 H 19.5 L 14 12 Z" />
+                <!-- Montaña de arena arriba (al girar quedará abajo y se llenará) -->
+                <path class="sand-top" d="M 8.5 7 H 19.5 L 14 12 Z" fill="#F4C242" />
+                
+                <!-- Arena cayendo (línea desde el cuello hasta la base) -->
+                <path class="sand-drop" d="M 14 14 V 7" stroke="#F4C242" stroke-width="1.5" stroke-linecap="round" fill="none" />
             </g>
         </svg>
     </div>

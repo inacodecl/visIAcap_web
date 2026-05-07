@@ -211,4 +211,169 @@ ion-popover.system-menu-popover {
         border: 1px solid var(--ion-color-step-150, rgba(0, 0, 0, 0.1));
         padding: 0;
     }
+}
+
+/* ========================================
+   UNIFIED V2 HEADER (DESKTOP/TOTEM) GLOBAL
+   ======================================== */
+.v2-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 40px;
+    height: 180px;
+    position: relative;
+    z-index: 20;
+    // Glassmorphism que se adapta
+    background: var(--v2-header-bg, rgba(255, 255, 255, 0.03)); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--v2-header-border, rgba(255, 255, 255, 0.1));
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .back-btn {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--header-back-btn-bg, rgba(255, 255, 255, 0.1));
+        border: 1px solid var(--header-back-btn-border, rgba(255, 255, 255, 0.2));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        padding: 0;
+        margin: 0;
+
+        ion-icon {
+            color: var(--header-back-btn-icon, #ffffff);
+            font-size: 28px;
+            transition: color 0.3s;
+        }
+
+        &:hover {
+            background: #c8102e;
+            transform: scale(1.05);
+            border-color: #c8102e;
+            ion-icon { color: #ffffff; }
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+
+    .logo-container {
+        pointer-events: none;
+
+        .logo-img {
+            height: clamp(50px, 8vw, 150px);
+            max-width: 350px;
+            object-fit: contain;
+            filter: var(--header-logo-filter, drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5)));
+        }
+    }
+
+    .header-separator {
+        flex: 1;
+        height: 2px;
+        background: var(--header-separator-bg, linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent));
+        margin: 0 40px;
+    }
+
+    .sede-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        pointer-events: none;
+
+        .sede-line {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--header-text-color, white);
+            letter-spacing: 2px;
+            text-shadow: var(--header-text-shadow, 0 2px 4px rgba(0, 0, 0, 0.5));
+            line-height: 1;
+            margin: 0;
+        }
+
+        .renca-line {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: #c8102e;
+            letter-spacing: 2px;
+            text-shadow: var(--header-text-shadow, 0 2px 4px rgba(0, 0, 0, 0.5));
+            line-height: 1;
+            margin: 0;
+        }
+    }
+}
+
+/* Ocultar separador en tablet y móvil para evitar el bloque visible */
+@media (max-width: 767px) {
+    .v2-header .header-separator {
+        display: none;
+    }
+}
+
+@media (max-width: 575px) {
+    .v2-header {
+        padding: 10px 15px;
+        height: 80px;
+
+        .header-left {
+            gap: 12px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: transparent; // Quitar la esfera semitransparente en móvil
+            border: none;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            box-shadow: none;
+            
+            ion-icon {
+                font-size: 26px;
+            }
+
+            &:hover {
+                background: transparent;
+                transform: scale(1.1);
+            }
+        }
+
+        .logo-container .logo-img {
+            height: 45px;
+            width: auto;
+            transform: none; // Anula el scale de desktop
+        }
+
+        .header-separator {
+            display: none; // Ocultar para que no empuje el texto hacia afuera
+        }
+
+        .sede-container {
+            transform: none; // Anula el scale de desktop porque se maneja por font-size aquí
+            margin-left: auto; 
+            text-align: right; 
+            
+            .sede-line,
+            .renca-line {
+                font-size: 14px;
+                letter-spacing: 0.5px;
+                padding-right: 0;
+            }
+        }
+    }
 }

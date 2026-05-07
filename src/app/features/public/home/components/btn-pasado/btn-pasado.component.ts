@@ -26,11 +26,11 @@ export class BtnPasadoComponent {
         this.isExpanded = true;
         this.createRipple(event);
 
-        // Auto-colapsar después de 5 segundos
+        // Auto-colapsar después de 3 segundos
         clearTimeout(this.expansionTimeout);
         this.expansionTimeout = setTimeout(() => {
             if (!this.isNavigating) this.isExpanded = false;
-        }, 5000);
+        }, 2200);
         return;
     }
 

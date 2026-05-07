@@ -19,100 +19,7 @@ $panel-dark: #1E293B;
     flex-direction: column;
 }
 
-// ========================================
-// UNIFIED V2 HEADER (DESKTOP/TOTEM)
-// ========================================
-.v2-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 40px;
-    height: 180px;
-    position: relative;
-    z-index: 20;
 
-    .header-left {
-        display: flex;
-        align-items: center;
-        gap: 30px;
-    }
-
-    .back-btn {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-
-        ion-icon {
-            color: #ffffff;
-            font-size: 28px;
-            transition: color 0.3s;
-        }
-
-        &:hover {
-            background: #c8102e;
-            transform: scale(1.05);
-            border-color: #c8102e;
-        }
-
-        &:active {
-            transform: scale(0.95);
-        }
-    }
-
-    .logo-container {
-        pointer-events: none;
-
-        .logo-img {
-            height: clamp(50px, 8vw, 150px);
-            max-width: 350px;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
-        }
-    }
-
-    .header-separator {
-        flex: 1;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-        margin: 0 40px;
-    }
-
-    .sede-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        pointer-events: none;
-
-        .sede-line {
-            font-family: 'Exo 2', sans-serif;
-            font-size: 32px;
-            font-weight: 800;
-            color: white;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            line-height: 1;
-        }
-
-        .renca-line {
-            font-family: 'Exo 2', sans-serif;
-            font-size: 32px;
-            font-weight: 800;
-            color: #c8102e;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            line-height: 1;
-        }
-    }
-}
 
 // ==============================================
 // PORTAL COLUMNS & CARDS
@@ -424,42 +331,6 @@ $panel-dark: #1E293B;
     .main-grid {
         height: 100%;
         overflow: hidden; // Evitar scroll total en el hub
-    }
-
-    .v2-header {
-        height: 70px; // Aún más compacto
-        padding: 5px 15px;
-
-        .header-left {
-            gap: 12px;
-        }
-
-        .back-btn {
-            width: 36px;
-            height: 36px;
-
-            ion-icon {
-                font-size: 16px;
-            }
-        }
-
-        .logo-container .logo-img {
-            height: 45px;
-        }
-
-        .header-separator {
-            display: none;
-        }
-
-        .sede-container {
-
-            .sede-line,
-            .renca-line {
-                font-size: 13px;
-                letter-spacing: 0.5px;
-                padding-right: 10px;
-            }
-        }
     }
 
     .content-row {

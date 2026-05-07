@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
   IonContent, IonHeader, IonIcon, IonButton,
-  IonSpinner, IonFab, IonFabButton
+  IonSpinner
 } from '@ionic/angular/standalone';
 import { TimelineService } from '../../../../core/services/timeline.service';
 import { Historia } from '../../../../core/models/historia.model';
@@ -31,7 +31,7 @@ interface TimelineEvent extends Historia {
   standalone: true,
   imports: [
     CommonModule,
-    IonContent, IonButton, IonIcon, IonSpinner, IonFab, IonFabButton,
+    IonContent, IonButton, IonIcon, IonSpinner,
     RouterModule,
     HomeFooterComponent,
     BackgroundBrilloComponent,

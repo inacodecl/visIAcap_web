@@ -23,6 +23,17 @@ $text-grey: #666;
     --header-bg-rgb: 255, 255, 255;
     --header-border-rgb: 0, 0, 0;
 
+    // Variables de V2 Header para Modo Claro
+    --v2-header-bg: rgba(255, 255, 255, 0.85);
+    --v2-header-border: rgba(0, 0, 0, 0.1);
+    --header-back-btn-bg: rgba(0, 0, 0, 0.05);
+    --header-back-btn-border: rgba(0, 0, 0, 0.15);
+    --header-back-btn-icon: #111111;
+    --header-separator-bg: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.15), transparent);
+    --header-text-color: #111111;
+    --header-text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+    --header-logo-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+
     --background: var(--bg-color);
     position: relative;
     overflow: hidden;
@@ -61,6 +72,17 @@ $text-grey: #666;
         --swiper-dot-active: #ffffff;
         --header-bg-rgb: 14, 18, 25;
         --header-border-rgb: 255, 255, 255;
+
+        // Variables de V2 Header para Modo Oscuro
+        --v2-header-bg: rgba(14, 18, 25, 0.6);
+        --v2-header-border: rgba(255, 255, 255, 0.1);
+        --header-back-btn-bg: rgba(255, 255, 255, 0.1);
+        --header-back-btn-border: rgba(255, 255, 255, 0.2);
+        --header-back-btn-icon: #ffffff;
+        --header-separator-bg: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        --header-text-color: #ffffff;
+        --header-text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        --header-logo-filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
     }
 }
 
@@ -78,105 +100,37 @@ $text-grey: #666;
 // Header
 // ==============================================
 .v2-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    left: 0;
-    box-sizing: border-box;
+    // Solo propiedades dinámicas del scroll
     padding: calc(15px - (5px * var(--header-progress, 0))) 40px;
     height: calc(180px - (90px * var(--header-progress, 0)));
     position: sticky;
     top: 0;
-    z-index: 1000;
-    background: rgba(var(--header-bg-rgb), calc(0.1 + 0.75 * var(--header-progress, 0))); // Glassmorphism que se adapta al modo
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(var(--header-border-rgb), calc(0.05 + 0.1 * var(--header-progress, 0)));
-    box-shadow: 0 4px 20px rgba(0, 0, 0, calc(0.5 * var(--header-progress, 0))); // Sombra que aparece al hacer scroll
 
     .header-left {
-        display: flex;
-        align-items: center;
         gap: calc(30px - (15px * var(--header-progress, 0)));
     }
 
     .back-btn {
         width: calc(60px - (15px * var(--header-progress, 0)));
         height: calc(60px - (15px * var(--header-progress, 0)));
-        border-radius: 50%;
-        background: var(--card-bg);
-        border: 1px solid var(--card-border);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-
+        
         ion-icon {
             font-size: calc(28px - (4px * var(--header-progress, 0)));
-            color: var(--text-main);
-            transition: color 0.3s;
-        }
-
-        &:hover {
-            background: #c8102e;
-            transform: scale(1.05);
-            border-color: #c8102e;
-        }
-
-        &:active {
-            transform: scale(0.95);
         }
     }
 
-    .logo-container {
-        pointer-events: none;
-        .logo-img {
-            height: clamp(50px, 8vw, 150px);
-            transform: scale(calc(1 - 0.35 * var(--header-progress, 0)));
-            transform-origin: left center;
-            max-width: 350px;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
-        }
+    .logo-container .logo-img {
+        transform: scale(calc(1 - 0.35 * var(--header-progress, 0)));
+        transform-origin: left center;
     }
 
     .header-separator {
-        flex: 1;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, var(--card-border), transparent);
-        margin: 0 40px;
         opacity: calc(1 - var(--header-progress, 0));
     }
 
     .sede-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        pointer-events: none;
         transform: scale(calc(1 - 0.3 * var(--header-progress, 0)));
         transform-origin: right center;
-
-        .sede-line {
-            font-family: 'Exo 2', sans-serif;
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: 2px;
-            line-height: 1;
-        }
-
-        .renca-line {
-            font-family: 'Exo 2', sans-serif;
-            font-size: 32px;
-            font-weight: 800;
-            color: #c8102e;
-            letter-spacing: 2px;
-            line-height: 1;
-        }
     }
 }
 
@@ -714,25 +668,6 @@ $text-grey: #666;
             gap: calc(12px - (4px * var(--header-progress, 0)));
         }
 
-        .back-btn {
-            width: calc(40px - (10px * var(--header-progress, 0)));
-            height: calc(40px - (10px * var(--header-progress, 0)));
-            background: transparent;
-            border: none;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
-            box-shadow: none;
-            
-            ion-icon {
-                font-size: calc(26px - (6px * var(--header-progress, 0)));
-            }
-            
-            &:hover {
-                background: transparent;
-                transform: scale(1.1);
-            }
-        }
-
         .logo-container .logo-img {
             height: calc(45px - (15px * var(--header-progress, 0)));
             transform: none;
@@ -807,60 +742,27 @@ $text-grey: #666;
 // ==============================================
 @media (max-width: 575px) {
     .v2-header {
-        height: calc(80px - (30px * var(--header-progress, 0))); // Achicar progresivamente el header
+        height: calc(80px - (30px * var(--header-progress, 0)));
         padding: calc(10px - (5px * var(--header-progress, 0))) 15px;
-        background: rgba(var(--header-bg-rgb), calc(0.1 + 0.75 * var(--header-progress, 0)));
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        border-bottom: 1px solid rgba(var(--header-border-rgb), calc(0.05 + 0.1 * var(--header-progress, 0)));
-        box-shadow: 0 4px 20px rgba(0, 0, 0, calc(0.5 * var(--header-progress, 0)));
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        
+
         .header-left {
-            gap: calc(12px - (4px * var(--header-progress, 0))); // Reducir el gap
-            padding-left: 0;
+            gap: calc(12px - (4px * var(--header-progress, 0)));
         }
 
         .back-btn {
-            position: relative;
             width: calc(40px - (10px * var(--header-progress, 0)));
             height: calc(40px - (10px * var(--header-progress, 0)));
-            min-width: 0;
-            background: transparent; // Quitar la esfera semitransparente
-            border: none;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
-            box-shadow: none;
             
-            ion-icon { 
-                font-size: calc(26px - (6px * var(--header-progress, 0))); 
-            }
-            
-            &:hover {
-                background: transparent;
-                transform: scale(1.1);
-            }
+            ion-icon { font-size: calc(26px - (6px * var(--header-progress, 0))); }
         }
 
         .logo-container .logo-img {
-            height: calc(45px - (15px * var(--header-progress, 0))); // Encoger logo progresivamente
-            width: auto;
-            transform: none; // Anula el scale de desktop
-        }
-
-        .header-separator {
-            display: none; // Ocultar para que no empuje el texto hacia afuera
+            height: calc(45px - (15px * var(--header-progress, 0)));
         }
 
         .sede-container {
-            transform: none; // Anula el scale de desktop porque se maneja por font-size aquí
-            margin-left: auto; 
-            text-align: right; 
             .sede-line, .renca-line {
-                font-size: calc(14px - (4px * var(--header-progress, 0))); // Encoger los textos también
-                letter-spacing: 0.5px;
+                font-size: calc(14px - (4px * var(--header-progress, 0)));
             }
         }
     }
