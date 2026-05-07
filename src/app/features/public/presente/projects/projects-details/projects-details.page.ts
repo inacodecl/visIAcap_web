@@ -69,7 +69,7 @@ export class ProjectsDetailsPage implements OnInit {
     }
 
     openUrl(url: string) {
-        this.externalTabService.openTab(url);
+        this.externalTabService.openModal(url, this.proyecto()?.titulo);
     }
 
     // ========================================

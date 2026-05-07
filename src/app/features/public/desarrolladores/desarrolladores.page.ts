@@ -72,35 +72,11 @@ export class DesarrolladoresPage implements OnInit, ViewWillEnter, ViewWillLeave
   private visibilityTimeout: any;
 
   developers = [
-    {
-      id: 'nicolas',
-      name: 'Nicolas García',
-      role: 'BACKEND SPECIALIST',
-      image: '/assets/img/dev-nicolas.png',
-      bio: 'Holaaa, me apasiona el mundo de las páginas web y descubrir de forma ingeniosa cómo funcionan las cosas por detrás. Me gusta mucho desarrollarme en el Backend, asegurándome de que todo el sistema interno y los datos trabajen de manera rápida y sin problemas.',
-      badges: [
-        { name: 'Python', icon: 'logo-python' },
-        { name: 'Redis', icon: 'server-outline' },
-        { name: 'Docker', icon: 'logo-docker' }
-      ]
-    },
-    {
-      id: 'jarod',
-      name: 'Jarod Pinto',
-      role: 'FULL-STACK',
-      image: '/assets/img/dev-jarod.png',
-      bio: 'Soy Jarod Pinto me gusta la creación de páginas web y aplicaciones móviles. Me gusta tener una visión completa de cada proyecto, por lo que disfruto mucho desarrollarme tanto en la parte visual como en la lógica interna.',
-      badges: [
-        { name: 'Node.js', icon: 'logo-nodejs' },
-        { name: 'React Native', icon: 'logo-react' },
-        { name: 'PostgreSQL', icon: 'server-outline' }
-      ]
-    },
-    {
+        {
       id: 'benjamin',
       name: 'Benjamin Gonzalez',
       role: 'FRONTEND SPECIALIST',
-      image: '/assets/img/dev-benjamin.png',
+      image: '/assets/img/dev-benjamin.jpeg',
       bio: 'Hola que tal, me apasiona crear páginas web y darle vida a las ideas en la pantalla. Disfruto mucho armando la estructura visual y desarrollándome directamente en el Frontend, siempre buscando que nuestros proyectos se vean geniales y sean fáciles de utilizar o navegar.',
       badges: [
         { name: 'Angular', icon: 'logo-angular' },
@@ -109,10 +85,34 @@ export class DesarrolladoresPage implements OnInit, ViewWillEnter, ViewWillLeave
       ]
     },
     {
+      id: 'jarod',
+      name: 'Jarod Pinto',
+      role: 'FULL-STACK',
+      image: '/assets/img/dev-jarod.jpeg',
+      bio: 'Soy Jarod Pinto me gusta la creación de páginas web y aplicaciones móviles. Me gusta tener una visión completa de cada proyecto, por lo que disfruto mucho desarrollarme tanto en la parte visual como en la lógica interna.',
+      badges: [
+        { name: 'Node.js', icon: 'logo-nodejs' },
+        { name: 'React Native', icon: 'logo-react' },
+        { name: 'PostgreSQL', icon: 'server-outline' }
+      ]
+    },
+        {
+      id: 'nicolas',
+      name: 'Nicolas García',
+      role: 'BACKEND SPECIALIST',
+      image: '/assets/img/dev-nicolas.jpeg',
+      bio: 'Holaaa, me apasiona el mundo de las páginas web y descubrir de forma ingeniosa cómo funcionan las cosas por detrás. Me gusta mucho desarrollarme en el Backend, asegurándome de que todo el sistema interno y los datos trabajen de manera rápida y sin problemas.',
+      badges: [
+        { name: 'Python', icon: 'logo-python' },
+        { name: 'Redis', icon: 'server-outline' },
+        { name: 'Docker', icon: 'logo-docker' }
+      ]
+    },
+    {
       id: 'lisbeth',
       name: 'Lisbeth Valenzuela',
       role: 'CEO',
-      image: '/assets/img/lisbeth.jpg',
+      image: '/assets/img/lisbeth.jpeg',
       bio: 'Soy Lisbeth Valenzuela, egresada de tecnico en administracion, estudiando la ingeniería de esta misma; gracias a mi carrera logré aprender sobre la gestión de tiempos y organizaciones. Estoy feliz de formar mi profesión en inacap donde se aprende haciendo.',
       badges: [
         { name: 'Análisis', icon: 'stats-chart-outline' },
@@ -124,7 +124,7 @@ export class DesarrolladoresPage implements OnInit, ViewWillEnter, ViewWillLeave
       id: 'cesar',
       name: 'Cesar Vilches',
       role: 'CEO',
-      image: '/assets/img/cesar.jpg',
+      image: '/assets/img/cesar.jpeg',
       bio: 'Soy César Vilches, titulado en Administración de Empresas. Me enfoco en estrategia, innovación y desarrollo de proyectos, participando en la coordinación de equipos y la integración de distintas ideas. Me gusta aportar con una mirada analítica y orientada a resultados, me caracterizo por ser resiliente y estar en constante mejora.',
       badges: [
         { name: 'Análisis', icon: 'stats-chart-outline' },
@@ -136,7 +136,7 @@ export class DesarrolladoresPage implements OnInit, ViewWillEnter, ViewWillLeave
       id: 'victoria',
       name: 'Victoria Rojas',
       role: 'CEO',
-      image: '/assets/img/victoria.jpg',
+      image: '/assets/img/victoria.jpeg',
       bio: 'Mi nombre es Victoria Rojas, soy titulada como Técnico de Nivel Superior en Administración de Empresas y actualmente estudiante de Ingeniería en Administración de Empresas. Me apasiona esta área, ya que permite desarrollarse y aportar en distintos ámbitos, tanto personales como organizacionales.',
       badges: [
         { name: 'Campo', icon: 'people-outline' },

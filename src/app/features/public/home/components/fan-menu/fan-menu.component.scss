@@ -44,7 +44,7 @@
 }
 
 /* COLORES CORPORATIVOS */
-.item-inacode { background-color: #CC0000 !important; }
+.item-gdi { background-color: #CC0000 !important; }
 .item-inago { background-color: #f59e0b !important; }
 .item-zenz { background-color: #000000 !important; }
 .item-midae { background-color: #e21f26 !important; }
@@ -75,12 +75,12 @@
 }
 
 /* LÓGICA VERTICAL TIPO HAMBURGUESA (UNO ARRIBA DEL OTRO) */
-.fan-menu-container.active .item-inacode { 
+.fan-menu-container.active .item-gdi { 
     opacity: 1; 
     transform: translate(0px, -440px) scale(1); /* El más alto */
     transition-delay: 0.0s;
 }
-.fan-menu-container.active .item-inacode:hover {
+.fan-menu-container.active .item-gdi:hover {
     transform: translate(0px, -440px) scale(1.08);
     filter: brightness(1.15);
     box-shadow: 0 0 25px rgba(51, 65, 85, 0.6);
@@ -277,12 +277,12 @@
     }
 
     /* Ajuste de distancias en el stack vertical para móvil reducido */
-    .fan-menu-container.active .item-inacode { transform: translate(0px, -280px) scale(1); }
+    .fan-menu-container.active .item-gdi { transform: translate(0px, -280px) scale(1); }
     .fan-menu-container.active .item-inago { transform: translate(0px, -210px) scale(1); }
     .fan-menu-container.active .item-zenz { transform: translate(0px, -140px) scale(1); }
     .fan-menu-container.active .item-midae { transform: translate(0px, -70px) scale(1); }
 
-    .fan-menu-container.active .item-inacode:hover { transform: translate(0px, -280px) scale(1.05); }
+    .fan-menu-container.active .item-gdi:hover { transform: translate(0px, -280px) scale(1.05); }
     .fan-menu-container.active .item-inago:hover { transform: translate(0px, -210px) scale(1.05); }
     .fan-menu-container.active .item-zenz:hover { transform: translate(0px, -140px) scale(1.05); }
     .fan-menu-container.active .item-midae:hover { transform: translate(0px, -70px) scale(1.05); }

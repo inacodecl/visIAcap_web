@@ -81,13 +81,18 @@ export class ExternalLinkButtonComponent implements OnInit, OnDestroy {
 
   /** Maneja el clic del usuario en el botón. */
   handleClick(): void {
+    // Para entornos de Tótem, preferimos abrir en modal para no perder el control
+    this.externalTabService.openModal(this.url, this.label);
+    
+    /* 
+    // Lógica original de pestañas con cooldown:
     const result = this.externalTabService.openTab(this.url);
 
     if (!result.opened && result.remainingMs > 0) {
       // Está en cooldown: iniciar/actualizar el contador visual
       this.startCountdown(result.remainingMs);
     }
-    // Si opened === true, no hacemos nada extra (la pestaña ya se abrió/enfocó)
+    */
   }
 
   /** Inicia el intervalo que actualiza el contador regresivo cada 100ms. */

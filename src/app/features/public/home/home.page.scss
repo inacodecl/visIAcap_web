@@ -112,9 +112,10 @@ $text-dark: #333;
 
         .logo-img {
             width: auto;
-            max-width: 100%; // Evitar desbordamiento
+            max-width: 60%; // Evitar desbordamiento
             height: clamp(40px, 80%, 150px); // Logo escala con el header
             object-fit: contain;
+            padding-left: 60px;
         }
     }
 
@@ -122,7 +123,7 @@ $text-dark: #333;
     .header-separator {
         width: 3px;
         height: 60%;
-        background-color: #333;
+        background-color: #f5f5f5;
         margin: 0 15px;
         border-radius: 2px;
 
@@ -136,10 +137,11 @@ $text-dark: #333;
         display: flex;
         flex-direction: column;
         text-align: left;
+        padding-right: 40px;
 
         span {
             font-weight: 800;
-            color: $text-dark;
+            color: $footer-bg;
             text-transform: uppercase;
             line-height: 1.2;
 
@@ -148,7 +150,7 @@ $text-dark: #333;
             letter-spacing: clamp(1px, 0.2vw, 3px);
 
             // Sombra blanca para contraste sobre figuras
-            text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.65);
+            //text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.65);
         }
     }
 }

@@ -1,0 +1,63 @@
+<ion-header class="browser-header">
+  <div class="header-content glass-panel">
+    <div class="header-left">
+      <button class="back-btn" (click)="close()" aria-label="Volver">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <span>Volver a Visiacap</span>
+      </button>
+    </div>
+
+    <div class="header-center">
+      <div class="url-badge">
+        <ion-icon name="globe-outline"></ion-icon>
+        <span class="url-text">{{ url }}</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <button class="action-btn new-tab-btn" (click)="openInNewTab()" aria-label="Abrir en pestaña">
+        <ion-icon name="open-outline"></ion-icon>
+      </button>
+      <button class="action-btn" (click)="refresh()" aria-label="Recargar">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </button>
+      <button class="action-btn close-btn" (click)="close()" aria-label="Cerrar">
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+</ion-header>
+
+<ion-content class="browser-content" [scrollX]="false" [scrollY]="false">
+  <div class="iframe-container">
+    @if (isLoading()) {
+      <div class="loading-overlay" [class.with-fallback]="showFallback()">
+        <ion-spinner name="crescent" color="danger"></ion-spinner>
+        <p>Cargando proyecto...</p>
+
+        @if (showFallback()) {
+          <div class="fallback-message">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <h3>¿Demora demasiado?</h3>
+            <p>Es posible que este sitio no permita ser visualizado aquí.</p>
+            <button class="btn-fallback" (click)="openInNewTab()">
+              ABRIR EN PESTAÑA NUEVA
+              <ion-icon name="open-outline"></ion-icon>
+            </button>
+          </div>
+        }
+      </div>
+    }
+
+    @if (safeUrl()) {
+      <iframe 
+        [src]="safeUrl()!" 
+        (load)="onIframeLoad()"
+        class="project-iframe"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    }
+  </div>
+</ion-content>

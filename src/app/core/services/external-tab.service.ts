@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { ModalController } from '@ionic/angular/standalone';
+import { ProjectBrowserModalComponent } from '../../components/modals/project-browser-modal/project-browser-modal.component';
 
 /**
  * ============================================================
@@ -16,6 +18,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ExternalTabService {
+  private modalCtrl = inject(ModalController);
 
   // ─────────────────────────────────────────────
   // ⚙️  PARÁMETROS CONFIGURABLES
@@ -103,6 +106,30 @@ export class ExternalTabService {
     this.autoCloseTimers.set(url, timer);
 
     return { opened: true, remainingMs: 0 };
+  }
+
+  /**
+   * Abre una URL en un modal de pantalla completa dentro de la app.
+   * Ideal para tótems y kioscos para mantener el control de la navegación.
+   * 
+   * PARCHE TEMPORAL: Redirige a openTab mientras los servidores externos no permitan iframes.
+   */
+  async openModal(url: string, title?: string) {
+    /* 
+    // Comentado temporalmente para evitar pantallas de espera
+    const modal = await this.modalCtrl.create({
+      component: ProjectBrowserModalComponent,
+      componentProps: {
+        url: url,
+        projectTitle: title || 'Proyecto'
+      },
+      cssClass: 'full-screen-modal'
+    });
+    return await modal.present();
+    */
+
+    // REDIRECCIÓN DIRECTA A PESTAÑA (Cero espera)
+    this.openTab(url);
   }
 
   /**

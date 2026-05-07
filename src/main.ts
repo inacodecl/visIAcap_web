@@ -17,7 +17,7 @@ registerLocaleData(localeEs);
 
 // Bloquear gestos multitáctiles para evitar zoom en pantallas táctiles/tótems
 document.addEventListener('touchstart', (event) => {
-  if (event.touches.length > 1) {
+  if (event.touches && event.touches.length > 1) {
     event.preventDefault();
   }
 }, { passive: false });
