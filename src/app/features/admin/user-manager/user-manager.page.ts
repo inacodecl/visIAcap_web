@@ -127,6 +127,7 @@ export class UserManagerPage implements OnInit {
     async saveUser() {
         if (this.userForm.invalid) {
             this.userForm.markAllAsTouched();
+            this.showToast('No se puede guardar. Revisa los campos obligatorios o formatos inválidos marcados en rojo.', 'danger');
             return;
         }
 

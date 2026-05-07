@@ -155,6 +155,7 @@ export class InterviewManagerPage implements OnInit {
     saveEntrevista() {
         if (this.interviewForm.invalid) {
             this.interviewForm.markAllAsTouched();
+            this.showToast('No se puede guardar. Revisa los campos obligatorios y formatos (ej. URL de YouTube válida).', 'danger');
             return;
         }
 

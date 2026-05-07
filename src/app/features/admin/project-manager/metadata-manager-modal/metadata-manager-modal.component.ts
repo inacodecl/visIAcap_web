@@ -71,7 +71,10 @@ export class MetadataManagerModalComponent implements OnInit {
     }
 
     createItem() {
-        if (!this.newSlug || !this.newNombre) return;
+        if (!this.newSlug || !this.newNombre) {
+            this.showToast('No se puede crear. Slug y Nombre son obligatorios.', 'danger');
+            return;
+        }
         this.isLoading.set(true);
 
         const payload = { slug: this.newSlug, nombre_es: this.newNombre };

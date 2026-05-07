@@ -20,30 +20,30 @@
                 <h6 class="menu-label">GESTIÓN DE CONTENIDO</h6>
                 <nav class="sidebar-nav">
                     <!-- Dashboard Home -->
-                    <a routerLink="/admin/dashboard/resumen" routerLinkActive="active" class="nav-item">
+                    <a routerLink="/admin/dashboard/resumen" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
                         <ion-icon name="grid-outline"></ion-icon>
                         <span>Resumen</span>
                     </a>
 
                     <!-- Admin (Content) -->
                     <ng-container *ngIf="!authService.isSuperAdmin">
-                        <a routerLink="/admin/dashboard/historias" routerLinkActive="active" class="nav-item">
+                        <a routerLink="/admin/dashboard/historias" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
                             <ion-icon name="time-outline"></ion-icon>
                             <span>Línea de Tiempo</span>
                         </a>
-                        <a routerLink="/admin/dashboard/entrevistas" routerLinkActive="active" class="nav-item">
+                        <a routerLink="/admin/dashboard/entrevistas" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
                             <ion-icon name="videocam-outline"></ion-icon>
                             <span>Entrevistas</span>
                         </a>
-                        <a routerLink="/admin/dashboard/galeria" routerLinkActive="active" class="nav-item">
+                        <a routerLink="/admin/dashboard/galeria" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
                             <ion-icon name="images-outline"></ion-icon>
                             <span>Galería</span>
                         </a>
-                        <a routerLink="/admin/dashboard/proyectos" routerLinkActive="active" class="nav-item">
+                        <a routerLink="/admin/dashboard/proyectos" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
                             <ion-icon name="rocket-outline"></ion-icon>
                             <span>Proyectos</span>
                         </a>
-                        <a routerLink="/admin/dashboard/futuro" routerLinkActive="active" class="nav-item">
+                        <a routerLink="/admin/dashboard/futuro" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
                             <ion-icon name="newspaper-outline"></ion-icon>
                             <span>Futuro (Noticias)</span>
                         </a>
@@ -51,7 +51,7 @@
 
                     <!-- SuperAdmin -->
                     <ng-container *ngIf="authService.isSuperAdmin">
-                        <a routerLink="/admin/dashboard/usuarios" routerLinkActive="active" class="nav-item">
+                        <a routerLink="/admin/dashboard/usuarios" routerLinkActive="active" class="nav-item" (click)="closeMobileMenu()">
                             <ion-icon name="people-outline"></ion-icon>
                             <span>Usuarios</span>
                         </a>
@@ -60,7 +60,7 @@
             </div>
 
             <div class="sidebar-footer">
-                <button class="logout-btn" (click)="logout()">
+                <button class="logout-btn" (click)="closeMobileMenu(); logout()">
                     <ion-icon name="log-out-outline"></ion-icon>
                     <span>Cerrar Sesión</span>
                 </button>

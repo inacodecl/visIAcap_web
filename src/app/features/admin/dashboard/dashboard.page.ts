@@ -49,6 +49,10 @@ export class DashboardPage implements OnInit {
         this.mobileMenuOpen = !this.mobileMenuOpen;
     }
 
+    closeMobileMenu() {
+        this.mobileMenuOpen = false;
+    }
+
     async logout() {
         // Cierra cualquier popover abierto (como el del nivel de administrador)
         try {

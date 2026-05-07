@@ -261,6 +261,7 @@ export class HistoryManagerPage implements OnInit {
     async saveHistoria() {
         if (this.historyForm.invalid) {
             this.historyForm.markAllAsTouched();
+            this.showToast('No se puede guardar. Faltan datos obligatorios o hay formatos inválidos. Revisa los campos en rojo.', 'danger');
             return;
         }
 

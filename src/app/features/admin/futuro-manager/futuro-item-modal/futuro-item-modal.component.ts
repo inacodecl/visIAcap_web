@@ -80,8 +80,21 @@ export class FuturoItemModalComponent implements OnInit {
         return 'Evento del Mes';
     }
 
+    private async showToast(message: string, color: 'success' | 'danger' | 'warning' = 'success') {
+        const toast = document.createElement('ion-toast');
+        toast.message = message;
+        toast.duration = 2000;
+        toast.color = color;
+        toast.position = 'bottom';
+        document.body.appendChild(toast);
+        await toast.present();
+    }
+
     save() {
-        if (!this.formData.titulo) return;
+        if (!this.formData.titulo) {
+            this.showToast('No se puede guardar. El título es obligatorio.', 'danger');
+            return;
+        }
 
         let obs: any; // Use any to handle different Observable return types
         if (this.isEdit) {

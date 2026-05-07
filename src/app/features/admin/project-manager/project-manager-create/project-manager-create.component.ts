@@ -267,6 +267,7 @@ export class ProjectManagerCreateComponent implements OnInit {
     save() {
         if (this.projectForm.invalid) {
             this.projectForm.markAllAsTouched();
+            this.presentToast('No se puede guardar. Faltan datos obligatorios o hay formatos inválidos. Revisa los campos marcados en rojo.', 'danger');
             return;
         }
 
