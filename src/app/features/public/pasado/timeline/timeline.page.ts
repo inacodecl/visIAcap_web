@@ -310,10 +310,15 @@ export class TimelinePage implements OnInit, AfterViewInit, OnDestroy {
       // Expandir actual
       milestone.expanded = true;
 
-      // Scroll suave hacia la tarjeta para asegurar visibilidad en la caja del Scroll de Ionic
+      // Primer scroll rápido para retroalimentación visual inmediata
       setTimeout(() => {
           cardElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }, 100);
+
+      // Segundo scroll de ajuste fino una vez que la tarjeta esté casi expandida por completo (esencial para el Tótem vertical)
+      setTimeout(() => {
+          cardElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 400);
   }
 
   closeMilestone(milestone: TimelineEvent, event: Event) {

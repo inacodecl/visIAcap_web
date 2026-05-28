@@ -547,3 +547,187 @@ $dark-bg: #0B0B0E;
         }
     }
 }
+
+/* ==========================================================================
+   OPTIMIZACIONES PARA PANTALLAS DE ESCRITORIO (DESKTOP)
+   Reduce el tamaño del header y footer para maximizar el área de contenido.
+   ========================================================================== */
+@media (min-width: 992px) and (orientation: landscape) {
+    // Reducción del Header Unificado V2
+    .v2-header {
+        height: calc(100px - (30px * var(--header-progress, 0))) !important;
+        padding: calc(10px - (3px * var(--header-progress, 0))) 30px !important;
+        
+        .header-left {
+            gap: calc(20px - (8px * var(--header-progress, 0))) !important;
+        }
+
+        .back-btn {
+            width: calc(46px - (8px * var(--header-progress, 0))) !important;
+            height: calc(46px - (8px * var(--header-progress, 0))) !important;
+            
+            ion-icon {
+                font-size: calc(22px - (2px * var(--header-progress, 0))) !important;
+            }
+        }
+
+        .logo-container .logo-img {
+            height: calc(65px - (20px * var(--header-progress, 0))) !important;
+            transform: none !important;
+        }
+
+        .sede-container {
+            transform: scale(calc(1 - 0.15 * var(--header-progress, 0))) !important;
+            
+            .sede-line,
+            .renca-line {
+                font-size: 20px !important;
+                letter-spacing: 1px !important;
+            }
+        }
+        
+        .header-separator {
+            margin: 0 25px !important;
+        }
+    }
+
+    // Reducción del Footer Home Component en esta página
+    app-home-footer {
+        ::ng-deep {
+            .v2-footer {
+                padding: 12px 40px !important;
+            }
+
+            .footer-spacer {
+                width: 48px !important;
+                height: 48px !important;
+                min-width: 48px !important;
+            }
+
+            .footer-btn {
+                width: 48px !important;
+                height: 48px !important;
+                
+                ion-icon {
+                    font-size: 24px !important;
+                }
+            }
+
+            .brand-text {
+                font-size: 1.15rem !important;
+                letter-spacing: 3px !important;
+            }
+
+            .brand-year {
+                font-size: 0.85rem !important;
+                margin-top: 2px !important;
+            }
+        }
+    }
+
+    // Botón Galería alineado
+    .galeria-footer-btn {
+        bottom: 12px !important;
+        left: 40px !important;
+        
+        app-button-image {
+            transform: scale(0.7) !important;
+            transform-origin: center center !important;
+        }
+    }
+
+    // Tarjeta de hitos en formato horizontal expandido
+    .card {
+        &.expanded {
+            flex-direction: row !important;
+            align-items: stretch !important;
+            max-width: 1000px !important;
+            height: 70vh !important;
+            max-height: 600px !important;
+            border-radius: 30px !important;
+
+            .card-hero {
+                position: relative !important;
+                width: 48% !important;
+                height: 100% !important;
+                flex-shrink: 0 !important;
+                -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%) !important;
+                mask-image: linear-gradient(to right, black 85%, transparent 100%) !important;
+                z-index: 2 !important;
+
+                .hero-bg, .slide-img {
+                    width: 100% !important;
+                    height: 100% !important;
+                }
+            }
+
+            .card-overlay {
+                display: none !important;
+            }
+
+            .card-content {
+                width: 52% !important;
+                height: 100% !important;
+                padding: 40px !important;
+                background: rgba(#0B0B0E, 0.9) !important;
+                backdrop-filter: blur(10px) !important;
+                -webkit-backdrop-filter: blur(10px) !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                z-index: 3 !important;
+
+                .content-inner {
+                    margin-top: 0 !important;
+                    height: 100% !important;
+                    overflow-y: auto !important;
+                    padding-right: 15px !important;
+
+                    &::-webkit-scrollbar {
+                        width: 6px !important;
+                    }
+                    &::-webkit-scrollbar-track {
+                        background: transparent !important;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background: rgba(255, 255, 255, 0.1) !important;
+                        border-radius: 10px !important;
+                    }
+                    &::-webkit-scrollbar-thumb:hover {
+                        background: rgba(#FF3333, 0.4) !important;
+                    }
+                }
+
+                h2 {
+                    font-size: 26px !important;
+                    margin-bottom: 12px !important;
+                    font-weight: 800 !important;
+                    -webkit-line-clamp: unset !important;
+                    line-clamp: unset !important;
+                    display: block !important;
+                }
+
+                p.main-desc {
+                    display: none !important; /* Esconder descripción truncada en expandido */
+                }
+
+                .extra-details {
+                    opacity: 1 !important;
+                    max-height: none !important;
+                    font-size: 16px !important;
+                    line-height: 1.6 !important;
+                    color: #e0e0e5 !important;
+                    margin-top: 10px !important;
+                }
+            }
+
+            .close-btn {
+                top: 25px !important;
+                right: 25px !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                z-index: 20 !important;
+            }
+        }
+    }
+}
