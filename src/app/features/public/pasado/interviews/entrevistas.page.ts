@@ -72,11 +72,17 @@ export class EntrevistasPage implements OnInit, AfterViewInit, OnDestroy {
 
     private updateModalBreakpoints() {
         if (window.innerWidth <= 768) {
+            // Celular / Móvil
             this.modalBreakpoints.set([0, 0.85]);
             this.modalInitialBreakpoint.set(0.85);
-        } else {
+        } else if (window.innerHeight > window.innerWidth) {
+            // Tótem (Vertical/Portrait con ancho > 768px)
             this.modalBreakpoints.set([0, 0.6]);
             this.modalInitialBreakpoint.set(0.6);
+        } else {
+            // PC / Desktop (Horizontal/Landscape)
+            this.modalBreakpoints.set([0, 0.90]);
+            this.modalInitialBreakpoint.set(0.90);
         }
     }
 

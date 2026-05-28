@@ -339,6 +339,24 @@ ion-modal.editorial-bottom-modal {
     background: radial-gradient(at 50% 0%, #1e1b4b 0%, transparent 40%), #020617;
     overflow-y: auto;
 
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 3px;
+        &:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    }
+
+    .modal-left-column, .modal-right-column {
+        width: 100%;
+    }
+
     .video-section {
         width: 100%;
         padding: 0 16px;
@@ -512,6 +530,113 @@ ion-modal.editorial-bottom-modal {
                 background: rgba(255, 255, 255, 0.1);
                 border-color: #fff;
                 transform: translateY(-2px);
+            }
+        }
+    }
+
+    @media (min-width: 769px) and (orientation: landscape) {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center;
+        gap: 50px;
+        align-items: stretch;
+        padding: 40px 60px;
+        height: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        box-sizing: border-box;
+
+        .modal-left-column {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+
+            .video-section {
+                width: 100%;
+                padding: 0;
+                margin-bottom: 20px;
+                
+                .iframe-wrapper {
+                    max-width: 100%;
+                }
+            }
+
+            .video-controls {
+                width: 100%;
+                max-width: 100%;
+                padding: 10px 0 0 0;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                gap: 2rem;
+            }
+        }
+
+        .modal-divider {
+            display: none;
+        }
+
+        .modal-right-column {
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+
+            .info-section {
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+
+                .title-row {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 12px;
+                    margin-bottom: 15px;
+                }
+
+                .modal-title {
+                    font-size: 1.8rem;
+                }
+
+                .modal-desc {
+                    font-size: 1.05rem;
+                    margin: 0;
+                    color: #94a3b8;
+                    overflow-y: auto;
+                    max-height: 250px;
+                    
+                    &::-webkit-scrollbar {
+                        width: 6px;
+                    }
+                    &::-webkit-scrollbar-track {
+                        background: transparent;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background: rgba(255, 255, 255, 0.15);
+                        border-radius: 3px;
+                        &:hover {
+                            background: rgba(255, 255, 255, 0.3);
+                        }
+                    }
+                }
+            }
+
+            .modal-action-footer {
+                padding: 0;
+                margin: 0;
+                display: flex;
+                justify-content: flex-start;
+                margin-top: auto;
+                
+                .close-vision-btn {
+                    margin-top: 20px;
+                    padding: 12px 24px;
+                }
             }
         }
     }
