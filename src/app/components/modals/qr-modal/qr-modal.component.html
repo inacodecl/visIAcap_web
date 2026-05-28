@@ -1,0 +1,32 @@
+<div class="qr-modal-container">
+  <!-- Botón de cerrar de esquina superior derecha -->
+  <button class="close-btn" (click)="close()" aria-label="Cerrar modal">
+    <ion-icon name="close-outline"></ion-icon>
+  </button>
+
+  <!-- Encabezado de la Modal -->
+  <div class="qr-header">
+    <div class="glow-accent"></div>
+    <h2 class="qr-title">QR InacapSmart</h2>
+    <p class="qr-subtitle">Lleva la experiencia inteligente contigo</p>
+  </div>
+
+  <!-- Contenido Central: Código QR -->
+  <div class="qr-content">
+    <div class="qr-frame">
+      <div class="scanner-line"></div>
+      <img src="assets/img/qr-inacapsmart.png" alt="Código QR InacapSmart" class="qr-image" />
+    </div>
+  </div>
+
+  <!-- Información de ayuda para el escaneo -->
+  <div class="qr-footer">
+    <p class="qr-instruction">
+      Escanea este código con la cámara de tu smartphone para acceder directamente a <strong>inacapsmart.cl/home</strong>.
+    </p>
+    
+    <button class="action-btn" (click)="close()">
+      Entendido
+    </button>
+  </div>
+</div>

@@ -79,3 +79,27 @@ Se ha integrado `src/theme/totem.scss` para estilos específicos de pantallas ve
 ```powershell
 ng g c components/[nombre carpet<>]/[nombre componente].component --standalone
 ```
+
+## Funcionalidad de Código QR InacapSmart (v2.1)
+
+### Descripción
+Se ha incorporado una nueva opción en el menú popover del footer llamada **QR InacapSmart**, colocada estéticamente entre "Cambio de Idioma y Traducción" y "Equipo Desarrollador". Al hacer clic sobre ella, se despliega un modal centrado en la pantalla con el código QR que redirige a `https://inacapsmart.cl/home`.
+La modal cuenta con efectos visuales premium de **Glassmorphism** (`backdrop-filter`), animaciones fluidas a 60 FPS con transformaciones CSS y un efecto interactivo de línea láser de escáner. El diseño es adaptativo (responsivo) y está especialmente optimizado para pantallas táctiles de gran formato (Tótems interactivos) y dispositivos móviles.
+
+### Tecnologías
+- **Componentes Standalone de Angular 17+** (`QrModalComponent`).
+- **Ionic Framework 7+** (`ModalController` e `IonIcon`).
+- **CSS Avanzado / SCSS** con Glassmorphism (`backdrop-filter`) y Keyframes para micro-interacciones fluidas.
+- **Offline First**: Carga la imagen del código QR de manera local (`src/assets/img/qr-inacapsmart.png`), garantizando la funcionalidad completa sin depender de conexión externa a internet en los Tótems de exhibición.
+
+### Instrucciones de Ejecución
+1. Asegurarse de tener la imagen del código QR descargada en `src/assets/img/qr-inacapsmart.png`.
+2. Ejecutar la aplicación en modo desarrollo local usando:
+   ```powershell
+   ionic serve
+   ```
+3. Hacer clic en el botón `(i)` en la esquina inferior del footer y seleccionar **QR InacapSmart**.
+
+### Endpoints y Contratos de Datos
+- **Tipo de Acción de Popover**: `'qr'` añadido al contrato de acciones de `SystemMenuComponent`.
+- **Ruta del Código QR**: `https://inacapsmart.cl/home`.
