@@ -1,4 +1,4 @@
-import { Component, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, Input, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonIcon, IonModal } from '@ionic/angular/standalone';
@@ -6,6 +6,7 @@ import { addIcons } from 'ionicons';
 import { newspaperOutline, arrowForwardOutline, arrowBackOutline, closeOutline, calendarOutline, pricetagOutline } from 'ionicons/icons';
 import { Noticia } from '../../futuro.models';
 import { register } from 'swiper/element/bundle';
+import { LanguageService } from 'src/app/core/services/language.service';
 
 register();
 
@@ -24,6 +25,7 @@ export class NoticiasFuturoComponent {
   selectedNoticia: Noticia | null = null;
   displayDate: string = '';
   private closeTimeoutId: any;
+  private languageService = inject(LanguageService);
 
   constructor() {
     addIcons({ newspaperOutline, arrowForwardOutline, arrowBackOutline, closeOutline, calendarOutline, pricetagOutline });
@@ -53,8 +55,9 @@ export class NoticiasFuturoComponent {
     if (noticia.created_at) {
       const date = new Date(noticia.created_at);
       if (!isNaN(date.getTime())) {
-        const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-        return meses[date.getMonth()];
+        const lang = this.languageService.getCurrentLang();
+        const monthName = date.toLocaleString(lang, { month: 'long' });
+        return monthName.charAt(0).toUpperCase() + monthName.slice(1);
       }
     }
     

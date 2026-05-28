@@ -12,8 +12,8 @@
         </div>
         <div class="header-separator"></div>
         <div class="sede-container">
-            <span class="sede-line">PRESENTE</span>
-            <span class="renca-line">RENCA</span>
+            <span class="sede-line">{{ 'PRESENTE.TITLE' | translate }}</span>
+            <span class="renca-line">{{ 'HOME.RENCA' | translate }}</span>
         </div>
     </header>
 
@@ -29,7 +29,7 @@
             style="font-size: 64px; margin-bottom: 20px; color: var(--ion-color-danger);"></ion-icon>
         <h2>{{ 'PROJECT_DETAIL.NOT_FOUND_TITLE' | translate }}</h2>
         <p>{{ 'PROJECT_DETAIL.NOT_FOUND_DESC' | translate }}</p>
-        <ion-button routerLink="/presente/projects" color="danger" style="margin-top:20px;">Volver</ion-button>
+        <ion-button routerLink="/presente/projects" color="danger" style="margin-top:20px;">{{ 'HEADER.BACK' | translate }}</ion-button>
     </div>
     } @else {
 
@@ -38,7 +38,7 @@
 
         <!-- HERO: Foto contenida como tarjeta -->
         <div class="hero-card">
-            <div class="badge-red">PROYECTO PRESENTE</div>
+            <div class="badge-red">{{ 'PROJECT_DETAIL.BADGE' | translate }}</div>
             <img [src]="proyecto()?.image_cover_url || 'assets/images/placeholder-project.jpg'"
                 alt="{{ proyecto()?.titulo }}" class="hero-img">
         </div>
@@ -53,7 +53,7 @@
                     <div class="icon-wrap">
                         <ion-icon name="calendar-outline"></ion-icon>
                     </div>
-                    <label>AÑO</label>
+                    <label>{{ 'PROJECT_DETAIL.YEAR' | translate }}</label>
                     <span>{{ proyecto()?.start_date ? (proyecto()?.start_date | date:'yyyy') : '2026' }}</span>
                 </div>
 
@@ -61,7 +61,7 @@
                     <div class="icon-wrap">
                         <ion-icon name="location-outline"></ion-icon>
                     </div>
-                    <label>UBICACIÓN</label>
+                    <label>{{ 'PROJECT_DETAIL.LOCATION' | translate }}</label>
                     <span>{{ proyecto()?.location || 'San miguel, Chile' }}</span>
                 </div>
 
@@ -69,8 +69,8 @@
                     <div class="icon-wrap">
                         <ion-icon name="pulse-outline"></ion-icon>
                     </div>
-                    <label>ESTADO</label>
-                    <span>Activo</span>
+                    <label>{{ 'PROJECT_DETAIL.STATUS' | translate }}</label>
+                    <span>{{ 'PROJECT_DETAIL.STATUS_ACTIVE' | translate }}</span>
                 </div>
 
             </div>
@@ -78,10 +78,10 @@
             <!-- 1. Historia -->
             <div class="history-section">
                 <div class="history-header">
-                    <h3 class="section-title">HISTORIA DEL PROYECTO</h3>
+                    <h3 class="section-title">{{ 'PROJECT_DETAIL.HISTORY' | translate }}</h3>
                     @if (proyecto()?.url_externa) {
                     <button class="btn-totem-red-inline" (click)="openUrl(proyecto()!.url_externa!)">
-                        <span>VISITAR SITIO WEB</span>
+                        <span>{{ 'PROJECT_DETAIL.VISIT_WEBSITE' | translate }}</span>
                         <ion-icon name="globe"></ion-icon>
                     </button>
                     }
@@ -97,7 +97,7 @@
             <!-- 2. Equipo del Proyecto -->
             @if (proyecto()?.members?.length) {
             <div class="team-section">
-                <h3 class="section-title-small">Equipo del Proyecto</h3>
+                <h3 class="section-title-small">{{ 'PROJECT_DETAIL.TEAM' | translate }}</h3>
 
                 @for (member of proyecto()?.members; track member.nombre) {
                 <div class="team-card">
@@ -107,7 +107,7 @@
                     <div class="member-info">
                         <span class="name">{{ member.nombre }}</span>
                         <!-- Siempre minúsculo según el diseño -->
-                        <span class="role">{{ member.rol || 'Desarrollador' }}</span>
+                        <span class="role">{{ member.rol || ('PROJECT_DETAIL.DEFAULT_ROLE' | translate) }}</span>
                     </div>
                 </div>
                 }
@@ -116,10 +116,10 @@
 
             <!-- 3. Galería Placeholder -->
             <div class="gallery-section">
-                <h3 class="section-title-small">Galería</h3>
+                <h3 class="section-title-small">{{ 'PROJECT_DETAIL.GALLERY' | translate }}</h3>
                 <div class="gallery-container">
                     <ion-icon name="images-outline" style="font-size:30px; margin-right: 10px;"></ion-icon>
-                    <span>Sin imágenes adicionales</span>
+                    <span>{{ 'PROJECT_DETAIL.GALLERY_EMPTY' | translate }}</span>
                 </div>
             </div>
 
@@ -148,8 +148,8 @@
                             <ion-icon name="qr-code-outline"></ion-icon>
                         </div>
                         <div class="text-info">
-                            <h4>Compartir este proyecto</h4>
-                            <p>Escanea el código para abrirlo en tu dispositivo</p>
+                            <h4>{{ 'PROJECT_DETAIL.QR_TITLE' | translate }}</h4>
+                            <p>{{ 'PROJECT_DETAIL.QR_SUBTITLE' | translate }}</p>
                         </div>
                     </div>
                     <div class="qr-code-wrapper">
@@ -158,7 +158,7 @@
                             [errorCorrectionLevel]="'M'">
                         </qrcode>
                     </div>
-                    <p class="qr-footer-text">Escanea con la cámara de tu celular</p>
+                    <p class="qr-footer-text">{{ 'PROJECT_DETAIL.QR_CAPTION' | translate }}</p>
                 </div>
             </div>
             }

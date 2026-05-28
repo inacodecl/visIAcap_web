@@ -54,6 +54,7 @@
     },
     "FUTURO": {
         "TITLE": "FUTURE",
+        "HERO_LABEL": "EXPLORE HORIZONS",
         "HERO_TITLE": "The Future of",
         "HERO_HIGHLIGHT": "INACAP Renca",
         "HERO_SUBTITLE": "Innovation, technology, and student talent building tomorrow.",
@@ -75,7 +76,14 @@
         "FEATURED_BADGE": "FEATURED PROJECT",
         "VIEW_FULL": "View Full Project",
         "READ_MORE": "Read more",
-        "EMPTY": "No projects published at this time."
+        "EMPTY": "No projects published at this time.",
+        "MORE_PROJECTS": "+Projects",
+        "SEDE_RENCA": "Renca Campus",
+        "IMPACT_TITLE": "Inacap Renca Impact",
+        "IMPACT_STUDENTS": "Students",
+        "IMPACT_TEACHERS": "Teachers",
+        "IMPACT_PROJECTS": "Projects",
+        "IMPACT_SINCE": "Since"
     },
     "PROJECT_DETAIL": {
         "LOADING": "Loading project...",
@@ -94,7 +102,8 @@
         "VISIT_WEBSITE": "Visit Official Website",
         "QR_TITLE": "Share this project",
         "QR_SUBTITLE": "Scan the code to open it on your device",
-        "QR_CAPTION": "Scan with your phone camera"
+        "QR_CAPTION": "Scan with your phone camera",
+        "DEFAULT_ROLE": "Developer"
     },
     "GALERIA": {
         "TITLE": "GALLERY"
@@ -116,5 +125,19 @@
         "RETRY": "Retry",
         "CANCEL": "Cancel",
         "LOADING": "Loading..."
+    },
+    "MONTHS": {
+        "ENE": "JAN",
+        "FEB": "FEB",
+        "MAR": "MAR",
+        "ABR": "APR",
+        "MAY": "MAY",
+        "JUN": "JUN",
+        "JUL": "JUL",
+        "AGO": "AUG",
+        "SEP": "SEP",
+        "OCT": "OCT",
+        "NOV": "NOV",
+        "DIC": "DEC"
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, inject } from '@angular/core';
+import { Component, OnInit, signal, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,6 +12,7 @@ import { forkJoin } from 'rxjs';
 // Servicios
 import { ProyectosService } from 'src/app/core/services/proyectos.service';
 import { EsteMesService } from 'src/app/core/services/este-mes.service';
+import { LanguageService } from 'src/app/core/services/language.service';
 import { Proyecto } from 'src/app/core/models/proyecto.model';
 
 // Modelos migrados
@@ -41,14 +42,16 @@ export class FuturoPage implements OnInit {
     private router = inject(Router);
     private proyectosService = inject(ProyectosService);
     private esteMesService = inject(EsteMesService);
+    private languageService = inject(LanguageService);
 
     // Estado de carga
     loading = signal<boolean>(true);
 
-    // Mes actual del dispositivo
-    nombreMesActual = signal<string>(
-        new Date().toLocaleString('es-ES', { month: 'long' }).toUpperCase()
-    );
+    // Mes actual del dispositivo (calculado dinámicamente)
+    nombreMesActual = computed(() => {
+        const lang = this.languageService.getCurrentLang();
+        return new Date().toLocaleString(lang, { month: 'long' }).toUpperCase();
+    });
 
     // ========================================
     // Datos de los bloques (Signals)
@@ -72,10 +75,11 @@ export class FuturoPage implements OnInit {
      */
     loadData() {
         this.loading.set(true);
+        const currentLang = this.languageService.getCurrentLang();
 
         forkJoin({
-            proyectos: this.proyectosService.getProyectos('es', 'futuro'),
-            esteMes: this.esteMesService.getAll('es')
+            proyectos: this.proyectosService.getProyectos(currentLang, 'futuro'),
+            esteMes: this.esteMesService.getAll(currentLang)
         }).subscribe({
             next: (res) => {
                 this.proyectos.set(this.mapProyectos(res.proyectos));

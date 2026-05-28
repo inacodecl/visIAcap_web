@@ -11,8 +11,8 @@
       </div>
       <div class="header-separator"></div>
       <div class="sede-container">
-          <span class="sede-line">PRESENTE</span>
-          <span class="renca-line">RENCA</span>
+          <span class="sede-line">{{ 'PRESENTE.TITLE' | translate }}</span>
+          <span class="renca-line">{{ 'HOME.RENCA' | translate }}</span>
       </div>
   </header>
 
@@ -71,7 +71,7 @@
       </div>
       } @else {
       
-      <h2 class="sub-section-title">+Proyectos</h2>
+      <h2 class="sub-section-title">{{ 'PRESENTE.MORE_PROJECTS' | translate }}</h2>
 
       <div class="projects-grid-container">
         <!-- Netflix-style swiper for other initiatives -->
@@ -94,7 +94,7 @@
                 <p class="mini-desc">{{ proj.resumen }}</p>
                 
                 <div class="mini-footer">
-                  <span class="mini-footer-text">Sede Renca</span>
+                  <span class="mini-footer-text">{{ 'PRESENTE.SEDE_RENCA' | translate }}</span>
                   <ion-icon class="mini-footer-icon" name="arrow-forward-outline"></ion-icon>
                 </div>
               </div>
@@ -110,29 +110,29 @@
       <!-- Sección de Noticias movida desde Futuro -->
       <app-noticias-futuro [noticias]="noticias()"></app-noticias-futuro>
 
-      <h2 class="sub-section-title">Impacto Inacap Renca</h2>
+      <h2 class="sub-section-title">{{ 'PRESENTE.IMPACT_TITLE' | translate }}</h2>
       
       <!-- Stats / Metrics Grid -->
       <div class="stats-bento-grid">
         <div class="stat-bento">
           <span class="stat-number">+5350</span>
           <br>
-          <span class="stat-label">Alumnos</span>
+          <span class="stat-label">{{ 'PRESENTE.IMPACT_STUDENTS' | translate }}</span>
         </div>
         <div class="stat-bento">
           <span class="stat-number">+180</span>
           <br>
-          <span class="stat-label">Docentes</span>
+          <span class="stat-label">{{ 'PRESENTE.IMPACT_TEACHERS' | translate }}</span>
         </div>
         <div class="stat-bento">
           <span class="stat-number">{{ totalProjects() || 0 }}</span>
           <br>
-          <span class="stat-label">Proyectos</span>
+          <span class="stat-label">{{ 'PRESENTE.IMPACT_PROJECTS' | translate }}</span>
         </div>
         <div class="stat-bento">
           <span class="stat-number">1966</span>
           <br>  
-          <span class="stat-label">Desde</span>
+          <span class="stat-label">{{ 'PRESENTE.IMPACT_SINCE' | translate }}</span>
         </div>
       </div>
 

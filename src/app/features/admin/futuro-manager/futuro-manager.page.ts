@@ -15,6 +15,7 @@ import {
 // Servicios del Futuro
 import { NoticiasFuturoService } from '../../../core/services/noticias-futuro.service';
 import { EsteMesService } from '../../../core/services/este-mes.service';
+import { LanguageService } from 'src/app/core/services/language.service';
 
 // Tipos
 import { Noticia, EventoEsteMes } from '../../public/futuro/futuro.models';
@@ -46,6 +47,7 @@ export class FuturoManagerPage implements OnInit {
     private modalCtrl = inject(ModalController);
     private alertCtrl = inject(AlertController);
     private toastCtrl = inject(ToastController);
+    private languageService = inject(LanguageService);
 
     // Signals
     searchTerm = signal('');
@@ -85,14 +87,16 @@ export class FuturoManagerPage implements OnInit {
     }
 
     loadAllData() {
-        this.noticiasService.getAllAdmin('es').subscribe();
-        this.esteMesService.getAllAdmin('es').subscribe();
+        const currentLang = this.languageService.getCurrentLang();
+        this.noticiasService.getAllAdmin(currentLang).subscribe();
+        this.esteMesService.getAllAdmin(currentLang).subscribe();
     }
 
     loadCurrentSegment() {
         const seg = this.activeSegment();
-        if (seg === 'noticias') this.noticiasService.getAllAdmin('es').subscribe();
-        else if (seg === 'este-mes') this.esteMesService.getAllAdmin('es').subscribe();
+        const currentLang = this.languageService.getCurrentLang();
+        if (seg === 'noticias') this.noticiasService.getAllAdmin(currentLang).subscribe();
+        else if (seg === 'este-mes') this.esteMesService.getAllAdmin(currentLang).subscribe();
     }
 
     segmentChanged(event: any) {

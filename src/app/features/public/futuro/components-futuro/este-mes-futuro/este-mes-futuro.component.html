@@ -23,7 +23,7 @@
                 
                 <div class="event-date">
                     <span class="day">{{ evento.dia }}</span>
-                    <span class="dow">{{ evento.mes }}</span>
+                    <span class="dow">{{ 'MONTHS.' + evento.mes.toUpperCase() | translate }}</span>
                 </div>
                 
                 <div class="event-details">

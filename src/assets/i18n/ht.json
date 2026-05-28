@@ -54,6 +54,7 @@
     },
     "FUTURO": {
         "TITLE": "AVNI",
+        "HERO_LABEL": "EKSPLORE ORIZON",
         "HERO_TITLE": "Avni",
         "HERO_HIGHLIGHT": "INACAP Renca",
         "HERO_SUBTITLE": "Inovasyon, teknoloji ak talan etidyan k ap konstwi demen.",
@@ -75,7 +76,14 @@
         "FEATURED_BADGE": "PWOJÈ VEDÈT",
         "VIEW_FULL": "Wè Pwojè Konplè",
         "READ_MORE": "Li plis",
-        "EMPTY": "Pa gen pwojè pibliye pou kounye a."
+        "EMPTY": "Pa gen pwojè pibliye pou kounye a.",
+        "MORE_PROJECTS": "+Pwojè yo",
+        "SEDE_RENCA": "Kanpis Renca",
+        "IMPACT_TITLE": "Enpak Inacap Renca",
+        "IMPACT_STUDENTS": "Elèv yo",
+        "IMPACT_TEACHERS": "Pwofesè yo",
+        "IMPACT_PROJECTS": "Pwojè yo",
+        "IMPACT_SINCE": "Depi"
     },
     "PROJECT_DETAIL": {
         "LOADING": "Ap chaje pwojè...",
@@ -94,7 +102,8 @@
         "VISIT_WEBSITE": "Vizite Sit Wèb Ofisyèl",
         "QR_TITLE": "Pataje pwojè sa a",
         "QR_SUBTITLE": "Eskane kòd la pou louvri l nan aparèy ou",
-        "QR_CAPTION": "Eskane avèk kamera telefòn ou"
+        "QR_CAPTION": "Eskane avèk kamera telefòn ou",
+        "DEFAULT_ROLE": "Devlopè"
     },
     "GALERIA": {
         "TITLE": "GALERI"
@@ -116,5 +125,19 @@
         "RETRY": "Eseye ankò",
         "CANCEL": "Anile",
         "LOADING": "Ap chaje..."
+    },
+    "MONTHS": {
+        "ENE": "JAN",
+        "FEB": "FEB",
+        "MAR": "MAS",
+        "ABR": "AVR",
+        "MAY": "MÈ",
+        "JUN": "JEN",
+        "JUL": "JIL",
+        "AGO": "OUT",
+        "SEP": "SET",
+        "OCT": "OKT",
+        "NOV": "NOV",
+        "DIC": "DES"
     }
 }
