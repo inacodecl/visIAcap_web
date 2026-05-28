@@ -2,10 +2,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { IonIcon, IonButton } from '@ionic/angular/standalone';
-import { ActionSheetController, PopoverController } from '@ionic/angular/standalone';
+import { ActionSheetController, PopoverController, ModalController } from '@ionic/angular/standalone';
 import { ThemeSelectorComponent } from '../../theme-selector/theme-selector.component';
 import { SystemMenuComponent } from '../../menus/system-menu/system-menu.component';
 import { LanguageMenuComponent } from '../../menus/language-menu/language-menu.component';
+import { QrModalComponent } from '../../modals/qr-modal/qr-modal.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { accessibilityOutline, informationCircleOutline, logInOutline, languageOutline, closeOutline, colorPaletteOutline, codeWorkingOutline } from 'ionicons/icons';
@@ -24,6 +25,7 @@ export class HomeFooterComponent implements OnInit {
     private router = inject(Router);
     private actionSheetCtrl = inject(ActionSheetController);
     private popoverCtrl = inject(PopoverController);
+    private modalCtrl = inject(ModalController);
     private languageService = inject(LanguageService);
     private translateService = inject(TranslateService);
     private themeService = inject(ThemeService);
@@ -76,6 +78,8 @@ export class HomeFooterComponent implements OnInit {
                 setTimeout(() => this.openThemeSelector(), 250);
             } else if (action === 'language') {
                 setTimeout(() => this.openLanguageSelector(), 250);
+            } else if (action === 'qr') {
+                setTimeout(() => this.openQrModal(), 250);
             } else if (action === 'developers') {
                 this.goToDevelopers();
             }
@@ -104,5 +108,16 @@ export class HomeFooterComponent implements OnInit {
             animated: true
         });
         await popover.present();
+    }
+
+    async openQrModal() {
+        const modal = await this.modalCtrl.create({
+            component: QrModalComponent,
+            backdropDismiss: true,
+            cssClass: 'qr-modal-popover', // Clase CSS personalizada por si se requiere estilización extra
+            animated: true,
+            mode: 'md' // Diseño de modal uniforme
+        });
+        await modal.present();
     }
 }

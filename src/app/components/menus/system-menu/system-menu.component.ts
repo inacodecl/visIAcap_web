@@ -13,7 +13,7 @@ import { PopoverController } from '@ionic/angular/standalone';
 export class SystemMenuComponent {
   private popoverCtrl = inject(PopoverController);
 
-  dismissWith(action: 'theme' | 'language' | 'developers' | 'login') {
+  dismissWith(action: 'theme' | 'language' | 'qr' | 'developers' | 'login') {
     this.popoverCtrl.dismiss(action);
   }
 

@@ -90,6 +90,28 @@ ion-modal.glass-modal {
     }
 }
 
+/* ==========================================================================
+   MODAL QR INACAPSMART (v2.1)
+   Solución a recortes en escritorio, tótems y móviles.
+   ========================================================================== */
+ion-modal.qr-modal-popover {
+    --background: transparent;
+    --box-shadow: none;
+    --border-radius: 24px;
+    --width: fit-content;
+    --height: fit-content;
+    --max-width: 90vw;
+    --max-height: 90vh;
+    --backdrop-opacity: 0.7;
+
+    &::part(content) {
+        background: transparent;
+        box-shadow: none;
+        border-radius: 24px;
+        overflow: visible; /* Evita recortes en sombra y efectos internos */
+    }
+}
+
 // --- Ampliar modal de Proyectos en Escritorio ---
 @media (min-width: 1024px) {
     ion-modal.project-modal-large {
