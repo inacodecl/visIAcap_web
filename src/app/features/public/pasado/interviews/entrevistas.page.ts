@@ -42,6 +42,12 @@ export class EntrevistasPage implements OnInit, AfterViewInit, OnDestroy {
     entrevistas = signal<Entrevista[]>([]);
     isLoading = signal<boolean>(true);
     error = signal<string | null>(null);
+    progressHeader = 0;
+
+    onScroll(event: any) {
+        const scrollTop = event.detail.scrollTop;
+        this.progressHeader = Math.max(0, Math.min(1, scrollTop / 200));
+    }
 
     // Video Modal States
     isVideoModalOpen = signal<boolean>(false);

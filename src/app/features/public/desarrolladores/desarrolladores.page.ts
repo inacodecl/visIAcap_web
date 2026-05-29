@@ -12,7 +12,8 @@ import { addIcons } from 'ionicons';
 import {
   arrowBackOutline, logoNodejs, logoReact, logoPython, logoDocker,
   logoAngular, logoIonic, serverOutline, colorPaletteOutline,
-  peopleOutline, documentTextOutline, statsChartOutline, globeOutline
+  peopleOutline, documentTextOutline, statsChartOutline, globeOutline,
+  logoJavascript
 } from 'ionicons/icons';
 import { HomeFooterComponent } from '../../../components/footers/home-footer/home-footer.component';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -99,13 +100,15 @@ export class DesarrolladoresPage implements OnInit, ViewWillEnter, ViewWillLeave
         {
       id: 'nicolas',
       name: 'Nicolas García',
-      role: 'BACKEND SPECIALIST',
+      role: 'FULL-STACK',
       image: '/assets/img/dev-nicolas.jpeg',
-      bio: 'Holaaa, me apasiona el mundo de las páginas web y descubrir de forma ingeniosa cómo funcionan las cosas por detrás. Me gusta mucho desarrollarme en el Backend, asegurándome de que todo el sistema interno y los datos trabajen de manera rápida y sin problemas.',
+      bio: 'Hola, me apasiona el desarrollo de software y crear aplicaciones completas que unan una interfaz interactiva con una lógica sólida. Disfruto resolviendo retos técnicos y construyendo soluciones eficientes y rápidas.',
       badges: [
+        { name: 'Angular', icon: 'logo-angular' },
+        { name: 'Ionic', icon: 'logo-ionic' },
+        { name: 'Node.js', icon: 'logo-nodejs' },
         { name: 'Python', icon: 'logo-python' },
-        { name: 'Redis', icon: 'server-outline' },
-        { name: 'Docker', icon: 'logo-docker' }
+        { name: 'JavaScript', icon: 'logo-javascript' }
       ]
     },
     {
@@ -150,7 +153,8 @@ export class DesarrolladoresPage implements OnInit, ViewWillEnter, ViewWillLeave
     addIcons({
       arrowBackOutline, logoNodejs, logoReact, logoPython,
       logoDocker, logoAngular, logoIonic, serverOutline, colorPaletteOutline,
-      peopleOutline, documentTextOutline, statsChartOutline, globeOutline
+      peopleOutline, documentTextOutline, statsChartOutline, globeOutline,
+      logoJavascript
     });
   }
 

@@ -526,19 +526,28 @@ $dark-bg: #0B0B0E;
 // Botón de Galería posicionado sobre el footer-spacer (donde estaba el fan-menu)
 .galeria-footer-btn {
     position: fixed;
-    bottom: 23px;
-    left: 50px;
+    bottom: 12px;
+    left: 40px;
+    width: 48px;
+    height: 48px;
     z-index: 1001; // Sobre el footer (z-index: 1000)
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    app-button-image {
+        transform: scale(0.7);
+        transform-origin: center center;
+    }
 }
 
 @media (max-width: 575px) {
     .galeria-footer-btn {
-        bottom: -5px;
-        left: 7px;
+        bottom: 8px;
+        left: 16px;
+        width: 45px;
+        height: 45px;
 
         // Escalar todo proporcionalmente (64px * 0.65 ≈ 42px)
         app-button-image {
@@ -591,50 +600,6 @@ $dark-bg: #0B0B0E;
         }
     }
 
-    // Reducción del Footer Home Component en esta página
-    app-home-footer {
-        ::ng-deep {
-            .v2-footer {
-                padding: 12px 40px !important;
-            }
-
-            .footer-spacer {
-                width: 48px !important;
-                height: 48px !important;
-                min-width: 48px !important;
-            }
-
-            .footer-btn {
-                width: 48px !important;
-                height: 48px !important;
-                
-                ion-icon {
-                    font-size: 24px !important;
-                }
-            }
-
-            .brand-text {
-                font-size: 1.15rem !important;
-                letter-spacing: 3px !important;
-            }
-
-            .brand-year {
-                font-size: 0.85rem !important;
-                margin-top: 2px !important;
-            }
-        }
-    }
-
-    // Botón Galería alineado
-    .galeria-footer-btn {
-        bottom: 12px !important;
-        left: 40px !important;
-        
-        app-button-image {
-            transform: scale(0.7) !important;
-            transform-origin: center center !important;
-        }
-    }
 
     // Tarjeta de hitos en formato horizontal expandido
     .card {

@@ -411,4 +411,47 @@ ion-popover.system-menu-popover {
             }
         }
     }
+}
+
+/* ==========================================================================
+   OPTIMIZACIONES PARA PANTALLAS DE ESCRITORIO (DESKTOP) GLOBAL
+   Reduce el tamaño del header para maximizar el área de contenido en PC.
+   ========================================================================== */
+@media (min-width: 992px) and (orientation: landscape) {
+    .v2-header {
+        height: calc(100px - (30px * var(--header-progress, 0))) !important;
+        padding: calc(10px - (3px * var(--header-progress, 0))) 30px !important;
+        
+        .header-left {
+            gap: calc(20px - (8px * var(--header-progress, 0))) !important;
+        }
+
+        .back-btn {
+            width: calc(46px - (8px * var(--header-progress, 0))) !important;
+            height: calc(46px - (8px * var(--header-progress, 0))) !important;
+            
+            ion-icon {
+                font-size: calc(22px - (2px * var(--header-progress, 0))) !important;
+            }
+        }
+
+        .logo-container .logo-img {
+            height: calc(65px - (20px * var(--header-progress, 0))) !important;
+            transform: none !important;
+        }
+
+        .sede-container {
+            transform: scale(calc(1 - 0.15 * var(--header-progress, 0))) !important;
+            
+            .sede-line,
+            .renca-line {
+                font-size: 20px !important;
+                letter-spacing: 1px !important;
+            }
+        }
+        
+        .header-separator {
+            margin: 0 25px !important;
+        }
+    }
 }

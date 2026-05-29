@@ -27,13 +27,11 @@
     },
     "PASADO": {
         "TITLE": "PASE",
-        "TIMELINE_TITLE": "Liy",
-        "TIMELINE_TITLE2": "Tan",
+        "TIMELINE_TITLE": "Liy Tan",
         "TIMELINE_DESC": "Vwayaje nan istwa nou.",
         "TIMELINE_BTN": "EKSPLORE",
         "TIMELINE_MODULE": "Modil 01",
-        "INTERVIEWS_TITLE": "Ant",
-        "INTERVIEWS_TITLE2": "Reviw",
+        "INTERVIEWS_TITLE": "Antreviw",
         "INTERVIEWS_DESC": "Temwayaj sou avni Renca.",
         "INTERVIEWS_BTN": "WÈ GALRI",
         "INTERVIEWS_MODULE": "Modil 02"

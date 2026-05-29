@@ -159,11 +159,11 @@ $panel-dark: #1E293B;
         border: 1px solid rgba(255, 255, 255, 0.2);
 
         &.top-badge {
-            top: 10%;
+            top: 15px;
         }
 
         &.bottom-badge {
-            bottom: 10%;
+            bottom: 15px;
         }
     }
 }
@@ -257,7 +257,7 @@ $panel-dark: #1E293B;
     text-align: center;
 
     width: 90%;
-    max-width: 400px;
+    max-width: 480px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
 
     display: flex;
@@ -278,13 +278,15 @@ $panel-dark: #1E293B;
 
     h2 {
         font-family: 'Exo 2', sans-serif;
-        font-size: clamp(1.8rem, 3vw, 2.8rem);
+        font-size: clamp(1.6rem, 2.2vw, 2.4rem);
         font-weight: 700;
         color: white;
         text-transform: uppercase;
         line-height: 1.1;
         margin-bottom: 10px;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        word-break: keep-all;
+        overflow-wrap: break-word;
     }
 
     .portal-description {
@@ -387,5 +389,111 @@ $panel-dark: #1E293B;
     // Ocultar el salto de línea forzado en el título de la tarjeta Entrevistas
     .interviews-portal h2 br {
         display: none !important;
+    }
+}
+
+// ========================================
+// UNIFIED V2 HEADER (DESKTOP/TOTEM) OVERRIDES
+// ========================================
+.v2-header {
+    // Solo propiedades dinámicas del scroll
+    padding: calc(15px - (5px * var(--header-progress, 0))) 40px;
+    height: calc(180px - (90px * var(--header-progress, 0)));
+    position: sticky;
+    top: 0;
+
+    .header-left {
+        gap: calc(30px - (15px * var(--header-progress, 0)));
+    }
+
+    .back-btn {
+        width: calc(60px - (15px * var(--header-progress, 0)));
+        height: calc(60px - (15px * var(--header-progress, 0)));
+        
+        ion-icon {
+            font-size: calc(28px - (4px * var(--header-progress, 0)));
+        }
+    }
+
+    .logo-container .logo-img {
+        transform: scale(calc(1 - 0.35 * var(--header-progress, 0)));
+        transform-origin: left center;
+    }
+
+    .header-separator {
+        opacity: calc(1 - var(--header-progress, 0));
+    }
+
+    .sede-container {
+        transform: scale(calc(1 - 0.3 * var(--header-progress, 0)));
+        transform-origin: right center;
+    }
+}
+
+@media (max-width: 575px) {
+    .v2-header {
+        height: calc(80px - (30px * var(--header-progress, 0)));
+        padding: calc(10px - (5px * var(--header-progress, 0))) 15px;
+
+        .header-left {
+            gap: calc(12px - (4px * var(--header-progress, 0)));
+        }
+
+        .back-btn {
+            width: calc(40px - (10px * var(--header-progress, 0)));
+            height: calc(40px - (10px * var(--header-progress, 0)));
+            
+            ion-icon { font-size: calc(26px - (6px * var(--header-progress, 0))); }
+        }
+
+        .logo-container .logo-img {
+            height: calc(45px - (15px * var(--header-progress, 0)));
+        }
+
+        .sede-container {
+            .sede-line, .renca-line {
+                font-size: calc(14px - (4px * var(--header-progress, 0)));
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) and (orientation: landscape) {
+    // Reducción del Header Unificado V2
+    .v2-header {
+        height: calc(100px - (30px * var(--header-progress, 0))) !important;
+        padding: calc(10px - (3px * var(--header-progress, 0))) 30px !important;
+        
+        .header-left {
+            gap: calc(20px - (8px * var(--header-progress, 0))) !important;
+        }
+
+        .back-btn {
+            width: calc(46px - (8px * var(--header-progress, 0))) !important;
+            height: calc(46px - (8px * var(--header-progress, 0))) !important;
+            
+            ion-icon {
+                font-size: calc(22px - (2px * var(--header-progress, 0))) !important;
+            }
+        }
+
+        .logo-container .logo-img {
+            height: calc(65px - (20px * var(--header-progress, 0))) !important;
+            transform: none !important;
+        }
+
+        .sede-container {
+            transform: scale(calc(1 - 0.15 * var(--header-progress, 0))) !important;
+            
+            .sede-line,
+            .renca-line {
+                font-size: 20px !important;
+                letter-spacing: 1px !important;
+            }
+        }
+        
+        .header-separator {
+            margin: 0 25px !important;
+        }
     }
 }

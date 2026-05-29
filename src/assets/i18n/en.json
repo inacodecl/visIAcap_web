@@ -27,13 +27,11 @@
     },
     "PASADO": {
         "TITLE": "PAST",
-        "TIMELINE_TITLE": "Time",
-        "TIMELINE_TITLE2": "Line",
+        "TIMELINE_TITLE": "Timeline",
         "TIMELINE_DESC": "Travel through our history.",
         "TIMELINE_BTN": "EXPLORE",
         "TIMELINE_MODULE": "Module 01",
-        "INTERVIEWS_TITLE": "Inter",
-        "INTERVIEWS_TITLE2": "Views",
+        "INTERVIEWS_TITLE": "Interviews",
         "INTERVIEWS_DESC": "Testimonies from Renca's future.",
         "INTERVIEWS_BTN": "VIEW GALLERY",
         "INTERVIEWS_MODULE": "Module 02"

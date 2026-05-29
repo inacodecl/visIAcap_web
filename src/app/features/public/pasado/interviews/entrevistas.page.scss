@@ -30,6 +30,108 @@ $text-grey: #666;
 // ==============================================
 // Header
 // ==============================================
+.v2-header {
+    // Solo propiedades dinámicas del scroll
+    padding: calc(15px - (5px * var(--header-progress, 0))) 40px;
+    height: calc(180px - (90px * var(--header-progress, 0)));
+    position: sticky;
+    top: 0;
+
+    .header-left {
+        gap: calc(30px - (15px * var(--header-progress, 0)));
+    }
+
+    .back-btn {
+        width: calc(60px - (15px * var(--header-progress, 0)));
+        height: calc(60px - (15px * var(--header-progress, 0)));
+        
+        ion-icon {
+            font-size: calc(28px - (4px * var(--header-progress, 0)));
+        }
+    }
+
+    .logo-container .logo-img {
+        transform: scale(calc(1 - 0.35 * var(--header-progress, 0)));
+        transform-origin: left center;
+    }
+
+    .header-separator {
+        opacity: calc(1 - var(--header-progress, 0));
+    }
+
+    .sede-container {
+        transform: scale(calc(1 - 0.3 * var(--header-progress, 0)));
+        transform-origin: right center;
+    }
+}
+
+@media (max-width: 575px) {
+    .v2-header {
+        height: calc(80px - (30px * var(--header-progress, 0)));
+        padding: calc(10px - (5px * var(--header-progress, 0))) 15px;
+
+        .header-left {
+            gap: calc(12px - (4px * var(--header-progress, 0)));
+        }
+
+        .back-btn {
+            width: calc(40px - (10px * var(--header-progress, 0)));
+            height: calc(40px - (10px * var(--header-progress, 0)));
+            
+            ion-icon { font-size: calc(26px - (6px * var(--header-progress, 0))); }
+        }
+
+        .logo-container .logo-img {
+            height: calc(45px - (15px * var(--header-progress, 0)));
+        }
+
+        .sede-container {
+            .sede-line, .renca-line {
+                font-size: calc(14px - (4px * var(--header-progress, 0)));
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) and (orientation: landscape) {
+    // Reducción del Header Unificado V2
+    .v2-header {
+        height: calc(100px - (30px * var(--header-progress, 0))) !important;
+        padding: calc(10px - (3px * var(--header-progress, 0))) 30px !important;
+        
+        .header-left {
+            gap: calc(20px - (8px * var(--header-progress, 0))) !important;
+        }
+
+        .back-btn {
+            width: calc(46px - (8px * var(--header-progress, 0))) !important;
+            height: calc(46px - (8px * var(--header-progress, 0))) !important;
+            
+            ion-icon {
+                font-size: calc(22px - (2px * var(--header-progress, 0))) !important;
+            }
+        }
+
+        .logo-container .logo-img {
+            height: calc(65px - (20px * var(--header-progress, 0))) !important;
+            transform: none !important;
+        }
+
+        .sede-container {
+            transform: scale(calc(1 - 0.15 * var(--header-progress, 0))) !important;
+            
+            .sede-line,
+            .renca-line {
+                font-size: 20px !important;
+                letter-spacing: 1px !important;
+            }
+        }
+        
+        .header-separator {
+            margin: 0 25px !important;
+        }
+    }
+}
 
 
 // ==============================================

@@ -1,35 +1,35 @@
 :host {
     position: fixed;
-    bottom: 25px; /* Altura perfecta con respecto al footer */
-    left: 50px; /* Alineado justo encima del hueco de accessibility */
+    bottom: 12px; /* Altura perfecta con respecto al footer */
+    left: 40px; /* Alineado justo encima del hueco de accessibility */
     z-index: 1001;
 }
 
 .fan-menu-container {
     position: relative;
-    width: 70px; 
-    height: 70px;
+    width: 48px; 
+    height: 48px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 // Icon sizes convertidos de Tailwind
-.w-7 { width: 2.25rem; }
-.h-7 { height: 2.25rem; }
-.w-14 { width: 4.5rem; }
-.h-14 { height: 4.5rem; }
-.w-12 { width: 65px; }
-.h-12 { height: 65px; }
+.w-7 { width: 1.5rem; }
+.h-7 { height: 1.5rem; }
+.w-14 { width: 3rem; }
+.h-14 { height: 3rem; }
+.w-12 { width: 44px; }
+.h-12 { height: 44px; }
 .fill-white { fill: white; }
 
-.shadow-xl { box-shadow: 0 10px 25px rgba(0,0,0,0.25); }
-.shadow-2xl { box-shadow: 0 15px 35px rgba(0,0,0,0.35); }
+.shadow-xl { box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
+.shadow-2xl { box-shadow: 0 10px 20px rgba(0,0,0,0.35); }
 
 .menu-item {
     position: absolute;
-    width: 70px; 
-    height: 70px;
+    width: 48px; 
+    height: 48px;
     border: none;
     border-radius: 50%;
     color: white;
@@ -54,9 +54,9 @@
 .label {
     position: absolute;
     top: 50%;
-    left: calc(100% + 15px);
+    left: calc(100% + 10px);
     transform: translateY(-50%);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
     color: #ffffff; 
     letter-spacing: 0.5px;
@@ -77,11 +77,11 @@
 /* LÓGICA VERTICAL TIPO HAMBURGUESA (UNO ARRIBA DEL OTRO) */
 .fan-menu-container.active .item-gdi { 
     opacity: 1; 
-    transform: translate(0px, -440px) scale(1); /* El más alto */
+    transform: translate(0px, -300px) scale(1); /* El más alto */
     transition-delay: 0.0s;
 }
 .fan-menu-container.active .item-gdi:hover {
-    transform: translate(0px, -440px) scale(1.08);
+    transform: translate(0px, -300px) scale(1.08);
     filter: brightness(1.15);
     box-shadow: 0 0 25px rgba(51, 65, 85, 0.6);
     z-index: 20;
@@ -89,11 +89,11 @@
 
 .fan-menu-container.active .item-inago { 
     opacity: 1; 
-    transform: translate(0px, -330px) scale(1); 
+    transform: translate(0px, -225px) scale(1); 
     transition-delay: 0.1s;
 }
 .fan-menu-container.active .item-inago:hover {
-    transform: translate(0px, -330px) scale(1.08);
+    transform: translate(0px, -225px) scale(1.08);
     filter: brightness(1.15);
     box-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
     z-index: 20;
@@ -101,11 +101,11 @@
 
 .fan-menu-container.active .item-zenz { 
     opacity: 1; 
-    transform: translate(0px, -220px) scale(1); 
+    transform: translate(0px, -150px) scale(1); 
     transition-delay: 0.2s;
 }
 .fan-menu-container.active .item-zenz:hover {
-    transform: translate(0px, -220px) scale(1.08);
+    transform: translate(0px, -150px) scale(1.08);
     filter: brightness(1.15);
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
     z-index: 20;
@@ -113,11 +113,11 @@
 
 .fan-menu-container.active .item-midae { 
     opacity: 1; 
-    transform: translate(0px, -110px) scale(1); 
+    transform: translate(0px, -75px) scale(1); 
     transition-delay: 0.3s;
 }
 .fan-menu-container.active .item-midae:hover {
-    transform: translate(0px, -110px) scale(1.08);
+    transform: translate(0px, -75px) scale(1.08);
     filter: brightness(1.15);
     box-shadow: 0 0 25px rgba(226, 31, 38, 0.6);
     z-index: 20;
@@ -125,8 +125,8 @@
 
 /* BOTÓN PRINCIPAL */
 .main-trigger {
-    width: 70px; /* Igual que el info-btn (70px) */
-    height: 70px; 
+    width: 48px; /* Igual que el info-btn (48px) */
+    height: 48px; 
     border-radius: 50%;
     border: none;
     background-color: #e21f26; /* Rojo INACAP */
@@ -136,7 +136,7 @@
     justify-content: center;
     align-items: center;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 12px 35px rgba(226, 31, 38, 0.55);
+    box-shadow: 0 6px 20px rgba(226, 31, 38, 0.55);
 }
 
 .main-trigger:active {
@@ -152,8 +152,8 @@
     align-items: center;
     
     img, svg {
-        width: 45px !important;
-        height: 45px !important;
+        width: 30px !important;
+        height: 30px !important;
     }
 }
 

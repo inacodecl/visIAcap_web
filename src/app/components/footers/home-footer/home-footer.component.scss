@@ -42,7 +42,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px 50px;
+    padding: 12px 40px;
     background: var(--footer-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -52,9 +52,9 @@
 }
 
 .footer-spacer {
-    width: 70px;
-    height: 70px;
-    min-width: 70px;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
 }
 
 // --- Botones del Footer ---
@@ -62,8 +62,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 70px;
-    height: 70px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     border: 1px solid var(--btn-border);
     background: var(--btn-bg);
@@ -74,7 +74,7 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 
     ion-icon {
-        font-size: 34px;
+        font-size: 24px;
         color: var(--btn-icon);
         transition: all 0.3s ease;
         pointer-events: none;
@@ -101,20 +101,20 @@
 }
 
 .brand-text {
-    font-size: 1.6rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: var(--brand-text);
     text-transform: uppercase;
-    letter-spacing: 5px;
+    letter-spacing: 3px;
     text-shadow: var(--text-shadow);
     transition: color 0.3s ease;
 }
 
 .brand-year {
-    font-size: 1.2rem;
+    font-size: 0.85rem;
     font-weight: 400;
     color: var(--brand-year);
-    margin-top: 4px;
+    margin-top: 2px;
     letter-spacing: 2px;
     font-style: italic;
     transition: color 0.3s ease;
