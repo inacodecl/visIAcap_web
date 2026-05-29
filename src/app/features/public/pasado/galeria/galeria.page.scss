@@ -1,18 +1,18 @@
 :host {
-    // Forzar tema oscuro (igual que timeline) para el efecto glass
-    --header-bg: rgba(255, 255, 255, 0.05);
-    --header-border: rgba(255, 255, 255, 0.1);
+    // Light Theme (Por defecto en modo claro) - Alto contraste
+    --header-bg: rgba(255, 255, 255, 0.6);
+    --header-border: rgba(0, 0, 0, 0.1);
     
-    --header-back-btn-bg: rgba(255, 255, 255, 0.1);
-    --header-back-btn-border: rgba(255, 255, 255, 0.2);
-    --header-back-btn-icon: #ffffff;
+    --header-back-btn-bg: rgba(0, 0, 0, 0.06);
+    --header-back-btn-border: rgba(0, 0, 0, 0.08);
+    --header-back-btn-icon: #111111; /* Ícono negro para alto contraste */
     
-    --header-sede-text: #ffffff;
-    --header-sede-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    --header-sede-text: #111111;
+    --header-sede-shadow: none;
 }
 
 :host-context(html.ion-palette-dark) {
-    // Dark Theme (mismos valores)
+    // Dark Theme (Valores oscuros activos en modo nocturno)
     --header-bg: rgba(255, 255, 255, 0.05);
     --header-border: rgba(255, 255, 255, 0.1);
     
@@ -22,6 +22,15 @@
     
     --header-sede-text: #ffffff;
     --header-sede-shadow: 0 2px 4px rgba(0,0,0,0.5);
+
+    .v2-header .logo-container .logo-img {
+        &.light-logo {
+            display: none !important;
+        }
+        &.dark-logo {
+            display: block !important;
+        }
+    }
 }
 
 .v2-header {
@@ -47,6 +56,13 @@
     .logo-container .logo-img {
         transform: scale(calc(1 - 0.35 * var(--header-progress, 0)));
         transform-origin: left center;
+
+        &.light-logo {
+            display: block;
+        }
+        &.dark-logo {
+            display: none;
+        }
     }
 
     .header-separator {

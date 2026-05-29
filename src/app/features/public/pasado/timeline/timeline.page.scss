@@ -46,6 +46,17 @@ $dark-bg: #0B0B0E;
     --empty-state-text: #F8F9FA;
 }
 
+:host-context(html.ion-palette-dark) {
+    .v2-header .logo-container .logo-img {
+        &.light-logo {
+            display: none !important;
+        }
+        &.dark-logo {
+            display: block !important;
+        }
+    }
+}
+
 // ========================================
 // UNIFIED V2 HEADER (DESKTOP/TOTEM)
 // ========================================
@@ -72,6 +83,13 @@ $dark-bg: #0B0B0E;
     .logo-container .logo-img {
         transform: scale(calc(1 - 0.35 * var(--header-progress, 0)));
         transform-origin: left center;
+
+        &.light-logo {
+            display: block;
+        }
+        &.dark-logo {
+            display: none;
+        }
     }
 
     .header-separator {
