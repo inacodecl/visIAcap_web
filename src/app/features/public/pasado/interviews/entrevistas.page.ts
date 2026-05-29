@@ -60,6 +60,9 @@ export class EntrevistasPage implements OnInit, AfterViewInit, OnDestroy {
     // YouTube Player Control
     @ViewChild('youtubeIframe') youtubeIframe!: ElementRef<HTMLIFrameElement>;
     isPlayerPlaying = true;
+    isMuted = signal<boolean>(false);
+    currentVolume = signal<number>(100);
+    isVolumeSliderVisible = signal<boolean>(false);
     private playerCurrentTime = 0;
 
     // Animation Refs
@@ -185,6 +188,9 @@ export class EntrevistasPage implements OnInit, AfterViewInit, OnDestroy {
         this.isVideoModalOpen.set(false);
         this.isPlayerPlaying = true;
         this.playerCurrentTime = 0;
+        this.isMuted.set(false);
+        this.currentVolume.set(100);
+        this.isVolumeSliderVisible.set(false);
         setTimeout(() => {
             this.currentVideoUrl.set(null);
             this.currentEntrevista.set(null);
@@ -245,6 +251,34 @@ export class EntrevistasPage implements OnInit, AfterViewInit, OnDestroy {
     seekRelative(seconds: number) {
         const newTime = Math.max(0, this.playerCurrentTime + seconds);
         this.sendYouTubeCommand('seekTo', [newTime, true]);
+    }
+
+    toggleMute() {
+        if (this.isMuted()) {
+            this.sendYouTubeCommand('unMute');
+            this.isMuted.set(false);
+        } else {
+            this.sendYouTubeCommand('mute');
+            this.isMuted.set(true);
+        }
+    }
+
+    toggleVolumeSlider() {
+        this.isVolumeSliderVisible.set(!this.isVolumeSliderVisible());
+    }
+
+    onVolumeChange(event: Event) {
+        const input = event.target as HTMLInputElement;
+        const value = parseInt(input.value, 10);
+        this.currentVolume.set(value);
+        this.sendYouTubeCommand('setVolume', [value]);
+        if (value === 0) {
+            this.isMuted.set(true);
+            this.sendYouTubeCommand('mute');
+        } else {
+            this.isMuted.set(false);
+            this.sendYouTubeCommand('unMute');
+        }
     }
 
     ionViewWillEnter() {

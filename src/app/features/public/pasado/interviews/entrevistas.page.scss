@@ -455,6 +455,13 @@ ion-modal.editorial-bottom-modal {
         }
     }
 
+    .pc-only-footer {
+        display: none;
+    }
+    .mobile-totem-footer {
+        display: flex;
+    }
+
     .modal-left-column, .modal-right-column {
         width: 100%;
     }
@@ -484,8 +491,109 @@ ion-modal.editorial-bottom-modal {
                 width: 100%;
                 height: 100%;
                 border: none;
-                pointer-events: auto !important;
-                touch-action: auto !important;
+                pointer-events: none !important;
+                touch-action: none !important;
+            }
+        }
+    }
+
+    .volume-container {
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        padding: 0;
+        transition: all 0.2s ease;
+        position: relative;
+
+        .ctrl-volume-btn {
+            background: transparent !important;
+            border: none !important;
+            border-radius: 12px !important;
+            padding: 10px 14px !important;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            &:hover {
+                transform: none !important;
+            }
+        }
+
+        .volume-slider-wrapper {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            width: 44px;
+            height: 140px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.2s;
+            z-index: 100;
+            padding: 15px 0;
+            
+            .volume-slider-range {
+                width: 100px;
+                height: 4px;
+                -webkit-appearance: none;
+                appearance: none;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 2px;
+                outline: none;
+                cursor: pointer;
+                transform: rotate(-90deg);
+                transform-origin: center;
+                margin: 0;
+                
+                &::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    appearance: none;
+                    width: 14px;
+                    height: 14px;
+                    border-radius: 50%;
+                    background: #c8102e;
+                    transition: transform 0.1s ease;
+                    border: none;
+                    
+                    &:hover {
+                        transform: scale(1.2);
+                    }
+                }
+
+                &::-moz-range-thumb {
+                    width: 14px;
+                    height: 14px;
+                    border-radius: 50%;
+                    background: #c8102e;
+                    transition: transform 0.1s ease;
+                    border: none;
+                    
+                    &:hover {
+                        transform: scale(1.2);
+                    }
+                }
+            }
+        }
+
+        &.show-slider {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.35);
+            
+            .volume-slider-wrapper {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(-50%) translateY(0);
             }
         }
     }
@@ -674,6 +782,18 @@ ion-modal.editorial-bottom-modal {
                 justify-content: center;
                 gap: 2rem;
             }
+
+            .pc-only-footer {
+                display: flex !important;
+                justify-content: center;
+                width: 100%;
+                margin-top: 25px;
+                
+                .close-vision-btn {
+                    margin: 0;
+                    padding: 12px 24px;
+                }
+            }
         }
 
         .modal-divider {
@@ -728,17 +848,8 @@ ion-modal.editorial-bottom-modal {
                 }
             }
 
-            .modal-action-footer {
-                padding: 0;
-                margin: 0;
-                display: flex;
-                justify-content: flex-start;
-                margin-top: auto;
-                
-                .close-vision-btn {
-                    margin-top: 20px;
-                    padding: 12px 24px;
-                }
+            .mobile-totem-footer {
+                display: none !important;
             }
         }
     }
