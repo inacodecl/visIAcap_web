@@ -1,4 +1,4 @@
-<div class="qr-modal-container">
+<div class="qr-modal-container" [class.presentation-mode]="isPresentationMode">
   <!-- Botón de cerrar de esquina superior derecha -->
   <button class="close-btn" (click)="close()" aria-label="Cerrar modal">
     <ion-icon name="close-outline"></ion-icon>
@@ -8,12 +8,12 @@
   <div class="qr-header">
     <div class="glow-accent"></div>
     <h2 class="qr-title">QR InacapSmart</h2>
-    <p class="qr-subtitle">Lleva la experiencia inteligente contigo</p>
+    <p class="qr-subtitle">Explora nuestros 60 años de historia</p>
   </div>
 
   <!-- Contenido Central: Código QR -->
   <div class="qr-content">
-    <div class="qr-frame">
+    <div class="qr-frame" (click)="onQrClick()">
       <div class="scanner-line"></div>
       <img src="assets/img/qr-inacapsmart.png" alt="Código QR InacapSmart" class="qr-image" />
     </div>
@@ -22,11 +22,18 @@
   <!-- Información de ayuda para el escaneo -->
   <div class="qr-footer">
     <p class="qr-instruction">
-      Escanea este código con la cámara de tu smartphone para acceder directamente a <strong>inacapsmart.cl/home</strong>.
+      Escanea este código con la cámara de tu smartphone para acceder directamente a <strong>inacapsmart.cl</strong>.
     </p>
     
     <button class="action-btn" (click)="close()">
       Entendido
     </button>
+    
+    <!-- Logos institucionales ocultos por defecto, visibles en modo presentación secreto -->
+    <div class="qr-presentation-logos">
+      <img src="assets/icon/Inacap-Renca-Smart-Logo-v8-fixed.svg" alt="Inacap Renca Smart" class="logo-smart" />
+      <div class="logo-separator"></div>
+      <img src="assets/icon/logo-inacap-60-blanco.png" alt="Inacap 60 Años" class="logo-60" />
+    </div>
   </div>
 </div>

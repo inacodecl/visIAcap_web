@@ -22,6 +22,12 @@
   /* Animación de entrada fluida */
   animation: modalEntrance 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   will-change: transform, opacity;
+  transition: max-width 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+              min-height 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+              padding 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+              gap 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+              border-radius 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+              background 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   color: #ffffff;
   font-family: 'Space Grotesk', 'Inter', sans-serif;
   text-align: center;
@@ -81,6 +87,7 @@
   z-index: 1;
   width: 100%;
   margin-bottom: 20px;
+  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   
   .qr-title {
     font-size: 26px;
@@ -122,7 +129,8 @@
   align-items: center;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  transition: transform 0.3s ease;
+  cursor: pointer; /* Indicar que es clickeable */
+  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   
   &:hover {
     transform: scale(1.02);
@@ -148,6 +156,7 @@
     object-fit: contain;
     border-radius: 8px;
     image-rendering: -webkit-optimize-contrast; /* Optimiza nitidez */
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   }
 }
 
@@ -161,6 +170,7 @@
   align-items: center;
   gap: 20px;
   margin-top: 15px;
+  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   
   .qr-instruction {
     font-size: 14px;
@@ -169,10 +179,48 @@
     margin: 0;
     font-weight: 300;
     max-width: 320px;
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     
     strong {
       color: var(--ion-color-primary, #c8102e);
       font-weight: 600;
+    }
+  }
+
+  /* Logos ocultos por defecto con soporte de animación bidireccional (entrada y salida) */
+  .qr-presentation-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    overflow: hidden;
+    transform: translateY(12px) scale(0.95);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    
+    .logo-smart {
+      height: 44px; /* Escalado un 15% más grande (de 38px) */
+      max-width: 180px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    .logo-separator {
+      width: 1px;
+      height: 28px; /* Escalado un 15% más grande (de 24px) */
+      background: rgba(255, 255, 255, 0.15);
+      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    .logo-60 {
+      height: 48px; /* Escalado un 15% más grande (de 42px) */
+      max-width: 180px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     }
   }
 }
@@ -188,7 +236,10 @@
   border-radius: 30px;
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(200, 16, 46, 0.35);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+              background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   letter-spacing: 0.2px;
   width: 100%;
   max-width: 240px;
@@ -330,5 +381,112 @@
     padding: 16px 54px;
     font-size: 17px;
     max-width: 280px;
+  }
+}
+
+/* ==============================================
+   MODO PRESENTACIÓN SECRETO (SOLO DESKTOP LANDSCAPE)
+   ============================================== */
+@media (min-width: 1024px) and (orientation: landscape) {
+  .qr-modal-container.presentation-mode {
+    max-width: 900px;
+    min-height: 520px;
+    padding: 48px 56px;
+    
+    display: grid;
+    grid-template-columns: 440px 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+      "qr header"
+      "qr footer";
+    gap: 16px 48px;
+    align-items: center;
+    text-align: left;
+    
+    .glow-accent {
+      // Reposicionar el brillo decorativo al centro del espacio del texto
+      left: 70%;
+      top: -20px;
+      width: 320px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(200, 16, 46, 0.25) 0%, rgba(200, 16, 46, 0) 70%);
+    }
+
+    .qr-header {
+      grid-area: header;
+      margin-bottom: 0;
+      align-self: end;
+      text-align: left;
+
+      .qr-title {
+        font-size: 38px;
+        background: linear-gradient(135deg, #ffffff 0%, #c8102e 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .qr-subtitle {
+        font-size: 16px;
+      }
+    }
+
+    .qr-content {
+      grid-area: qr;
+      margin: 0;
+      justify-content: center;
+      
+      .qr-frame {
+        padding: 24px;
+        border-radius: 32px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(200, 16, 46, 0.15);
+        border: 1px solid rgba(200, 16, 46, 0.3);
+
+        .qr-image {
+          width: 360px;  /* QR más grande como solicitó el usuario */
+          height: 360px; /* QR más grande como solicitó el usuario */
+        }
+
+        &:hover {
+          transform: scale(1.03);
+          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(200, 16, 46, 0.3);
+        }
+      }
+    }
+
+    .qr-footer {
+      grid-area: footer;
+      margin-top: 0;
+      align-self: stretch; /* Estirar para ocupar todo el alto disponible verticalmente */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 16px;
+      padding-bottom: 8px;
+
+      .qr-instruction {
+        font-size: 16px;
+        text-align: left;
+        max-width: 100%;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      .action-btn {
+        margin: 32px auto 0 auto; /* Centrado horizontalmente y separado cómodamente */
+        width: 100%;
+        max-width: 240px;
+      }
+
+      /* Mostrar y animar logos en modo presentación secreto (entrada/salida fluida por transición) */
+      .qr-presentation-logos {
+        opacity: 1;
+        visibility: visible;
+        max-height: 95px; /* Ampliado a 95px para dar espacio al escalado del 15% */
+        transform: translateY(0) scale(1);
+        margin: auto auto 0 auto; /* Empujado hacia abajo al pie de la columna y centrado horizontalmente */
+        gap: 32px; /* Incrementado el espacio entre logos para balancear el nuevo tamaño */
+      }
+    }
   }
 }
