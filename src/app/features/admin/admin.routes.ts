@@ -50,6 +50,10 @@ export const routes: Routes = [
             {
                 path: 'galeria',
                 loadComponent: () => import('./gallery-manager/gallery-manager.page').then(m => m.GalleryManagerPage)
+            },
+            {
+                path: 'feedbacks',
+                loadComponent: () => import('./feedback-manager/feedback-manager.page').then(m => m.FeedbackManagerPage)
             }
         ]
     },
@@ -81,6 +85,11 @@ export const routes: Routes = [
     {
         path: 'galeria',
         redirectTo: 'dashboard/galeria',
+        pathMatch: 'full'
+    },
+    {
+        path: 'feedbacks',
+        redirectTo: 'dashboard/feedbacks',
         pathMatch: 'full'
     }
 ];

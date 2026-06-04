@@ -1,0 +1,69 @@
+<ion-content class="ion-padding admin-page-content">
+  <!-- Título de la página -->
+  <app-admin-page-title 
+    title="Feedbacks de la Comunidad" 
+    subtitle="Revisa, filtra y gestiona los comentarios y sugerencias enviados por los usuarios en los tótems.">
+  </app-admin-page-title>
+
+  <!-- Filtro de Roles y Controles Rápidos -->
+  <div class="feedback-filters-container">
+    <div class="filter-segment-wrap">
+      <ion-icon name="filter-outline" class="filter-icon"></ion-icon>
+      <ion-segment [value]="selectedFilter" (ionChange)="onFilterChange($event)" class="custom-segment">
+        <ion-segment-button value="all">
+          <ion-label>Todos</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="docente">
+          <ion-label>Docentes</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="administrativo">
+          <ion-label>Administrativos</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="estudiante">
+          <ion-label>Estudiantes</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+  </div>
+
+  <!-- Indicador de Carga -->
+  <div *ngIf="isLoading" class="loading-container ion-text-center">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p>Cargando sugerencias...</p>
+  </div>
+
+  <!-- Estado Vacío -->
+  <app-admin-empty-state 
+    *ngIf="!isLoading && filteredFeedbacks.length === 0"
+    [message]="selectedFilter === 'all' ? 'No se han recibido sugerencias todavía.' : 'No hay sugerencias registradas para este grupo.'">
+  </app-admin-empty-state>
+
+  <!-- Listado de Sugerencias en Grilla Responsiva -->
+  <div *ngIf="!isLoading && filteredFeedbacks.length > 0" class="feedback-grid">
+    <div *ngFor="let feedback of filteredFeedbacks" class="feedback-card glass-card">
+      
+      <!-- Cabecera de la Tarjeta -->
+      <div class="card-header">
+        <div class="user-role-badge" [class]="feedback.rol">
+          <ion-icon [name]="getRoleIcon(feedback.rol)"></ion-icon>
+          <span class="role-text">{{ feedback.rol | titlecase }}</span>
+        </div>
+        <span class="feedback-date">{{ formatDate(feedback.created_at) }}</span>
+      </div>
+
+      <!-- Contenido de la Tarjeta -->
+      <div class="card-body">
+        <p class="feedback-comment">"{{ feedback.comentario }}"</p>
+      </div>
+
+      <!-- Footer/Acciones de la Tarjeta -->
+      <div class="card-footer">
+        <button class="btn-delete" (click)="deleteFeedback(feedback.id!)" title="Eliminar sugerencia">
+          <ion-icon name="trash-outline"></ion-icon>
+          <span>Eliminar</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

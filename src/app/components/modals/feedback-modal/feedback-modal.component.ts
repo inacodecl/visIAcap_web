@@ -5,6 +5,7 @@ import { ModalController, IonIcon, IonSpinner } from '@ionic/angular/standalone'
 import { TranslateModule } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { closeOutline, checkmarkCircleOutline, schoolOutline, businessOutline, personOutline } from 'ionicons/icons';
+import { FeedbackService } from '../../../core/services/feedback.service';
 
 /**
  * Componente de modal interactivo y premium para recoger sugerencias
@@ -19,6 +20,7 @@ import { closeOutline, checkmarkCircleOutline, schoolOutline, businessOutline, p
 })
 export class FeedbackModalComponent {
   private modalCtrl = inject(ModalController);
+  private feedbackService = inject(FeedbackService);
 
   // Estados reactivos controlados por señales (Angular Signals)
   selectedRol = signal<string | null>(null);
@@ -46,25 +48,36 @@ export class FeedbackModalComponent {
   }
 
   /**
-   * Simula el envío del formulario al backend y activa la animación de éxito.
+   * Envía el formulario al backend e inicia la animación de éxito al confirmar.
    */
   submitForm() {
     if (!this.isValidForm || this.isSubmitting()) {
       return;
     }
 
+    const rol = this.selectedRol();
+    const comentario = this.suggestionText();
+
+    if (!rol) return;
+
     this.isSubmitting.set(true);
 
-    // Simulación de delay de red del servidor (1.5 segundos)
-    setTimeout(() => {
-      this.isSubmitting.set(false);
-      this.showSuccess.set(true);
+    this.feedbackService.sendFeedback(rol, comentario).subscribe({
+      next: () => {
+        this.isSubmitting.set(false);
+        this.showSuccess.set(true);
 
-      // Cierre automático del modal después de 2.2 segundos para que el usuario aprecie el estado de éxito
-      setTimeout(() => {
-        this.close();
-      }, 2200);
-    }, 1500);
+        // Cierre automático del modal después de 2.2 segundos para que el usuario aprecie el estado de éxito
+        setTimeout(() => {
+          this.close();
+        }, 2200);
+      },
+      error: (error) => {
+        console.error('Error al enviar feedback:', error);
+        this.isSubmitting.set(false);
+        // Fallback en caso de error: reconfigurar envío
+      }
+    });
   }
 
   /**
