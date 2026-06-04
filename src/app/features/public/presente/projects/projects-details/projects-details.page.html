@@ -114,13 +114,28 @@
             </div>
             }
 
-            <!-- 3. Galería Placeholder -->
+            <!-- 3. Galería -->
             <div class="gallery-section">
                 <h3 class="section-title-small">{{ 'PROJECT_DETAIL.GALLERY' | translate }}</h3>
+                
+                @if (proyecto()?.images?.length) {
+                <div class="gallery-grid gallery-grid-{{ proyecto()!.images!.length }}">
+                    @for (img of proyecto()?.images; track img.id) {
+                    <div class="gallery-item glass-panel" (click)="openLightbox($index)">
+                        <img [src]="img.url" [alt]="img.alt_es || 'Imagen del proyecto'" class="gallery-img" loading="lazy">
+                        <div class="gallery-hover-overlay">
+                            <ion-icon name="images-outline"></ion-icon>
+                            <span>{{ 'PROJECT_DETAIL.GALLERY_VIEW' | translate }}</span>
+                        </div>
+                    </div>
+                    }
+                </div>
+                } @else {
                 <div class="gallery-container">
                     <ion-icon name="images-outline" style="font-size:30px; margin-right: 10px;"></ion-icon>
                     <span>{{ 'PROJECT_DETAIL.GALLERY_EMPTY' | translate }}</span>
                 </div>
+                }
             </div>
 
             <!-- 4. Tags y Categorías -->
@@ -173,5 +188,33 @@
 
     <!-- Menú Fan Abanico Custom -->
     <app-fan-menu></app-fan-menu>
+
+    <!-- Lightbox de Imágenes Premium -->
+    @if (activeLightboxImage()) {
+    <div class="lightbox-backdrop" (click)="closeLightbox()">
+        <button class="lightbox-close-btn" (click)="closeLightbox()" aria-label="Cerrar">
+            <ion-icon name="close-outline"></ion-icon>
+        </button>
+
+        @if (proyecto()!.images!.length > 1) {
+        <button class="lightbox-nav-btn prev" (click)="prevLightboxImage($event)" aria-label="Anterior">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+        </button>
+        }
+
+        <div class="lightbox-content" (click)="$event.stopPropagation()">
+            <img [src]="activeLightboxImage()" [alt]="'Imagen ampliada de la galería'" class="lightbox-img">
+            @if (proyecto()?.images?.[activeLightboxIndex()]?.alt_es) {
+            <p class="lightbox-caption">{{ proyecto()?.images?.[activeLightboxIndex()]?.alt_es }}</p>
+            }
+        </div>
+
+        @if (proyecto()!.images!.length > 1) {
+        <button class="lightbox-nav-btn next" (click)="nextLightboxImage($event)" aria-label="Siguiente">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+        </button>
+        }
+    </div>
+    }
 
 </ion-content>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { IonContent, IonIcon, IonSpinner, IonChip, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { arrowBack, arrowBackOutline, globe, time, location, calendarNumber, analytics, imagesOutline, folderOpen, qrCodeOutline, alertCircleOutline, calendarOutline, locationOutline, pulseOutline, folderOutline } from 'ionicons/icons';
+import { arrowBack, arrowBackOutline, globe, time, location, calendarNumber, analytics, imagesOutline, folderOpen, qrCodeOutline, alertCircleOutline, calendarOutline, locationOutline, pulseOutline, folderOutline, closeOutline, chevronBackOutline, chevronForwardOutline } from 'ionicons/icons';
 import { ProyectosService } from '../../../../../core/services/proyectos.service';
 import { Proyecto } from '../../../../../core/models/proyecto.model';
 import { TranslateModule } from '@ngx-translate/core';
@@ -31,8 +31,12 @@ export class ProjectsDetailsPage implements OnInit {
     isLoading = signal(true);
     error = signal(false);
 
+    // Señales para el visualizador Lightbox
+    activeLightboxImage = signal<string | null>(null);
+    activeLightboxIndex = signal<number>(-1);
+
     constructor() {
-        addIcons({ arrowBackOutline, alertCircleOutline, calendarOutline, locationOutline, pulseOutline, imagesOutline, folderOutline, qrCodeOutline, arrowBack, calendarNumber, location, analytics, folderOpen, globe, time });
+        addIcons({ arrowBackOutline, alertCircleOutline, calendarOutline, locationOutline, pulseOutline, imagesOutline, folderOutline, qrCodeOutline, arrowBack, calendarNumber, location, analytics, folderOpen, globe, time, closeOutline, chevronBackOutline, chevronForwardOutline });
     }
 
     ngOnInit() {
@@ -70,6 +74,49 @@ export class ProjectsDetailsPage implements OnInit {
 
     openUrl(url: string) {
         this.externalTabService.openModal(url, this.proyecto()?.titulo);
+    }
+
+    openLightbox(index: number) {
+        const images = this.proyecto()?.images || [];
+        if (images[index]) {
+            this.activeLightboxImage.set(images[index].url);
+            this.activeLightboxIndex.set(index);
+        }
+    }
+
+    closeLightbox() {
+        this.activeLightboxImage.set(null);
+        this.activeLightboxIndex.set(-1);
+    }
+
+    nextLightboxImage(event?: Event) {
+        if (event) {
+            event.stopPropagation();
+        }
+        const images = this.proyecto()?.images || [];
+        if (images.length === 0) return;
+        
+        let nextIdx = this.activeLightboxIndex() + 1;
+        if (nextIdx >= images.length) {
+            nextIdx = 0; // Bucle
+        }
+        this.activeLightboxImage.set(images[nextIdx].url);
+        this.activeLightboxIndex.set(nextIdx);
+    }
+
+    prevLightboxImage(event?: Event) {
+        if (event) {
+            event.stopPropagation();
+        }
+        const images = this.proyecto()?.images || [];
+        if (images.length === 0) return;
+        
+        let prevIdx = this.activeLightboxIndex() - 1;
+        if (prevIdx < 0) {
+            prevIdx = images.length - 1; // Bucle
+        }
+        this.activeLightboxImage.set(images[prevIdx].url);
+        this.activeLightboxIndex.set(prevIdx);
     }
 
     // ========================================
