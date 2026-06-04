@@ -1,18 +1,17 @@
-// Estilos del Administrador de Comentarios (Feedbacks)
+// Estilos del Administrador de Comentarios (Feedbacks) - Optimizado para Modo Claro
 .admin-page-content {
-  --background: transparent;
-  background: transparent;
+  --background: #f4f6f8;
+  background: #f4f6f8;
 }
 
 // Contenedor de filtros
 .feedback-filters-container {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 12px 20px;
   margin-bottom: 24px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
 
   .filter-segment-wrap {
     display: flex;
@@ -21,20 +20,20 @@
 
     .filter-icon {
       font-size: 20px;
-      color: #94a3b8;
+      color: #64748b;
     }
   }
 
-  // Segmento personalizado
+  // Segmento personalizado en color claro
   .custom-segment {
-    background: rgba(0, 0, 0, 0.2);
+    background: #f1f5f9;
     border-radius: 10px;
     padding: 3px;
     
     ion-segment-button {
       --background-checked: #c8102e;
       --color-checked: #ffffff;
-      --color: #94a3b8;
+      --color: #64748b;
       font-weight: 600;
       font-size: 0.9rem;
       min-height: 36px;
@@ -53,7 +52,7 @@
 .loading-container {
   padding: 80px 20px;
   p {
-    color: #94a3b8;
+    color: #64748b;
     margin-top: 15px;
     font-size: 1rem;
   }
@@ -67,25 +66,23 @@
   margin-bottom: 30px;
 }
 
-// Tarjeta con efecto Glassmorphism
+// Tarjeta de Feedback con excelente contraste
 .feedback-card {
-  background: rgba(30, 41, 59, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 220px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   &:hover {
     transform: translateY(-4px);
-    border-color: rgba(226, 31, 38, 0.3);
-    box-shadow: 0 15px 35px rgba(226, 31, 38, 0.08);
+    border-color: rgba(200, 16, 46, 0.3); // Rojo Inacap
+    box-shadow: 0 10px 25px rgba(200, 16, 46, 0.06);
   }
 
   .card-header {
@@ -110,28 +107,28 @@
       }
 
       &.docente {
-        background: rgba(245, 158, 11, 0.1);
-        color: #f59e0b;
-        border-color: rgba(245, 158, 11, 0.2);
+        background: rgba(217, 119, 6, 0.08);
+        color: #b45309;
+        border-color: rgba(217, 119, 6, 0.2);
       }
 
       &.administrativo {
-        background: rgba(56, 189, 248, 0.1);
-        color: #38bdf8;
-        border-color: rgba(56, 189, 248, 0.2);
+        background: rgba(2, 132, 199, 0.08);
+        color: #0369a1;
+        border-color: rgba(2, 132, 199, 0.2);
       }
 
       &.estudiante {
-        background: rgba(16, 185, 129, 0.1);
-        color: #10b981;
-        border-color: rgba(16, 185, 129, 0.2);
+        background: rgba(5, 150, 105, 0.08);
+        color: #047857;
+        border-color: rgba(5, 150, 105, 0.2);
       }
     }
 
     .feedback-date {
       font-size: 0.78rem;
-      color: #94a3b8;
-      font-weight: 500;
+      color: #64748b; // Gris oscuro legible
+      font-weight: 600;
     }
   }
 
@@ -140,8 +137,9 @@
     margin-bottom: 20px;
 
     .feedback-comment {
-      color: #e2e8f0;
-      font-size: 0.95rem;
+      color: #1e293b; // Negro pizarra de alto contraste
+      font-size: 0.98rem;
+      font-weight: 500;
       line-height: 1.6;
       font-style: italic;
       margin: 0;
@@ -156,17 +154,17 @@
   .card-footer {
     display: flex;
     justify-content: flex-end;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid #f1f5f9; // Separador sutil
     padding-top: 16px;
 
     .btn-delete {
       background: transparent;
-      border: 1px solid rgba(239, 68, 68, 0.2);
-      color: #ef4444;
+      border: 1px solid rgba(220, 38, 38, 0.2);
+      color: #dc2626;
       padding: 8px 16px;
       border-radius: 8px;
       font-size: 0.85rem;
-      font-weight: 600;
+      font-weight: 700;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -178,9 +176,9 @@
       }
 
       &:hover {
-        background: rgba(239, 68, 68, 0.1);
-        border-color: #ef4444;
-        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+        background: rgba(220, 38, 38, 0.08);
+        border-color: #dc2626;
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
       }
 
       &:active {
