@@ -7,6 +7,7 @@ import { ThemeSelectorComponent } from '../../theme-selector/theme-selector.comp
 import { SystemMenuComponent } from '../../menus/system-menu/system-menu.component';
 import { LanguageMenuComponent } from '../../menus/language-menu/language-menu.component';
 import { QrModalComponent } from '../../modals/qr-modal/qr-modal.component';
+import { FeedbackModalComponent } from '../../modals/feedback-modal/feedback-modal.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { accessibilityOutline, informationCircleOutline, logInOutline, languageOutline, closeOutline, colorPaletteOutline, codeWorkingOutline } from 'ionicons/icons';
@@ -80,6 +81,8 @@ export class HomeFooterComponent implements OnInit {
                 setTimeout(() => this.openLanguageSelector(), 250);
             } else if (action === 'qr') {
                 setTimeout(() => this.openQrModal(), 250);
+            } else if (action === 'feedback') {
+                setTimeout(() => this.openFeedbackModal(), 250);
             } else if (action === 'developers') {
                 this.goToDevelopers();
             }
@@ -117,6 +120,17 @@ export class HomeFooterComponent implements OnInit {
             cssClass: 'qr-modal-popover', // Clase CSS personalizada por si se requiere estilización extra
             animated: true,
             mode: 'md' // Diseño de modal uniforme
+        });
+        await modal.present();
+    }
+
+    async openFeedbackModal() {
+        const modal = await this.modalCtrl.create({
+            component: FeedbackModalComponent,
+            backdropDismiss: true,
+            cssClass: 'feedback-modal-popover',
+            animated: true,
+            mode: 'md'
         });
         await modal.present();
     }

@@ -137,5 +137,21 @@
         "OCT": "OKT",
         "NOV": "NOV",
         "DIC": "DES"
+    },
+    "FEEDBACK_MODAL": {
+        "MENU_TITLE": "Sijesyon / Kòmantè",
+        "TITLE": "Sondaj sou pèsepsyon Inacap Smart",
+        "SUBTITLE": "Fòm sa a ap chèche konnen opinyon kominote a sou INACAP Smart, kontribisyon li nan eksperyans etidyan yo ak enpak li sou inovasyon nan enstitisyon an. Anplis de sa, sijesyon ak lide yo pral kolekte pou kontinye amelyore inisyativ la.",
+        "REQUIRED_NOTICE": "* Endike kesyon obligatwa",
+        "ROLE_LABEL": "Chwazi wòl ou nan Inacap *",
+        "ROLE_DOCENTE": "Pwofesè",
+        "ROLE_ADMIN": "Administratif",
+        "ROLE_ESTUDIANTE": "Etidyan",
+        "SUGGESTION_LABEL": "Ki sijesyon ou ta pwopoze pou amelyore eksperyans oswa enpak Inacap Smart? *",
+        "PLACEHOLDER": "Repons ou...",
+        "SEND": "Voye sijesyon",
+        "CANCEL": "Anile",
+        "SUCCESS_TITLE": "Sijesyon Voye!",
+        "SUCCESS_DESC": "Mèsi paske ou ede nou amelyore eksperyans INACAP Smart la. Kòmantè ou anrejistre avèk siksè."
     }
 }

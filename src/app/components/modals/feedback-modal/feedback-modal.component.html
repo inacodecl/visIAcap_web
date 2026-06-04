@@ -1,0 +1,117 @@
+<div class="modal-wrapper">
+
+  <!-- Botón de Cierre Flotante en la Esquina Superior Derecha -->
+  @if (!showSuccess()) {
+    <button class="close-btn" (click)="close()" aria-label="Cerrar">
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+  }
+
+  <!-- ============================== -->
+  <!-- ESTADO DE ÉXITO ANIMADO -->
+  <!-- ============================== -->
+  @if (showSuccess()) {
+    <div class="success-container animate-fade-in">
+      <div class="success-icon-wrap">
+        <ion-icon name="checkmark-circle-outline" class="checkmark-icon"></ion-icon>
+        <div class="success-glow"></div>
+      </div>
+      <h2 class="success-title">{{ 'FEEDBACK_MODAL.SUCCESS_TITLE' | translate }}</h2>
+      <p class="success-desc">{{ 'FEEDBACK_MODAL.SUCCESS_DESC' | translate }}</p>
+    </div>
+  } @else {
+
+    <!-- ============================== -->
+    <!-- CUERPO DEL FORMULARIO (RESPONSIVE) -->
+    <!-- ============================== -->
+    <div class="form-container">
+      
+      <!-- Columna Izquierda: Información del Formulario -->
+      <header class="form-header">
+        <div class="logo-area">
+          <img src="assets/icon/logo-inacap-60-blanco.png" alt="INACAP" class="logo-img">
+        </div>
+        <div class="header-titles">
+          <h1 class="survey-title">{{ 'FEEDBACK_MODAL.TITLE' | translate }}</h1>
+          <p class="survey-subtitle">{{ 'FEEDBACK_MODAL.SUBTITLE' | translate }}</p>
+        </div>
+      </header>
+
+      <!-- Columna Derecha: Contenido y Acciones -->
+      <div class="form-content-area">
+        
+        <div class="form-body">
+          <p class="required-notice">{{ 'FEEDBACK_MODAL.REQUIRED_NOTICE' | translate }}</p>
+
+          <!-- 1. SELECCIÓN DE ROL (Botones interactivos premium) -->
+          <section class="form-section">
+            <label class="section-label">{{ 'FEEDBACK_MODAL.ROLE_LABEL' | translate }}</label>
+            
+            <div class="roles-grid">
+              
+              <button class="role-btn glass-panel" 
+                      [class.active]="selectedRol() === 'docente'" 
+                      (click)="selectRol('docente')">
+                <ion-icon name="school-outline"></ion-icon>
+                <span>{{ 'FEEDBACK_MODAL.ROLE_DOCENTE' | translate }}</span>
+              </button>
+
+              <button class="role-btn glass-panel" 
+                      [class.active]="selectedRol() === 'administrativo'" 
+                      (click)="selectRol('administrativo')">
+                <ion-icon name="business-outline"></ion-icon>
+                <span>{{ 'FEEDBACK_MODAL.ROLE_ADMIN' | translate }}</span>
+              </button>
+
+              <button class="role-btn glass-panel" 
+                      [class.active]="selectedRol() === 'estudiante'" 
+                      (click)="selectRol('estudiante')">
+                <ion-icon name="person-outline"></ion-icon>
+                <span>{{ 'FEEDBACK_MODAL.ROLE_ESTUDIANTE' | translate }}</span>
+              </button>
+
+            </div>
+          </section>
+
+          <!-- 2. CAJA DE COMENTARIOS -->
+          <section class="form-section" style="margin-top: 25px;">
+            <label class="section-label">{{ 'FEEDBACK_MODAL.SUGGESTION_LABEL' | translate }}</label>
+            
+            <div class="textarea-container glass-panel">
+              <textarea 
+                [ngModel]="suggestionText()" 
+                (ngModelChange)="suggestionText.set($event)"
+                placeholder="{{ 'FEEDBACK_MODAL.PLACEHOLDER' | translate }}"
+                maxlength="1000"
+                [disabled]="isSubmitting()"></textarea>
+              
+              <div class="char-counter" [class.warning]="suggestionText().length > 900">
+                {{ suggestionText().length }}/1000
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Pie de Acciones del Formulario -->
+        <footer class="form-actions">
+          <button class="btn-action btn-cancel" (click)="close()" [disabled]="isSubmitting()">
+            {{ 'FEEDBACK_MODAL.CANCEL' | translate }}
+          </button>
+
+          <button class="btn-action btn-submit" 
+                  (click)="submitForm()" 
+                  [disabled]="!isValidForm || isSubmitting()">
+            @if (isSubmitting()) {
+              <ion-spinner name="crescent" color="light"></ion-spinner>
+            } @else {
+              <span>{{ 'FEEDBACK_MODAL.SEND' | translate }}</span>
+            }
+          </button>
+        </footer>
+
+      </div>
+
+    </div>
+  }
+
+</div>

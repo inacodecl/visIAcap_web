@@ -1,0 +1,554 @@
+// ==============================================
+// Design System: "Glassmorphism Espacial" Inacap
+// Estilos Adaptables y Antirecortes
+// ==============================================
+
+$red-inacap: #e21f26;
+$red-inacap-glow: rgba(226, 31, 38, 0.4);
+$radius-main: 24px;
+$radius: 16px;
+
+:host {
+  --bg-modal: rgba(20, 20, 25, 0.85);
+  --border-modal: rgba(255, 255, 255, 0.1);
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --card-border-active: rgba(226, 31, 38, 0.5);
+  --input-bg: rgba(0, 0, 0, 0.2);
+
+  --btn-cancel-bg: rgba(255, 255, 255, 0.08);
+  --btn-cancel-border: rgba(255, 255, 255, 0.15);
+  --btn-cancel-hover: rgba(255, 255, 255, 0.15);
+  
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 100%;
+}
+
+:host-context(html:not(.ion-palette-dark)) {
+  --bg-modal: rgba(255, 255, 255, 0.95);
+  --border-modal: rgba(0, 0, 0, 0.15);
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  
+  --card-bg: rgba(0, 0, 0, 0.04);
+  --card-border: rgba(0, 0, 0, 0.1);
+  --card-border-active: rgba(226, 31, 38, 0.5);
+  --input-bg: rgba(255, 255, 255, 0.8);
+
+  --btn-cancel-bg: rgba(0, 0, 0, 0.05);
+  --btn-cancel-border: rgba(0, 0, 0, 0.12);
+  --btn-cancel-hover: rgba(0, 0, 0, 0.1);
+}
+
+.modal-wrapper {
+  position: relative;
+  width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-modal);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: $radius-main;
+  border: 1px solid var(--border-modal);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  animation: modalSlideUp 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+// Botón de cierre flotante
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20; // Aumentamos z-index para que no sea tapado en desktop
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  ion-icon {
+    font-size: 20px;
+  }
+
+  &:hover {
+    background: $red-inacap;
+    border-color: $red-inacap;
+    color: white;
+    transform: rotate(90deg) scale(1.05);
+    box-shadow: 0 0 15px rgba(226, 31, 38, 0.4);
+  }
+
+  &:active {
+    transform: rotate(90deg) scale(0.95);
+  }
+}
+
+// Contenedor principal
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 100%;
+}
+
+// Cabecera por defecto (Vertical)
+.form-header {
+  background: linear-gradient(135deg, #a61217, #e21f26);
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -20%;
+    width: 80%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .logo-area {
+    margin-bottom: 15px;
+    
+    .logo-img {
+      height: 38px;
+      object-fit: contain;
+    }
+  }
+
+  .survey-title {
+    font-family: 'Space Grotesk', sans-serif;
+    color: white;
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin: 0 0 8px;
+    line-height: 1.2;
+  }
+
+  .survey-subtitle {
+    font-family: 'Inter', sans-serif;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin: 0;
+  }
+}
+
+// Área de contenido y formulario
+.form-content-area {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+// Cuerpo del formulario con Scroll vertical preventivo
+.form-body {
+  padding: 30px;
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+  }
+
+  .required-notice {
+    color: #ff5252;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+  }
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .section-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+}
+
+// Grid de roles
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+
+  .role-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: $radius;
+    padding: 18px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    outline: none;
+
+    ion-icon {
+      font-size: 26px;
+      transition: transform 0.3s ease;
+    }
+
+    span {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    &:hover {
+      border-color: rgba($red-inacap, 0.3);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+
+      ion-icon { transform: scale(1.1); }
+    }
+
+    &.active {
+      background: rgba($red-inacap, 0.08);
+      border-color: var(--card-border-active);
+      color: $red-inacap;
+      box-shadow: 0 6px 20px rgba(226, 31, 38, 0.12);
+
+      ion-icon {
+        color: $red-inacap;
+        transform: scale(1.15);
+      }
+    }
+  }
+}
+
+// Textarea
+.textarea-container {
+  background: var(--input-bg);
+  border: 1px solid var(--card-border);
+  border-radius: $radius;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+
+  &:focus-within {
+    border-color: var(--card-border-active);
+    box-shadow: 0 0 15px rgba(226, 31, 38, 0.15);
+  }
+
+  textarea {
+    width: 100%;
+    height: 120px;
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+
+    &::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.7;
+    }
+  }
+
+  .char-counter {
+    align-self: flex-end;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    margin-top: 5px;
+
+    &.warning { color: #ffaa00; }
+  }
+}
+
+// Acciones del pie
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px 30px;
+  border-top: 1px solid var(--card-border);
+  background: rgba(0, 0, 0, 0.05);
+
+  .btn-action {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 12px 25px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .btn-cancel {
+    background: var(--btn-cancel-bg);
+    border: 1px solid var(--btn-cancel-border);
+    color: var(--text-primary);
+
+    &:not(:disabled):hover {
+      background: var(--btn-cancel-hover);
+      transform: translateY(-1px);
+    }
+  }
+
+  .btn-submit {
+    background: $red-inacap;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(226, 31, 38, 0.35);
+
+    &:not(:disabled):hover {
+      background: #c8102e;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(226, 31, 38, 0.5);
+    }
+  }
+}
+
+// Éxito
+.success-container {
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 400px;
+
+  .success-icon-wrap {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+
+    .checkmark-icon {
+      font-size: 96px;
+      color: #2ecc71;
+      z-index: 2;
+      animation: checkmarkScale 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .success-glow {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(46, 204, 113, 0.2);
+      filter: blur(15px);
+      z-index: 1;
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+  }
+
+  .success-title {
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--text-primary);
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin: 0 0 10px;
+  }
+
+  .success-desc {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 380px;
+  }
+}
+
+// ==============================================
+// ADAPTACIÓN EN DOS COLUMNAS (Computadoras de Escritorio)
+// Aprovecha el espacio lateral de manera óptima
+// ==============================================
+@media (min-width: 768px) and (orientation: landscape) {
+  .form-container {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 500px;
+  }
+
+  .form-header {
+    width: 38%; // 38% del ancho para la columna informativa de la izquierda
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+    border-top-left-radius: $radius-main;
+    border-bottom-left-radius: $radius-main;
+    box-sizing: border-box;
+
+    .logo-area {
+      margin-bottom: 25px;
+      .logo-img { height: 42px; }
+    }
+
+    .survey-title {
+      font-size: 1.65rem;
+      margin-bottom: 12px;
+    }
+
+    .survey-subtitle {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  }
+
+  .form-content-area {
+    width: 62%; // 62% del ancho para el formulario
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  .form-body {
+    padding: 40px;
+    max-height: none; // Evita desbordamiento en PC usando flex dinámico
+  }
+
+  .form-actions {
+    padding: 25px 40px;
+  }
+  
+  .close-btn {
+    color: var(--text-primary);
+    background: rgba(var(--text-primary), 0.08);
+  }
+}
+
+// ==============================================
+// Animaciones
+// ==============================================
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes checkmarkScale {
+  from {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(0.9); opacity: 0.5; }
+  50% { transform: scale(1.3); opacity: 0.8; }
+}
+
+// ==============================================
+// Responsivo Móvil (max 575px)
+// ==============================================
+@media (max-width: 575px) {
+  .modal-wrapper {
+    max-width: 95%;
+    border-radius: 20px;
+  }
+
+  .form-header {
+    padding: 20px;
+    .logo-area { margin-bottom: 10px; .logo-img { height: 32px; } }
+    .survey-title { font-size: 1.15rem; }
+    .survey-subtitle { font-size: 0.75rem; }
+  }
+
+  .form-body {
+    padding: 20px;
+  }
+
+  .roles-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+
+    .role-btn {
+      flex-direction: row;
+      justify-content: flex-start;
+      padding: 14px 20px;
+      gap: 15px;
+      ion-icon { font-size: 22px; }
+      span { font-size: 0.9rem; }
+    }
+  }
+
+  .textarea-container textarea {
+    height: 100px;
+    font-size: 0.85rem;
+  }
+
+  .form-actions {
+    padding: 15px 20px 20px;
+    flex-direction: column-reverse;
+    gap: 8px;
+    .btn-action { width: 100%; }
+  }
+
+  .success-container {
+    padding: 40px 20px;
+    min-height: 350px;
+    .success-icon-wrap {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
+      .checkmark-icon { font-size: 76px; }
+    }
+    .success-title { font-size: 1.4rem; }
+    .success-desc { font-size: 0.85rem; }
+  }
+}

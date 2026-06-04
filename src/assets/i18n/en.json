@@ -137,5 +137,21 @@
         "OCT": "OCT",
         "NOV": "NOV",
         "DIC": "DEC"
+    },
+    "FEEDBACK_MODAL": {
+        "MENU_TITLE": "Suggestions / Feedback",
+        "TITLE": "Inacap Smart Perception Survey",
+        "SUBTITLE": "This form seeks to know the community's opinion about INACAP Smart, its contribution to the student experience, and its impact on innovation within the institution. In addition, suggestions and ideas will be collected to continue improving the initiative.",
+        "REQUIRED_NOTICE": "* Indicates required question",
+        "ROLE_LABEL": "Select your role in Inacap *",
+        "ROLE_DOCENTE": "Teacher",
+        "ROLE_ADMIN": "Administrative",
+        "ROLE_ESTUDIANTE": "Student",
+        "SUGGESTION_LABEL": "What suggestions would you propose to improve the experience or impact of Inacap Smart? *",
+        "PLACEHOLDER": "Your answer...",
+        "SEND": "Send suggestion",
+        "CANCEL": "Cancel",
+        "SUCCESS_TITLE": "Suggestion Sent!",
+        "SUCCESS_DESC": "Thank you for helping us improve the INACAP Smart experience. Your feedback has been successfully registered."
     }
 }

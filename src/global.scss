@@ -112,6 +112,48 @@ ion-modal.qr-modal-popover {
     }
 }
 
+/* ==========================================================================
+   MODAL DE SUGERENCIAS / COMENTARIOS (v2.2)
+   Configuración de tamaño en móviles, tótems y escritorio.
+   ========================================================================== */
+ion-modal.feedback-modal-popover {
+    --background: transparent;
+    --box-shadow: none;
+    --border-radius: 24px;
+    --width: 90vw;
+    --max-width: 600px;
+    --height: fit-content;
+    --max-height: 90vh;
+    --backdrop-opacity: 0.7;
+
+    &::part(content) {
+        background: transparent;
+        box-shadow: none;
+        border-radius: 24px;
+        overflow: visible; /* Evita recortes de sombra */
+    }
+}
+
+// Adaptación para Tótems (pantalla grande pero vertical, o tabletas verticales)
+@media (min-height: 1024px) and (max-width: 1080px) {
+    ion-modal.feedback-modal-popover {
+        --width: 650px;
+        --max-width: 650px;
+        --height: fit-content;
+        --max-height: 85vh;
+    }
+}
+
+// Adaptación para Computadoras de Escritorio (Desktop Landscape)
+@media (min-width: 768px) and (orientation: landscape) {
+    ion-modal.feedback-modal-popover {
+        --width: 90vw;
+        --max-width: 950px; // Más ancho para aprovechar el espacio lateral
+        --height: fit-content;
+        --max-height: 85vh;
+    }
+}
+
 // --- Ampliar modal de Proyectos en Escritorio ---
 @media (min-width: 1024px) {
     ion-modal.project-modal-large {
