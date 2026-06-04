@@ -94,25 +94,54 @@
                 }
             </div>
 
-            <!-- 2. Equipo del Proyecto -->
-            @if (proyecto()?.members?.length) {
-            <div class="team-section">
-                <h3 class="section-title-small">{{ 'PROJECT_DETAIL.TEAM' | translate }}</h3>
-
-                @for (member of proyecto()?.members; track member.nombre) {
-                <div class="team-card">
-                    <div class="avatar">
-                        {{ member.nombre.substring(0, 1) }}
-                    </div>
-                    <div class="member-info">
-                        <span class="name">{{ member.nombre }}</span>
-                        <!-- Siempre minúsculo según el diseño -->
-                        <span class="role">{{ member.rol || ('PROJECT_DETAIL.DEFAULT_ROLE' | translate) }}</span>
+            <!-- Contenedor unificado para Equipo y QR (2 columnas en tótem, oculta QR en móvil) -->
+            <div class="team-qr-container">
+                
+                <!-- Columna Izquierda: Equipo del Proyecto -->
+                @if (proyecto()?.members?.length) {
+                <div class="team-section">
+                    <h3 class="section-title-small">{{ 'PROJECT_DETAIL.TEAM' | translate }}</h3>
+                    <div class="team-grid">
+                        @for (member of proyecto()?.members; track member.nombre) {
+                        <div class="team-card">
+                            <div class="avatar">
+                                {{ member.nombre.substring(0, 1) }}
+                            </div>
+                            <div class="member-info">
+                                <span class="name">{{ member.nombre }}</span>
+                                <!-- Siempre minúsculo según el diseño -->
+                                <span class="role">{{ member.rol || ('PROJECT_DETAIL.DEFAULT_ROLE' | translate) }}</span>
+                            </div>
+                        </div>
+                        }
                     </div>
                 </div>
                 }
+
+                <!-- Columna Derecha: QR de Compartir (se oculta en móvil) -->
+                @if (proyecto()?.url_externa || proyecto()?.id) {
+                <div class="qr-section">
+                    <div class="qr-card">
+                        <div class="qr-header-info">
+                            <div class="icon-box">
+                                <ion-icon name="qr-code-outline"></ion-icon>
+                            </div>
+                            <div class="text-info">
+                                <h4>{{ 'PROJECT_DETAIL.QR_SUBTITLE' | translate }}</h4>
+                            </div>
+                        </div>
+                        <div class="qr-code-wrapper">
+                            <qrcode [qrdata]="proyecto()?.url_externa || 'https://inacap.cl/proyectos/' + proyecto()?.id"
+                                [width]="180" [margin]="0" [colorDark]="'#000000'" [colorLight]="'#ffffff'"
+                                [errorCorrectionLevel]="'M'">
+                            </qrcode>
+                        </div>
+                        <p class="qr-footer-text">{{ 'PROJECT_DETAIL.QR_CAPTION' | translate }}</p>
+                    </div>
+                </div>
+                }
+
             </div>
-            }
 
             <!-- 3. Galería -->
             <div class="gallery-section">
@@ -154,29 +183,7 @@
             </div>
             }
 
-            <!-- 5. QR de Compartir -->
-            @if (proyecto()?.url_externa || proyecto()?.id) {
-            <div class="qr-section">
-                <div class="qr-card">
-                    <div class="qr-header-info">
-                        <div class="icon-box">
-                            <ion-icon name="qr-code-outline"></ion-icon>
-                        </div>
-                        <div class="text-info">
-                            <h4>{{ 'PROJECT_DETAIL.QR_TITLE' | translate }}</h4>
-                            <p>{{ 'PROJECT_DETAIL.QR_SUBTITLE' | translate }}</p>
-                        </div>
-                    </div>
-                    <div class="qr-code-wrapper">
-                        <qrcode [qrdata]="proyecto()?.url_externa || 'https://inacap.cl/proyectos/' + proyecto()?.id"
-                            [width]="180" [margin]="0" [colorDark]="'#000000'" [colorLight]="'#ffffff'"
-                            [errorCorrectionLevel]="'M'">
-                        </qrcode>
-                    </div>
-                    <p class="qr-footer-text">{{ 'PROJECT_DETAIL.QR_CAPTION' | translate }}</p>
-                </div>
-            </div>
-            }
+
 
         </div>
     </div>

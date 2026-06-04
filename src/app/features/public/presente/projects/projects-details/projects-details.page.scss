@@ -355,17 +355,71 @@ h3.section-title {
     }
 }
 
-// --- Equipo ---
-.team-section {
-    margin-bottom: 40px;
+// --- Contenedor Equipo y QR (Tótem/Escritorio) ---
+.team-qr-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 16px;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 30px;
+    margin-bottom: 40px;
     align-items: start;
 
-    .section-title-small {
-        grid-column: 1 / -1;
+    .team-section {
+        margin-bottom: 0;
+
+        .section-title-small {
+            margin-top: 0;
+        }
     }
+
+    .qr-section {
+        margin-bottom: 0;
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+
+        .qr-card {
+            margin-bottom: 0;
+            width: 100%;
+            max-width: 320px;
+            
+            .qr-header-info {
+                gap: 10px;
+                margin-bottom: 15px;
+                
+                .icon-box {
+                    min-width: 38px;
+                    width: 38px;
+                    height: 38px;
+                    ion-icon { font-size: 18px; }
+                }
+                
+                .text-info {
+                    h4 { font-size: 1rem; }
+                    p { font-size: 0.75rem; }
+                }
+            }
+            
+            .qr-code-wrapper {
+                margin-bottom: 10px;
+            }
+            
+            .qr-footer-text {
+                font-size: 0.75rem;
+            }
+        }
+    }
+}
+
+// --- Equipo ---
+.team-section {
+    margin-bottom: 0;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 16px;
+    align-items: start;
 }
 
 .team-card {
@@ -990,6 +1044,17 @@ h3.section-title {
                 padding: 6px 14px;
                 max-width: 90%;
             }
+        }
+    }
+
+    // Contenedor de Equipo y QR adaptado a móviles
+    .team-qr-container {
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin-bottom: 30px;
+
+        .qr-section {
+            display: none !important; // Ocultar el QR por completo en móviles
         }
     }
 }
