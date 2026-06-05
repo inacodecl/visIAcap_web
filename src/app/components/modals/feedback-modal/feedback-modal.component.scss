@@ -146,6 +146,7 @@ $radius: 16px;
     font-size: 0.85rem;
     line-height: 1.4;
     margin: 0;
+    text-align: justify;
   }
 }
 
@@ -343,6 +344,24 @@ $radius: 16px;
       background: #c8102e;
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(226, 31, 38, 0.5);
+    }
+  }
+
+  .btn-phone-qr {
+    display: none; /* Oculto por defecto en móvil y escritorio */
+    background: rgba(226, 31, 38, 0.08);
+    border: 1px solid rgba(226, 31, 38, 0.25);
+    color: $red-inacap;
+    margin-right: auto; /* Empuja Cancelar y Enviar a la derecha */
+
+    &:not(:disabled):hover {
+      background: rgba(226, 31, 38, 0.15);
+      border-color: rgba(226, 31, 38, 0.4);
+      transform: translateY(-1px);
+    }
+
+    ion-icon {
+      font-size: 1.15rem;
     }
   }
 }
@@ -590,3 +609,59 @@ $radius: 16px;
     .success-desc { font-size: 0.85rem; }
   }
 }
+
+// Estilos del contenedor del QR para la encuesta (2 columnas)
+.qr-survey-container {
+  display: flex;
+  flex-direction: row; /* Diseño horizontal en dos columnas */
+  align-items: center;
+  justify-content: center;
+  gap: 24px; /* Espacio entre el QR y el texto instructivo */
+  padding: 24px 30px;
+  border-top: 1px solid var(--card-border);
+  background: rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  
+  .qr-survey-instruction {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+    text-align: center; /* Centrado en medio del espacio de la derecha */
+    max-width: 300px;
+    line-height: 1.5;
+    flex: 1;
+  }
+  
+  .qr-survey-frame {
+    background: white;
+    padding: 10px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0; /* Previene que el QR se achique */
+    
+    .qr-survey-img {
+      width: 175px; /* Incrementado un 15% (de 130px a 150px) */
+      height: 175px;
+      display: block;
+    }
+  }
+}
+
+:host-context(html:not(.ion-palette-dark)) {
+  .qr-survey-container {
+    background: rgba(0, 0, 0, 0.02);
+  }
+}
+
+// Media Query para pantallas grandes en orientación vertical (Tótem)
+@media (min-width: 576px) and (orientation: portrait) {
+  .btn-phone-qr {
+    display: flex !important; /* Habilitar exclusivamente en la vista vertical del Tótem */
+  }
+}
+

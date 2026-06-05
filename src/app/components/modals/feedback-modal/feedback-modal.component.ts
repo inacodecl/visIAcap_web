@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ModalController, IonIcon, IonSpinner } from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { closeOutline, checkmarkCircleOutline, schoolOutline, businessOutline, personOutline } from 'ionicons/icons';
+import { closeOutline, checkmarkCircleOutline, schoolOutline, businessOutline, personOutline, qrCodeOutline } from 'ionicons/icons';
 import { FeedbackService } from '../../../core/services/feedback.service';
 
 /**
@@ -27,10 +27,18 @@ export class FeedbackModalComponent {
   suggestionText = signal<string>('');
   isSubmitting = signal<boolean>(false);
   showSuccess = signal<boolean>(false);
+  showQR = signal<boolean>(false);
 
   constructor() {
     // Registro de iconos visuales
-    addIcons({ closeOutline, checkmarkCircleOutline, schoolOutline, businessOutline, personOutline });
+    addIcons({ closeOutline, checkmarkCircleOutline, schoolOutline, businessOutline, personOutline, qrCodeOutline });
+  }
+
+  /**
+   * Alterna la visualización del código QR de la encuesta.
+   */
+  toggleQR() {
+    this.showQR.update(show => !show);
   }
 
   /**

@@ -140,18 +140,19 @@
     },
     "FEEDBACK_MODAL": {
         "MENU_TITLE": "Sugerencias / Comentarios",
-        "TITLE": "Encuesta de percepción Inacap Smart",
-        "SUBTITLE": "Este formulario busca conocer la opinión de la comunidad sobre INACAP Smart, su aporte a la experiencia estudiantil y su impacto en innovación dentro de la institución. Además, se recogerán sugerencias e ideas para seguir mejorando la iniciativa.",
-        "REQUIRED_NOTICE": "* Indica que la pregunta es obligatoria",
-        "ROLE_LABEL": "Selecciona tu rol en Inacap *",
+        "TITLE": "Encuesta de percepción InacapSmart",
+        "SUBTITLE": "Este formulario busca conocer la opinión de la comunidad sobre INACAPSmart, su aporte a la experiencia estudiantil y su impacto en innovación dentro de la institución. Además, se recogerán sugerencias e ideas para seguir mejorando la iniciativa.",
+        "ROLE_LABEL": "Selecciona tu rol en Inacap:",
         "ROLE_DOCENTE": "Docente",
         "ROLE_ADMIN": "Administrativo",
         "ROLE_ESTUDIANTE": "Estudiante",
-        "SUGGESTION_LABEL": "¿Qué sugerencias propondrías para mejorar la experiencia o impacto de Inacap Smart? *",
+        "SUGGESTION_LABEL": "¿Qué sugerencias propondrías para mejorar la experiencia o impacto de InacapSmart?",
         "PLACEHOLDER": "Tu respuesta...",
         "SEND": "Enviar sugerencia",
         "CANCEL": "Cancelar",
         "SUCCESS_TITLE": "¡Sugerencia Enviada!",
-        "SUCCESS_DESC": "Gracias por ayudarnos a mejorar la experiencia de INACAP Smart. Tu comentario ha sido registrado con éxito."
+        "SUCCESS_DESC": "Gracias por ayudarnos a mejorar la experiencia de INACAPSmart. Tu comentario ha sido registrado con éxito.",
+        "RESPOND_BY_PHONE": "Responder en celular",
+        "QR_INSTRUCTION": "Escanea este código QR con tu celular para continuar respondiendo la encuesta desde tu dispositivo."
     }
 }

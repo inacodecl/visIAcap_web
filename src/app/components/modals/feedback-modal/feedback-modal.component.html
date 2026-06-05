@@ -41,7 +41,6 @@
       <div class="form-content-area">
         
         <div class="form-body">
-          <p class="required-notice">{{ 'FEEDBACK_MODAL.REQUIRED_NOTICE' | translate }}</p>
 
           <!-- 1. SELECCIÓN DE ROL (Botones interactivos premium) -->
           <section class="form-section">
@@ -94,6 +93,11 @@
 
         <!-- Pie de Acciones del Formulario -->
         <footer class="form-actions">
+          <button class="btn-action btn-phone-qr" (click)="toggleQR()" [disabled]="isSubmitting()">
+            <ion-icon name="qr-code-outline" style="margin-right: 8px;"></ion-icon>
+            {{ 'FEEDBACK_MODAL.RESPOND_BY_PHONE' | translate }}
+          </button>
+
           <button class="btn-action btn-cancel" (click)="close()" [disabled]="isSubmitting()">
             {{ 'FEEDBACK_MODAL.CANCEL' | translate }}
           </button>
@@ -108,6 +112,19 @@
             }
           </button>
         </footer>
+
+        <!-- Contenedor expandible del QR -->
+        @if (showQR()) {
+          <div class="qr-survey-container animate-fade-in">
+            <!-- Columna Izquierda: Código QR -->
+            <div class="qr-survey-frame">
+              <img src="assets/img/qr-feedback.png" alt="QR Encuesta" class="qr-survey-img">
+            </div>
+
+            <!-- Columna Derecha: Instrucción -->
+            <p class="qr-survey-instruction">{{ 'FEEDBACK_MODAL.QR_INSTRUCTION' | translate }}</p>
+          </div>
+        }
 
       </div>
 
