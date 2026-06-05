@@ -226,15 +226,15 @@ $text-dark: #333;
 
         .logo-container {
             justify-content: flex-start;
-        }
 
-        .logo-img {
-            height: 85% !important;
-            width: 100%;
-            padding-left: 0;
-            max-width: 100%;
-            object-fit: contain;
-            object-position: left center;
+            .logo-img {
+                height: 45% !important;
+                width: auto;
+                padding-left: 0;
+                max-width: 100%;
+                object-fit: contain;
+                object-position: left center;
+            }
         }
 
         .header-separator {
@@ -242,11 +242,15 @@ $text-dark: #333;
             background-color: rgba(255, 255, 255, 0.3);
         }
 
-        .sede-container span {
-            font-size: clamp(0.9rem, 4.8vw, 1.2rem);
-            letter-spacing: 0.5px;
-            color: var(--ion-text-color, #ffffff) !important;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        .sede-container {
+            padding-right: 0;
+
+            span {
+                font-size: clamp(0.9rem, 4.8vw, 1.2rem);
+                letter-spacing: 0.5px;
+                color: var(--ion-text-color, #ffffff) !important;
+                text-shadow: 0 2px 10px rgba(0,0,0,0.5);            
+            }
         }
     }
 
