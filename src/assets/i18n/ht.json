@@ -139,7 +139,7 @@
         "DIC": "DES"
     },
     "FEEDBACK_MODAL": {
-        "MENU_TITLE": "Sijesyon / Kòmantè",
+        "MENU_TITLE": "Sijesyon",
         "TITLE": "Sondaj sou pèsepsyon InacapSmart",
         "SUBTITLE": "Fòm sa a ap chèche konnen opinyon kominote a sou INACAPSmart, kontribisyon li nan eksperyans etidyan yo ak enpak li sou inovasyon nan enstitisyon an. Anplis de sa, sijesyon ak lide yo pral kolekte pou kontinye amelyore inisyativ la.",
         "ROLE_LABEL": "Chwazi wòl ou nan Inacap:",
@@ -154,5 +154,12 @@
         "SUCCESS_DESC": "Mèsi paske ou ede nou amelyore eksperyans INACAPSmart la. Kòmantè ou anrejistre avèk siksè.",
         "RESPOND_BY_PHONE": "Reponn nan telefòn",
         "QR_INSTRUCTION": "Eskane kòd QR sa a ak telefòn ou pou kontinye reponn sondaj la nan aparèy ou an."
+    },
+    "SYSTEM_MENU": {
+        "THEME": "Aparans Vizyèl",
+        "LANGUAGE": "Chanje Lang",
+        "QR": "QR InacapSmart",
+        "DEVELOPERS": "Ekip Devlopè",
+        "CANCEL": "Anile"
     }
 }

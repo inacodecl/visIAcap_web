@@ -139,7 +139,7 @@
         "DIC": "DIC"
     },
     "FEEDBACK_MODAL": {
-        "MENU_TITLE": "Sugerencias / Comentarios",
+        "MENU_TITLE": "Sugerencias",
         "TITLE": "Encuesta de percepción InacapSmart",
         "SUBTITLE": "Este formulario busca conocer la opinión de la comunidad sobre INACAPSmart, su aporte a la experiencia estudiantil y su impacto en innovación dentro de la institución. Además, se recogerán sugerencias e ideas para seguir mejorando la iniciativa.",
         "ROLE_LABEL": "Selecciona tu rol en Inacap:",
@@ -154,5 +154,12 @@
         "SUCCESS_DESC": "Gracias por ayudarnos a mejorar la experiencia de INACAPSmart. Tu comentario ha sido registrado con éxito.",
         "RESPOND_BY_PHONE": "Responder en celular",
         "QR_INSTRUCTION": "Escanea este código QR con tu celular para continuar respondiendo la encuesta desde tu dispositivo."
+    },
+    "SYSTEM_MENU": {
+        "THEME": "Apariencia Visual",
+        "LANGUAGE": "Cambio de Idioma",
+        "QR": "QR InacapSmart",
+        "DEVELOPERS": "Equipo Desarrollador",
+        "CANCEL": "Cancelar"
     }
 }

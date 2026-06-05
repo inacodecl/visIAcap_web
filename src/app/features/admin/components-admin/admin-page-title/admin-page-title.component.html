@@ -1,6 +1,6 @@
 <div class="page-header-row">
     <h1 class="page-title">
-        <ion-icon [name]="icon" [class]="'icon-' + themeColor"></ion-icon>
+        <ion-icon *ngIf="icon" [name]="icon" [class]="'icon-' + themeColor"></ion-icon>
         {{ title }}
     </h1>
     <div class="search-wrapper" *ngIf="showSearch">

@@ -3,28 +3,112 @@
     
     <div class="icon-container">
 
-        <!-- SVG Reloj de Arena Line-Art (Palitos) -->
-        <svg viewBox="0 0 28 28" class="loader">
-            <g class="hourglass-rotate">
-                <!-- Bases (Gris) -->
-                <path d="M 5 3 h 18" stroke="#888888" stroke-width="1.5" stroke-linecap="round" fill="none" />
-                <path d="M 5 25 h 18" stroke="#888888" stroke-width="1.5" stroke-linecap="round" fill="none" />
-                
-                <!-- Cristal (Gris) -->
-                <path d="M 7 3 V 6 C 7 10 11 12 13 14 C 11 16 7 18 7 22 V 25" stroke="#888888" stroke-width="1.5" fill="none" stroke-linejoin="round" />
-                <path d="M 21 3 V 6 C 21 10 17 12 15 14 C 17 16 21 18 21 22 V 25" stroke="#888888" stroke-width="1.5" fill="none" stroke-linejoin="round" />
-                
-                <!-- Detalles internos de arena (Mostaza Brillante) -->
-                
-                <!-- Montaña de arena abajo (al girar quedará arriba y se vaciará) -->
-                <path class="sand-fill" d="M 10.5 21 L 14 16 L 17.5 21 V 23 H 10.5 Z" fill="#F4C242" />
-                
-                <!-- Montaña de arena arriba (al girar quedará abajo y se llenará) -->
-                <path class="sand-top" d="M 8.5 7 H 19.5 L 14 12 Z" fill="#F4C242" />
-                
-                <!-- Arena cayendo (línea desde el cuello hasta la base) -->
-                <path class="sand-drop" d="M 14 14 V 7" stroke="#F4C242" stroke-width="1.5" stroke-linecap="round" fill="none" />
+        <!-- SVG Reloj de Arena Detallado (Agrandado mediante viewBox ajustado) -->
+        <svg
+          aria-label="reloj de arena girando con arena cayendo"
+          role="img"
+          viewBox="10 7 36 42"
+          class="loader"
+        >
+          <clipPath id="sand-mound-top">
+            <path
+              d="M 14.613 13.087 C 15.814 12.059 19.3 8.039 20.3 6.539 C 21.5 4.789 21.5 2.039 21.5 2.039 L 3 2.039 C 3 2.039 3 4.789 4.2 6.539 C 5.2 8.039 8.686 12.059 9.887 13.087 C 11 14.039 12.25 14.039 12.25 14.039 C 12.25 14.039 13.5 14.039 14.613 13.087 Z"
+              class="loader__sand-mound-top"
+            ></path>
+          </clipPath>
+          <clipPath id="sand-mound-bottom">
+            <path
+              d="M 14.613 20.452 C 15.814 21.48 19.3 25.5 20.3 27 C 21.5 28.75 21.5 31.5 21.5 31.5 L 3 31.5 C 3 31.5 3 28.75 4.2 27 C 5.2 25.5 8.686 21.48 9.887 20.452 C 11 19.5 12.25 19.5 12.25 19.5 C 12.25 19.5 13.5 19.5 14.613 20.452 Z"
+              class="loader__sand-mound-bottom"
+            ></path>
+          </clipPath>
+          <g transform="translate(2,2)">
+            <g transform="translate(13.75,9.25)" class="loader__model">
+              <!-- Arena y goteo -->
+              <g stroke-linecap="round" stroke="#F4C242">
+                <line
+                  y2="20.75"
+                  x2="12"
+                  y1="15.75"
+                  x1="12"
+                  stroke-dasharray="0.25 33.75"
+                  stroke-width="1.5"
+                  class="loader__sand-grain-left"
+                ></line>
+                <line
+                  y2="21.75"
+                  x2="12.5"
+                  y1="16.75"
+                  x1="12.5"
+                  stroke-dasharray="0.25 33.75"
+                  stroke-width="1.5"
+                  class="loader__sand-grain-right"
+                ></line>
+                <line
+                  y2="31.5"
+                  x2="12.25"
+                  y1="18"
+                  x1="12.25"
+                  stroke-dasharray="0.5 107.5"
+                  stroke-width="1.5"
+                  class="loader__sand-drop"
+                ></line>
+                <line
+                  y2="31.5"
+                  x2="12.25"
+                  y1="14.75"
+                  x1="12.25"
+                  stroke-dasharray="54 54"
+                  stroke-width="2.5"
+                  class="loader__sand-fill"
+                ></line>
+                <line
+                  y2="31.5"
+                  x2="12"
+                  y1="16"
+                  x1="12"
+                  stroke-dasharray="1 107"
+                  stroke-width="1.5"
+                  stroke="#F4C242"
+                  class="loader__sand-line-left"
+                ></line>
+                <line
+                  y2="31.5"
+                  x2="12.5"
+                  y1="16"
+                  x1="12.5"
+                  stroke-dasharray="12 96"
+                  stroke-width="1.5"
+                  stroke="#F4C242"
+                  class="loader__sand-line-right"
+                ></line>
+
+                <!-- Montículos de arena con relleno sólido -->
+                <g stroke-width="0" fill="#F4C242">
+                  <path
+                    d="M 12.25 15 L 15.392 13.486 C 21.737 11.168 22.5 2 22.5 2 L 2 2.013 C 2 2.013 2.753 11.046 9.009 13.438 L 12.25 15 Z"
+                    clip-path="url(#sand-mound-top)"
+                  ></path>
+                  <path
+                    d="M 12.25 18.5 L 15.392 20.014 C 21.737 22.332 22.5 31.5 22.5 31.5 L 2 31.487 C 2 31.487 2.753 22.454 9.009 20.062 Z"
+                    clip-path="url(#sand-mound-bottom)"
+                  ></path>
+                </g>
+              </g>
+
+              <!-- Cuerpo principal del reloj de arena (transparente) -->
+              <path
+                d="M 1.5 2 L 23 2 C 23 2 22.5 8.5 19 12 C 16 15.5 13.5 13.5 13.5 16.75 C 13.5 20 16 18 19 21.5 C 22.5 25 23 31.5 23 31.5 L 1.5 31.5 C 1.5 31.5 2 25 5.5 21.5 C 8.5 18 11 20 11 16.75 C 11 13.5 8.5 15.5 5.5 12 C 2 8.5 1.5 2 1.5 2 Z"
+                fill="none"
+                stroke="#333333"
+                stroke-width="2.2"
+              ></path>
+
+              <!-- Tapas superior e inferior del reloj de color sólido continuo -->
+              <rect height="2.8" width="24.5" x="0.25" ry="0.75" rx="0.75" fill="#333333"></rect>
+              <rect height="2.8" width="24.5" y="30.4" x="0.25" ry="0.75" rx="0.75" fill="#333333"></rect>
             </g>
+          </g>
         </svg>
     </div>
 

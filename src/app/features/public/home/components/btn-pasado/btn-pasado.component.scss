@@ -94,23 +94,21 @@
 
 /* EFECTOS DEL HOVER Y ACTIVE */
 @media (hover: hover) {
-    .glass-btn:not(.is-animating):hover {
+    .glass-btn:not(.expanded):hover {
         border-color: var(--btn-accent);
 
         svg {
             transform: scale(1.1) rotate(5deg);
-            stroke: var(--btn-accent);
         }
     }
 }
 
-.glass-btn:not(.is-animating):active {
+.glass-btn:not(.expanded):active {
     transform: scale(0.95);
     border-color: var(--btn-accent);
     
     svg {
         transform: scale(0.9);
-        stroke: var(--btn-accent);
     }
 }
 
@@ -141,10 +139,11 @@
 }
 
 /* =========================================
-   ESTILOS RELOJ DE ARENA (LINE-ART)
+   ESTILOS RELOJ DE ARENA (button-hourglass)
    ========================================= */
 
 .loader {
+    --dur: 2s;
     width: 80px;
     height: 80px;
     position: relative;
@@ -152,75 +151,203 @@
     overflow: visible; 
 }
 
-/* Base de la arena (Montaña inferior) */
-.sand-fill {
-    transform-origin: 14px 16px;
-    transform-box: view-box;
-    transform: scaleY(1);
+/* Estado de reposo (sin expandir) */
+.loader__model {
+    transform: translate(13.75px, 9.25px) rotate(-180deg); /* Arena abajo por defecto */
+    transform-origin: 12.25px 16.75px;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Top de la arena (Montaña superior) */
-.sand-top {
-    transform-origin: 14px 7px;
-    transform-box: view-box;
-    transform: scaleY(0);
+.loader__sand-mound-top {
+    transform: translate(0, 0);
+    transition: transform 0.4s ease;
 }
 
-/* Flujo de arena cayendo */
-.sand-drop {
-    stroke-dasharray: 7;
-    stroke-dashoffset: 7;
+.loader__sand-mound-bottom {
+    transform: scale(1, 0);
+    transform-origin: 12.25px 31.5px;
+    transition: transform 0.4s ease;
 }
 
-/* =========================================
-   ANIMACIONES AL HACER CLIC (.expanded)
-   ========================================= */
-
-.expanded .sand-fill {
-    animation: empty-top 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    animation-delay: 0.5s; /* Espera a que termine de girar el reloj */
+.loader__sand-drop {
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 0.4s ease;
 }
 
-.expanded .sand-top {
-    animation: fill-bottom 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    animation-delay: 0.5s;
+.loader__sand-fill {
+    stroke-dashoffset: 55;
+    transition: stroke-dashoffset 0.4s ease;
 }
 
-.expanded .sand-drop {
-    animation: drop-flow 2.2s linear forwards;
-    animation-delay: 0.5s;
+.loader__sand-grain-left,
+.loader__sand-grain-right {
+    stroke-dashoffset: 29;
+    transition: stroke-dashoffset 0.4s ease;
 }
 
-@keyframes empty-top {
-    0% { transform: scaleY(1); }
-    100% { transform: scaleY(0); }
+.loader__sand-line-left,
+.loader__sand-line-right {
+    stroke-dashoffset: 53;
+    transition: stroke-dashoffset 0.4s ease;
 }
 
-@keyframes fill-bottom {
-    0% { transform: scaleY(0); }
-    100% { transform: scaleY(1); }
+/* Estado Expandido (activa las animaciones detalladas por 1 ciclo y mantiene el final) */
+.expanded {
+    .loader__model,
+    .loader__sand-drop,
+    .loader__sand-fill,
+    .loader__sand-grain-left,
+    .loader__sand-grain-right,
+    .loader__sand-line-left,
+    .loader__sand-line-right,
+    .loader__sand-mound-top,
+    .loader__sand-mound-bottom {
+        animation-duration: var(--dur);
+        animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+    
+    .loader__model {
+        animation-name: loader-flip;
+        transform-origin: 12.25px 16.75px;
+    }
+    .loader__sand-drop {
+        animation-name: sand-drop;
+    }
+    .loader__sand-fill {
+        animation-name: sand-fill;
+    }
+    .loader__sand-grain-left {
+        animation-name: sand-grain-left;
+    }
+    .loader__sand-grain-right {
+        animation-name: sand-grain-right;
+    }
+    .loader__sand-line-left {
+        animation-name: sand-line-left;
+    }
+    .loader__sand-line-right {
+        animation-name: sand-line-right;
+    }
+    .loader__sand-mound-top {
+        animation-name: sand-mound-top;
+    }
+    .loader__sand-mound-bottom {
+        animation-name: sand-mound-bottom;
+        transform-origin: 12.25px 31.5px;
+    }
 }
 
-@keyframes drop-flow {
-    0% { stroke-dashoffset: 7; }
-    10% { stroke-dashoffset: 0; }
-    90% { stroke-dashoffset: 0; }
-    100% { stroke-dashoffset: -7; }
+/* Keyframes de animación detallada */
+@keyframes loader-flip {
+    from {
+        transform: translate(13.75px, 9.25px) rotate(-180deg);
+    }
+    24%,
+    to {
+        transform: translate(13.75px, 9.25px) rotate(0deg);
+    }
 }
 
-/* =========================================
-   ANIMACIÓN DE GIRO DEL RELOJ
-   ========================================= */
-
-.hourglass-rotate {
-    transform-origin: center;
-    transform-box: view-box;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+@keyframes sand-drop {
+    from,
+    10% {
+        animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0);
+        stroke-dashoffset: 1;
+    }
+    70%,
+    to {
+        stroke-dashoffset: -107;
+    }
 }
 
-/* Al expandirse (hacer clic), da media vuelta (180 grados) */
-.glass-btn.expanded .hourglass-rotate {
-    transform: rotate(180deg);
+@keyframes sand-fill {
+    from,
+    10% {
+        animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0);
+        stroke-dashoffset: 55;
+    }
+    70%,
+    to {
+        stroke-dashoffset: -54;
+    }
+}
+
+@keyframes sand-grain-left {
+    from,
+    10% {
+        animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0);
+        stroke-dashoffset: 29;
+    }
+    70%,
+    to {
+        stroke-dashoffset: -22;
+    }
+}
+
+@keyframes sand-grain-right {
+    from,
+    10% {
+        animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0);
+        stroke-dashoffset: 27;
+    }
+    70%,
+    to {
+        stroke-dashoffset: -24;
+    }
+}
+
+@keyframes sand-line-left {
+    from,
+    10% {
+        animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0);
+        stroke-dashoffset: 53;
+    }
+    70%,
+    to {
+        stroke-dashoffset: -55;
+    }
+}
+
+@keyframes sand-line-right {
+    from,
+    10% {
+        animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0);
+        stroke-dashoffset: 14;
+    }
+    70%,
+    to {
+        stroke-dashoffset: -24.5;
+    }
+}
+
+@keyframes sand-mound-top {
+    from,
+    10% {
+        animation-timing-function: linear;
+        transform: translate(0, 0);
+    }
+    15% {
+        animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0);
+        transform: translate(0, 1.5px);
+    }
+    51%,
+    to {
+        transform: translate(0, 13px);
+    }
+}
+
+@keyframes sand-mound-bottom {
+    from,
+    31% {
+        animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1);
+        transform: scale(1, 0);
+    }
+    56%,
+    to {
+        transform: scale(1, 1);
+    }
 }
 
 // ==============================================

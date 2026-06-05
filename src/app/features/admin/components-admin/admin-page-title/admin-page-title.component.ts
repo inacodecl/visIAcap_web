@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonIcon, IonSearchbar } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { rocket, videocam, time, images } from 'ionicons/icons';
+import { rocket, videocam, time, images, chatboxEllipsesOutline } from 'ionicons/icons';
 
 @Component({
     selector: 'app-admin-page-title',
@@ -21,7 +21,7 @@ export class AdminPageTitleComponent {
     @Output() searchChange = new EventEmitter<string>();
 
     constructor() {
-        addIcons({ rocket, videocam, time, images });
+        addIcons({ rocket, videocam, time, images, chatboxEllipsesOutline });
     }
 
     onSearchInput(event: any) {

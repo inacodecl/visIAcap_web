@@ -139,7 +139,7 @@
         "DIC": "DEC"
     },
     "FEEDBACK_MODAL": {
-        "MENU_TITLE": "Suggestions / Feedback",
+        "MENU_TITLE": "Suggestions",
         "TITLE": "InacapSmart Perception Survey",
         "SUBTITLE": "This form seeks to know the community's opinion about INACAPSmart, its contribution to the student experience, and its impact on innovation within the institution. In addition, suggestions and ideas will be collected to continue improving the initiative.",
         "ROLE_LABEL": "Select your role in Inacap:",
@@ -154,5 +154,12 @@
         "SUCCESS_DESC": "Thank you for helping us improve the INACAPSmart experience. Your feedback has been successfully registered.",
         "RESPOND_BY_PHONE": "Respond by phone",
         "QR_INSTRUCTION": "Scan this QR code with your phone to continue responding to the survey on your device."
+    },
+    "SYSTEM_MENU": {
+        "THEME": "Visual Appearance",
+        "LANGUAGE": "Change Language",
+        "QR": "QR InacapSmart",
+        "DEVELOPERS": "Developer Team",
+        "CANCEL": "Cancel"
     }
 }
