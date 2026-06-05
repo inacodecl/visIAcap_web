@@ -669,7 +669,10 @@ $text-grey: #666;
         }
 
         .logo-container .logo-img {
-            height: calc(45px - (15px * var(--header-progress, 0)));
+            height: calc(35px - (10px * var(--header-progress, 0))) !important;
+            width: auto !important;
+            max-width: 100%;
+            object-fit: contain;
             transform: none;
         }
 
@@ -757,7 +760,10 @@ $text-grey: #666;
         }
 
         .logo-container .logo-img {
-            height: calc(45px - (15px * var(--header-progress, 0)));
+            height: calc(35px - (10px * var(--header-progress, 0))) !important;
+            width: auto !important;
+            max-width: 100%;
+            object-fit: contain;
         }
 
         .sede-container {
