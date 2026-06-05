@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonApp, IonRouterOutlet, ModalController } from '@ionic/angular/standalone';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { FeedbackModalComponent } from './components/modals/feedback-modal/feedback-modal.component';
 
 import { ThemeService } from './core/services/theme.service';
 import { LanguageService } from './core/services/language.service';
+
+// Declaración global para Google Analytics
+declare let gtag: Function;
 
 @Component({
   selector: 'app-root',
@@ -30,6 +34,15 @@ export class AppComponent implements OnInit {
         this.clearQueryParam();
       }
     });
+
+    // Suscribirse a eventos de navegación para Google Analytics
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      gtag('config', 'G-ZW831GYOWC', {
+        'page_path': event.urlAfterRedirects
+      });
+    });
   }
 
   private async openFeedbackModal() {
@@ -50,4 +63,3 @@ export class AppComponent implements OnInit {
     });
   }
 }
-

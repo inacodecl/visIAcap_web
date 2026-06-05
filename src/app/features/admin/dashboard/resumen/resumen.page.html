@@ -48,13 +48,109 @@
             </div>
         </div>
 
-        <!-- Espacio para expansiones -->
-        <div class="empty-state-box">
-            <ion-icon name="analytics-outline"></ion-icon>
-            <h4>Panel Listo para Operar</h4>
-            <p>Selecciona una opción del menú lateral para comenzar a gestionar el contenido de la aplicación.</p>
-            <br>
-            <label style="font-size: 15px; color: var(--ion-color-light);">Resumen en Desarrollo...</label>
+        <!-- Caja Dinámica de Estado del Panel y Analíticas -->
+        <div class="empty-state-box loading-state" *ngIf="isLoadingAnalytics()">
+            <ion-icon name="analytics-outline" class="spinning-icon"></ion-icon>
+            <h4>Conectando con Google Analytics 4...</h4>
+            <p>Obteniendo métricas de tráfico en tiempo real para tu panel de control.</p>
+            <div class="skeleton-summary-text">
+                <ion-skeleton-text animated style="width: 70%; height: 16px; margin: 15px auto 0;"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 50%; height: 16px; margin: 8px auto 0;"></ion-skeleton-text>
+            </div>
+        </div>
+
+        <div class="empty-state-box error-state" *ngIf="!isLoadingAnalytics() && analyticsError()">
+            <ion-icon name="alert-circle-outline" style="color: #ff7675;"></ion-icon>
+            <h4>Panel Listo y Operando (Conexión Limitada)</h4>
+            <p>El panel de administración está listo, pero no pudimos obtener los datos de tráfico de GA4 en este momento.</p>
+            <span class="error-detail-text">{{ analyticsError() }}</span>
+            <button class="btn-retry-flat" (click)="loadAnalytics()">Reintentar Conexión</button>
+        </div>
+
+        <div class="empty-state-box active-state" *ngIf="!isLoadingAnalytics() && !analyticsError()">
+            <div class="state-header">
+                <ion-icon name="analytics-outline" class="pulse-icon"></ion-icon>
+                <button class="btn-refresh-mini" (click)="loadAnalytics()" title="Actualizar datos">
+                    <ion-icon name="refresh-outline" [class.spinning]="isLoadingAnalytics()"></ion-icon>
+                </button>
+            </div>
+            
+            <h4>Panel Listo y Operando con Éxito</h4>
+            <p class="traffic-summary-text">
+                La plataforma está activa y registrando tráfico. El sitio más visitado en los últimos 7 días es la sección 
+                <span class="highlight-badge">{{ topRuta() || '/' }}</span> con 
+                <strong>{{ topVistas() | number }}</strong> vistas totales, acumulando un total de 
+                <strong>{{ totalUsuarios() | number }}</strong> usuarios únicos en toda la aplicación.
+            </p>
+
+            <button class="btn-toggle-details" (click)="toggleDetails()">
+                <span>{{ showDetailedTable() ? 'Ocultar Desglose de Páginas' : 'Ver Desglose de Páginas más Visitadas' }}</span>
+                <ion-icon [name]="showDetailedTable() ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+            </button>
+
+            <!-- Desglose de tablas detalladas (Expandible) -->
+            <div class="detailed-analytics-wrapper" [class.expanded]="showDetailedTable()">
+                
+                <!-- Tarjetas resumidas de GA4 -->
+                <div class="analytics-summary-cards">
+                    <div class="analytics-summary-card views-card">
+                        <div class="card-icon"><ion-icon name="eye-outline"></ion-icon></div>
+                        <div class="card-info">
+                            <h4>{{ totalVistas() | number }}</h4>
+                            <span>Visitas Totales (7 días)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-summary-card users-card">
+                        <div class="card-icon"><ion-icon name="people-outline"></ion-icon></div>
+                        <div class="card-info">
+                            <h4>{{ totalUsuarios() | number }}</h4>
+                            <span>Usuarios Activos (7 días)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-table-container">
+                    <h4 class="table-subtitle">Páginas y Secciones Más Visitadas</h4>
+                    
+                    <div class="empty-analytics" *ngIf="analyticsData().length === 0">
+                        <p>No se encontraron datos de tráfico para los últimos 7 días.</p>
+                    </div>
+
+                    <table class="analytics-table" *ngIf="analyticsData().length > 0">
+                        <thead>
+                            <tr>
+                                <th>Ruta del Sitio</th>
+                                <th>Usuarios Únicos</th>
+                                <th class="text-right">Vistas Totales</th>
+                                <th>Popularidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of analyticsData()">
+                                <td class="route-cell">
+                                    <span class="route-badge">{{ item.ruta }}</span>
+                                </td>
+                                <td>
+                                    <div class="users-badge">
+                                        <ion-icon name="people-outline"></ion-icon>
+                                        {{ item.usuarios_unicos }}
+                                    </div>
+                                </td>
+                                <td class="text-right views-count">{{ item.vistas_totales }}</td>
+                                <td class="popularity-cell">
+                                    <div class="popularity-bar-wrapper">
+                                        <div class="popularity-bar" [style.width.%]="totalVistas() > 0 ? (item.vistas_totales / totalVistas() * 100) : 0"></div>
+                                        <span class="popularity-percentage">
+                                            {{ totalVistas() > 0 ? (item.vistas_totales / totalVistas() * 100 | number:'1.0-1') : 0 }}%
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </ion-content>
