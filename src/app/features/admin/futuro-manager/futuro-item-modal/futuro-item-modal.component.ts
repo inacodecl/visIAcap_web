@@ -8,12 +8,14 @@ import {
 import { addIcons } from 'ionicons';
 import {
     close, textOutline, documentTextOutline, imageOutline, 
-    calendarClearOutline, bookmark, listOutline, timeOutline, locationOutline, bulbOutline
+    calendarClearOutline, bookmark, listOutline, timeOutline, locationOutline, bulbOutline, trash
 } from 'ionicons/icons';
 
 // Servicios
 import { NoticiasFuturoService } from '../../../../core/services/noticias-futuro.service';
 import { EsteMesService } from '../../../../core/services/este-mes.service';
+import { UploadService } from '../../../../core/services/upload.service';
+import { AdminImageUploadComponent } from '../../components-admin/admin-image-upload/admin-image-upload.component';
 
 @Component({
     selector: 'app-futuro-item-modal',
@@ -23,13 +25,17 @@ import { EsteMesService } from '../../../../core/services/este-mes.service';
     imports: [
         CommonModule, FormsModule,
         IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton,
-        IonIcon, IonItem, IonLabel, IonToggle
+        IonIcon, IonItem, IonLabel, IonToggle,
+        AdminImageUploadComponent
     ]
 })
 export class FuturoItemModalComponent implements OnInit {
     private modalCtrl = inject(ModalController);
     private noticiasService = inject(NoticiasFuturoService);
     private esteMesService = inject(EsteMesService);
+    private uploadService = inject(UploadService);
+
+    newlyUploadedImages: string[] = [];
 
     @Input() type!: 'noticias' | 'este-mes';
     @Input() item?: any;
@@ -44,7 +50,7 @@ export class FuturoItemModalComponent implements OnInit {
     constructor() {
         addIcons({ 
             close, textOutline, documentTextOutline, imageOutline, 
-            calendarClearOutline, bookmark, listOutline, timeOutline, locationOutline, bulbOutline 
+            calendarClearOutline, bookmark, listOutline, timeOutline, locationOutline, bulbOutline, trash 
         });
     }
 
@@ -54,11 +60,14 @@ export class FuturoItemModalComponent implements OnInit {
             this.formData = { ...this.item };
             
             // Ajustes de tipos para selects/inputs si fuera necesario
-            if (this.type === 'noticias' && this.formData.fecha) {
-                // Asegurar formato YYYY-MM-DD para input date
-                const date = new Date(this.formData.fecha);
-                if (!isNaN(date.getTime())) {
-                    this.formData.fecha = date.toISOString().split('T')[0];
+            if (this.type === 'noticias') {
+                this.formData.imagen_url = this.formData.imagen_url || this.formData.imagen;
+                if (this.formData.fecha) {
+                    // Asegurar formato YYYY-MM-DD para input date
+                    const date = new Date(this.formData.fecha);
+                    if (!isNaN(date.getTime())) {
+                        this.formData.fecha = date.toISOString().split('T')[0];
+                    }
                 }
             }
         } else {
@@ -66,6 +75,7 @@ export class FuturoItemModalComponent implements OnInit {
             if (this.type === 'noticias') {
                 this.formData.resumen = '';
                 this.formData.etiqueta = 'Nuevo';
+                this.formData.imagen_url = '';
             } else if (this.type === 'este-mes') {
                 this.formData.descripcion = '';
                 this.formData.dia = new Date().getDate().toString().padStart(2, '0');
@@ -90,6 +100,26 @@ export class FuturoItemModalComponent implements OnInit {
         await toast.present();
     }
 
+    onImageUploaded(url: string) {
+        this.newlyUploadedImages.push(url);
+        this.formData.imagen_url = url;
+        this.formData.imagen = url;
+    }
+
+    removeImage() {
+        const currentUrl = this.formData.imagen_url || this.formData.imagen;
+        this.formData.imagen_url = '';
+        this.formData.imagen = '';
+
+        if (currentUrl && this.newlyUploadedImages.includes(currentUrl)) {
+            this.uploadService.deleteImage(currentUrl, 'noticias').subscribe({
+                next: () => console.log('Imagen huérfana eliminada:', currentUrl),
+                error: (err) => console.error('Error al limpiar imagen huérfana:', err)
+            });
+            this.newlyUploadedImages = this.newlyUploadedImages.filter(u => u !== currentUrl);
+        }
+    }
+
     save() {
         if (!this.formData.titulo) {
             this.showToast('No se puede guardar. El título es obligatorio.', 'danger');
@@ -106,12 +136,24 @@ export class FuturoItemModalComponent implements OnInit {
         }
 
         obs.subscribe({
-            next: () => this.modalCtrl.dismiss('confirm'),
+            next: () => {
+                this.newlyUploadedImages = []; // Limpiar tracker ya que la noticia se guardó con éxito
+                this.modalCtrl.dismiss('confirm');
+            },
             error: (err: any) => console.error('Error saving futuro item:', err)
         });
     }
 
     close() {
+        if (this.newlyUploadedImages.length > 0) {
+            this.newlyUploadedImages.forEach(url => {
+                this.uploadService.deleteImage(url, 'noticias').subscribe({
+                    next: () => console.log('Limpieza: Imagen huérfana eliminada:', url),
+                    error: (err) => console.error('Limpieza: Error al eliminar:', err)
+                });
+            });
+            this.newlyUploadedImages = [];
+        }
         this.modalCtrl.dismiss();
     }
 }

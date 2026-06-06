@@ -1,5 +1,5 @@
 .upload-container {
-  border: 2px dashed rgba(0, 0, 0, 0.2);
+  border: 2px dashed rgba(0, 0, 0, 0.15);
   border-radius: 16px;
   padding: 40px 20px;
   text-align: center;
@@ -11,8 +11,8 @@
   overflow: hidden;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.3);
   }
 
   &.dragging {
@@ -82,7 +82,7 @@
     h3 {
       margin: 0;
       font-size: 1rem;
-      color: var(--ion-color-dark, #222428);
+      color: #222428;
     }
 
     ion-progress-bar {
@@ -99,3 +99,5 @@
     }
   }
 }
+
+

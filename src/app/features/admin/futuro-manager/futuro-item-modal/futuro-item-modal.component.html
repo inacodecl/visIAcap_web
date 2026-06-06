@@ -38,10 +38,21 @@
                 </div>
             </div>
             <div class="input-group">
-                <label>URL Imagen</label>
-                <div class="input-wrapper">
-                    <ion-icon name="image-outline"></ion-icon>
-                    <input type="text" [(ngModel)]="formData.imagen_url" name="img" placeholder="https://unsplash.com/...">
+                <label>Imagen de Portada</label>
+                
+                <!-- Componente de subida de imagen -->
+                <app-admin-image-upload 
+                    *ngIf="!formData.imagen_url && !formData.imagen"
+                    uploadFolder="noticias"
+                    (imageUploaded)="onImageUploaded($event)">
+                </app-admin-image-upload>
+
+                <!-- Previsualización de la imagen cargada -->
+                <div class="media-preview-container" *ngIf="formData.imagen_url || formData.imagen" style="position: relative; margin-top: 10px;">
+                    <img [src]="formData.imagen_url || formData.imagen" alt="Portada de noticia" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15);" />
+                    <ion-button fill="clear" color="danger" (click)="removeImage()" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); border-radius: 50%; width: 36px; height: 36px; --padding-start: 0; --padding-end: 0;">
+                        <ion-icon name="trash" slot="icon-only" style="font-size: 18px;"></ion-icon>
+                    </ion-button>
                 </div>
             </div>
             <div class="input-group">

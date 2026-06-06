@@ -115,3 +115,68 @@
         --box-shadow: 0 10px 30px rgba(0, 255, 234, 0.3);
     }
 }
+
+app-admin-image-upload ::ng-deep {
+    .upload-container {
+        border-color: rgba(0, 255, 234, 0.25) !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        display: block;
+        margin-top: 8px;
+
+        &:hover {
+            background: rgba(0, 255, 234, 0.03) !important;
+            border-color: rgba(0, 255, 234, 0.6) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 0 20px rgba(0, 255, 234, 0.15) !important;
+        }
+
+        &.dragging {
+            background: rgba(0, 255, 234, 0.15) !important;
+            border-color: #00ffea !important;
+            box-shadow: 0 0 15px rgba(0, 255, 234, 0.3) !important;
+        }
+
+        .upload-content {
+            .icon-circle {
+                background: rgba(0, 255, 234, 0.1) !important;
+                transition: transform 0.3s ease !important;
+                
+                ion-icon {
+                    color: #00ffea !important;
+                    transition: transform 0.3s ease !important;
+                }
+            }
+
+            h3 {
+                color: #ffffff !important;
+                font-weight: 600 !important;
+            }
+
+            p {
+                color: rgba(255, 255, 255, 0.7) !important;
+            }
+
+            .upload-hint {
+                color: rgba(255, 255, 255, 0.4) !important;
+            }
+        }
+
+        &:hover .upload-content .icon-circle {
+            transform: scale(1.08) !important;
+            ion-icon {
+                transform: translateY(-2px) !important;
+            }
+        }
+
+        .upload-progress {
+            h3 {
+                color: #ffffff !important;
+            }
+            p {
+                color: #00ffea !important;
+            }
+        }
+    }
+}
+
