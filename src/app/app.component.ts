@@ -3,13 +3,12 @@ import { CommonModule } from '@angular/common';
 import { IonApp, IonRouterOutlet, ModalController } from '@ionic/angular/standalone';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import { FeedbackModalComponent } from './components/modals/feedback-modal/feedback-modal.component';
 
 import { ThemeService } from './core/services/theme.service';
 import { LanguageService } from './core/services/language.service';
-
-// Declaración global para Google Analytics
-declare let gtag: Function;
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +22,8 @@ export class AppComponent implements OnInit {
     private languageService: LanguageService,
     private route: ActivatedRoute,
     private router: Router,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -35,13 +35,32 @@ export class AppComponent implements OnInit {
       }
     });
 
-    // Suscribirse a eventos de navegación para Google Analytics
+    // Recuperar o generar ID de cliente para Analytics
+    let clientId = localStorage.getItem('ga_client_id');
+    if (!clientId) {
+      clientId = this.generateUUID();
+      localStorage.setItem('ga_client_id', clientId);
+    }
+
+    // Suscribirse a eventos de navegación para Google Analytics (Proxy Server-Side)
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      gtag('config', 'G-ZW831GYOWC', {
-        'page_path': event.urlAfterRedirects
+      this.http.post(`${environment.apiUrl}/admin/track`, {
+        ruta: event.urlAfterRedirects,
+        client_id: clientId
+      }).subscribe({
+        next: () => {},
+        error: (err) => console.error('[Analytics] Error al enviar tracking:', err)
       });
+    });
+  }
+
+  private generateUUID(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
     });
   }
 

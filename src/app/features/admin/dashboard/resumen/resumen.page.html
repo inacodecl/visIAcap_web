@@ -64,13 +64,13 @@
             <h4>Panel Listo y Operando (Conexión Limitada)</h4>
             <p>El panel de administración está listo, pero no pudimos obtener los datos de tráfico de GA4 en este momento.</p>
             <span class="error-detail-text">{{ analyticsError() }}</span>
-            <button class="btn-retry-flat" (click)="loadAnalytics()">Reintentar Conexión</button>
+            <button class="btn-retry-flat" (click)="loadAnalytics(true)">Reintentar Conexión</button>
         </div>
 
         <div class="empty-state-box active-state" *ngIf="!isLoadingAnalytics() && !analyticsError()">
             <div class="state-header">
                 <ion-icon name="analytics-outline" class="pulse-icon"></ion-icon>
-                <button class="btn-refresh-mini" (click)="loadAnalytics()" title="Actualizar datos">
+                <button class="btn-refresh-mini" (click)="loadAnalytics(true)" title="Actualizar datos">
                     <ion-icon name="refresh-outline" [class.spinning]="isLoadingAnalytics()"></ion-icon>
                 </button>
             </div>

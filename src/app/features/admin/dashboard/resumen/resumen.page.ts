@@ -57,6 +57,9 @@ export class ResumenPage implements OnInit {
     topVistas = signal<number>(0);
     showDetailedTable = signal<boolean>(false);
 
+    // Variable de diagnóstico y seguridad contra bucles infinitos
+    private analyticsCallCount = 0;
+
     constructor() {
         addIcons({ 
             time, 
@@ -115,7 +118,22 @@ export class ResumenPage implements OnInit {
     /**
      * Carga las métricas reales de Google Analytics 4
      */
-    loadAnalytics() {
+    loadAnalytics(isManual = false) {
+        if (isManual) {
+            this.analyticsCallCount = 0;
+            console.log('[Analytics Debug] Reiniciando contador por solicitud manual.');
+        }
+
+        this.analyticsCallCount++;
+        console.log(`[Analytics Debug] loadAnalytics llamado. Intento número: ${this.analyticsCallCount}`);
+        console.trace('[Analytics Debug] Traza de ejecución:');
+
+        if (this.analyticsCallCount > 5) {
+            console.warn('[Analytics Debug] Se bloqueó la solicitud porque superó el límite de seguridad (5 intentos). Esto previene un bucle infinito en red.');
+            this.isLoadingAnalytics.set(false);
+            return;
+        }
+
         this.isLoadingAnalytics.set(true);
         this.analyticsError.set(null);
 
