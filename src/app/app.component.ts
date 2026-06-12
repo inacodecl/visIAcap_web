@@ -3,12 +3,10 @@ import { CommonModule } from '@angular/common';
 import { IonApp, IonRouterOutlet, ModalController } from '@ionic/angular/standalone';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
 import { FeedbackModalComponent } from './components/modals/feedback-modal/feedback-modal.component';
 
 import { ThemeService } from './core/services/theme.service';
 import { LanguageService } from './core/services/language.service';
-import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -22,8 +20,7 @@ export class AppComponent implements OnInit {
     private languageService: LanguageService,
     private route: ActivatedRoute,
     private router: Router,
-    private modalCtrl: ModalController,
-    private http: HttpClient
+    private modalCtrl: ModalController
   ) {}
 
   ngOnInit() {
@@ -35,32 +32,21 @@ export class AppComponent implements OnInit {
       }
     });
 
-    // Recuperar o generar ID de cliente para Analytics
-    let clientId = localStorage.getItem('ga_client_id');
-    if (!clientId) {
-      clientId = this.generateUUID();
-      localStorage.setItem('ga_client_id', clientId);
-    }
-
-    // Suscribirse a eventos de navegación para Google Analytics (Proxy Server-Side)
+    // Escuchar cambios de ruta para Google Analytics (GTM dataLayer)
     this.router.events.pipe(
+      // Filtramos únicamente cuando una navegación haya concluido exitosamente
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      this.http.post(`${environment.apiUrl}/admin/track`, {
-        ruta: event.urlAfterRedirects,
-        client_id: clientId
-      }).subscribe({
-        next: () => {},
-        error: (err) => console.error('[Analytics] Error al enviar tracking:', err)
+      // Inicializamos el dataLayer de forma segura si no se ha cargado el script de GTM todavía
+      const dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer = dataLayer;
+      
+      // Empujamos el evento de página vista virtual a GTM
+      dataLayer.push({
+        event: 'page_view',                  // Nombre del evento personalizado
+        page_path: event.urlAfterRedirects,  // URL de la ruta (Ej: /contacto)
+        page_title: document.title || 'App'  // Título de la pestaña actual
       });
-    });
-  }
-
-  private generateUUID(): string {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      const r = Math.random() * 16 | 0;
-      const v = c === 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
     });
   }
 
