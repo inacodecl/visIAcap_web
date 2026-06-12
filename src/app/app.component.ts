@@ -4,7 +4,6 @@ import { IonApp, IonRouterOutlet, ModalController } from '@ionic/angular/standal
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { FeedbackModalComponent } from './components/modals/feedback-modal/feedback-modal.component';
-
 import { ThemeService } from './core/services/theme.service';
 import { LanguageService } from './core/services/language.service';
 
