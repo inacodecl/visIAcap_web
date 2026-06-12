@@ -1,6 +1,17 @@
 @use "sass:color";
 @use '../shared-futuro.scss';
 
+// ─── Tema Automático Claro/Oscuro ───
+:host {
+    --month-char-color: rgba(226, 6, 19, 0.2);
+    --month-char-hover: rgba(226, 6, 19, 0.5);
+}
+
+:host-context(html.ion-palette-dark) {
+    --month-char-color: rgba(226, 6, 19, 0.8);
+    --month-char-hover: rgba(226, 6, 19, 1);
+}
+
 // ─── Contenedor de sección ───
 .stitch-section {
     padding: 0 6vw;
@@ -71,7 +82,7 @@
         .month-char {
             font-size: 4.5rem;
             font-weight: 900;
-            color: rgba(226, 6, 19, 0.2);
+            color: var(--month-char-color);
             font-family: "Space Grotesk", sans-serif;
             line-height: 1.05;
             text-transform: uppercase;
@@ -79,7 +90,7 @@
             transition: color 0.3s ease;
 
             &:hover {
-                color: rgba(226, 6, 19, 0.5);
+                color: var(--month-char-hover);
             }
         }
 
